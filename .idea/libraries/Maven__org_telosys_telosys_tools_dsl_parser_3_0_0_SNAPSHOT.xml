@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.telosys:telosys-tools-dsl-parser:3.0.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/telosys/telosys-tools-dsl-parser/3.0.0-SNAPSHOT/telosys-tools-dsl-parser-3.0.0-20160628.080156-4.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/telosys/telosys-tools-dsl-parser/3.0.0-SNAPSHOT/telosys-tools-dsl-parser-3.0.0-20160628.080156-4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/telosys/telosys-tools-dsl-parser/3.0.0-SNAPSHOT/telosys-tools-dsl-parser-3.0.0-20160628.080156-4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

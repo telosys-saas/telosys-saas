@@ -1,0 +1,24 @@
+<ul id="main-left" class="collapsible" data-collapsible="expandable" style="margin: 0; box-shadow: none; border: none;">
+    <li>
+        <div class="collapsible-header active">
+            <i class="mdi mdi-camera-timer"></i>
+            Working files
+            <a href="#" style="float:right" onclick="IDEWorkingFiles.closeAll(event)"><i class="fa fa-times"></i></a>
+            <a href="#" style="float:right" onclick="IDEWorkingFiles.saveAll(event)"><i class="fa fa-floppy-o"></i></a>
+        </div>
+        <div class="collapsible-body" id="workingfiles" style="border: none;">
+        </div>
+    </li>
+    <li>
+        <div class="collapsible-header active">
+            <i class="mdi mdi-library-books"></i>
+            Project
+            <a href="#" style="float:right" onclick="IDETreeview.collapseAll(event)"><i class="fa fa-minus"></i></a>
+            <a href="#" style="float:right" onclick="event.stopPropagation();IDETreeview.refreshAll()"><i
+                    class="fa fa-refresh"></i></a>
+        </div>
+        <div class="collapsible-body" id="jstree" style="border: none;">
+            <div id="jstreecontent" class="treeview"></div>
+        </div>
+    </li>
+</ul>

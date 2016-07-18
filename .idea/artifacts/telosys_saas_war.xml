@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="telosys-saas:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="telosys-saas.war">
+      <element id="artifact" artifact-name="telosys-saas:war exploded" />
+    </root>
+  </artifact>
+</component>

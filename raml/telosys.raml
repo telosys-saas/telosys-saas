@@ -1,0 +1,203 @@
+#%RAML 0.8
+title: TelosysWeb
+version: v1
+baseUri: http://www.telosys.com
+/auth/github:
+  description: Log in with Github
+  get:
+    description: Log in with Github
+    responses:
+      200:
+/auth/logout:
+  description: Log out
+  get:
+    description: Log out
+    responses:
+      200:
+/auth/status:
+  description: Authentication status
+  get:
+    description: Authentication status
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "authenticated": "true",
+                "userId": "user1"
+              }
+/projects:
+  description: Projects
+  get:
+    description: Get all projects of the authenticated user
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [
+                {
+                  "id": "project1",
+                  "name": "Project 1"
+                },
+                {
+                  "id": "project2",
+                  "name": "Project 2"
+                }
+              ]
+
+/projects/{projectId}:
+    description: A project
+    get:
+      description: Get a project of the authenticated user
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "id": "project1",
+                  "name": "Project 1"
+                }
+
+/projects/{projectId}/folders:
+      description: Project folders
+      get:
+        description: Get the root folder with all sub folders and all files of the project of the authenticated user
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "id": "project1",
+                    "name": "Project 1",
+                    "type": "folder",
+                    "children": [
+                      {
+                        "id": "folder1",
+                        "name": "Folder 1",
+                        "type": "folder"
+                      },
+                      {
+                        "id": "file1",
+                        "name": "File 1",
+                        "type": "file"
+                      }
+                    ]
+                  }
+
+/projects/{projectId}/folders/{folderId}:
+        description: A folder
+        get:
+          description: Get a folder of the project
+          responses:
+            200:
+              body:
+                application/json:
+                  example: |
+                    {
+                      "id": "folder1",
+                      "name": "Folder 1",
+                      "type": "folder",
+                      "children": [
+                        {
+                          "id": "folder2",
+                          "name": "Folder 2",
+                          "type": "folder"
+                        },
+                        {
+                          "id": "file2",
+                          "name": "File 2",
+                          "type": "file"
+                        }
+                      ]
+                    }
+        put:
+          description: Update the folder
+          body:
+            application/json:
+          responses:
+            200:
+              body:
+                application/json:
+                  example: |
+                    {
+                      "id": "file1",
+                      "name": "File 1",
+                      "type": "file"
+                    }
+        delete:
+          description: Delete the folder
+          responses:
+            200:
+
+/projects/{projectId}/folders/{folderId}/subfolders:
+          description: Sub folders of the folder
+          post:
+            description: Create a folder in the folder
+            body:
+              application/json:
+            responses:
+              200:
+                body:
+                  application/json:
+                    example: |
+                      {
+                        "id": "newfolder",
+                        "name": "New Folder",
+                        "type": "folder"
+                      }
+
+/projects/{projectId}/folders/{folderId}/files:
+          description: Files of the folder
+          post:
+            description: Create a file in the folder
+            body:
+              application/json:
+            responses:
+              200:
+                body:
+                  application/json:
+                    example: |
+                      {
+                        "id": "new file",
+                        "name": "New File",
+                        "type": "file"
+                      }
+
+/projects/{projectId}/files/{fileId}:
+      description: A project file
+      get:
+        description: Get a file of the project
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "id": "file1",
+                    "name": "File 1",
+                    "type": "file",
+                    "content": "... File content ..."
+                  }
+      put:
+        description: Save the file
+        body:
+          application/json:
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "id": "file1",
+                    "name": "File 1",
+                    "type": "file",
+                    "content": "... File content ..."
+                  }
+      delete:
+        description: Delete the file
+        responses:
+          200:

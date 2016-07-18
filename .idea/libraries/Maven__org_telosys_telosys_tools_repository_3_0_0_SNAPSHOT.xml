@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.telosys:telosys-tools-repository:3.0.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/telosys/telosys-tools-repository/3.0.0-SNAPSHOT/telosys-tools-repository-3.0.0-20160628.080237-4.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/telosys/telosys-tools-repository/3.0.0-SNAPSHOT/telosys-tools-repository-3.0.0-20160628.080237-4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/telosys/telosys-tools-repository/3.0.0-SNAPSHOT/telosys-tools-repository-3.0.0-20160628.080237-4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

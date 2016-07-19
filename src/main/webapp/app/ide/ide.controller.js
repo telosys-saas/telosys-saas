@@ -8,22 +8,21 @@ controller('ideCtrl',['ProjectsService', 'FilesService', '$scope', '$routeParams
         project: {},
         tree: {},
         events: {},
-        workingFiles: {
-            'toto': {
-                id:'toto', name:'toto.txt'
-            }
-        }
+        workingFiles: {}
+        };
+
+    $scope.addFile = function(file) {
+        //console.log(file);
+        $scope.data.workingFiles[file.id] = file;
+        $scope.$apply();
     };
 
-    function defineEvents(data) {
-        data.events.addFile = function(file) {
-            console.log(file);
-            data.workingFiles[file.id] = file;
-            data.workingFiles = 'toto'
-            console.log('defineEvents',$scope.data);
+    function defineEvents() {
+        $scope.data.events = {
+            addFile: $scope.addFile
         }
     }
-
+    
     // init
     function init(){
         defineEvents($scope.data);

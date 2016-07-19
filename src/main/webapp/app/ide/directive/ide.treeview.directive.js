@@ -4,14 +4,14 @@ angular.module('ide').directive('treeview', function () {
     return {
         scope: {
             data: '=',
-            onaddfile: '&'
+            events: '='
         },
         templateUrl: 'app/ide/directive/ide.treeview.directive.html',
 
         link: function ($scope, element, attrs) {
             function init() {
-                console.log('data :', $scope.data);
-                console.log('event:', $scope.events);
+                //console.log('data :', $scope.data);
+                //console.log('event:', $scope.events);
                 $(element[0].children[0]).jstree({
                     'core': {
                         'data': [
@@ -61,9 +61,19 @@ angular.module('ide').directive('treeview', function () {
                 });
                 // double click
                 $(element[0].children[0]).bind("dblclick.jstree", function (event) {
-                    console.log('double click');
-                    workingFileCtrl.addFile('coucou');
-                });
+                    console.log('double click', event);
+                    $scope.events.addFile($scope.data.selectedFile)
+                }.bind(this));
+                $(element[0].children[0]).bind("activate_node.jstree", function (e, data) {
+                    var objectId = data.node.id;
+                    console.log(objectId);
+                    console.log($scope.data);
+                    //recherche du fichier dans data
+                    if(fileFound.type == 'file') {
+                        $scope.data.selectedFile = fileFound;
+                    }
+                    
+                }.bind(this));
             }
             init();
             
@@ -89,9 +99,9 @@ angular.module('ide').directive('treeview', function () {
                         }
                         tree.set_id(node, file.id);
                         console.log('file created');
-                        // Ajouter un controller dans la directive vers un service
-                        if($scope.onaddfile) {
-                            $scope.onaddfile(file);
+                        // Ajouter un controller dans la directive vers un service rest
+                        if($scope.events.addFile) {
+                            $scope.events.addFile(file);
                         }
                     });
                 });
@@ -119,7 +129,7 @@ angular.module('ide').directive('treeview', function () {
                         }
                         tree.set_id(node, folder.id);
                         console.log('folder created');
-                        // Ajouter un controller dans la directive vers un service
+                        // Ajouter un controller dans la directive vers un service rest
                     });
                 });
             };

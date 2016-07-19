@@ -10,14 +10,8 @@ angular.module('ide').directive('workingfiles', function () {
         link: function ($scope, element, attrs) {
             $scope.$watchCollection('data', function(newValue, oldValue) {
                 if (newValue)
-                    console.log("I see a data change!");
+                    console.log("data change");
             }, true);
-/*
-            function display() {
-
-            }
-            display();
-            */
         }
     }
 });

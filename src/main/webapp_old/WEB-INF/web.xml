@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="portail-jaxrs" version="2.5">
+	<display-name>telosys-saas</display-name>
+
+	<!-- Initialization -->
+	<listener>
+		<listener-class>org.telosys.saas.servlet.InitServletContextListener</listener-class>
+	</listener>
+
+	<!-- JAXRS with Jersey -->
+	<servlet>
+		<servlet-name>Jersey REST Service</servlet-name>
+		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<param-name>jersey.config.server.provider.packages</param-name>
+			<param-value>org.telosys.saas.rest</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Jersey REST Service</servlet-name>
+		<url-pattern>/api/v1/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- PAC4J Security -->
+	<!-- callback -->
+	<filter>
+		<filter-name>callbackFilter</filter-name>
+		<filter-class>org.pac4j.j2e.filter.CallbackFilter</filter-class>
+		<init-param>
+			<param-name>defaultUrl</param-name>
+			<param-value>index.html</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>callbackFilter</filter-name>
+		<url-pattern>/callback</url-pattern>
+	</filter-mapping>
+	<!-- logout -->
+	<filter>
+		<filter-name>logoutFilter</filter-name>
+		<filter-class>org.pac4j.j2e.filter.ApplicationLogoutFilter</filter-class>
+		<init-param>
+			<param-name>defaultUrl</param-name>
+			<param-value>../index.html</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>logoutFilter</filter-name>
+		<url-pattern>/auth/logout</url-pattern>
+	</filter-mapping>
+	<!-- authentication form -->
+	<filter>
+		<filter-name>formFilter</filter-name>
+		<filter-class>org.pac4j.j2e.filter.RequiresAuthenticationFilter</filter-class>
+		<init-param>
+			<param-name>clientName</param-name>
+			<param-value>FormClient</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>formFilter</filter-name>
+		<url-pattern>/form/*</url-pattern>
+	</filter-mapping>
+	<!-- github -->
+	<filter>
+		<filter-name>githubFilter</filter-name>
+		<filter-class>org.pac4j.j2e.filter.RequiresAuthenticationFilter</filter-class>
+		<init-param>
+			<param-name>configFactory</param-name>
+			<param-value>org.telosys.saas.security.Pac4jConfigFactory</param-value>
+		</init-param>
+		<init-param>
+			<param-name>clientName</param-name>
+			<param-value>GitHubClient</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>githubFilter</filter-name>
+		<url-pattern>/auth/github</url-pattern>
+	</filter-mapping>
+	
+
+</web-app>

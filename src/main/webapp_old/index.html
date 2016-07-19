@@ -1,0 +1,145 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Telosys Web</title>
+  <meta name="description" content="Telosys Web">
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
+  <link rel="stylesheet" type="text/css" href="lib/w2ui/w2ui-1.4.3.css">
+  <!--
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+  -->
+  <link rel="stylesheet" href="lib/jstree/themes/default/style.min.css" />
+  <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="lib/prism/prism.css">
+  <link rel="stylesheet" href="lib/codemirror/lib/codemirror.css">
+  <style type="text/css" media="screen">
+    #editor {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <!--link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"-->
+  <link type="text/css" rel="stylesheet" href="lib/materialize/css/materialize.min.css"  media="screen,projection"/>
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <link rel="stylesheet" type="text/css" href="fonts.css">
+  <link rel="stylesheet" type="text/css" href="index.css">
+  <link rel="stylesheet" type="text/css" href="welcome.css">
+  <link href="lib/materialdesignicons/css/materialdesignicons.css" media="all" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+  <nav id="appbar" class="light-blue darken-3 nav-wrapper">
+  </nav>
+
+  <div id="main">
+  </div>
+
+  <footer>
+    <span class="icon-telosys"></span>
+    Telosys
+    -
+    <a href="http://www.telosys.org" target="_blank">www.telosys.org</a>
+    -
+    Contact: <a mailto="telosysteam@gmail.com">telosysteam@gmail.com</a>
+    -
+    Forum: <a href="https://moot.it/telosystools" target="_blank">moot.it/telosystools</a>
+  </footer>
+
+  <!-- Modals -->
+  <div id="projectnew"></div>
+  <div id="settingsDiv"></div>
+  <div id="bundlesDiv"></div>
+  <div id="generationModalDiv"></div>
+  <div id="changepassword"></div>
+  <div id="usersettings"></div>
+
+  <!-- This script adds the Roboto font to our project. For more detail go to this site:  http://www.google.com/fonts#UsePlace:use/Collection:Roboto:400,300,500 -->
+  <script>
+    var WebFontConfig = {
+      google: { families: [ 'Roboto:400,300,500:latin', '' ] }
+    };
+    (function() {
+      var wf = document.createElement('script');
+      wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+      wf.type = 'text/javascript';
+      wf.async = 'true';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(wf, s);
+    })();
+  </script>
+  <script src="lib/jquery/jquery.js"></script>
+  <script src="lib/materialize/js/materialize.js"></script>
+  <script src="lib/prism/prism.js"></script>
+  <script src="lib/w2ui/w2ui-1.4.3.js"></script>
+  <script src="lib/codemirror/lib/codemirror.js"></script>
+  <script src="lib/codemirror/mode/javascript/javascript.js"></script>
+  <script src="lib/codemirror/mode/xml/xml.js"></script>
+  <script src="lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+  <script src="lib/codemirror/mode/clike/clike.js"></script>
+  <script src="lib/codemirror/mode/php/php.js"></script>
+  <script src="lib/codemirror/mode/css/css.js"></script>
+  <script src="lib/codemirror/mode/python/python.js"></script>
+  <script src="lib/codemirror/mode/velocity/velocity.js"></script>
+  <script src="lib/interact/interact.js"></script>
+  <script src="js/jquery-extend.js"></script>
+  <script src="js/codemirror/mode/entity/entity.js"></script>
+  <!--script src="lib/split/split.js"></script-->
+  <script src="lib/q/q.js"></script>
+  <!-- jstree : https://www.jstree.com/ -->
+  <script src="lib/jstree/jstree.js"></script>
+  <script src="app/services/auth.service.js"></script>
+  <script src="app/services/bundles.service.js"></script>
+  <script src="app/services/projects.service.js"></script>
+  <script src="app/services/files.service.js"></script>
+  <script src="app/services/telosys.service.js"></script>
+  <script src="app/store/store.js"></script>
+  <script src="app/view/index/main.view.js"></script>
+  <script src="app/websocket/websocket.js"></script>
+  <script src="app/view/index/welcome/welcome.view.js"></script>
+  <script src="app/view/index/toolbar/toolbar.view.js"></script>
+  <script src="app/view/index/toolbar/toolbar.settings.view.js"></script>
+  <script src="app/view/index/toolbar/toolbar.bundles.view.js"></script>
+  <script src="app/view/index/toolbar/toolbar.generation.view.js"></script>
+  <script src="app/view/index/toolbar/toolbar.download.view.js"></script>
+  <script src="app/view/index/toolbar/toolbar.projectnew.view.js"></script>
+  <script src="app/view/index/toolbar/toolbar.projects.view.js"></script>
+  <script src="app/view/index/toolbar/toolbar.projects.action.js"></script>
+  <script src="app/view/index/toolbar/toolbar.user.view.js"></script>
+  <script src="app/view/index/toolbar/toolbar.user.settings.view.js"></script>
+  <script src="app/view/index/toolbar/toolbar.user.changepassword.view.js"></script>
+  <script src="app/view/index/login/login.view.js"></script>
+  <script src="app/view/index/account/account.create.view.js"></script>
+  <script src="app/view/index/projects/projects.view.js"></script>
+  <script src="app/view/index/projects/projects.list.view.js"></script>
+  <script src="app/view/index/ide/ide.action.js"></script>
+  <script src="app/view/index/ide/ide.settings.view.js"></script>
+  <script src="app/view/index/ide/ide.bundles.view.js"></script>
+  <script src="app/view/index/ide/ide.generation.view.js"></script>
+  <script src="app/view/index/ide/ide.workingfiles.view.js"></script>
+  <script src="app/view/index/ide/ide.treeview.view.js"></script>
+  <script src="app/view/index/ide/ide.treeview.action.js"></script>
+  <script src="app/view/index/ide/ide.editor.view.js"></script>
+  <script src="app/view/index/ide/ide.editor.codemirror.view.js"></script>
+  <script src="app/view/index/ide/ide.editor.tabs.view.js"></script>
+  <script src="app/view/index/ide/ide.editor.toolbar.view.js"></script>
+  <script src="app/view/index/ide/ide.generate.view.js"></script>
+  <script src="app/view/index/ide/ide.console.view.js"></script>
+  <script src="app/view/index/ide/ide.console.model.view.js"></script>
+  <script src="app/view/index/ide/ide.console.generation.view.js"></script>
+  <script src="app/view/index/toolbar/toolbar.view.js"></script>
+  <script src="app/view/index/ide/ide.view.js"></script>
+  <script src="app.js"></script>
+  <script>
+    Main.init();
+  </script>
+</body>
+
+</html>

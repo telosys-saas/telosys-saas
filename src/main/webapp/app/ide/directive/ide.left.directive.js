@@ -1,22 +1,21 @@
 'use strict';
 
 angular.module('ide').
-    directive('left', ['FilesService', function (FilesService) {
+    directive('left', function () {
    return {
        scope : {
-           folder : '='
+           data : '='
        },
        templateUrl : 'app/ide/directive/ide.left.directive.html',
-
-       link : function($scope){
-           $scope.rootTree = {};
+       link : function($scope, element, attrs){
            function init() {
-               FilesService.getFilesForProject('', '', function (result) {
-                   $scope.rootTree = FilesService.convertFolderToJson(result, null, null);
-                   console.log($scope.rootTree);
-               })
+               console.log('Left - data :', $scope.data);
+               //console.log('left',$(element[0].children[0]));
+               $(element[0].children[0]).collapsible({
+                   accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+               });
            }
            init();
        }
    };
-}]);
+});

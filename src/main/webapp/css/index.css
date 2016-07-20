@@ -86,21 +86,22 @@ html .vakata-context li>a>i:empty {
     text-align: right;
 }
 
-#workingfiles .collection .collection-item {
+.workingfiles .collection .collection-item {
     line-height: 0.3em;
     padding: 5px 5px;
+    cursor: pointer;
 }
 
-#workingfiles .collection .collection-item a {
+.workingfiles .collection .collection-item a {
     color: black;
 }
 
-#workingfiles .collection .collection-item a i {
+.workingfiles .collection .collection-item a i {
     visibility: hidden;
     color: #039be5;
 }
 
-#workingfiles .collection .collection-item:hover a i {
+.workingfiles .collection .collection-item:hover a i {
     visibility: visible;
 }
 

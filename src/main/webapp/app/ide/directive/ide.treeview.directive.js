@@ -3,19 +3,19 @@
 angular.module('ide').directive('treeview', function () {
     return {
         scope: {
-            data: '=',
+            tree: '=',
+            allFiles: '=allfiles',
             events: '='
         },
         templateUrl: 'app/ide/directive/ide.treeview.directive.html',
 
         link: function ($scope, element, attrs) {
             function init() {
-                //console.log('data :', $scope.data);
-                //console.log('event:', $scope.events);
+                //console.log('tree :', $scope.tree);
                 $(element[0].children[0]).jstree({
                     'core': {
                         'data': [
-                            $scope.data
+                            $scope.tree
                         ],
                         // so that create works
                         "check_callback": true
@@ -32,7 +32,7 @@ angular.module('ide').directive('treeview', function () {
                         // Customize context menu items : http://stackoverflow.com/questions/21096141/jstree-and-context-menu-modify-items
                         "items": function (node) {
                             var tree = $(element[0].children[0]).jstree(true);
-                            console.log(tree);
+
                             /*
                              separator_before - a boolean indicating if there should be a separator before this item
                              separator_after - a boolean indicating if there should be a separator after this item
@@ -43,7 +43,7 @@ angular.module('ide').directive('treeview', function () {
                              shortcut - keyCode which will trigger the action if the menu is open (for example 113 for rename, which equals F2)
                              shortcut_label - shortcut label (like for example F2 for rename)
                              */
-                            console.log(node);
+                            //console.log(node);
                             var items = {};
 
                             items.CreateFile = {
@@ -59,24 +59,30 @@ angular.module('ide').directive('treeview', function () {
                     },
                     "plugins": ["contextmenu", "types"]
                 });
-                // double click
-                $(element[0].children[0]).bind("dblclick.jstree", function (event) {
-                    console.log('double click', event);
-                    $scope.events.addFile($scope.data.selectedFile)
-                }.bind(this));
+
+                // click file (one click)
                 $(element[0].children[0]).bind("activate_node.jstree", function (e, data) {
-                    var objectId = data.node.id;
-                    console.log(objectId);
-                    console.log($scope.data);
-                    //recherche du fichier dans data
-                    if(fileFound.type == 'file') {
-                        $scope.data.selectedFile = fileFound;
+                    var fileFound = $scope.allFiles[data.node.id];
+                    if (fileFound && (fileFound.type == 'file')) {
+                        $scope.tree.selectedFile = fileFound;
                     }
-                    
+                    if ($scope.events.onClickFile) {
+                        $scope.events.onClickFile(data.node.id);
+                    }
+                }.bind(this));
+
+                // double click
+                $(element[0].children[0]).bind("dblclick.jstree", function () {
+                    if ($scope.events.onDoubleClickFile) {
+                        if($scope.tree.selectedFile != null) {
+                            $scope.events.onDoubleClickFile($scope.tree.selectedFile.id);
+                        }
+                    }
                 }.bind(this));
             }
+
             init();
-            
+
             $scope.onCreateFile = function (nodeParent, tree) {
                 return (function (obj) {
                     var node = {
@@ -98,9 +104,9 @@ angular.module('ide').directive('treeview', function () {
                             };
                         }
                         tree.set_id(node, file.id);
-                        console.log('file created');
+                        console.log('file created', file);
                         // Ajouter un controller dans la directive vers un service rest
-                        if($scope.events.addFile) {
+                        if ($scope.events.addFile) {
                             $scope.events.addFile(file);
                         }
                     });

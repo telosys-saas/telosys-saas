@@ -7,6 +7,10 @@ body {
     box-sizing: border-box;
 }
 
+.codemirror {
+    height: auto;
+}
+
 #main {
     width: 100%;
     height: calc(100% - 88px);

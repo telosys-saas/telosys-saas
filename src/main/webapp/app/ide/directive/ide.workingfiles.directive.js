@@ -4,14 +4,29 @@ angular.module('ide').directive('workingfiles', function () {
     return {
         restrict: 'E',
         scope: {
-           data: '='
+            selectedFile: '=',
+            workingFiles: '=',
+            events: '='
         },
+        
         templateUrl: 'app/ide/directive/ide.workingfiles.directive.html',
+
         link: function ($scope, element, attrs) {
-            $scope.$watchCollection('data', function(newValue, oldValue) {
+            $scope.$watchCollection('workingFiles', function (newValue, oldValue) {
                 if (newValue)
-                    console.log("data change");
+                    console.log("workingFiles change");
             }, true);
-        }
+        },
+
+        controller: ['$scope', function($scope) {
+
+            $scope.onClickFile = function(file) {
+                console.log('onClickFile',file);
+                if($scope.events.onClickFile != null) {
+                    $scope.events.onClickFile(file);
+                }
+            }
+
+        }]
     }
 });

@@ -101,7 +101,5 @@ var IDEWorkingFiles = {
     for(var fileId in state.openFiles) {
       this.closeFile(fileId);
     }
-
   }
-
 };

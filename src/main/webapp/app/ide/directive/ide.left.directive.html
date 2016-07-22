@@ -2,23 +2,16 @@
     <li>
         <div class="collapsible-header active">
             <i class="mdi mdi-camera-timer"></i>
-            Working files
+            Open editors
             <a href ng-click="closeAll(); $event.stopPropagation()" style="float:right"><i class="fa fa-times"></i></a>
-            <a href ng-click="saveAll(); $event.stopPropagation()" style="float:right"><i class="fa fa-floppy-o"></i></a>
+            <a href ng-click="saveAll(); $event.stopPropagation()" style="float:right"><i
+                    class="fa fa-floppy-o"></i></a>
         </div>
         <div class="collapsible-body" id="workingfiles" style="border: none;">
-            <workingfiles selected-file="data.selectedFile" working-files="data.workingFiles" events="data.events" class="workingfiles"></workingfiles>
+            <workingfiles data="data" class="workingfiles"></workingfiles>
         </div>
     </li>
     <li>
-        <div class="collapsible-header active">
-            <i class="mdi mdi-library-books"></i>
-            Project
-            <a href ng-click="collapseAll(); $event.stopPropagation()" style="float:right"><i class="fa fa-minus"></i></a>
-            <a href ng-click="stopPropagation(); $event.stopPropagation()" style="float:right"><i class="fa fa-refresh"></i></a>
-        </div>
-        <div class="collapsible-body" id="jstree" style="border: none;">
-            <treeview tree="data.tree" allfiles="data.allFiles" events="data.events"></treeview>
-        </div>
+        <treeview data="data"></treeview>
     </li>
 </ul>

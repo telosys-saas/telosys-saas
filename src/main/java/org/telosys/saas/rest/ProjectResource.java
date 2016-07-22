@@ -212,7 +212,7 @@ public class ProjectResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void saveFile(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @QueryParam("fileId") String fileId, File fileToSave) {
+    public File saveFile(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @QueryParam("fileId") String fileId, File fileToSave) {
     	UserProfile user = getUser();
     	Project project = storage.getProjectForUser(user, projectId);
     	File file = storage.getFileForProjectAndUser(user, project, fileId);
@@ -223,6 +223,7 @@ public class ProjectResource {
     		// Update
     		storage.saveFileForProjectAndUser(user, project, fileToSave);
     	}
+		return fileToSave;
     }
 
     @Path("/files")
@@ -234,7 +235,7 @@ public class ProjectResource {
     	if(file == null) {
     		throw new IllegalStateException("File does not exists : "+fileId);
     	}
-    	storage.deleteFileForProjectAndUser(user, project, file);
+	    	storage.deleteFileForProjectAndUser(user, project, file);
     }
 
     /*

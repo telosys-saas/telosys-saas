@@ -1,10 +1,20 @@
 <ul class="collection">
-    <li ng-repeat="file in workingFiles" class="collection-item truncate" ng-class="{'working-file-selected': selectedFile.id == file.id}" ng-click="onClickFile(file.id)">
-        <a href="#" onclick="IDEWorkingFiles.closeFile(\'' + fileId + '\')">
+    <li ng-repeat="file in data.workingFiles" class="collection-item truncate"
+        ng-class="{'working-file-selected': data.selectedFile.id == file.id}" ng-click="onClickFile(file.id)">
+        <a href ng-click="data.events.closeFile(file.id); $event.stopPropagation()">
             <i class="fa fa-times fa-lg"></i>
         </a>
         &nbsp;
         <a href>{{file.name}} <span style="font-size: smaller; color: gray;">{{file.path}}</span></a>
-
+    </li>
+    <li ng-if="data.selectedFile!=null && data.workingFiles[data.selectedFile.id]==null" class="collection-item truncate working-file-selected"
+        ng-click="onClickFile(data.selectedFile.id)">
+        <a href ng-click="events.closeFile(selectedFile.id); $event.stopPropagation()">
+        <i class="fa fa-times fa-lg"></i>
+    </a>
+        &nbsp;
+        <a href>{{data.selectedFile.name}} <span style="font-size: smaller; color: gray;">{{data.selectedFile.path}}</span></a>
     </li>
 </ul>
+
+<!--<i class="fa fa-circle"></i>-->

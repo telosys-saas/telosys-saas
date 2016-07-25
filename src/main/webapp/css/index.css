@@ -92,6 +92,16 @@ html .vakata-context li>a>i:empty {
     cursor: pointer;
 }
 
+.animate-enter {
+    -webkit-transition: 1s linear all; /* Chrome */
+    transition: 1s linear all;
+    opacity: 0;
+}
+
+.animate-enter.animate-enter-active {
+    opacity: 1;
+}
+
 .workingfiles .collection .collection-item a {
     color: black;
 }

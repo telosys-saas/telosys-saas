@@ -3,18 +3,17 @@
 angular.module('ide').directive('editor', function () {
     return {
       scope: {
-        workingFiles: '=',
-        selectedFile: '=',
-        events: '='
+        data: '='
       },
 
       templateUrl: 'app/ide/directive/ide.editor.directive.html',
 
       link: function ($scope, element, attrs) {
-        $scope.$watch('selectedFile', function (newValue, oldValue) {
+        $scope.$watch('data.selectedFile', function (newValue, oldValue) {
+          console.log("selectedFile change in editor", newValue);
           if (newValue && newValue != null) {
-            console.log("selectedFile", newValue);
             if (oldValue == null || newValue.id != oldValue.id) {
+
               $scope.addEditor(newValue);
             }
           } else if (oldValue != null) {
@@ -108,15 +107,13 @@ angular.module('ide').directive('editor', function () {
         };
 
         $scope.contentChange = function () {
-          var formatedFileId = $scope.formatFileId($scope.selectedFile.id);
-          $scope.selectedFile.content = $scope.editors[formatedFileId].editor.getValue();
-          if (!$scope.selectedFile.isModified) {
-            $scope.selectedFile.isModified = true;
-            $scope.events.selectedFileIsModified();
+          var formatedFileId = $scope.formatFileId($scope.data.selectedFile.id);
+          $scope.data.selectedFile.content = $scope.editors[formatedFileId].editor.getValue();
+          if($scope.data.events.onContentChange) {
+            $scope.data.events.onContentChange($scope.data.selectedFile.id);
           }
         };
       }
     }
   }
 );
-

@@ -69,7 +69,8 @@ angular.module('app')
         var currentNode = {
           id: file.id,
           text: file.name,
-          type: file.type
+          type: file.type,
+          isModified: false
         };
         allFiles[file.id] = file;
         return currentNode;

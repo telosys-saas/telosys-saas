@@ -3,8 +3,8 @@
         <div class="collapsible-header active">
             <i class="mdi mdi-camera-timer"></i>
             Open editors
-            <a href ng-click="closeAll(); $event.stopPropagation()" style="float:right"><i class="fa fa-times"></i></a>
-            <a href ng-click="saveAll(); $event.stopPropagation()" style="float:right"><i
+            <a href ng-click="$event.stopPropagation(); closeAll();" style="float:right"><i class="fa fa-times"></i></a>
+            <a href ng-click="$event.stopPropagation(); saveAll();" style="float:right"><i
                     class="fa fa-floppy-o"></i></a>
         </div>
         <div class="collapsible-body" id="workingfiles" style="border: none;">

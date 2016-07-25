@@ -25,7 +25,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
       $scope.data.selectedFile = null;
     };
 
-    $scope.closeFile = function (fileId) {
+    $scope.onCloseFile = function (fileId) {
       console.log("close file", fileId);
       delete $scope.data.workingFiles[fileId];
       if ($scope.data.selectedFile.id == fileId) {
@@ -35,11 +35,18 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
 
     $scope.saveAll = function () {
       console.log("save all");
-      FilesService.saveFileForProject($scope.auth.userId, $scope.projectId, $scope.data.selectedFile);
-      $scope.data.selectedFile.isModified = false;
       for (var file in $scope.data.workingFiles) {
+        console.log("save all for loop", $scope.data.workingFiles[file]);
         FilesService.saveFileForProject($scope.auth.userId, $scope.projectId, $scope.data.workingFiles[file]);
-        $scope.data.workingFiles[file].isModified = false;
+        $scope.data.events.fileIsModified(file);
+      }
+      if ($scope.data.selectedFile) {
+        if (!$scope.data.workingFiles[$scope.data.selectedFile.id]) {
+          console.log("save all selectedFile");
+          $scope.data.selectedFile.isModified = false;
+          $scope.data.events.fileIsModified($scope.data.selectedFile);
+          FilesService.saveFileForProject($scope.auth.userId, $scope.projectId, $scope.data.selectedFile);
+        }
       }
     };
 
@@ -52,6 +59,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
           $scope.data.workingFiles[file.id] = file;
           $scope.data.allFiles[file.id] = file;
           $scope.data.selectedFile = file;
+          file.isModified = true;
         });
       $scope.$apply();
     };
@@ -68,7 +76,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
     };
 
     $scope.onDeleteFile = function (fileId) {
-      FilesService.deleteFileForProject($scope.auth.userId, $scope.projectId, fileId)
+      FilesService.deleteFileForProject($scope.auth.userId, $scope.projectId, fileId);
       delete $scope.data.workingFiles[fileId];
       if ($scope.data.selectedFile.id == fileId) {
         $scope.data.selectedFile = null;
@@ -76,17 +84,20 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
     };
 
     $scope.onClickFile = function (fileId) {
-      console.log('onClickFile', fileId);
       var file = $scope.data.allFiles[fileId];
-      if (file.content == null || file.content == '') {
+      if (!file.isGet) {
         FilesService.getFileForProject($scope.auth.userId, $scope.projectId, fileId)
           .then(function (result) {
-            console.log('getF ileForProject', result);
             var file = result.data;
-            $scope.data.selectedFile = file;
+            console.log('getFileForProject', file);
+            $scope.data.allFiles[file.id].isGet = true;
+            $scope.data.allFiles[file.id].content = file.content;
+            $scope.data.allFiles[file.id].isModified = false;
           })
       } else {
+        console.log('before onClickFile', $scope.data.selectedFile);
         $scope.data.selectedFile = file;
+        console.log('after onClickFile', $scope.data.selectedFile);
       }
     };
 
@@ -95,6 +106,12 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
       var file = $scope.data.allFiles[fileId];
       $scope.data.selectedFile = file;
       $scope.data.workingFiles[file.id] = file;
+      $scope.$apply();
+    };
+
+    $scope.onContentChange = function(fileId) {
+      console.log('onContentChange', fileId);
+      $scope.data.allFiles[fileId].isModified = true;
       $scope.$apply();
     };
 
@@ -116,8 +133,9 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
         onDoubleClickFile: $scope.onDoubleClickFile,
         onDeleteFolder: $scope.onDeleteFolder,
         onDeleteFile: $scope.onDeleteFile,
-        closeFile: $scope.closeFile,
-        refreshAll: $scope.refreshAll
+        onCloseFile: $scope.onCloseFile,
+        refreshAll: $scope.refreshAll,
+        onContentChange: $scope.onContentChange
       }
     }
 

@@ -227,10 +227,9 @@ angular.module('ide').directive('treeview', function () {
         $(element[0].children[1]).bind("activate_node.jstree", function (e, data) {
           var fileFound = $scope.data.allFiles[data.node.id];
           $scope.data.selectedElement = data.node;
-          console.log('treeview one click', data.node);
+          console.log('treeview one click', fileFound);
           if (fileFound && (fileFound.type == 'file')) {
             $scope.data.tree.selectedFile = fileFound;
-            $scope.data.tree.selectedFile.isModified = false;
             if ($scope.data.events.onClickFile) {
               $scope.data.events.onClickFile(data.node.id);
             }

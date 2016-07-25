@@ -9,14 +9,12 @@ angular.module('ide').directive('workingfiles', function () {
 
     templateUrl: 'app/ide/directive/ide.workingfiles.directive.html',
 
-    link: function ($scope, element, attrs) {
-      $scope.$watchCollection('data.workingFiles', function (newValue, oldValue) {
-        if (newValue)
-          console.log("workingFiles change");
-      }, true);
-    },
-
     controller: ['$scope', function ($scope) {
+      
+      /**
+       * Select a file
+       * @param file File to select
+       */
       $scope.onClickFile = function (file) {
         if ($scope.data.events.onClickFile != null) {
           console.log('working file', $scope.data.selectedFile);

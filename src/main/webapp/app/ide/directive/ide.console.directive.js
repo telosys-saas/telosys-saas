@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * IDE Console
+ */
 angular.module('ide').
 directive('console', function () {
     return {

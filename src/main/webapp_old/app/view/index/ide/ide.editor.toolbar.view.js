@@ -22,8 +22,7 @@ var IDEEditorToolbar = {
           '<i class="fa fa-circle"></i>'
       }
 
-      html +=
-        filename + 
+      html += filename +
         '<span style="font-size: smaller; color: gray;">' + filepath + '</span>' +
         '<a href="#" style="float:right" onclick="IDEWorkingFiles.closeFile(\'' + fileId + '\')"><i class="fa fa-times fa-2x"></i></a>' +
         '<a href="#" style="float:right" onclick="IDEEditorCodemirror.refreshFile(\'' + fileId + '\', true)"><i class="fa fa-refresh fa-2x"></i> </a>'

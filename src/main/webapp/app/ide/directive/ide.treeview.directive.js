@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * IDE files treeview
+ */
 angular.module('ide').directive('treeview', function () {
   return {
     scope: {
@@ -9,11 +12,9 @@ angular.module('ide').directive('treeview', function () {
 
     link: function ($scope, element, attrs) {
 
-      $scope.$watchCollection('data.allFiles', function (newValue, oldValue) {
-        if (newValue)
-          console.log("allFiles change in treeview");
-      }, true);
-
+      /**
+       * Create a file
+       */
       $scope.createFile = function () {
         var tree = $(element[0].children[1]).jstree();
         var nodeParent = $scope.data.selectedElement;
@@ -33,6 +34,12 @@ angular.module('ide').directive('treeview', function () {
         }
       };
 
+      /**
+       * During file creation
+       * @param nodeParent Node parent
+       * @param tree Treeview
+       * @returns {Function}
+       */
       $scope.onCreateFile = function (nodeParent, tree) {
         return (function (obj) {
           var node = {
@@ -63,6 +70,9 @@ angular.module('ide').directive('treeview', function () {
         });
       };
 
+      /**
+       * Create a folder
+       */
       $scope.createFolder = function () {
         console.log('create Folder');
         var tree = $(element[0].children[1]).jstree();
@@ -82,6 +92,11 @@ angular.module('ide').directive('treeview', function () {
         }
       };
 
+      /**
+       * During folder creation
+       * @param nodeParent Node parent
+       * @param tree Treeview
+       */
       $scope.onCreateFolder = function (nodeParent, tree) {
         return (function (obj) {
           var node = {
@@ -111,15 +126,18 @@ angular.module('ide').directive('treeview', function () {
         });
       };
 
-      $scope.collapseAll = function (event) {
+      /**
+       * Collapse all elements in the treeview
+       */
+      $scope.collapseAll = function () {
         console.log('collapseAll');
-        if (event) {
-          event.stopPropagation();
-        }
         var tree = $(element[0].children[1]).jstree();
         tree.close_all();
       };
 
+      /**
+       * Force a refresh of all files
+       */
       $scope.refreshAll = function () {
         console.log('refreshAll');
         var tree = $(element[0].children[1]).jstree();
@@ -128,6 +146,11 @@ angular.module('ide').directive('treeview', function () {
         tree.refresh();
       };
 
+      /**
+       * During file remove
+       * @param node File node to remove
+       * @param tree Treeview
+       */
       $scope.onRemove = function (node, tree) {
         return (function (obj) {
           console.log('onRemove');
@@ -143,6 +166,9 @@ angular.module('ide').directive('treeview', function () {
         });
       };
 
+      /**
+       * Delete the selected element (folder, file, etc) in the treeview
+       */
       $scope.deleteSelectedElement = function () {
         var elementToDelete = $scope.data.selectedElement;
         var tree = $(element[0].children[1]).jstree();
@@ -156,8 +182,10 @@ angular.module('ide').directive('treeview', function () {
         }
       };
 
+      /**
+       * Treeview initialization
+       */
       function init() {
-        //console.log('tree :', $scope.tree);
         $(element[0].children[1]).jstree({
           'core': {
             'data': [
@@ -181,18 +209,6 @@ angular.module('ide').directive('treeview', function () {
             // Customize context menu items : http://stackoverflow.com/questions/21096141/jstree-and-context-menu-modify-items
             "items": function (node) {
               var tree = $(element[0].children[1]).jstree();
-
-              /*
-               separator_before - a boolean indicating if there should be a separator before this item
-               separator_after - a boolean indicating if there should be a separator after this item
-               _disabled - a boolean indicating if this action should be disabled
-               label - a string - the name of the action (could be a function returning a string)
-               action - a function to be executed if this item is chosen
-               icon - a string, can be a path to an icon or a className, if using an image that is in the current directory use a ./ prefix, otherwise it will be detected as a class
-               shortcut - keyCode which will trigger the action if the menu is open (for example 113 for rename, which equals F2)
-               shortcut_label - shortcut label (like for example F2 for rename)
-               */
-              //console.log(node);
               var items = {};
               if (node.type == 'folder' || node.id == '@@_root_@@') {
                 items.CreateFile = {
@@ -222,6 +238,8 @@ angular.module('ide').directive('treeview', function () {
           },
           "plugins": ["contextmenu", "types"]
         });
+
+        /** Functions to detect one click and double click on one node in the treeview */
 
         // click file (one click)
         $(element[0].children[1]).bind("activate_node.jstree", function (e, data) {

@@ -20,7 +20,7 @@ angular.module('ide').directive('editor', function () {
             if (oldValue == null || newValue.id != oldValue.id) {
               // Cases :
               // - no selected file : the user opens a first file
-              // - selected file id has changed : it is another file
+              // - selected file id changed : it is another file
               $scope.addEditor(newValue);
               element[0].children[0].children[0].style.display = 'block';
             }
@@ -28,10 +28,7 @@ angular.module('ide').directive('editor', function () {
             // Case :
             // - the user closes the selected file
             console.log("close editor", oldValue);
-            var formatedFileId = $scope.formatFileId(oldValue.id);
-            var numDiv = $scope.editors[formatedFileId].numDiv;
-            element[0].children[1].children[numDiv].remove();
-            delete $scope.editors[formatedFileId];
+            $scope.closeEditor(oldValue.id);
             element[0].children[0].children[0].style.display = 'none';
           } else {
             // by default : we close all files
@@ -42,8 +39,7 @@ angular.module('ide').directive('editor', function () {
         /**
          * Update the display of Opened files
          */
-        $scope.$watchCollection('workingFiles', function (newValue, oldValue) {
-
+        $scope.$watchCollection('data.workingFiles', function (newValue, oldValue) {
           // Files opened by user
           if (newValue) {
             // calculate new files
@@ -67,8 +63,23 @@ angular.module('ide').directive('editor', function () {
           }
 
           // Files closed by user
-          // TODO Close editors
-
+          // calculate old files
+          var oldFileIds = [];
+          if (oldValue != null) {
+            if (newValue == null) {
+              oldFileIds = Object.keys(oldValue);
+            } else {
+              for (var oldFileId in oldValue) {
+                if (newValue[oldFileId] == null) {
+                  oldFileIds.push(oldFileId);
+                }
+              }
+            }
+          }
+          //Close old Files
+          for (var index = 0; index < oldFileIds.length; index++) {
+            $scope.closeEditor(oldFileIds[i]);
+          }
         }, true);
 
         /**
@@ -97,8 +108,8 @@ angular.module('ide').directive('editor', function () {
         /**
          * Save the current selected file
          */
-        $scope.saveFile = function() {
-          if($scope.data.events.saveFile) {
+        $scope.saveFile = function () {
+          if ($scope.data.events.saveFile) {
             $scope.data.events.saveFile();
           }
         };
@@ -106,16 +117,13 @@ angular.module('ide').directive('editor', function () {
         /**
          * Close the current selected file
          */
-        $scope.closeFile = function() {
-          if($scope.data.selectedFile == null) {
+        $scope.closeSelectedFile = function () {
+          if ($scope.data.selectedFile == null) {
             return;
           }
-
-          // TODO Close editor
-
-          if($scope.data.events.onCloseFile) {
-            $scope.data.events.onCloseFile($scope.data.selectedFile.id);
-          }
+          if ($scope.data.events.onCloseFile) {
+              $scope.data.events.onCloseFile($scope.data.selectedFile.id);
+            }
         };
 
         /**
@@ -130,15 +138,33 @@ angular.module('ide').directive('editor', function () {
 
           $scope.hideAllEditors();
           var formatedFileId = $scope.formatFileId(file.id);
-          console.log("add editor", element[0].children[1]);
+          console.log("add editor");
           var newElement = $(element[0].children[1]).append('<div id="editorCodemirror_' + formatedFileId + '" class="codemirror"></div>');
           var editor = CodeMirror(newElement[0].children[newElement[0].children.length - 1], $scope.editorOptions);
           editor.setValue(file.content);
           editor.on('change', $scope.onContentChange);
           $scope.editors[formatedFileId] = {
             editor: editor,
-            numDiv: newElement[0].children.length - 1
+            div: element[0].children[1].children[newElement[0].children.length - 1]
           };
+        };
+
+        /**
+         * Close the editor for the file
+         * @param fileId File ID
+         */
+        $scope.closeEditor = function (fileId) {
+          console.log('close editor', fileId);
+          var formatedFileId = $scope.formatFileId(fileId);
+          if ($scope.editors[formatedFileId]) {
+            $scope.editors[formatedFileId].div.remove();
+            delete $scope.editors[formatedFileId];
+            if ($scope.data.selectedFile != null) {
+              if (fileId == $scope.data.selectedFile.id) {
+                element[0].children[0].children[0].style.display = 'none';
+              }
+            }
+          }
         };
 
         /**
@@ -162,11 +188,10 @@ angular.module('ide').directive('editor', function () {
           if ($scope.editors[formatedFileId] == null) {
             return;
           }
-
+          console.log('show editor',$scope.editors[formatedFileId]);
           $scope.hideAllEditors();
-          var numDiv = $scope.editors[formatedFileId].numDiv;
-          var div = element[0].children[1].children[numDiv];
-          div.style.display = 'block';
+
+          $scope.editors[formatedFileId].div.style.display = 'block';
         };
 
         /**
@@ -203,4 +228,5 @@ angular.module('ide').directive('editor', function () {
       }
     }
   }
-);
+)
+;

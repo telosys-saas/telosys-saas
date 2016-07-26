@@ -1,15 +1,6 @@
-<ul id="main-left" class="collapsible" data-collapsible="expandable" style="margin: 0; box-shadow: none; border: none;">
+<ul id="main-left" class="collapsible" style="margin: 0; box-shadow: none; border: none;">
     <li>
-        <div class="collapsible-header active">
-            <i class="mdi mdi-camera-timer"></i>
-            Open editors
-            <a href ng-click="$event.stopPropagation(); closeAll();" style="float:right"><i class="fa fa-times"></i></a>
-            <a href ng-click="$event.stopPropagation(); saveAll();" style="float:right"><i
-                    class="fa fa-floppy-o"></i></a>
-        </div>
-        <div class="collapsible-body" id="workingfiles" style="border: none;">
-            <workingfiles data="data" class="workingfiles"></workingfiles>
-        </div>
+        <workingfiles data="data"></workingfiles>
     </li>
     <li>
         <treeview data="data"></treeview>

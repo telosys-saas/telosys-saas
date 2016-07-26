@@ -54,12 +54,16 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
         onDeleteFile: $scope.onDeleteFile,
         // Close the file
         onCloseFile: $scope.onCloseFile,
+        // Close all files
+        closeAll: $scope.closeAll,
         // Refresh all files
         refreshAll: $scope.refreshAll,
         // File content changes
         onContentChange: $scope.onContentChange,
         // Save the file
         saveFile: $scope.saveFile,
+        // Save all files
+        saveAll: $scope.saveAll,
         // Refresh the file
         onRefreshFile: $scope.onRefreshFile
       }
@@ -82,8 +86,28 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
      */
     $scope.closeAll = function () {
       $log.info("close all");
-      $scope.data.workingFiles = {};
-      $scope.data.selectedFile = null;
+      var hasModifiedFile = false;
+      for(var fileOpened in $scope.data.workingFiles) {
+        if ($scope.data.workingFiles[fileOpened].isModified) {
+          hasModifiedFile = true;
+        }
+      }
+      if(hasModifiedFile) {
+        if (!confirm("Les modifications seront perdues. Souhaitez-vous continuer ?")) {
+          return;
+        }
+      }
+      for(var fileOpened in $scope.data.workingFiles) {
+        if ($scope.data.workingFiles[fileOpened].isModified) {
+          $scope.saveFile($scope.data.workingFiles[fileOpened]);
+          delete $scope.data.workingFiles[fileOpened];
+          $scope.data.allFiles[fileOpened].hasContent = false;
+        }
+      }
+      if($scope.data.selectedFile != null) {
+        $scope.data.selectedFile.hasContent = false;
+        $scope.data.selectedFile = null;
+      }
     };
 
     /**
@@ -91,10 +115,18 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
      * @param fileId File id
      */
     $scope.onCloseFile = function (fileId) {
+      if ($scope.data.selectedFile.isModified &&
+        confirm("Voulez-vous enregistrez les modifications apportées à " + $scope.data.selectedFile.name + "?")) {
+        $scope.saveFile();
+      }
       $log.info("close file", fileId);
+      $scope.data.allFiles[fileId].hasContent = false;
       delete $scope.data.workingFiles[fileId];
-      if ($scope.data.selectedFile.id == fileId) {
-        $scope.data.selectedFile = null;
+      if($scope.data.selectedFile) {
+        if ($scope.data.selectedFile.id == fileId) {
+          $scope.data.selectedFile.hasContent = false;
+          $scope.data.selectedFile = null;
+        }
       }
     };
 
@@ -120,10 +152,15 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
     /**
      * Save the opened selected file
      */
-    $scope.saveFile = function () {
-      $log.info('save selectedFile');
-      $scope.data.selectedFile.isModified = false;
-      FilesService.saveFileForProject($scope.auth.userId, $scope.projectId, $scope.data.selectedFile);
+    $scope.saveFile = function (file) {
+      if(file){
+        $log.info('save file',file);
+        FilesService.saveFileForProject($scope.auth.userId, $scope.projectId, file);
+      }else {
+        $log.info('save selectedFile');
+        $scope.data.selectedFile.isModified = false;
+        FilesService.saveFileForProject($scope.auth.userId, $scope.projectId, $scope.data.selectedFile);
+      }
     };
 
     /**
@@ -181,12 +218,12 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
      */
     $scope.onClickFile = function (fileId) {
       var file = $scope.data.allFiles[fileId];
-      if (!file.isGet) {
+      if (!file.hasContent) {
         FilesService.getFileForProject($scope.auth.userId, $scope.projectId, fileId)
           .then(function (result) {
             var file = result.data;
             $log.info('getFileForProject', file);
-            $scope.data.allFiles[file.id].isGet = true;
+            $scope.data.allFiles[file.id].hasContent = true;
             $scope.data.allFiles[file.id].content = file.content;
             $scope.data.allFiles[file.id].isModified = false;
             $scope.data.selectedFile = $scope.data.allFiles[file.id];
@@ -216,6 +253,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
     $scope.onContentChange = function (fileId) {
       $log.info('onContentChange', fileId);
       $scope.data.allFiles[fileId].isModified = true;
+      $scope.data.workingFiles[fileId] = $scope.data.allFiles[fileId];
       $scope.safeApply();
     };
 
@@ -241,7 +279,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
         .then(function (result) {
           var file = result.data;
           $log.info('refresh file', file);
-          $scope.data.allFiles[file.id].isGet = true;
+          $scope.data.allFiles[file.id].hasContent = true;
           $scope.data.allFiles[file.id].content = file.content;
           $scope.data.allFiles[file.id].isModified = false;
           $scope.data.selectedFile = $scope.data.allFiles[file.id];

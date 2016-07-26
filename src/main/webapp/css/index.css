@@ -106,12 +106,12 @@ html .vakata-context li>a>i:empty {
     color: black;
 }
 
-.workingfiles .collection .collection-item a i {
+.workingfiles .collection .collection-item a .delete {
     visibility: hidden;
     color: #039be5;
 }
 
-.workingfiles .collection .collection-item:hover a i {
+.workingfiles .collection .collection-item:hover a .delete {
     visibility: visible;
 }
 

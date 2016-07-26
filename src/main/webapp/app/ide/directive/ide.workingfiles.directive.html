@@ -1,26 +1,37 @@
-<ul class="collection">
-    <li ng-repeat="file in data.workingFiles" class="collection-item truncate"
-        ng-class="{'working-file-selected': data.selectedFile.id == file.id}" ng-click="data.events.onClickFile(file.id)"
-        ng-animate=" 'animate' ">
-        <a href ng-click="data.events.onCloseFile(file.id); $event.stopPropagation()">
-            <i ng-if="!file.isModified" class="fa fa-times fa-lg"></i>
-        </a>
-        <i ng-if="file.isModified" class="fa fa-circle"></i>
-        &nbsp;
-        <a href>{{file.name}} <span style="font-size: smaller; color: gray;">{{file.path}}</span></a>
-    </li>
+<div class="collapsible-header active">
+    <i class="mdi mdi-camera-timer"></i>
+    Open editors
+    <a href ng-click="$event.stopPropagation(); data.events.closeAll();" style="float:right"><i
+            class="fa fa-times"></i></a>
+    <a href ng-click="$event.stopPropagation(); data.events.saveAll();" style="float:right"><i
+            class="fa fa-floppy-o"></i></a>
+</div>
+<div class="workingfiles" style="border: none;">
+    <ul class="collection">
+        <li ng-repeat="file in data.workingFiles" class="collection-item truncate"
+            ng-class="{'working-file-selected': data.selectedFile.id == file.id}"
+            ng-click="data.events.onClickFile(file.id)"
+            ng-animate=" 'animate' ">
+            <a href ng-click="data.events.onCloseFile(file.id); $event.stopPropagation()">
+                <i ng-if="!file.isModified" class="fa fa-times fa-lg delete"></i>
+            </a>
+            <i ng-if="file.isModified" class="fa fa-circle"></i>
+            &nbsp;
+            <a href>{{file.name}} <span style="font-size: smaller; color: gray;">{{file.path}}</span></a>
+        </li>
 
-    <li ng-if="data.selectedFile!=null && data.workingFiles[data.selectedFile.id]==null"
-        class="collection-item truncate working-file-selected"
-        ng-click="onClickFile(data.selectedFile.id)"
-        ng-animate=" 'animate' ">
-        <a href ng-if="!data.selectedFile.isModified" ng-click="data.events.onCloseFile(data.selectedFile.id); $event.stopPropagation()">
-            <i class="fa fa-times fa-lg"></i>
-        </a>
-        <i ng-if="data.selectedFile.isModified" class="fa fa-circle"></i>
-        &nbsp;
-        <a href>{{data.selectedFile.name}} <span style="font-size: smaller; color: gray;">{{data.selectedFile.path}}</span></a>
-    </li>
-</ul>
-
-<!---->
+        <li ng-if="data.selectedFile!=null && data.workingFiles[data.selectedFile.id]==null"
+            class="collection-item truncate working-file-selected"
+            ng-click="onClickFile(data.selectedFile.id)"
+            ng-animate=" 'animate' ">
+            <a href ng-if="!data.selectedFile.isModified"
+               ng-click="$event.stopPropagation(); data.events.onCloseFile(data.selectedFile.id);">
+                <i class="fa fa-times fa-lg delete"></i>
+            </a>
+            <i ng-if="data.selectedFile.isModified" class="fa fa-circle"></i>
+            &nbsp;
+            <a href><i>{{data.selectedFile.name}} <span
+                    style="font-size: smaller; color: gray;">{{data.selectedFile.path}}</span></i></a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,30 @@
+﻿Liste des fonctionnalités IDE Telosys :
+
+Fait :
+
+	- création de fichier
+	- création de dossier
+	- suppression de fichier
+	- suppression de dossier
+	- sauvegarde de tous les fichiers
+	- rafraichissement du projet
+	- gestion des numéros de ligne dans l'éditeur (affichage sur toute la hauteur)
+	- Ajouter la barre du haut dans l'éditeur  : (à revérifer)
+		- bouton sauvergarde du fichier courant 
+		- nom fichier courant 
+		- rafraichissement du fichier 
+		- fermeture
+	- rajouter une animation lors d'un ajout de fichier dans la directive "Open Editors"
+	- gestion des éditeurs de fichiers (à voir)
+
+A faire :
+
+	- rennomage du projet sur git (Telosys-Angular)
+	- rassembler toute la partie workingFile dans la directive
+	
+A faire plus tard :
+	
+	- Ajouter la barre du haut
+	- création de nouveau projet
+	- gestion de "TelosysTools"
+	- menu contextuel : renommer ficher/dossier

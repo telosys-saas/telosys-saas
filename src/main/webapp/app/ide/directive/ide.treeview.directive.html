@@ -1,11 +1,13 @@
 <div class="collapsible-header active">
     <i class="mdi mdi-library-books"></i>
     Project
-    <a href ng-click="$event.stopPropagation(); collapseAll();" style="float:right"><i class="fa fa-minus"></i></a>
-    <a href ng-click="$event.stopPropagation(); refreshAll();" style="float:right"><i class="fa fa-refresh"></i></a>
-    <a href ng-click="$event.stopPropagation(); deleteSelectedElement();" style="float:right"><i
-            class="fa fa-trash-o"></i></a>
-    <a href ng-click="$event.stopPropagation(); createFolder();" style="float:right"><i class="fa fa-folder-o"></i></a>
-    <a href ng-click="$event.stopPropagation(); createFile();" style="float:right"><i class="fa fa-file-o"></i></a>
+    <div style="float:right">
+        <a href ng-click="$event.stopPropagation(); createFile();"><i class="fa fa-file-o"></i></a>
+        <a href ng-click="$event.stopPropagation(); createFolder();"><i class="fa fa-folder-o"></i></a>
+        <a href ng-click="$event.stopPropagation(); deleteSelectedElement();"><i
+                class="fa fa-trash-o"></i></a>
+        <a href ng-click="$event.stopPropagation(); refreshAll();"><i class="fa fa-refresh"></i></a>
+        <a href ng-click="$event.stopPropagation(); collapseAll();"><i class="fa fa-minus"></i></a>
+    </div>
 </div>
 <div></div>

@@ -1,15 +1,19 @@
-<div id="editorToolbar" class="editorToolbar">
+<div id="editorToolbar" class="editorToolbar" ng-if="data.selectedFile">
     <div>
-        <button class="waves-effect waves-green btn" ng-click="saveFile()">
-            <span class="fa fa-floppy-o fa-lg"></span> Save
+        <button class="btn btn-success" ng-click="saveFile()">
+            <span class="fa fa-floppy-o fa-lg"></span> &nbsp;Save
         </button>
         &nbsp;
         <i ng-if="data.selectedFile.isModified" class="fa fa-circle"></i>
-        <span style="font-size: smaller; color: gray;"> {{data.selectedFile.name}}</span>
-        <a href style="float:right" ng-click="closeSelectedFile()"><i
-                class="fa fa-times fa-2x"></i></a>
-        <a href style="float:right" ng-click="refreshFile()"><i
-                class="fa fa-refresh fa-2x"></i> </a>
+        <span> {{data.selectedFile.name}}</span>
+        <div style="float:right" class="icons">
+            <button class="btn" ng-click="refreshFile()">
+                <span class="fa fa-refresh fa-lg"></span> &nbsp;Refresh
+            </button>
+            <button class="btn" ng-click="closeSelectedFile()">
+                <span class="fa fa-times fa-lg"></span> &nbsp;Close
+            </button>
+        </div>
     </div>
 </div>
 <div id="editorCodemirror" class="editorCodemirror"></div>

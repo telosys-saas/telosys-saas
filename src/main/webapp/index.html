@@ -25,20 +25,56 @@
         }
     </style>
     <!--link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"-->
-    <link type="text/css" rel="stylesheet" href="lib/materialize/css/materialize.min.css" media="screen,projection"/>
+    <!--link type="text/css" rel="stylesheet" href="lib/materialize/css/materialize.min.css" media="screen,projection"/-->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="lib/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="css/main2.css">
+    <!--
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/fonts.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <link rel="stylesheet" type="text/css" href="css/welcome.css">
+    -->
     <link href="lib/materialdesignicons/css/materialdesignicons.css" media="all" rel="stylesheet" type="text/css">
 </head>
 
 <body>
 
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand logo-telosys-min" href="#"></a>
+            <a class="navbar-brand" href="#">Telosys</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/#/dashboard">Dashboard</a></li>
+                        <li><a href="#">Create project</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="/#/ide/Project%201">Project 1</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+    <!--
 <nav id="appbar" class="light-blue darken-3 nav-wrapper">
     <a href="#" class="brand-logo left logo-telosys-min" style="position: relative; margin-left: 20px; margin-top: 5px;"></a>
     <a href="#" class="brand-logo left" style="position: relative; margin-right: 20px; ">Telosys</a>
-</nav>
+</nav>-->
 
 <div id="main" ng-view></div>
 
@@ -77,7 +113,8 @@
     })();
 </script>
 <script src="lib/jquery/jquery.js"></script>
-<script src="lib/materialize/js/materialize.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="lib/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="lib/angularjs/1.5.7/angular.js"></script>
 <script src="lib/angularjs/1.5.7/angular-route.js"></script>
 <script src="lib/angularjs/1.5.7/angular-animate.js"></script>

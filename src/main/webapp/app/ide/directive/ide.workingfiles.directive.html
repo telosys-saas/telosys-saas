@@ -1,10 +1,12 @@
 <div class="collapsible-header active">
     <i class="mdi mdi-camera-timer"></i>
     Open editors
-    <a href ng-click="$event.stopPropagation(); data.events.closeAll();" style="float:right"><i
-            class="fa fa-times"></i></a>
-    <a href ng-click="$event.stopPropagation(); data.events.saveAll();" style="float:right"><i
-            class="fa fa-floppy-o"></i></a>
+    <div style="float:right">
+        <a href ng-click="$event.stopPropagation(); data.events.saveAll();"><i
+                class="fa fa-floppy-o"></i></a>
+        <a href ng-click="$event.stopPropagation(); data.events.closeAll();"><i
+                class="fa fa-times"></i></a>
+    </div>
 </div>
 <div class="workingfiles" style="border: none;">
     <ul class="collection">

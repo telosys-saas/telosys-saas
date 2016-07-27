@@ -12,8 +12,7 @@
     <ul class="collection">
         <li ng-repeat="file in data.workingFiles" class="collection-item truncate"
             ng-class="{'working-file-selected': data.selectedFile.id == file.id}"
-            ng-click="data.events.onClickFile(file.id)"
-            ng-animate=" 'animate' ">
+            ng-click="data.events.onClickFile(file.id)">
             <a href ng-click="data.events.onCloseFile(file.id); $event.stopPropagation()">
                 <i ng-if="!file.isModified" class="fa fa-times fa-lg delete"></i>
             </a>

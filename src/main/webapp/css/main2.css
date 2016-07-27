@@ -44,10 +44,30 @@ html div, html ul {
 }
 
 .collection .collection-item {
-    padding: 5px 10px;
     font-size: 15px;
     line-height: 20px;
+    padding: 5px 10px;
     border-bottom: 1px solid lightgrey;
+}
+
+.collection-item.ng-enter {
+    transition: 0.25s linear all;
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0;
+    border-bottom: 0;
+}
+
+.collection-item.ng-leave {
+     opacity: 0;
+ }
+
+.collection-item.ng-leave.ng-leave-active {
+    height: 0;
+    opacity: 0;
+    padding-bottom: 0;
+    padding-top: 0;
 }
 
 #left {
@@ -114,4 +134,12 @@ footer {
 
 .dashboard .action {
     font-size: 16px;
+}
+
+.animate.ng-animate {
+    transition: 0s;
+}
+
+#workingfiles .working-file-selected {
+    background-color: #D7EFFF;
 }

@@ -241,7 +241,9 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
     $scope.onDoubleClickFile = function (fileId) {
       $log.info('onDoubleClickFile', fileId);
       var file = $scope.data.allFiles[fileId];
-      $scope.data.selectedFile = file;
+      if($scope.data.selectedFile.id != fileId) {
+        $scope.data.selectedFile = file;
+      }
       $scope.data.workingFiles[file.id] = file;
       $scope.safeApply();
     };

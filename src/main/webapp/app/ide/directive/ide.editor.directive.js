@@ -32,7 +32,9 @@ angular.module('ide').directive('editor', function () {
             element[0].children[0].children[0].style.display = 'none';
           } else {
             // by default : we close all files
-            element[0].children[0].children[0].style.display = 'none';
+            if(element[0].children[0].children[0]) {
+              element[0].children[0].children[0].style.display = 'none';
+            }
           }
         }, true);
 

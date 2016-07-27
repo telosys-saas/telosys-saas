@@ -1,3 +1,26 @@
+<div>
+    <ul class="nav nav-tabs">
+        <li ng-repeat="file in data.workingFiles" class="collection-item truncate"
+            ng-class="{'active': data.selectedFile.id == file.id}"
+            ng-click="data.events.onClickFile(file.id)">
+
+            <a href><i ng-if="file.isModified" class="fa fa-circle" style="padding-right: 5px"></i>{{file.name}}</a>
+        </li>
+        <li ng-if="data.selectedFile!=null && data.workingFiles[data.selectedFile.id]==null"
+            class="active"
+            ng-click="data.events.onClickFile(data.selectedFile.id)">
+
+            <a href><i ng-if="data.selectedFile.isModified" class="fa fa-circle" style="padding-right: 5px"></i><i>{{data.selectedFile.name}} <span
+                    style="font-size: smaller; color: gray;">{{data.selectedFile.path}}</span></i></a>
+        </li>
+        <li ng-if="data.openFile!=null && data.workingFiles[data.openFile.id]==null"
+            ng-click="data.events.onClickFile(data.openFile.id)">
+
+            <a href><i ng-if="data.openFile.isModified" class="fa fa-circle" style="padding-right: 5px"></i><i>{{data.openFile.name}} <span
+                    style="font-size: smaller; color: gray;">{{data.openFile.path}}</span></i></a>
+        </li>
+    </ul>
+</div>
 <div id="editorToolbar" class="editorToolbar" ng-if="data.selectedFile">
     <div>
         <button class="btn btn-success" ng-click="saveFile()">

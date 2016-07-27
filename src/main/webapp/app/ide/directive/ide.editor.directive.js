@@ -141,13 +141,13 @@ angular.module('ide').directive('editor', function () {
           $scope.hideAllEditors();
           var formatedFileId = $scope.formatFileId(file.id);
           console.log("add editor");
-          var newElement = $(element[0].children[1]).append('<div id="editorCodemirror_' + formatedFileId + '" class="codemirror"></div>');
+          var newElement = $(element[0].children[2]).append('<div id="editorCodemirror_' + formatedFileId + '" class="codemirror"></div>');
           var editor = CodeMirror(newElement[0].children[newElement[0].children.length - 1], $scope.editorOptions);
           editor.setValue(file.content);
           editor.on('change', $scope.onContentChange);
           $scope.editors[formatedFileId] = {
             editor: editor,
-            div: element[0].children[1].children[newElement[0].children.length - 1]
+            div: element[0].children[2].children[newElement[0].children.length - 1]
           };
         };
 
@@ -173,8 +173,8 @@ angular.module('ide').directive('editor', function () {
          * Hide all editors
          */
         $scope.hideAllEditors = function () {
-          for (var i = 0; i < element[0].children[1].children.length; i++) {
-            var div = element[0].children[1].children[i];
+          for (var i = 0; i < element[0].children[2].children.length; i++) {
+            var div = element[0].children[2].children[i];
             if (div.style.display != 'none') {
               div.style.display = 'none';
             }

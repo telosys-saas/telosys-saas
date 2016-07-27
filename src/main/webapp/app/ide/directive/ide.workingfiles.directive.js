@@ -17,8 +17,7 @@ angular.module('ide').directive('workingfiles', function () {
        */
       $scope.onClickFile = function (file) {
         if ($scope.data.events.onClickFile != null) {
-          console.log('working file', $scope.data.selectedFile);
-          $scope.data.events.onClickFile(file);
+          $scope.data.events.onClickFile(file.id);
         }
       }
 

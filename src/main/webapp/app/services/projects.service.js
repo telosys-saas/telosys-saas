@@ -3,9 +3,11 @@
 angular.module('app')
     .factory('ProjectsService', ['$http', function ($http) {
 
+      var host = '';
+
         return {
             getProjects: function (callback) {
-                $http({
+                 return $http({
                     method: 'GET',
                     url: 'api/v1/users/user/projects'
                 })
@@ -15,7 +17,7 @@ angular.module('app')
             },
 
             getProjectById: function (projectId, callback) {
-                $http({
+              return $http({
                     method: 'GET',
                     url: 'api/v1/users/user/projects/' + projectId
                 })
@@ -24,6 +26,22 @@ angular.module('app')
                             callback(result.data);
                         }
                     })
-            }
+            },
+
+          createProject: function (userId, projectName) {
+            return $http({
+              method: "PUT",
+              url: host + "api/v1/users/"+userId+"/projects/"+projectName,
+              dataType: 'json',
+              contentType: 'application/json',
+              data: JSON.stringify({
+                id: projectName,
+                name: projectName
+              })
+            })
+              .catch(function (e) {
+                console.log(e);
+              });
+          }
         }
     }]);

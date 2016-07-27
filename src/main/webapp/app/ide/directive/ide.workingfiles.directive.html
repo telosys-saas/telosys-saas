@@ -12,7 +12,7 @@
     <ul class="collection">
         <li ng-repeat="file in data.workingFiles" class="collection-item truncate"
             ng-class="{'working-file-selected': data.selectedFile.id == file.id}"
-            ng-click="data.events.onClickFile(file.id)">
+            ng-click="onClickFile(file)">
             <a href ng-click="data.events.onCloseFile(file.id); $event.stopPropagation()">
                 <i ng-if="!file.isModified" class="fa fa-times fa-lg delete"></i>
             </a>
@@ -20,10 +20,9 @@
             &nbsp;
             <a href>{{file.name}} <span style="font-size: smaller; color: gray;">{{file.path}}</span></a>
         </li>
-
         <li ng-if="data.selectedFile!=null && data.workingFiles[data.selectedFile.id]==null"
             class="collection-item truncate working-file-selected"
-            ng-click="onClickFile(data.selectedFile.id)"
+            ng-click="onClickFile(data.selectedFile)"
             ng-animate=" 'animate' ">
             <a href ng-if="!data.selectedFile.isModified"
                ng-click="$event.stopPropagation(); data.events.onCloseFile(data.selectedFile.id);">
@@ -33,6 +32,19 @@
             &nbsp;
             <a href><i>{{data.selectedFile.name}} <span
                     style="font-size: smaller; color: gray;">{{data.selectedFile.path}}</span></i></a>
+        </li>
+        <li ng-if="data.openFile!=null && data.workingFiles[data.openFile.id]==null"
+            class="collection-item truncate"
+            ng-click="onClickFile(data.openFile)"
+            ng-animate=" 'animate' ">
+            <a href ng-if="!data.openFile.isModified"
+               ng-click="$event.stopPropagation(); data.events.onCloseFile(data.openFile.id);">
+                <i class="fa fa-times fa-lg delete"></i>
+            </a>
+            <i ng-if="data.openFile.isModified" class="fa fa-circle"></i>
+            &nbsp;
+            <a href><i>{{data.openFile.name}} <span
+                    style="font-size: smaller; color: gray;">{{data.openFile.path}}</span></i></a>
         </li>
     </ul>
 </div>

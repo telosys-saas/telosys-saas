@@ -11,9 +11,6 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
       userId: 'user'
     };
 
-    /** current project */
-    $scope.projectId = 'Project 1';
-
     /** Indicates if the IDE is initialized and could be displayed */
     $scope.initialized = false;
 
@@ -31,6 +28,8 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
       workingFiles: {},
       /** Selected file */
       selectedFile: null,
+      /** Open File */
+      openFile: null,
       /** Select element in the treeview */
       selectedElement: null
     };
@@ -100,14 +99,15 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
       for(var fileOpened in $scope.data.workingFiles) {
         if ($scope.data.workingFiles[fileOpened].isModified) {
           $scope.saveFile($scope.data.workingFiles[fileOpened]);
-          delete $scope.data.workingFiles[fileOpened];
-          $scope.data.allFiles[fileOpened].hasContent = false;
         }
+        delete $scope.data.workingFiles[fileOpened];
+        $scope.data.allFiles[fileOpened].hasContent = false;
       }
       if($scope.data.selectedFile != null) {
         $scope.data.selectedFile.hasContent = false;
         $scope.data.selectedFile = null;
       }
+      console.log($scope.data.workingFiles);
     };
 
     /**
@@ -137,14 +137,14 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
       $log.info("save all");
       for (var file in $scope.data.workingFiles) {
         $log.info("save all for loop", $scope.data.workingFiles[file]);
-        FilesService.saveFileForProject($scope.auth.userId, $scope.projectId, $scope.data.workingFiles[file]);
+        FilesService.saveFileForProject($scope.auth.userId, $scope.data.project.id, $scope.data.workingFiles[file]);
         $scope.data.workingFiles[file].isModified = false;
       }
       if ($scope.data.selectedFile) {
         if (!$scope.data.workingFiles[$scope.data.selectedFile.id]) {
           $log.info("save all selectedFile");
           $scope.data.selectedFile.isModified = false;
-          FilesService.saveFileForProject($scope.auth.userId, $scope.projectId, $scope.data.selectedFile);
+          FilesService.saveFileForProject($scope.auth.userId, $scope.data.project.id, $scope.data.selectedFile);
         }
       }
     };
@@ -155,11 +155,11 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
     $scope.saveFile = function (file) {
       if(file){
         $log.info('save file',file);
-        FilesService.saveFileForProject($scope.auth.userId, $scope.projectId, file);
+        FilesService.saveFileForProject($scope.auth.userId, $scope.data.project.id, file);
       }else {
         $log.info('save selectedFile');
         $scope.data.selectedFile.isModified = false;
-        FilesService.saveFileForProject($scope.auth.userId, $scope.projectId, $scope.data.selectedFile);
+        FilesService.saveFileForProject($scope.auth.userId, $scope.data.project.id, $scope.data.selectedFile);
       }
     };
 
@@ -169,7 +169,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
      */
     $scope.onCreateFile = function (file) {
       $log.info('onCreateFile', file);
-      FilesService.createFileForProject($scope.auth.userId, $scope.projectId, file)
+      FilesService.createFileForProject($scope.auth.userId, $scope.data.project.id, file)
         .then(function (result) {
           var file = result.data;
           $log.info('createFileForProject', file);
@@ -187,7 +187,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
      */
     $scope.onCreateFolder = function (folder) {
       $log.info('onCreateFolder', folder);
-      FilesService.createFolderForProject($scope.auth.userId, $scope.projectId, folder);
+      FilesService.createFolderForProject($scope.auth.userId, $scope.data.project.id, folder);
       $scope.safeApply();
     };
 
@@ -197,7 +197,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
      */
     $scope.onDeleteFolder = function (folderId) {
       $log.info('onDeleteFolder', folderId);
-      FilesService.deleteFolderForProject($scope.auth.userId, $scope.projectId, folderId);
+      FilesService.deleteFolderForProject($scope.auth.userId, $scope.data.project.id, folderId);
     };
 
     /**
@@ -205,7 +205,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
      * @param fileId File id to delete
      */
     $scope.onDeleteFile = function (fileId) {
-      FilesService.deleteFileForProject($scope.auth.userId, $scope.projectId, fileId);
+      FilesService.deleteFileForProject($scope.auth.userId, $scope.data.project.id, fileId);
       delete $scope.data.workingFiles[fileId];
       if ($scope.data.selectedFile.id == fileId) {
         $scope.data.selectedFile = null;
@@ -219,7 +219,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
     $scope.onClickFile = function (fileId) {
       var file = $scope.data.allFiles[fileId];
       if (!file.hasContent) {
-        FilesService.getFileForProject($scope.auth.userId, $scope.projectId, fileId)
+        FilesService.getFileForProject($scope.auth.userId, $scope.data.project.id, fileId)
           .then(function (result) {
             var file = result.data;
             $log.info('getFileForProject', file);
@@ -228,7 +228,13 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
             $scope.data.allFiles[file.id].isModified = false;
             $scope.data.selectedFile = $scope.data.allFiles[file.id];
           })
-      } else {
+      } else if($scope.data.selectedFile.id != fileId) {
+        if($scope.data.workingFiles[fileId] && (fileId != $scope.data.selectedFile.id)){
+          $scope.data.openFile = $scope.data.selectedFile;
+        }
+        if($scope.data.openFile != null && fileId == $scope.data.openFile.id){
+          $scope.data.openFile = null;
+        }
         $scope.data.selectedFile = file;
       }
       $scope.safeApply();
@@ -265,7 +271,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
     $scope.refreshAll = function () {
       ProjectsService.getProjectById($routeParams.projectId, function (result) {
         $scope.data.project = result;
-        FilesService.getFilesForProject($scope.auth.user, $routeParams.projectId, function (result) {
+        FilesService.getFilesForProject($scope.auth.user, $scope.data.project.id, function (result) {
           $scope.data.tree = FilesService.convertFolderToJson(result, null, 'root');
           $scope.data.allFiles = FilesService.getAllFiles();
         })
@@ -277,7 +283,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
      * @param callback Callback to update the file content in the editor
      */
     $scope.onRefreshFile = function (callback) {
-      FilesService.getFileForProject($scope.auth.userId, $scope.projectId, $scope.data.selectedFile.id)
+      FilesService.getFileForProject($scope.auth.userId, $scope.data.project.id, $scope.data.selectedFile.id)
         .then(function (result) {
           var file = result.data;
           $log.info('refresh file', file);
@@ -300,7 +306,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
       ProjectsService.getProjectById($routeParams.projectId, function (result) {
         $scope.data.project = result;
         // Get all files of the current project
-        FilesService.getFilesForProject($scope.auth.user, $routeParams.projectId, function (result) {
+        FilesService.getFilesForProject($scope.auth.user, $scope.data.project.id, function (result) {
           $scope.data.tree = FilesService.convertFolderToJson(result, null, 'root');
           $scope.data.allFiles = FilesService.getAllFiles();
           // Indicates that the IDE is initialized and can be displayed

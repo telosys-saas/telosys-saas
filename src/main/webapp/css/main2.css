@@ -46,8 +46,23 @@ html div, html ul {
 .collection .collection-item {
     font-size: 15px;
     line-height: 20px;
-    padding: 5px 10px;
+    padding: 2px 10px;
     border-bottom: 1px solid lightgrey;
+    background-color: #fff;
+}
+
+.collection .collection-item:hover {
+    background-color: #edf4ff;
+    cursor: pointer;
+}
+
+.collection .working-file-selected {
+    background-color: #edf4ff;
+}
+
+.collection .working-file-selected a {
+    color: black;
+    text-decoration: none;
 }
 
 .collection-item.ng-enter {
@@ -77,6 +92,18 @@ html div, html ul {
     top: 0;
     bottom: 0;
     border-right: 1px solid lightgrey;
+}
+
+#editorCodemirror {
+    height: calc(100% - 82px);
+}
+
+.codemirror {
+    height: 100%;
+}
+
+.CodeMirror {
+    height: 100%;
 }
 
 .content {
@@ -142,4 +169,29 @@ footer {
 
 #workingfiles .working-file-selected {
     background-color: #D7EFFF;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    cursor: default;
+    border-color: #ccc;
+    border-bottom-color: transparent;
+}
+
+.nav-tabs>li>a, .nav-tabs>li>a:focus, .nav-tabs>li>a:hover {
+    color: #555;
+    cursor: default;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    min-width: 50px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.nav-tabs>li>a:hover {
+    background-color: #edf4ff;
+}
+
+.nav-tabs>li>a {
+    margin: 3px 0 0 5px;
+    padding: 5px 10px;
 }

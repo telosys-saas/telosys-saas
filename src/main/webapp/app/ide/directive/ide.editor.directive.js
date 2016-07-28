@@ -29,12 +29,6 @@ angular.module('ide').directive('editor', function () {
             // - the user closes the selected file
             console.log("close editor", oldValue);
             $scope.closeEditor(oldValue.id);
-            element[0].children[0].children[0].style.display = 'none';
-          } else {
-            // by default : we close all files
-            if(element[0].children[0].children[0]) {
-              element[0].children[0].children[0].style.display = 'none';
-            }
           }
         }, true);
 
@@ -62,6 +56,11 @@ angular.module('ide').directive('editor', function () {
               $scope.addEditor(file);
             }
             console.log("new files", newFileIds);
+          }else {
+            // by default : we close all files
+            if(element[0].children[0].children[0]) {
+              element[0].children[0].children[0].style.display = 'none';
+            }
           }
 
           // Files closed by user

@@ -41,8 +41,6 @@
 
 <body>
 
-<toolbar></toolbar>
-
 <div id="main" ng-view></div>
 
 <footer>
@@ -106,7 +104,7 @@
 <script src="app/dashboard/dashboard.module.js"></script>
 <script src="app/dashboard/dashboard.routes.js"></script>
 <script src="app/dashboard/dashboard.controller.js"></script>
-<script src="app/dashboard/dashboard.modal.controller.js"></script>
+<script src="app/dashboard/directive/dashboard.toolbar.directive.js"></script>
 
 <script src="app/services/files.service.js"></script>
 <script src="app/services/projects.service.js"></script>
@@ -115,14 +113,15 @@
 <script src="app/ide/ide.routes.js"></script>
 <script src="app/ide/ide.controller.js"></script>
 
+<script src="app/ide/directive/ide.toolbar.directive.js"></script>
 <script src="app/ide/directive/ide.left.directive.js"></script>
 <script src="app/ide/directive/ide.workingfiles.directive.js"></script>
 <script src="app/ide/directive/ide.treeview.directive.js"></script>
 <script src="app/ide/directive/ide.console.directive.js"></script>
 <script src="app/ide/directive/ide.editor.directive.js"></script>
 
-<script src="app/toolbar/toolbar.module.js"></script>
-<script src="app/toolbar/toolbar.component.js"></script>
+<script src="app/modal/modal.module.js"></script>
+<script src="app/modal/modal.controller.js"></script>
 
 </body>
 

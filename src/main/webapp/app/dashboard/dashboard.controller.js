@@ -2,7 +2,9 @@
 
 angular.module('dashboard')
   .controller('dashboardCtrl', ['ProjectsService', '$scope', '$location', '$uibModal', function (ProjectsService, $scope, $location, $uibModal) {
-    // data
+    /**
+     * Projects list
+     */
     $scope.projects = [];
 
     // methods
@@ -13,15 +15,12 @@ angular.module('dashboard')
     $scope.addProject = function () {
       console.log('addProject');
       var modalInstance = $uibModal.open({
-        templateUrl: 'app/dashboard/dashboard.modal.html',
-        controller: 'dashboardModalCtrl'
+        templateUrl: 'app/modal/modal.createproject.html',
+        controller: 'modalCtrl'
       });
 
       modalInstance.result.then(function (project) {
         console.log('modalInstance.result.then', project);
-        ProjectsService.getProjects(function (result) {
-            $scope.projects = result;
-          })
       })
     };
 

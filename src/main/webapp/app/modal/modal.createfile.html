@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <h3 class="modal-title">Create a file</h3>
+</div>
+<div class="modal-body">
+    <label>File name :</label>
+    <input ng-model="fileName" ng-change="isExisting()">
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-disabled="ifExist" ng-click="createFile()">Create file</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

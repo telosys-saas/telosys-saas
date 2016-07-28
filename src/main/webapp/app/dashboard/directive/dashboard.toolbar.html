@@ -5,7 +5,7 @@
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+                <span class="icon-bar"></span   >
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand logo-telosys-min" href="#"></a>
@@ -21,7 +21,7 @@
                         <li ng-click="addProject()"><a href="#">Create project</a></li>
                         <li role="separator" class="divider"></li>
                         <li ng-repeat="project in projects">
-                            <a href="/#/ide/project.id">{{project.id}}</a>
+                            <a href="/#/ide/{{project.id}}">{{project.name}}</a>
                         </li>
                     </ul>
                 </li>

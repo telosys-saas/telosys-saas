@@ -42,6 +42,10 @@ angular.module('app')
               .catch(function (e) {
                 console.log(e);
               });
+          },
+
+          downloadZip: function(userId, projectName) {
+            document.location = host + "api/v1/users/"+userId+"/projects/"+projectName+"/zip";
           }
         }
     }]);

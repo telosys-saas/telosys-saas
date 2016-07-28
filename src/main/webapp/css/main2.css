@@ -56,6 +56,15 @@ html div, html ul {
     cursor: pointer;
 }
 
+.workingfiles .collection .collection-item a .delete {
+    visibility: hidden;
+    color: #039be5;
+}
+
+.workingfiles .collection .collection-item:hover a .delete {
+    visibility: visible;
+}
+
 .collection .working-file-selected {
     background-color: #edf4ff;
 }
@@ -65,24 +74,13 @@ html div, html ul {
     text-decoration: none;
 }
 
-.collection-item.ng-enter {
+.collection-item-opened.ng-enter {
     transition: 0.25s linear all;
     height: 0;
     opacity: 0;
     overflow: hidden;
     padding: 0;
     border-bottom: 0;
-}
-
-.collection-item.ng-leave {
-     opacity: 0;
- }
-
-.collection-item.ng-leave.ng-leave-active {
-    height: 0;
-    opacity: 0;
-    padding-bottom: 0;
-    padding-top: 0;
 }
 
 #left {
@@ -95,7 +93,7 @@ html div, html ul {
 }
 
 #editorCodemirror {
-    height: calc(100% - 82px);
+    height: calc(100% - 75px);
 }
 
 .codemirror {

@@ -4,12 +4,6 @@
     <list default="true" id="93bd2800-babb-4683-a80f-4022e6ca4b9e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.editor.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.editor.directive.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/ide.controller.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/ide/ide.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/modal/modal.controller.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/modal/modal.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/modal/modal.savefile.html" afterPath="$PROJECT_DIR$/src/main/webapp/app/modal/modal.savefile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/services/files.service.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/services/files.service.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/doc/editor.md" afterPath="$PROJECT_DIR$/doc/ide.md" />
     </list>
     <ignored path="telosys-saas.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -66,8 +60,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="604">
-                <caret line="37" column="31" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
+              <first_editor relative-caret-position="234">
+                <caret line="98" column="16" selection-start-line="98" selection-start-column="16" selection-end-line="98" selection-end-column="16" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -848,7 +842,7 @@
       <workItem from="1469699061626" duration="17469000" />
       <workItem from="1469724904087" duration="7429000" />
       <workItem from="1469777501358" duration="14805000" />
-      <workItem from="1469796209246" duration="9629000" />
+      <workItem from="1469796209246" duration="9678000" />
     </task>
     <task id="LOCAL-00001" summary="Start telosys saas 2">
       <created>1468857299874</created>
@@ -927,11 +921,18 @@
       <option name="project" value="LOCAL" />
       <updated>1469798465856</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="doc">
+      <created>1469805856603</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1469805856603</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="286294000" />
+    <option name="totallyTimeSpent" value="286343000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1365,8 +1366,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="604">
-            <caret line="37" column="31" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
+          <first_editor relative-caret-position="234">
+            <caret line="98" column="16" selection-start-line="98" selection-start-column="16" selection-end-line="98" selection-end-column="16" />
             <folding />
           </first_editor>
           <second_editor />

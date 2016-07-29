@@ -96,7 +96,7 @@ Events function of the controller used by the directives of the IDE page in resp
   - onRefreshFile : File refresh
   - onDownload : User action to download project files in ZIP
 
-## Services
+## Services REST
 
 - **ProjectsService** : Projects management
   - **getProjects** : Get all projects

@@ -15,15 +15,24 @@ angular.module('dashboard')
 
       link: function ($scope, element, attrs) {
 
+        /**
+         * Add a new project
+         */
         $scope.addProject = function () {
           console.log('addProject');
+          // Modal window to create a new project
           var modalInstance = $uibModal.open({
             templateUrl: 'app/modal/modal.createproject.html',
-            controller: 'modalCtrl'
+            controller: 'modalCtrl',
+            resolve: {
+              data: {}
+            }
           });
-
+          
           modalInstance.result.then(function (project) {
+            // When the creation is a success
             console.log('modalInstance.result.then', project);
+            $scope.projects.push(project);
           })
         };
       }

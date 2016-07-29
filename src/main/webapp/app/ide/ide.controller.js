@@ -130,12 +130,25 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
         $scope.saveFile();
       }
       $log.info("close file", fileId);
+      var workingFilesArray = [];
+      var indexFile;
+      for (var fileKey in $scope.data.workingFiles) {
+        var tempFile = {};
+        tempFile = $scope.data.workingFiles[fileKey];
+        if(fileKey == fileId){
+          indexFile = workingFilesArray.length-1;
+        }
+        workingFilesArray.push(tempFile);
+      }
+      
+      console.log('workingFilesArray',workingFilesArray[indexFile]);
       $scope.data.allFiles[fileId].hasContent = false;
       delete $scope.data.workingFiles[fileId];
+
       if ($scope.data.selectedFile) {
         if ($scope.data.selectedFile.id == fileId) {
-          $scope.data.selectedFile.hasContent = false;
-          $scope.data.selectedFile = null;
+          $scope.data.selectedFile.hasContent = true;
+          $scope.data.selectedFile = workingFilesArray[indexFile];
         }
       }
       if ($scope.data.openFile) {
@@ -144,6 +157,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
           $scope.data.openFile = null;
         }
       }
+      $scope.onClickFile(workingFilesArray[indexFile].id);
     };
 
     /**
@@ -185,15 +199,10 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
      */
     $scope.onCreateFile = function (file) {
       $log.info('onCreateFile', file);
-      FilesService.createFileForProject($scope.auth.userId, $scope.data.project.id, file)
-        .then(function (result) {
-          var file = result.data;
-          $log.info('createFileForProject', file);
-          $scope.data.workingFiles[file.id] = file;
-          $scope.data.allFiles[file.id] = file;
-          $scope.data.selectedFile = file;
-          file.isModified = false;
-        });
+      $scope.data.workingFiles[file.id] = file;
+      $scope.data.allFiles[file.id] = file;
+      $scope.data.selectedFile = file;
+      file.isModified = false;
       $scope.safeApply();
     };
 
@@ -203,7 +212,6 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
      */
     $scope.onCreateFolder = function (folder) {
       $log.info('onCreateFolder', folder);
-      FilesService.createFolderForProject($scope.auth.userId, $scope.data.project.id, folder);
       $scope.safeApply();
     };
 
@@ -225,7 +233,10 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
       delete $scope.data.workingFiles[fileId];
       if ($scope.data.selectedFile.id == fileId) {
         $scope.data.selectedFile = null;
+      }if ($scope.data.openFile.id == fileId) {
+        $scope.data.openFile = null;
       }
+
     };
 
     /**
@@ -346,7 +357,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
       });
       ProjectsService.getProjects(function (result) {
         $scope.data.projects = result;
-      })
+      });
     }
 
     init();

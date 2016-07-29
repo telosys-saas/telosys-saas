@@ -1,35 +1,51 @@
 'use strict';
 
 angular.module('dashboard')
-  .controller('dashboardCtrl', ['ProjectsService', '$scope', '$location', '$uibModal', function (ProjectsService, $scope, $location, $uibModal) {
-    /**
-     * Projects list
-     */
-    $scope.projects = [];
+  .controller('dashboardCtrl', ['ProjectsService', '$scope', '$location', '$uibModal',
+    function (ProjectsService, $scope, $location, $uibModal) {
 
-    // methods
-    $scope.goToProject = function (projectId) {
-      $location.path('/ide/' + projectId);
-    };
+      /**
+       * Projects list
+       */
+      $scope.projects = [];
 
-    $scope.addProject = function () {
-      console.log('addProject');
-      var modalInstance = $uibModal.open({
-        templateUrl: 'app/modal/modal.createproject.html',
-        controller: 'modalCtrl'
-      });
+      /**
+       * Go to the projectID
+       * @param projectId
+       */
+      $scope.goToProject = function (projectId) {
+        // Change the url path
+        $location.path('/ide/' + projectId);
+      };
 
-      modalInstance.result.then(function (project) {
-        console.log('modalInstance.result.then', project);
-      })
-    };
+      /**
+       * Create a new project
+       */
+      $scope.addProject = function () {
+        console.log('addProject');
+        // Modal window to create a new project
+        var modalInstance = $uibModal.open({
+          templateUrl: 'app/modal/modal.createproject.html',
+          controller: 'modalCtrl',
+          resolve: {
+            data: {}
+          }
+        });
+        modalInstance.result.then(function (project) {
+          // When the creation is a success
+          console.log('modalInstance.result.then', project);
+          $scope.projects.push(project);
+        })
+      };
 
-    // init
-    function init() {
-      ProjectsService.getProjects(function (result) {
-        $scope.projects = result;
-      })
-    }
-    init();
-    
-  }]);
+      /**
+       * Init the dashboard toolbar
+       */
+      function init() {
+        ProjectsService.getProjects(function (result) {
+          $scope.projects = result;
+        })
+      }
+      init();
+
+    }]);

@@ -93,7 +93,7 @@ angular.module('app')
       createFolderForProject: function (userId, projectId, folder) {
         return $http({
           method: "PUT",
-          url: host + "api/v1/users/" + userId + "/projects/" + projectId + "/folders?folderId=" + encodeURIComponent(folder.id),
+          url: host + "api/v1/users/" + userId + "/projects/" + projectId + "/createFolder?folderId=" + encodeURIComponent(folder.id),
           dataType: 'json',
           contentType: 'application/json',
           data: JSON.stringify(folder)
@@ -106,7 +106,7 @@ angular.module('app')
       createFileForProject: function (userId, projectId, file) {
         return $http({
           method: "PUT",
-          url: host + "api/v1/users/" + userId + "/projects/" + projectId + "/files?fileId=" + encodeURIComponent(file.id),
+          url: host + "api/v1/users/" + userId + "/projects/" + projectId + "/createFile?fileId=" + encodeURIComponent(file.id),
           dataType: 'json',
           contentType: 'application/json',
           data: JSON.stringify(file)

@@ -18,15 +18,9 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
       $scope.createFile = function () {
         var tree = $(element[0].children[1]).jstree();
         var nodeParent = $scope.data.selectedElement;
-        console.log('create file', nodeParent);
         if (nodeParent == null) {
           nodeParent = {
             id: '@@_root_@@'
-          };
-          $scope.onCreateFile(nodeParent, tree)();
-        } else if (nodeParent.type == "file") {
-          nodeParent = {
-            id: $scope.data.selectedElement.parent
           };
           $scope.onCreateFile(nodeParent, tree)();
         } else {
@@ -42,36 +36,26 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
        */
       $scope.onCreateFile = function (nodeParent, tree) {
         return (function (obj) {
-          var newFileName;
           var modalInstance = $uibModal.open({
             templateUrl: 'app/modal/modal.createfile.html',
             controller: 'modalCtrl',
             resolve: {
-              data: function () {
-                return {
+              data: {
                   nodeParent: nodeParent,
-                  allFiles: $scope.data.allFiles
-                };
+                  project: $scope.data.project
               }
             }
           });
-
-          modalInstance.result.then(function (fileName) {
-            newFileName = fileName;
-
+          console.log('onCreateFile nodeParent:', nodeParent);
+          modalInstance.result.then(function (file) {
             var node = {
-              id: nodeParent.id + '/' + fileName,
-              text: fileName,
-              type: 'file'
+              id: file.id,
+              text: file.name,
+              type: file.type,
+              nodeParentId: file.folderParentId
             };
             tree.create_node(nodeParent, node);
-            console.log('creating file', node);
-            var file = {
-              id: node.id,
-              name: node.text,
-              folderParentId: nodeParent.id
-            };
-            console.log('creating file', file);
+            console.log('creating node', node);
             if ($scope.data.events.onCreateFile) {
               $scope.data.events.onCreateFile(file);
             }
@@ -103,41 +87,26 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
        */
       $scope.onCreateFolder = function (nodeParent, tree) {
         return (function (obj) {
-
-          var newFolderName;
           var modalInstance = $uibModal.open({
             templateUrl: 'app/modal/modal.createfolder.html',
             controller: 'modalCtrl',
             resolve: {
-              data: function () {
-                return $scope.data;
+              data: {
+                nodeParent: nodeParent,
+                project: $scope.data.project
               }
             }
           });
 
-          modalInstance.result.then(function (folderName) {
-            newFolderName = folderName;
+          modalInstance.result.then(function (folder) {
             var node = {
-              id: nodeParent.id + '/' + newFolderName,
-              text: newFolderName,
-              type: 'folder'
+              id: folder.id,
+              text: folder.name,
+              type: folder.type,
+              nodeParentId: folder.folderParentId
             };
             tree.create_node(nodeParent, node);
-            if (nodeParent.id == '@@_root_@@') {
-              var folder = {
-                id: node.id,
-                name: node.text,
-                folderParentId: ''
-              };
-            } else {
-              var folder = {
-                id: nodeParent.id + '/' + node.text,
-                name: node.text,
-                folderParentId: nodeParent.id
-              };
-            }
-            tree.set_id(node, folder.id);
-            console.log('folder created');
+            console.log('creating node', node);
             if ($scope.data.events.onCreateFolder) {
               $scope.data.events.onCreateFolder(folder);
             }

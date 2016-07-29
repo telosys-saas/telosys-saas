@@ -8,7 +8,7 @@ angular.module('ide')
         data: '='
       },
 
-      templateUrl: 'app/ide/directive/ide.toolbar.html',
+      templateUrl: 'app/ide/directive/ide.toolbar.directive.html',
 
       link: function ($scope, element, attrs) {
 
@@ -21,11 +21,13 @@ angular.module('ide')
           console.log('addProject');
           var modalInstance = $uibModal.open({
             templateUrl: 'app/modal/modal.createproject.html',
-            controller: 'modalCtrl'
+            controller: 'modalCtrl',
+            resolve: {
+              data: {}
+            }
           });
-
           modalInstance.result.then(function (project) {
-            console.log('modalInstance.result.then', project);
+            $scope.data.projects.push(project);
           })
         };
       }

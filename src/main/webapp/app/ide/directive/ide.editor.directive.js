@@ -13,7 +13,7 @@ angular.module('ide').directive('editor', function () {
 
       link: function ($scope, element, attrs) {
         /**
-         * Watch "selected file"
+         * Watch "selected file", when the selected file change
          */
         $scope.$watch('data.selectedFile', function (newValue, oldValue) {
           if (newValue && newValue != null) {
@@ -33,7 +33,7 @@ angular.module('ide').directive('editor', function () {
         }, true);
 
         /**
-         * Update the display of Opened files
+         * Update the display of Opened and pinned files
          */
         $scope.$watchCollection('data.workingFiles', function (newValue, oldValue) {
           // Files opened by user
@@ -57,7 +57,7 @@ angular.module('ide').directive('editor', function () {
             }
             console.log("new files", newFileIds);
           }else {
-            // by default : we close all files
+            // by default : we close all files and editor view
             if(element[0].children[0].children[0]) {
               element[0].children[0].children[0].style.display = 'none';
             }
@@ -141,6 +141,7 @@ angular.module('ide').directive('editor', function () {
           var formatedFileId = $scope.formatFileId(file.id);
           console.log("add editor");
           var newElement = $(element[0].children[2]).append('<div id="editorCodemirror_' + formatedFileId + '" class="codemirror"></div>');
+          // Create a new editor
           var editor = CodeMirror(newElement[0].children[newElement[0].children.length - 1], $scope.editorOptions);
           editor.setValue(file.content);
           editor.on('change', $scope.onContentChange);

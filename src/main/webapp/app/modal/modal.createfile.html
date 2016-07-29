@@ -3,9 +3,10 @@
 </div>
 <div class="modal-body">
     <label>File name :</label>
-    <input ng-model="fileName" ng-change="isExisting()">
+    <input ng-model="fileName">
+    &nbsp;{{errorMessage}}
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-disabled="ifExist" ng-click="createFile()">Create file</button>
+    <button class="btn btn-primary" type="button" ng-click="createFile()">Create file</button>
     <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 </div>

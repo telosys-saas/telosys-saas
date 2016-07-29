@@ -14,8 +14,10 @@ angular.module('ide').directive('editor', function () {
       link: function ($scope, element, attrs) {
         /**
          * Watch "selected file", when the selected file change
+         * @param newValue : 
          */
         $scope.$watch('data.selectedFile', function (newValue, oldValue) {
+          console.log(newValue);
           if (newValue && newValue != null) {
             if (oldValue == null || newValue.id != oldValue.id) {
               // Cases :
@@ -57,7 +59,7 @@ angular.module('ide').directive('editor', function () {
             }
             console.log("new files", newFileIds);
           }else {
-            // by default : we close all files and editor view
+            // by default : we close all files and the editor view
             if(element[0].children[0].children[0]) {
               element[0].children[0].children[0].style.display = 'none';
             }
@@ -145,6 +147,7 @@ angular.module('ide').directive('editor', function () {
           var editor = CodeMirror(newElement[0].children[newElement[0].children.length - 1], $scope.editorOptions);
           editor.setValue(file.content);
           editor.on('change', $scope.onContentChange);
+          // Save the new editor and the DOM element in the list of editors
           $scope.editors[formatedFileId] = {
             editor: editor,
             div: element[0].children[2].children[newElement[0].children.length - 1]
@@ -159,6 +162,7 @@ angular.module('ide').directive('editor', function () {
           console.log('close editor', fileId);
           var formatedFileId = $scope.formatFileId(fileId);
           if ($scope.editors[formatedFileId]) {
+            // Remove the editor from the DOM
             $scope.editors[formatedFileId].div.remove();
             delete $scope.editors[formatedFileId];
             if ($scope.data.selectedFile != null) {

@@ -3,7 +3,6 @@
 angular.module('app')
   .factory('FilesService', ['$http', function ($http) {
 
-    var allFiles = {};
     var host = '';
 
     return {
@@ -70,13 +69,29 @@ angular.module('app')
           id: file.id,
           text: file.name,
           type: file.type,
-          isModified: false
+          isModified: false,
+          hasContent: false
         };
-        allFiles[file.id] = file;
         return currentNode;
       },
 
-      getAllFiles: function () {
+      getAllFilesFromTree: function (folder) {
+        var allFiles = {};
+        if (folder.folders) {
+          for (var i = 0; i < folder.folders.length; i++) {
+            var folderSub = folder.folders[i];
+            var tempAllFiles = this.getAllFilesFromTree(folderSub);
+            for(var fileId in tempAllFiles){
+              allFiles[fileId] = tempAllFiles[fileId];
+            }
+          }
+        }
+        if (folder.files) {
+          for (var i = 0; i < folder.files.length; i++) {
+            var file = folder.files[i];
+            allFiles[file.id] = file;
+          }
+        }
         return allFiles;
       },
 
@@ -140,7 +155,7 @@ angular.module('app')
       },
 
       deleteFolderForProject: function (userId, projectId, folderId) {
-        console.log("deleteFolderForProject",folderId);
+        console.log("deleteFolderForProject", folderId);
         return $http({
           method: "DELETE",
           url: host + "api/v1/users/" + userId + "/projects/" + projectId + "/folders?folderId=" + encodeURIComponent(folderId)

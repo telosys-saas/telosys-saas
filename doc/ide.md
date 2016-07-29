@@ -1,13 +1,16 @@
 # IDE
 
+The IDE page permits to the user to edit projects files.
+
 ## Page
 
 The IDE page is composed of :
 - at left :
-  - Open editors : list of opened files
-  - Project files treeview : list of project files
+  - Opened files : list of opened files
+  - Project files : Treeview of the project files
 - at right :
-  - File editor
+  - Files editors
+  - Consoles
 
 ## Source code organization
 
@@ -23,6 +26,8 @@ The IDE page is composed of :
 
 ## Data model
 
+Data shared by the controller and used by the directives of the IDE page.
+
 - $scope.data:
   - project : current project infos
   - projects : all projects
@@ -35,6 +40,8 @@ The IDE page is composed of :
   - selectedElement : Selected element in the treeview (folder or file)
 
 ## IDE events
+
+Events function of the controller used by the directives of the IDE page in response of the user actions.
 
 - $scope.data.events :
   - onCreateFile : After file creation
@@ -74,12 +81,10 @@ The IDE page is composed of :
   - **createFolderForProject** : Create a new folder in the project
     - PUT : api/v1/users/[userId]/projects/[projectId]/createFolder?folderId=[folder.id]
   - **createFileForProject** : Create a file in the project
-    - PUT : api/v1/users/[userId]/projects/[projectId]/createFile?fileId=[encodeURIComponent(file.id)
+    - PUT : api/v1/users/[userId]/projects/[projectId]/createFile?fileId=[fileId]
   - **saveFileForProject** : Save a file
-    - PUT : api/v1/users/[userId]/projects/[projectId]/files?fileId=[encodeURIComponent(file.id)
+    - PUT : api/v1/users/[userId]/projects/[projectId]/files?fileId=[fileId]
   - **deleteFileForProject** : Delete a file
-    - DELETE : api/v1/users/[userId]/projects/[projectId]/files?fileId=[encodeURIComponent(fileId)
+    - DELETE : api/v1/users/[userId]/projects/[projectId]/files?fileId=[fileId]
   - **deleteFolderForProject** : Delete a folder
-    - DELETE : api/v1/users/[userId]/projects/[projectId]/folders?folderId=[encodeURIComponent(folderId)
-
-## REST URIs
+    - DELETE : api/v1/users/[userId]/projects/[projectId]/folders?folderId=[folderId]

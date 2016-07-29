@@ -3,8 +3,8 @@
 /**
  * IDE Controller
  */
-angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', '$scope', '$routeParams', '$log',
-  function (ProjectsService, FilesService, $scope, $routeParams, $log) {
+angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', '$scope', '$routeParams', '$log', '$uibModal',
+  function (ProjectsService, FilesService, $scope, $routeParams, $log, $uibModal) {
 
     /** authentication */
     $scope.auth = {
@@ -109,14 +109,15 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
         delete $scope.data.workingFiles[fileOpened];
         $scope.data.allFiles[fileOpened].hasContent = false;
       }
-      if ($scope.data.selectedFile != null) {
-        $scope.data.selectedFile.hasContent = false;
+      if ($scope.data.selectedFile) {
+        $scope.data.selectedFile.hasContent = true;
         $scope.data.selectedFile = null;
       }
-      if ($scope.data.openFile != null) {
+      if ($scope.data.openFile) {
         $scope.data.openFile.hasContent = false;
         $scope.data.openFile = null;
       }
+
       console.log($scope.data.workingFiles);
     };
 
@@ -135,13 +136,13 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
       for (var fileKey in $scope.data.workingFiles) {
         var tempFile = {};
         tempFile = $scope.data.workingFiles[fileKey];
-        if(fileKey == fileId){
-          indexFile = workingFilesArray.length-1;
+        if (fileKey == fileId) {
+          indexFile = workingFilesArray.length - 1;
         }
         workingFilesArray.push(tempFile);
       }
-      
-      console.log('workingFilesArray',workingFilesArray[indexFile]);
+
+      console.log('workingFilesArray', workingFilesArray[indexFile]);
       $scope.data.allFiles[fileId].hasContent = false;
       delete $scope.data.workingFiles[fileId];
 
@@ -233,7 +234,8 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
       delete $scope.data.workingFiles[fileId];
       if ($scope.data.selectedFile.id == fileId) {
         $scope.data.selectedFile = null;
-      }if ($scope.data.openFile.id == fileId) {
+      }
+      if ($scope.data.openFile.id == fileId) {
         $scope.data.openFile = null;
       }
 
@@ -249,7 +251,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
       if (!$scope.data.workingFiles[fileId]) {
         $scope.data.openFile = file;
       }
-      $scope.data.selectedFile = file;
+
       if (!file.hasContent) {
         FilesService.getFileForProject($scope.auth.userId, $scope.data.project.id, fileId)
           .then(function (result) {
@@ -258,7 +260,10 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
             $scope.data.allFiles[file.id].hasContent = true;
             $scope.data.allFiles[file.id].content = file.content;
             $scope.data.allFiles[file.id].isModified = false;
+            $scope.data.selectedFile = $scope.data.allFiles[file.id];
           });
+      } else {
+        $scope.data.selectedFile = file;
       }
       $scope.safeApply();
     };
@@ -350,7 +355,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
         // Get all files of the current project
         FilesService.getFilesForProject($scope.auth.user, $scope.data.project.id, function (result) {
           $scope.data.tree = FilesService.convertFolderToJson(result, null, 'root');
-          $scope.data.allFiles = FilesService.getAllFiles();
+          $scope.data.allFiles = FilesService.getAllFilesFromTree(result);
           // Indicates that the IDE is initialized and can be displayed
           $scope.initialized = true;
         })

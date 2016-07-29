@@ -108,8 +108,9 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     /**
      * Save current file
      */
-    $scope.saveFile = function () {
+    $scope.saveFile = function (result) {
       console.log('saveFile modal');
+      $uibModalInstance.close(result);
     };
 
     /**

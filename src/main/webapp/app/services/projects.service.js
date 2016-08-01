@@ -6,6 +6,7 @@ angular.module('app')
     var host = '';
 
     return {
+      
       /**
        * Get the list of all projects
        * @param callback Callback function

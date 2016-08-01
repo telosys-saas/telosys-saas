@@ -4,13 +4,8 @@
     <list default="true" id="93bd2800-babb-4683-a80f-4022e6ca4b9e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.editor.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.editor.directive.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.left.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.left.directive.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.toolbar.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.toolbar.directive.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.treeview.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.treeview.directive.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/dashboard/dashboard.controller.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/dashboard/dashboard.controller.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/ide.controller.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/ide/ide.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/modal/modal.controller.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/modal/modal.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/services/files.service.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/services/files.service.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/services/projects.service.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/services/projects.service.js" />
     </list>
     <ignored path="telosys-saas.iws" />
@@ -41,22 +36,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="dashboard.module.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/app/dashboard/dashboard.module.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="44">
-              <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="FIRST">
-              <first_editor relative-caret-position="154">
-                <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="176">
+                <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -124,7 +109,6 @@
         <option value="$PROJECT_DIR$/src/main/webapp/app/dashboard/directive/dashboard.toolbar.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/dashboard/dashboard.routes.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.console.directive.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/app/dashboard/dashboard.controller.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.toolbar.directive.html" />
         <option value="$PROJECT_DIR$/doc/editor.md" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/modal/modal.savefile.html" />
@@ -132,11 +116,12 @@
         <option value="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.toolbar.directive.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.editor.directive.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.treeview.directive.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/app/ide/ide.controller.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/modal/modal.controller.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/app/services/projects.service.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/services/files.service.js" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/main/webapp/app/dashboard/dashboard.controller.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/app/ide/ide.controller.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/app/services/projects.service.js" />
       </list>
     </option>
   </component>
@@ -365,7 +350,23 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="doc" />
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dashboard" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -968,7 +969,7 @@
       <workItem from="1469724904087" duration="7429000" />
       <workItem from="1469777501358" duration="14805000" />
       <workItem from="1469796209246" duration="10308000" />
-      <workItem from="1470035358938" duration="5935000" />
+      <workItem from="1470035358938" duration="7816000" />
     </task>
     <task id="LOCAL-00001" summary="Start telosys saas 2">
       <created>1468857299874</created>
@@ -1061,11 +1062,18 @@
       <option name="project" value="LOCAL" />
       <updated>1469805904139</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="documentation and comments">
+      <created>1470041839902</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1470041839902</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="292908000" />
+    <option name="totallyTimeSpent" value="294789000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1131,7 +1139,8 @@
     <MESSAGE value="Ajout des onglets dans l'editeur" />
     <MESSAGE value="Ajout fenêtre modal fichier" />
     <MESSAGE value="doc" />
-    <option name="LAST_COMMIT_MESSAGE" value="doc" />
+    <MESSAGE value="documentation and comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="documentation and comments" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1365,14 +1374,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/dashboard/dashboard.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-396">
-          <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.console.directive.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
@@ -1416,14 +1417,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
           <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/services/projects.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="48" column="9" selection-start-line="48" selection-start-column="9" selection-end-line="48" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -1479,27 +1472,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/ide/ide.controller.js">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/services/files.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4106">
-          <caret line="375" column="5" selection-start-line="375" selection-start-column="5" selection-end-line="375" selection-end-column="5" />
+        <state relative-caret-position="1848">
+          <caret line="96" column="9" selection-start-line="96" selection-start-column="9" selection-end-line="96" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/services/files.service.js">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/ide/ide.controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="96" column="9" selection-start-line="96" selection-start-column="9" selection-end-line="96" selection-end-column="9" />
+        <state relative-caret-position="340">
+          <caret line="362" column="57" selection-start-line="362" selection-start-column="57" selection-end-line="362" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/services/projects.service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="30" column="6" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/app/dashboard/dashboard.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="560">
+          <caret line="49" column="29" selection-start-line="49" selection-start-column="29" selection-end-line="49" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="154">
-            <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="176">
+            <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
             <folding />
           </first_editor>
           <second_editor />

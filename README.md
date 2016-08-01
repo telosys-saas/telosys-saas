@@ -2,11 +2,19 @@
 
 Telosys IDE
 
-##
+## Introduction
+
+The Telosys IDE is a documentation and code generator.
+
+Features available (for this version) :
+ - Create project
+ - Create/Delete folder
+ - Create/Delete/Edit file
+ - Download the project in a ZIP file
 
 ## Configuration
 
-Define a new environment variable  :
+Define the application workspace in an environment variable  :
  -
  TELOSYS_ROOT="pathToLocalDirectory"
 
@@ -23,7 +31,7 @@ Define a new environment variable  :
  * ```java -jar target/telosys-saas.jar```
 => Console output : ```[main] INFO org.eclipse.jetty.server.Server - Started```
 * Go to the URL :
- * [http://localhost:8080](http://localhost:8080)
+ * [http://localhost:8181](http://localhost:8181)
 
 ## Development configuration
 

@@ -4,6 +4,11 @@ angular.module('dashboard')
   .controller('dashboardCtrl', ['ProjectsService', '$scope', '$location', '$uibModal',
     function (ProjectsService, $scope, $location, $uibModal) {
 
+      /** authentication */
+      $scope.auth = {
+        userId: 'user'
+      };
+      
       /**
        * Projects list
        */
@@ -42,7 +47,7 @@ angular.module('dashboard')
        * Init the dashboard toolbar
        */
       function init() {
-        ProjectsService.getProjects(function (result) {
+        ProjectsService.getProjects($scope.auth.userId, function (result) {
           $scope.projects = result;
         })
       }

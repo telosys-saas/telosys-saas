@@ -360,7 +360,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
     function init() {
       defineEvents();
       // Get the current project
-      ProjectsService.getProjectById($routeParams.projectId, function (result) {
+      ProjectsService.getProjectById($scope.auth.userId, $routeParams.projectId, function (result) {
         $scope.data.project = result;
         // Get all files of the current project
         FilesService.getFilesForProject($scope.auth.user, $scope.data.project.id, function (result) {
@@ -370,7 +370,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
           $scope.initialized = true;
         })
       });
-      ProjectsService.getProjects(function (result) {
+      ProjectsService.getProjects($scope.auth.userId, function (result) {
         $scope.data.projects = result;
       });
     }

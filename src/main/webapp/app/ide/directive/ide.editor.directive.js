@@ -116,7 +116,7 @@ angular.module('ide').directive('editor', function () {
          */
         $scope.saveFile = function () {
           if ($scope.data.events.saveFile) {
-            $scope.data.events.saveFile();
+            $scope.data.events.saveFile($scope.data.selectedFile);
           }
         };
 

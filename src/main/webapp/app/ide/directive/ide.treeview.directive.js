@@ -90,7 +90,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
        */
       $scope.onCreateFolder = function (nodeParent, tree) {
         return (function (obj) {
-          // Modal window to create a new file
+          // Modal window to create a new folder
           var modalInstance = $uibModal.open({
             templateUrl: 'app/modal/modal.createfolder.html',
             controller: 'modalCtrl',

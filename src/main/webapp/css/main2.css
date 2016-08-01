@@ -8,9 +8,17 @@ html div, html ul {
 
 #main {
     width: 100%;
-    height: 100%;
     height: calc(100% - 75px);
     position: relative;
+}
+
+footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    padding-top: 2px;
+    background-color: #fafafa;
 }
 
 .logo-telosys-min {
@@ -111,12 +119,6 @@ html div, html ul {
 .navbar {
     z-index: 2;
     border-bottom: 1px solid lightgrey;
-}
-
-footer {
-    text-align: center;
-    padding-top: 2px;
-    background-color: #fafafa;
 }
 
 .editorToolbar {

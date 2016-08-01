@@ -45,6 +45,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     $scope.createFolder = function () {
       console.log('createFolder modal', $scope.data.nodeParent);
       var folder = {};
+      // create the new folder object
       if ($scope.data.nodeParent.id == '@@_root_@@') {
         folder = {
           id: $scope.folderName,
@@ -78,6 +79,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     $scope.createFile = function () {
       console.log('createFile modal', $scope.data.nodeParent);
       var file = {};
+      // create the new file object
       if ($scope.data.nodeParent.id == '@@_root_@@') {
         file = {
           id: $scope.fileName,

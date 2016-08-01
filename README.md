@@ -2,6 +2,8 @@
 
 Telosys IDE
 
+##
+
 ## Configuration
 
 Define a new environment variable  :
@@ -66,7 +68,7 @@ The IDE page is composed of :
 Data shared by the controller and used by the directives of the IDE page.
 
 - $scope.data:
-  - project : current project infos
+  - project : current project information
   - projects : all projects
   - tree : All project files as a tree
   - allFiles : All project files as an array in only one level
@@ -125,3 +127,4 @@ Events function of the controller used by the directives of the IDE page in resp
     - DELETE : api/v1/users/[userId]/projects/[projectId]/files?fileId=[fileId]
   - **deleteFolderForProject** : Delete a folder
     - DELETE : api/v1/users/[userId]/projects/[projectId]/folders?folderId=[folderId]
+

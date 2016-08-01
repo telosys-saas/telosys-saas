@@ -92,6 +92,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
     $scope.closeAll = function () {
       $log.info("close all");
       var hasModifiedFile = false;
+      // Check if one of the opened file is modified
       for (var fileOpened in $scope.data.workingFiles) {
         if ($scope.data.workingFiles[fileOpened].isModified) {
           hasModifiedFile = true;
@@ -102,10 +103,13 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
           return;
         }
       }
+      // Close the opened file
       for (var fileOpened in $scope.data.workingFiles) {
+        // Save the modified file(s)
         if ($scope.data.workingFiles[fileOpened].isModified) {
           $scope.saveFile($scope.data.workingFiles[fileOpened]);
         }
+        // and close all
         delete $scope.data.workingFiles[fileOpened];
         $scope.data.allFiles[fileOpened].hasContent = false;
       }
@@ -117,12 +121,11 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
         $scope.data.openFile.hasContent = false;
         $scope.data.openFile = null;
       }
-
       console.log($scope.data.workingFiles);
     };
 
     /**
-     * Close current File
+     * Close the fileId
      * @param fileId File id
      */
     $scope.onCloseFile = function (fileId) {
@@ -141,7 +144,6 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
         }
         workingFilesArray.push(tempFile);
       }
-
       console.log('workingFilesArray', workingFilesArray[indexFile]);
       $scope.data.allFiles[fileId].hasContent = false;
       delete $scope.data.workingFiles[fileId];
@@ -167,13 +169,11 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
     $scope.saveAll = function () {
       $log.info("save all");
       for (var file in $scope.data.workingFiles) {
-        $log.info("save all for loop", $scope.data.workingFiles[file]);
         FilesService.saveFileForProject($scope.auth.userId, $scope.data.project.id, $scope.data.workingFiles[file]);
         $scope.data.workingFiles[file].isModified = false;
       }
       if ($scope.data.selectedFile) {
         if (!$scope.data.workingFiles[$scope.data.selectedFile.id]) {
-          $log.info("save all selectedFile");
           $scope.data.selectedFile.isModified = false;
           FilesService.saveFileForProject($scope.auth.userId, $scope.data.project.id, $scope.data.selectedFile);
         }
@@ -181,7 +181,8 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
     };
 
     /**
-     * Save the opened selected file
+     * Save the selected file or the file if defined
+     * @param file File to save
      */
     $scope.saveFile = function (file) {
       if (file) {
@@ -195,7 +196,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
     };
 
     /**
-     * File creation
+     * After file creation
      * @param file File to create
      */
     $scope.onCreateFile = function (file) {
@@ -208,7 +209,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
     };
 
     /**
-     * Folder creation
+     * After folder creation
      * @param folder Folder to create
      */
     $scope.onCreateFolder = function (folder) {
@@ -248,6 +249,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
     $scope.onClickFile = function (fileId) {
       var file = $scope.data.allFiles[fileId];
 
+
       if (!$scope.data.workingFiles[fileId]) {
         $scope.data.openFile = file;
       }
@@ -269,7 +271,7 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
     };
 
     /**
-     * Open a file
+     * Open a file and pinned it
      * @param fileId File id to open
      */
     $scope.onDoubleClickFile = function (fileId) {
@@ -325,21 +327,29 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
         })
     };
 
+    /**
+     * Download the project in a ZIP file
+     */
     $scope.onDownload = function () {
       ProjectsService.downloadZip($scope.auth.userId, $scope.data.project.id)
     };
 
+    /**
+     * Create a new project
+     */
     $scope.addProject = function () {
       console.log('addProject');
+      // Modal window to create a new file
       var modalInstance = $uibModal.open({
         templateUrl: 'app/dashboard/modal/modal.createproject.html',
         controller: 'ideModalCtrl'
       });
 
+      // When the creation is a success
       modalInstance.result.then(function (project) {
         console.log('modalInstance.result.then', project);
         ProjectsService.getProjects(function (result) {
-          $scope.projects = result;
+          $scope.projects.push(project);
         })
       })
     };
@@ -364,6 +374,5 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
         $scope.data.projects = result;
       });
     }
-
     init();
   }]);

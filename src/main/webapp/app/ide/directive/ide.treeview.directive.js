@@ -36,6 +36,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
        */
       $scope.onCreateFile = function (nodeParent, tree) {
         return (function (obj) {
+          // Modal window to create a new file
           var modalInstance = $uibModal.open({
             templateUrl: 'app/modal/modal.createfile.html',
             controller: 'modalCtrl',
@@ -47,6 +48,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
             }
           });
           console.log('onCreateFile nodeParent:', nodeParent);
+          // When the creation is a success
           modalInstance.result.then(function (file) {
             var node = {
               id: file.id,
@@ -54,6 +56,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
               type: file.type,
               nodeParentId: file.folderParentId
             };
+            // Add the node to the tree
             tree.create_node(nodeParent, node);
             console.log('creating node', node);
             if ($scope.data.events.onCreateFile) {
@@ -87,6 +90,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
        */
       $scope.onCreateFolder = function (nodeParent, tree) {
         return (function (obj) {
+          // Modal window to create a new file
           var modalInstance = $uibModal.open({
             templateUrl: 'app/modal/modal.createfolder.html',
             controller: 'modalCtrl',
@@ -99,12 +103,14 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           });
 
           modalInstance.result.then(function (folder) {
+            // When the creation is a success
             var node = {
               id: folder.id,
               text: folder.name,
               type: folder.type,
               nodeParentId: folder.folderParentId
             };
+            // Add the node to the tree
             tree.create_node(nodeParent, node);
             console.log('creating node', node);
             if ($scope.data.events.onCreateFolder) {
@@ -220,7 +226,6 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
                   action: $scope.onRemove(node, tree)
                 }
               }
-
               return items;
             }.bind(this)
           },
@@ -251,7 +256,6 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           }
         }.bind(this));
       }
-
       init();
     }
   }

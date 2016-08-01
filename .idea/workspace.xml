@@ -4,9 +4,6 @@
     <list default="true" id="93bd2800-babb-4683-a80f-4022e6ca4b9e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/dashboard/dashboard.controller.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/dashboard/dashboard.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/ide.controller.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/ide/ide.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/app/services/projects.service.js" afterPath="$PROJECT_DIR$/src/main/webapp/app/services/projects.service.js" />
     </list>
     <ignored path="telosys-saas.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,8 +37,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="176">
-                <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+              <first_editor relative-caret-position="308">
+                <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -118,10 +115,10 @@
         <option value="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.treeview.directive.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/modal/modal.controller.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/services/files.service.js" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/dashboard/dashboard.controller.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/ide/ide.controller.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/app/services/projects.service.js" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -969,7 +966,7 @@
       <workItem from="1469724904087" duration="7429000" />
       <workItem from="1469777501358" duration="14805000" />
       <workItem from="1469796209246" duration="10308000" />
-      <workItem from="1470035358938" duration="7816000" />
+      <workItem from="1470035358938" duration="7984000" />
     </task>
     <task id="LOCAL-00001" summary="Start telosys saas 2">
       <created>1468857299874</created>
@@ -1069,11 +1066,18 @@
       <option name="project" value="LOCAL" />
       <updated>1470041839902</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="documentation and comments">
+      <created>1470043713796</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1470043713796</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="294789000" />
+    <option name="totallyTimeSpent" value="294957000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1507,8 +1511,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="176">
-            <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+          <first_editor relative-caret-position="308">
+            <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
             <folding />
           </first_editor>
           <second_editor />

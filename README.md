@@ -15,8 +15,7 @@ Features available (for this version) :
 ## Configuration
 
 Define the application workspace in an environment variable  :
- -
- TELOSYS_ROOT="pathToLocalDirectory"
+    TELOSYS_ROOT="pathToLocalDirectory"
 
 ## Install & Run
 

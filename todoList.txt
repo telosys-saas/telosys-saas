@@ -1,30 +1,22 @@
-ï»¿Liste des fonctionnalitÃ©s IDE Telosys :
+Telosys-saas-angular Version 2
 
-Fait :
+1) Authentification + création de compte
 
-	- crÃ©ation de fichier
-	- crÃ©ation de dossier
-	- suppression de fichier
-	- suppression de dossier
-	- sauvegarde de tous les fichiers
-	- rafraichissement du projet
-	- gestion des numÃ©ros de ligne dans l'Ã©diteur (affichage sur toute la hauteur)
-	- Ajouter la barre du haut dans l'Ã©diteur  : (Ã  revÃ©rifer)
-		- bouton sauvergarde du fichier courant 
-		- nom fichier courant 
-		- rafraichissement du fichier 
-		- fermeture
-	- rajouter une animation lors d'un ajout de fichier dans la directive "Open Editors"
-	- gestion des Ã©diteurs de fichiers (Ã  voir)
+	- Modifier arborescence (url mapping à partir du "webapp/") : login.html -> vérification login/MDP au serveur
+								      si log OK workspace/#/{{angularURL}}
+									(index.html sera dans le dossier workspace)
 
-A faire :
+2) Regarder la gestion des models et bunbdle dans l'ancienne version
 
-	- rennomage du projet sur git (Telosys-Angular)
-	- rassembler toute la partie workingFile dans la directive
+3) 3 vues différentes afin de garder le focus sur :
 	
-A faire plus tard :
+	- soit Model
+	- soit Bundle
+	- soit Project (déjà fait)
+
+4) Renommer Toolbar en navBar
+
+5) Gestion du générateur
+					
 	
-	- Ajouter la barre du haut
-	- crÃ©ation de nouveau projet
-	- gestion de "TelosysTools"
-	- menu contextuel : renommer ficher/dossier
+	

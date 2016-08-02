@@ -3,7 +3,7 @@
 angular.module('app')
   .factory('FilesService', ['$http', function ($http) {
 
-    var host = '';
+    var host = '/';
 
     return {
 
@@ -16,7 +16,7 @@ angular.module('app')
       getFilesForProject: function (userId, projectId, callback) {
         $http({
           method: 'GET',
-          url: 'api/v1/users/' + userId + '/projects/' + projectId + '/workspace'
+          url: host + 'api/v1/users/' + userId + '/projects/' + projectId + '/workspace'
         })
           .then(function (result) {
             if (callback) callback(result.data);

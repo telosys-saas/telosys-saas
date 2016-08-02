@@ -3,7 +3,7 @@
 angular.module('app')
   .factory('ProjectsService', ['$http', function ($http) {
 
-    var host = '';
+    var host = '/';
 
     return {
       
@@ -16,7 +16,7 @@ angular.module('app')
       getProjects: function (userId, callback) {
         return $http({
           method: 'GET',
-          url: 'api/v1/users/' + userId + '/projects'
+          url: host + 'api/v1/users/' + userId + '/projects'
         })
           .then(function (result) {
             if (callback) callback(result.data);
@@ -33,7 +33,7 @@ angular.module('app')
       getProjectById: function (userId, projectId, callback) {
         return $http({
           method: 'GET',
-          url: 'api/v1/users/' + userId + '/projects/' + projectId
+          url: host + 'api/v1/users/' + userId + '/projects/' + projectId
         })
           .then(function (result) {
             if (callback) {

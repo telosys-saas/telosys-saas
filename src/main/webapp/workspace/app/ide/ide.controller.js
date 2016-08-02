@@ -3,8 +3,8 @@
 /**
  * IDE Controller
  */
-angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', '$scope', '$routeParams', '$log', '$uibModal',
-  function (ProjectsService, FilesService, $scope, $routeParams, $log, $uibModal) {
+angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'ProjectsService', 'FilesService', '$scope', '$routeParams', '$log', '$uibModal',
+  function (AuthService, $location, ProjectsService, FilesService, $scope, $routeParams, $log, $uibModal) {
 
     /** authentication */
     $scope.auth = {
@@ -358,21 +358,29 @@ angular.module('ide').controller('ideCtrl', ['ProjectsService', 'FilesService', 
      * Initialize the IDE
      */
     function init() {
-      defineEvents();
-      // Get the current project
-      ProjectsService.getProjectById($scope.auth.userId, $routeParams.projectId, function (result) {
-        $scope.data.project = result;
-        // Get all files of the current project
-        FilesService.getFilesForProject($scope.auth.user, $scope.data.project.id, function (result) {
-          $scope.data.tree = FilesService.convertFolderToJson(result, null, 'root');
-          $scope.data.allFiles = FilesService.getAllFilesFromTree(result);
-          // Indicates that the IDE is initialized and can be displayed
-          $scope.initialized = true;
-        })
-      });
-      ProjectsService.getProjects($scope.auth.userId, function (result) {
-        $scope.data.projects = result;
-      });
+      AuthService.status().then(function (result) {
+        $scope.profile = result.data;
+        console.log($scope.profile);
+        if ($scope.profile.authenticated == true) {
+          defineEvents();
+          // Get the current project
+          ProjectsService.getProjectById($scope.auth.userId, $routeParams.projectId, function (result) {
+            $scope.data.project = result;
+            // Get all files of the current project
+            FilesService.getFilesForProject($scope.auth.user, $scope.data.project.id, function (result) {
+              $scope.data.tree = FilesService.convertFolderToJson(result, null, 'root');
+              $scope.data.allFiles = FilesService.getAllFilesFromTree(result);
+              // Indicates that the IDE is initialized and can be displayed
+              $scope.initialized = true;
+            })
+          });
+          ProjectsService.getProjects($scope.auth.userId, function (result) {
+            $scope.data.projects = result;
+          });
+        }else {
+          console.log('authenticated false')
+        }
+      })
     }
     init();
   }]);

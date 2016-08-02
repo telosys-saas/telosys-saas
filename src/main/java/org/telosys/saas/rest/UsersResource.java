@@ -17,7 +17,6 @@ import org.pac4j.core.profile.ProfileManager;
 import org.pac4j.core.profile.UserProfile;
 import org.telosys.saas.domain.UserChangePassword;
 import org.telosys.saas.domain.UserCreation;
-import org.telosys.saas.security.GetUserProfile;
 import org.telosys.saas.util.Util;
 import org.telosys.tools.users.User;
 import org.telosys.tools.users.UsersManager;
@@ -33,7 +32,12 @@ public class UsersResource {
 	private HttpServletResponse response;
 
 	private UserProfile getUser() {
-		return new GetUserProfile().getUser(request, response);
+		J2EContext context = new J2EContext(request, response);
+		ProfileManager<UserProfile> manager = new ProfileManager<>(context);
+		UserProfile profile = manager.get(true);
+		return profile;
+
+		//return new GetUserProfile().getUser(request, response);
 	}
 	
 	@POST

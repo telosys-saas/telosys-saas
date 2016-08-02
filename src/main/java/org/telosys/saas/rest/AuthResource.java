@@ -3,6 +3,7 @@ package org.telosys.saas.rest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Enumeration;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,10 +18,11 @@ import javax.ws.rs.core.Response;
 import org.pac4j.core.context.J2EContext;
 import org.pac4j.core.profile.ProfileManager;
 import org.pac4j.core.profile.UserProfile;
+import org.slf4j.LoggerFactory;
 
 @Path("/auth")
 public class AuthResource {
-	
+
     @GET
     @Path("/user")
     @Produces(MediaType.APPLICATION_JSON)

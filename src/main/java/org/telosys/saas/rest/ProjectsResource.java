@@ -17,7 +17,6 @@ import org.pac4j.core.profile.UserProfile;
 import org.telosys.saas.dao.StorageDao;
 import org.telosys.saas.dao.StorageDaoProvider;
 import org.telosys.saas.domain.Project;
-import org.telosys.saas.security.GetUserProfile;
 
 @Path("/users/{userId}/projects")
 public class ProjectsResource {
@@ -32,7 +31,12 @@ public class ProjectsResource {
 	private HttpServletResponse response;
 	
 	private UserProfile getUser() {
-		return new GetUserProfile().getUser(request, response);
+		J2EContext context = new J2EContext(request, response);
+		ProfileManager<UserProfile> manager = new ProfileManager<>(context);
+		UserProfile profile = manager.get(true);
+		return profile;
+
+		//return new GetUserProfile().getUser(request, response);
 	}
 	
     @GET

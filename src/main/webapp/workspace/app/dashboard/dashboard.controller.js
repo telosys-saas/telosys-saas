@@ -1,13 +1,11 @@
 'use strict';
 
 angular.module('dashboard')
-  .controller('dashboardCtrl', ['ProjectsService', '$scope', '$location', '$uibModal',
-    function (ProjectsService, $scope, $location, $uibModal) {
+  .controller('dashboardCtrl', ['AuthService','ProjectsService', '$scope', '$location', '$uibModal',
+    function (AuthService, ProjectsService, $scope, $location, $uibModal) {
 
       /** authentication */
-      $scope.auth = {
-        userId: 'user'
-      };
+      $scope.profile = {};
       
       /**
        * Projects list
@@ -47,8 +45,16 @@ angular.module('dashboard')
        * Init the dashboard toolbar
        */
       function init() {
-        ProjectsService.getProjects($scope.auth.userId, function (result) {
-          $scope.projects = result;
+        AuthService.status().then(function (result) {
+          console.log('authentication:', result.data);
+          $scope.profile = result.data;
+          if ($scope.profile.authenticated == true) {
+            ProjectsService.getProjects($scope.profile.userId, function (result) {
+              $scope.projects = result;
+            })
+          }else {
+            $location.path('/error');
+          }
         })
       }
       init();

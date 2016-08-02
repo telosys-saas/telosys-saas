@@ -30,7 +30,6 @@ import org.telosys.saas.domain.GenerationResult;
 import org.telosys.saas.domain.Model;
 import org.telosys.saas.domain.Project;
 import org.telosys.saas.domain.ProjectConfiguration;
-import org.telosys.saas.security.GetUserProfile;
 import org.telosys.saas.services.BundleService;
 import org.telosys.saas.services.ProjectService;
 import org.telosys.saas.services.TelosysFolderService;
@@ -51,7 +50,12 @@ public class ProjectResource {
     private HttpServletResponse response;
 
     private UserProfile getUser() {
-        return new GetUserProfile().getUser(request, response);
+        J2EContext context = new J2EContext(request, response);
+        ProfileManager<UserProfile> manager = new ProfileManager<>(context);
+        UserProfile profile = manager.get(true);
+        return profile;
+
+        //return new GetUserProfile().getUser(request, response);
     }
 
     @GET

@@ -8,7 +8,12 @@ angular.module('dashboard')
         /**
          * List of projects
          */
-        projects: '='
+        projects: '=',
+
+        /**
+         * User's profile
+         */
+        profile: '='
       },
 
       templateUrl: 'app/dashboard/directive/dashboard.toolbar.html',
@@ -34,6 +39,11 @@ angular.module('dashboard')
             console.log('modalInstance.result.then', project);
             $scope.projects.push(project);
           })
+        };
+        
+        $scope.logout = function() {
+          console.log(document.location);
+          document.location = 'auth/logout?url='+document.location.href;
         };
       }
     }

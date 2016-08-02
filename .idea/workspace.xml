@@ -2,59 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="93bd2800-babb-4683-a80f-4022e6ca4b9e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/login.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/app.routes.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/error.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/services/auth.service.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/index.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/org/telosys/saas/security/GetUserProfile.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/app/app.routes.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/telosys/saas/rest/AuthResource.java" afterPath="$PROJECT_DIR$/src/main/java/org/telosys/saas/rest/AuthResource.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/telosys/saas/rest/ProjectResource.java" afterPath="$PROJECT_DIR$/src/main/java/org/telosys/saas/rest/ProjectResource.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/telosys/saas/rest/ProjectsResource.java" afterPath="$PROJECT_DIR$/src/main/java/org/telosys/saas/rest/ProjectsResource.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/telosys/saas/rest/UsersResource.java" afterPath="$PROJECT_DIR$/src/main/java/org/telosys/saas/rest/UsersResource.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/index.html" afterPath="$PROJECT_DIR$/src/main/webapp/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp_old/app/view/index/welcome/welcome.view.js" afterPath="$PROJECT_DIR$/src/main/webapp_old/app/view/index/welcome/welcome.view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/todoList.txt" afterPath="$PROJECT_DIR$/todoList.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/app.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/app.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/dashboard/dashboard.controller.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/dashboard/dashboard.controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/dashboard/dashboard.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/dashboard/dashboard.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/dashboard/dashboard.module.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/dashboard/dashboard.module.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/dashboard/dashboard.routes.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/dashboard/dashboard.routes.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/dashboard/directive/dashboard.toolbar.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/dashboard/directive/dashboard.toolbar.directive.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/dashboard/directive/dashboard.toolbar.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/dashboard/directive/dashboard.toolbar.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/dashboard/old/dashboard.project.directive.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/dashboard/old/dashboard.project.directive.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/dashboard/old/dashboard.project.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/dashboard/old/dashboard.project.directive.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/dashboard/old/dashboard.projects.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/dashboard/old/dashboard.projects.directive.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.console.directive.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.console.directive.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.console.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.console.directive.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.editor.directive.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.editor.directive.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.editor.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.editor.directive.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.left.directive.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.left.directive.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.left.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.left.directive.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.toolbar.directive.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.toolbar.directive.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.toolbar.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.toolbar.directive.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.treeview.directive.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.treeview.directive.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.treeview.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.treeview.directive.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.workingfiles.directive.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.workingfiles.directive.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/directive/ide.workingfiles.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.workingfiles.directive.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/ide.controller.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/ide.controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/ide.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/ide.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/ide.module.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/ide.module.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/ide/ide.routes.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/ide.routes.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/modal/modal.controller.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/modal/modal.createfile.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.createfile.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/modal/modal.createfolder.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.createfolder.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/modal/modal.createproject.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.createproject.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/modal/modal.module.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.module.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/modal/modal.savefile.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.savefile.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/services/files.service.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/services/files.service.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/services/projects.service.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/services/projects.service.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/toolbar_old/toolbar.component.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/toolbar_old/toolbar.component.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/toolbar_old/toolbar.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/toolbar_old/toolbar.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/app/toolbar_old/toolbar.module.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/toolbar_old/toolbar.module.js" />
     </list>
     <ignored path="telosys-saas.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -1167,7 +1115,7 @@
       <workItem from="1469796209246" duration="10308000" />
       <workItem from="1470035358938" duration="7984000" />
       <workItem from="1470057666406" duration="258000" />
-      <workItem from="1470121208064" duration="24863000" />
+      <workItem from="1470121208064" duration="25017000" />
     </task>
     <task id="LOCAL-00001" summary="Start telosys saas 2">
       <created>1468857299874</created>
@@ -1274,11 +1222,18 @@
       <option name="project" value="LOCAL" />
       <updated>1470043713796</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Gestion de l'authentification">
+      <created>1470151827862</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1470151827862</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="324056000" />
+    <option name="totallyTimeSpent" value="324210000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1345,7 +1300,8 @@
     <MESSAGE value="Ajout fenêtre modal fichier" />
     <MESSAGE value="doc" />
     <MESSAGE value="documentation and comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="documentation and comments" />
+    <MESSAGE value="Gestion de l'authentification" />
+    <option name="LAST_COMMIT_MESSAGE" value="Gestion de l'authentification" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

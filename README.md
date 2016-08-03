@@ -135,3 +135,46 @@ Events function of the controller used by the directives of the IDE page in resp
   - **deleteFolderForProject** : Delete a folder
     - DELETE : api/v1/users/[userId]/projects/[projectId]/folders?folderId=[folderId]
 
+## Security
+
+To configure Github OAuth For Telosys, go to the Github page "OAuth" of the organization "Telosys".
+
+Java classes :
+- Pac4jConfigFactory : define authentication modes (with login/password or with github)
+- FormAuthenticator : Manage authentication with login/password form
+- RedirectAfterGithubLogin : Redirect to the workspace page after a github authentication
+
+### Pac4J : Form authentication
+
+Steps :
+- the user goes to the login page and defines his username and password
+- it makes a POST on URL "/callback" to call the PAC4J callback filter : CallbackFilter
+- This filter detects that the user wants to authenticate with his username and password and use the PAC4J client "FormClient" which is defined by the class "FormAuthenticator"
+- The method "validate" of "FormAuthenticator" searches the login in the users file "users.txt"
+- And it compares the password to validate the authentication
+- "FormAuthenticator" defines the user profile which indicates that user is authenticated
+
+### Pac4J : Github authentication
+
+Steps:
+- the user goes to the logine page and click on the button "Login with Github"
+- it makes a POST on the URL "/auth/github" to call the PAC4J "RequiresAuthenticationFilter"
+- it uses the PAC4J Github client which has been initialized with the client id and secret token
+- it calls Github URL for Oauth authentication : "https://github.com/login/oauth/authorize?client_id=AAA&redirect_uri=AAA&scope=AAA" with the client id and redirect URL
+- the redirect URL must match with the redirect URL registered in Github for this OAuth application key
+- Github displays an authoriation confirmation page to the user
+- If the user confirms, then Github redirect the user to the "redirect URL"
+- It redirectes the user to the Telosys webapp on "/auth/github"
+- It calls the servlet "RedirectAfterGithubLogin" which redirects the user to the workspace page "/workspace"
+
+### Github OAuth : How create an OAuth key
+
+- On Github, go to the organization "Telosys" settings page : https://github.com/settings/profile
+- Click on "OAuth applications" in the left entries to display OAuth authorization page
+- Click on the tab "Developer application"
+- Click on "Register a new application" button
+- Set an application Name
+- Defines a callback URL which matches with the PAC4J callback filter URL defined in the web.xml. This callback URL must start by "http://" or "https://". It likes : "http://localhost:8080/callback"
+- Click on "Register application"
+- It creates an OAuth key with a "Client ID" and a "Client secret"
+- In github configuration in PAC4J, we must define these "Client ID", "Client secret" and "Callback URL"

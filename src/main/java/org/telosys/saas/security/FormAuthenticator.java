@@ -16,15 +16,15 @@ public class FormAuthenticator implements UsernamePasswordAuthenticator {
     protected static final Logger logger = LoggerFactory.getLogger(FormAuthenticator.class);
 
     private UsersManager usersManager = UsersManager.getInstance();
-    
+
     @Override
     public void validate(final UsernamePasswordCredentials credentials) {
-    	if (credentials == null) {
+        if (credentials == null) {
             throwsException("No credentials");
         }
-    	
-    	logger.info("Authentication - validate credentials : "+credentials.getUsername());
-        
+
+        logger.info("Authentication - validate credentials : " + credentials.getUsername());
+
         String username = credentials.getUsername();
         String password = credentials.getPassword();
         if (CommonHelper.isBlank(username)) {
@@ -40,13 +40,13 @@ public class FormAuthenticator implements UsernamePasswordAuthenticator {
             throwsException("User does not exist");
         }
         //--- Check user's password 
-        if ( ! usersManager.checkPassword(user, password) ) {
-            throwsException("Username : '" + username + "' invalid password");        	
+        if (!usersManager.checkPassword(user, password)) {
+            throwsException("Username : '" + username + "' invalid password");
         }
-        
-    	logger.info("Authentication - user "+credentials.getUsername() + " : OK");
 
-    	final HttpProfile profile = new HttpProfile();
+        logger.info("Authentication - user " + credentials.getUsername() + " : OK");
+
+        final HttpProfile profile = new HttpProfile();
         profile.setId(username);
         profile.addAttribute(CommonProfile.USERNAME, username);
         profile.addAttribute("USER", user);

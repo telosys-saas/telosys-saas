@@ -53,7 +53,7 @@ var ToolbarUser = {
   },
 
   login: function() {
-    // document.location = '/login.html';
+    // document.location = '/login.jsp';
     var state = Store.getState();
     state.page = 'login';
     Main.display();

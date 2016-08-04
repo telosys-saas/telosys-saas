@@ -36,8 +36,6 @@ public class UsersResource {
 		ProfileManager<UserProfile> manager = new ProfileManager<>(context);
 		UserProfile profile = manager.get(true);
 		return profile;
-
-		//return new GetUserProfile().getUser(request, response);
 	}
 	
 	@POST

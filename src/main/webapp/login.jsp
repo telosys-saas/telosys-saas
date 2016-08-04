@@ -15,6 +15,11 @@
 <body>
 <h2>Sign in to Telosys SaaS</h2>
 <div class="col-sm-2">
+    <b><%
+        if (request.getSession().getAttribute("error") != null) {
+            out.println(request.getSession().getAttribute("error"));
+        }
+    %></b>
     <form action="/callback" method="POST">
         <input type="hidden" name="client_name" value="FormClient"/>
         <div class="row">
@@ -41,6 +46,7 @@
             &nbsp; &nbsp; &nbsp; Sign in with GitHub
         </button>
     </form>
+    <a href="/forgetPassword"> Forget password</a>
 </div>
 </body>
 

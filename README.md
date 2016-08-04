@@ -157,12 +157,12 @@ Steps :
 ### Pac4J : Github authentication
 
 Steps:
-- the user goes to the logine page and click on the button "Login with Github"
+- the user goes to the login page and click on the button "Login with Github"
 - it makes a POST on the URL "/auth/github" to call the PAC4J "RequiresAuthenticationFilter"
 - it uses the PAC4J Github client which has been initialized with the client id and secret token
 - it calls Github URL for Oauth authentication : "https://github.com/login/oauth/authorize?client_id=AAA&redirect_uri=AAA&scope=AAA" with the client id and redirect URL
 - the redirect URL must match with the redirect URL registered in Github for this OAuth application key
-- Github displays an authoriation confirmation page to the user
+- Github displays an authorization confirmation page to the user
 - If the user confirms, then Github redirect the user to the "redirect URL"
 - It redirectes the user to the Telosys webapp on "/auth/github"
 - It calls the servlet "RedirectAfterGithubLogin" which redirects the user to the workspace page "/workspace"
@@ -177,4 +177,26 @@ Steps:
 - Defines a callback URL which matches with the PAC4J callback filter URL defined in the web.xml. This callback URL must start by "http://" or "https://". It likes : "http://localhost:8080/callback"
 - Click on "Register application"
 - It creates an OAuth key with a "Client ID" and a "Client secret"
-- In github configuration in PAC4J, we must define these "Client ID", "Client secret" and "Callback URL"
+- These "Client ID", "Client secret" and "Callback URL" must be written in the file "telosys-saas.properties" located in the TELOSYS_ROOT directory as follow :
+    - authRedirectUrl="CallbackURL"
+    - githubOauthKey="ClientID"
+    - githubOauthPassword"ClientSecret"
+
+## Server mail configuration
+
+The application use a gmail account to send automatic email to confirm the email address for a new account or to reset a password.
+The username and the password of the gmail account are written in the file "telosys-saas.properties" located in the TELOSYS_ROOT directory.
+The properties have to be set as follow :
+- gmailUsername="username" (without "@gmail.com")
+- gmailPassword="password" (not encrypted)
+
+To allowed Telosys to use gmail, you have to change the security parameter of your account.
+Go on this web page: https://www.google.com/settings/u/1/security/lesssecureapps and activate the access for the application less secure.
+
+The properties configurations to send the emails are define in the java class "GMail".
+##### Properties :
+- host: smtp.gmail.com
+- protocol: smtp
+- port: 587
+- authentication: enabled
+- start tls : enabled

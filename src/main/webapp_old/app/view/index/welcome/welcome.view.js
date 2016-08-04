@@ -10,7 +10,7 @@ var Welcome = {
       $('#main .parallax').parallax();
       $('footer').hide();
 
-      $.get('app/view/index/login/login.html', function (html) {
+      $.get('app/view/index/login/login.jsp', function (html) {
         $('#login').html(html);
         $('#main').click();
       });

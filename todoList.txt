@@ -18,5 +18,6 @@ Telosys-saas-angular Version 2
 
 5) Gestion du générateur
 					
-	
-	
+6) Création de compte : login et email ne doivent pas déjà être pris
+
+7) Gestion de la vérification d'adresse email et forget password	

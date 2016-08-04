@@ -5,7 +5,7 @@ var Login = {
   },
 
   display: function() {
-    $.get('app/view/index/login/login.html', function(html) {
+    $.get('app/view/index/login/login.jsp', function(html) {
       $('#main').html(html);
       $('#main').click();
     });

@@ -1,5 +1,8 @@
 package org.telosys.saas.util;
 
+import org.telosys.saas.config.Configuration;
+import org.telosys.saas.config.ConfigurationHolder;
+
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -12,6 +15,7 @@ public class GMail {
 	
 	public void send(String to, String subject, String body) {
 		try {
+			Configuration configuration = ConfigurationHolder.getConfiguration();
 			Properties mailServerProperties;
 			mailServerProperties = System.getProperties();
 			mailServerProperties.put("mail.smtp.port", "587");
@@ -20,17 +24,17 @@ public class GMail {
 
 			Session getMailSession;
 			getMailSession = Session.getDefaultInstance(mailServerProperties, null);
-			
+
 			MimeMessage generateMailMessage;
 			generateMailMessage = new MimeMessage(getMailSession);
 			generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			generateMailMessage.setSubject(subject);
 			generateMailMessage.setContent(body, "text/html");
-			
+
 			Transport transport = getMailSession.getTransport("smtp");
-			String gmailUsername = "";
-			String gmailPassword = "";
-			transport.connect("smtp.gmail.com", gmailUsername, gmailPassword);
+			String gMailUsername = configuration.getGmailUsername();
+			String gMailPassword = configuration.getGmailPassword();
+			transport.connect("smtp.gmail.com", gMailUsername, gMailPassword);
 			transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
 			transport.close();
 	    }
@@ -38,5 +42,5 @@ public class GMail {
 	      throw new IllegalStateException("Send mail",e);
 	    }
 	}
-	
+
 }

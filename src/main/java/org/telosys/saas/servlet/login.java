@@ -23,19 +23,21 @@ public class login extends HttpServlet {
         ProfileManager<UserProfile> manager = new ProfileManager<>(context);
         UserProfile profile = manager.get(true);
         if (profile == null) {
-            if(request.getSession().getAttribute("numberOfTry") != null) {
+            if (request.getSession().getAttribute("numberOfTry") != null) {
                 int numberOfTry = (int) request.getSession().getAttribute("numberOfTry");
                 if (numberOfTry >= 3) {
-                    response.sendRedirect("/");
+                    request.setAttribute("error", "You reach the limit of login try.");
+                    response.sendRedirect("/login.jsp");
                 } else {
+                    request.getSession().setAttribute("error", "Incorrect username or password.");
                     request.getSession().setAttribute("numberOfTry", ++numberOfTry);
-                    response.sendRedirect("/login.html");
+                    response.sendRedirect("/login.jsp");
                 }
-            }else{
+            } else {
                 request.getSession().setAttribute("numberOfTry", 1);
-                response.sendRedirect("/login.html");
+                response.sendRedirect("/login.jsp");
             }
-        }else{
+        } else {
             response.sendRedirect("/workspace");
         }
     }

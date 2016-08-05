@@ -3,7 +3,7 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <a class="navbar-brand logo-telosys-min" href="#"></a>
-            <a class="navbar-brand" href="/#/ide/{{data.project.id}}"><b>{{data.project.name}}</b></a>
+            <a class="navbar-brand" href="/workspace/#/ide/{{data.project.id}}"><b>{{data.project.name}}</b></a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -12,13 +12,25 @@
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">Projects<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/#/dashboard">Dashboard</a></li>
+                        <li><a href="/workspace/#/dashboard">Dashboard</a></li>
                         <li ng-click="addProject()"><a href>Create project</a></li>
                         <li role="separator" class="divider"></li>
                         <li ng-repeat="project in data.projects">
-                            <a href="/#/ide/{{project.id}}">{{project.name}}</a>
+                            <a href="/workspace/#/ide/{{project.id}}">{{project.name}}</a>
                         </li>
                     </ul>
+                </li>
+                <li class="dropdown" ng-click="data.events.changeView('model')">
+                    <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Model</a>
+                </li>
+                <li class="dropdown"  ng-click="data.events.changeView('bundles')">
+                    <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Bundle</a>
+                </li>
+                <li class="dropdown"  ng-click="data.events.changeView('files')">
+                    <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Files</a>
                 </li>
                 <li class="dropdown">
                     <a href ng-click="download()">Download</a>

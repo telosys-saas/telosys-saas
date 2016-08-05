@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/login")
+/**
+ * Servlet to manage the log process
+ */
+@WebServlet("/login/*")
 public class login extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -21,22 +24,26 @@ public class login extends HttpServlet {
         J2EContext context = new J2EContext(request, response);
         ProfileManager<UserProfile> manager = new ProfileManager<>(context);
         UserProfile profile = manager.get(true);
+        // Case : no user are authenticated
         if (profile == null) {
-            if (request.getSession().getAttribute("numberOfTry") != null) {
+            // case : the user tries to login for the first time
+            if (request.getSession().getAttribute("numberOfTry") == null) {
+                request.getSession().setAttribute("numberOfTry", 1);
+                response.sendRedirect("/login.jsp");
+            } else {
                 int numberOfTry = (int) request.getSession().getAttribute("numberOfTry");
+                // the user tries 3 times to login
                 if (numberOfTry >= 3) {
-                    request.setAttribute("error", "You reach the limit of login try.");
-                    response.sendRedirect("/login.jsp");
+                    request.getSession().setAttribute("error", "You reach the limit of login try.");
+                    response.sendRedirect("/");
                 } else {
                     request.getSession().setAttribute("error", "Incorrect username or password.");
                     request.getSession().setAttribute("numberOfTry", ++numberOfTry);
                     response.sendRedirect("/login.jsp");
                 }
-            } else {
-                request.getSession().setAttribute("numberOfTry", 1);
-                response.sendRedirect("/login.jsp");
             }
         } else {
+            // A user is already authenticated
             response.sendRedirect("/workspace");
         }
     }

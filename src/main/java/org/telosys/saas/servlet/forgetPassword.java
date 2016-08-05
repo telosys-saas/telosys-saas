@@ -11,13 +11,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 
+/**
+ * Servlet used when a user lost is password
+ */
 @WebServlet("/forgetPassword")
 public class forgetPassword extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UsersManager usersManager = UsersManager.getInstance();
+        Memory memory = Memory.getMemory();
         GMail gMail = new GMail();
+        // Check if the user exists
         User userExisting = usersManager.getUserByLogin(request.getParameter("login"));
         if (userExisting == null) {
             throw new IllegalStateException("forget password : user doesn't exist");
@@ -25,8 +32,13 @@ public class forgetPassword extends HttpServlet {
         if (!Util.equalsAndNotEmpty(request.getParameter("mail"), userExisting.getMail())) {
             throw new IllegalStateException("forget password : bad email");
         }
+        // Save the new user in memory
+        // and create a unique token for the link and memory map
+        SecureRandom secureRandom = new SecureRandom();
+        String token = new BigInteger(130, secureRandom).toString();
+        memory.addUser(token,userExisting);
         String bodyMail = "Dear " + userExisting.getLogin() + "," + " Please click on the following link to reset your password" +
-                " http://localhost:8080/resetPassword/" + userExisting.getLogin() + "/" + userExisting.getEncryptedPassword() +
+                " http://localhost:8080/resetPassword/" + token +
                 " Sincerly," +
                 " The Telosys Team";
         gMail.send(userExisting.getMail(), "Reset Telosys password", bodyMail);

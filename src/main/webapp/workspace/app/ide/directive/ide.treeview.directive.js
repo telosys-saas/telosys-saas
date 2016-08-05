@@ -6,7 +6,8 @@
 angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
   return {
     scope: {
-      data: '='
+      data: '=',
+      events: '='
     },
     templateUrl: 'app/ide/directive/ide.treeview.directive.html',
 
@@ -59,8 +60,8 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
             // Add the node to the tree
             tree.create_node(nodeParent, node);
             console.log('creating node', node);
-            if ($scope.data.events.onCreateFile) {
-              $scope.data.events.onCreateFile(file);
+            if ($scope.events.onCreateFile) {
+              $scope.events.onCreateFile(file);
             }
           });
         });
@@ -113,8 +114,8 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
             // Add the node to the tree
             tree.create_node(nodeParent, node);
             console.log('creating node', node);
-            if ($scope.data.events.onCreateFolder) {
-              $scope.data.events.onCreateFolder(folder);
+            if ($scope.events.onCreateFolder) {
+              $scope.events.onCreateFolder(folder);
             }
           });
         });
@@ -135,7 +136,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
       $scope.refreshAll = function () {
         console.log('refreshAll');
         var tree = $(element[0].children[1]).jstree();
-        $scope.data.events.refreshAll();
+        $scope.events.refreshAll();
         tree.settings.core.data = $scope.data.tree;
         tree.refresh();
       };
@@ -151,11 +152,11 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           tree.delete_node(node);
           if (node.type == 'folder') {
             var folderId = node.id;
-            $scope.data.events.onDeleteFolder(folderId)
+            $scope.events.onDeleteFolder(folderId)
           }
           if (node.type == 'file') {
             var fileId = node.id;
-            $scope.data.events.onDeleteFile(fileId);
+            $scope.events.onDeleteFile(fileId);
           }
         });
       };
@@ -241,17 +242,17 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           console.log('treeview one click', fileFound);
           if (fileFound && (fileFound.type == 'file')) {
             $scope.data.tree.selectedFile = fileFound;
-            if ($scope.data.events.onClickFile) {
-              $scope.data.events.onClickFile(data.node.id);
+            if ($scope.events.onClickFile) {
+              $scope.events.onClickFile(data.node.id);
             }
           }
         }.bind(this));
 
         // double click
         $(element[0].children[1]).bind("dblclick.jstree", function () {
-          if ($scope.data.events.onDoubleClickFile) {
+          if ($scope.events.onDoubleClickFile) {
             if ($scope.data.tree.selectedFile != null) {
-              $scope.data.events.onDoubleClickFile($scope.data.tree.selectedFile.id);
+              $scope.events.onDoubleClickFile($scope.data.tree.selectedFile.id);
             }
           }
         }.bind(this));
@@ -259,6 +260,5 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
       init();
     }
   }
-    ;
 }])
 ;

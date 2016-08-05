@@ -1,23 +1,40 @@
-Telosys-saas-angular Version 2
+ÔªøListe des fonctionnalit√©s IDE Telosys :
 
-1) Authentification + crÈation de compte
+Fait :
 
-	- Modifier arborescence (url mapping ‡ partir du "webapp/") : login.html -> vÈrification login/MDP au serveur
-								      si log OK workspace/#/{{angularURL}}
-									(index.html sera dans le dossier workspace)
+	- cr√©ation de fichier
+	- cr√©ation de dossier
+	- suppression de fichier
+	- suppression de dossier
+	- sauvegarde de tous les fichiers
+	- rafraichissement du projet
+	- gestion des num√©ros de ligne dans l'√©diteur (affichage sur toute la hauteur)
+	- Ajouter la barre du haut dans l'√©diteur  : (√† rev√©rifer)
+		- bouton sauvergarde du fichier courant 
+		- nom fichier courant 
+		- rafraichissement du fichier 
+		- fermeture
+	- rajouter une animation lors d'un ajout de fichier dans la directive "Open Editors"
+	- gestion des √©diteurs de fichiers (√† voir)
+	- Ajouter la barre du haut
+	- cr√©ation de nouveau projet
 
-2) Regarder la gestion des models et bunbdle dans l'ancienne version
 
-3) 3 vues diffÈrentes afin de garder le focus sur :
+	- rennomage du projet sur git (Telosys-Angular)
+	- rassembler toute la partie workingFile dans la directive
 	
-	- soit Model
-	- soit Bundle
-	- soit Project (dÈj‡ fait)
+A faire :
 
-4) Renommer Toolbar en navBar
+	
+	- gestion de "TelosysTools"
+		- Regarder la gestion des models et bunbdle dans l'ancienne version
+	- menu contextuel : renommer ficher/dossier
 
-5) Gestion du gÈnÈrateur
-					
-6) CrÈation de compte : login et email ne doivent pas dÈj‡ Ítre pris
-
-7) Gestion de la vÈrification d'adresse email et forget password	
+	- 3 vues diff√©rentes afin de garder le focus sur :
+		- soit Model
+		- soit Bundle
+		- soit Project (d√©j√† fait)
+	- Renommer Toolbar en navBar
+	- Gestion du g√©n√©rateur
+	- Cr√©ation de compte : login et email ne doivent pas d√©j√† √™tre pris
+	- Gestion de la v√©rification d'adresse email et forget password	(utilisation d'une hashMap)

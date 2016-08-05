@@ -22,20 +22,46 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
        * List of projects
        */
       projects: [],
-      /** All files of the project as a tree */
-      tree: {},
-      /** All files of the project in only one level */
-      allFiles: {},
+
+      /**
+       * View to display
+       */
+      isDisplay: null,
+
+      /**
+       * Data for model created by the user
+       */
+      model: {
+        name: 'model'
+      },
+
+      /**
+       * All templates to generate files from the model
+       */
+      bundles:{
+        name: 'bunbles'
+      },
+
+      /**
+       * Data for generated files
+       */
+      files: {
+        name: 'files',
+        /** All files of the project as a tree*/
+        tree: {},
+        /** All files of the project in only one level */
+        allFiles: {},
+        /** Working files */
+        workingFiles: {},
+        /** Selected file */
+        selectedFile: null,
+        /** Open File */
+        openFile: null,
+        /** Select element in the treeview */
+        selectedElement: null
+      },
       /** IDE events redirected to controller functions */
-      events: {},
-      /** Working files */
-      workingFiles: {},
-      /** Selected file */
-      selectedFile: null,
-      /** Open File */
-      openFile: null,
-      /** Select element in the treeview */
-      selectedElement: null
+      events: {}
     };
 
     /**
@@ -70,7 +96,9 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         // Refresh the file
         onRefreshFile: $scope.onRefreshFile,
         // Donwload the project in zip file
-        onDownload: $scope.onDownload
+        onDownload: $scope.onDownload,
+        // change the view to display
+        changeView: $scope.changeView
       }
     }
 
@@ -248,8 +276,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      */
     $scope.onClickFile = function (fileId) {
       var file = $scope.data.allFiles[fileId];
-
-
+      
       if (!$scope.data.workingFiles[fileId]) {
         $scope.data.openFile = file;
       }
@@ -354,6 +381,10 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       })
     };
 
+    $scope.changeView = function (view) {
+      $scope.data.isDisplay = view;
+    };
+
     /**
      * Initialize the IDE
      */
@@ -361,6 +392,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       AuthService.status().then(function (result) {
         $scope.profile = result.data;
         console.log($scope.profile);
+        $scope.data.isDisplay = 'model';
         if ($scope.profile.authenticated == true) {
           defineEvents();
           // Get the current project
@@ -368,8 +400,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
             $scope.data.project = result;
             // Get all files of the current project
             FilesService.getFilesForProject($scope.auth.user, $scope.data.project.id, function (result) {
-              $scope.data.tree = FilesService.convertFolderToJson(result, null, 'root');
-              $scope.data.allFiles = FilesService.getAllFilesFromTree(result);
+              $scope.data.files.tree = FilesService.convertFolderToJson(result, null, 'root');
+              $scope.data.files.allFiles = FilesService.getAllFilesFromTree(result);
               // Indicates that the IDE is initialized and can be displayed
               $scope.initialized = true;
             })

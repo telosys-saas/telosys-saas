@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+/**
+ * Servlet to validate the email address of a new user
+ */
 @WebServlet("/confirmEmail/*")
 public class confirmEmail extends HttpServlet {
 
@@ -21,20 +25,14 @@ public class confirmEmail extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String urlRequest = request.getRequestURL().toString();
         String[] parseUrlRequest = urlRequest.split("/");
-        String login = parseUrlRequest[4];
-        String emailEncrypted = parseUrlRequest[5];
-        PasswordEncoder passwordEncoder = new PasswordEncoder();
+        String token = parseUrlRequest[4];
+        Memory memory = Memory.getMemory();
         UsersManager usersManager = UsersManager.getInstance();
-        User userExisting = usersManager.getUserByLogin(login);
-        if(userExisting == null){
-            throw new IllegalStateException("forget password : user doesn't exist");
+        User user = memory.findUserByToken(token);
+        if(user == null){
+            throw new IllegalStateException("confirm email : bad link");
         }
-        if(emailEncrypted.equals(passwordEncoder.encrypt(userExisting.getMail()))){
-            String email = userExisting.getMail();
-            userExisting.setMail(email.substring(1));
-        }
-        usersManager.deleteUser(userExisting.getLogin());
-        usersManager.saveUser(userExisting);
+        usersManager.saveUser(user, user.getEncryptedPassword());
         response.sendRedirect("/login");
     }
 }

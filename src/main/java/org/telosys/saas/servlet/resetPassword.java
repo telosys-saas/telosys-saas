@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Servlet to reset the password for a user
+ */
 @WebServlet("/resetPassword/*")
 public class resetPassword extends HttpServlet {
 
@@ -26,6 +29,7 @@ public class resetPassword extends HttpServlet {
         if(userExisting == null){
             throw new IllegalStateException("reset password : user doesn't exist");
         }
+
         userExisting.setEncryptedPassword(passwordEncoder.encrypt(request.getParameter("password1")));
         usersManager.deleteUser(userExisting.getLogin());
         usersManager.saveUser(userExisting);
@@ -33,18 +37,17 @@ public class resetPassword extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Find the user who match with the token in the url link
         String urlRequest = request.getRequestURL().toString();
         String[] parseUrlRequest = urlRequest.split("/");
-        String login = parseUrlRequest[4];
-        UsersManager usersManager = UsersManager.getInstance();
-        User userExisting = usersManager.getUserByLogin(login);
+        String token = parseUrlRequest[4];
+        Memory memory = Memory.getMemory();
+        User userExisting = memory.findUserByToken(token);
         if(userExisting == null){
-            throw new IllegalStateException("reset password : user doesn't exist");
-        }
-        if(!userExisting.getEncryptedPassword().equals(parseUrlRequest[5])){
             throw new IllegalStateException("reset password : bad link");
         }
-        request.getSession().setAttribute("login",login);
+        // Save the user's login in the session
+        request.getSession().setAttribute("login",userExisting.getLogin());
         response.sendRedirect("/resetPassword.html");
     }
 }

@@ -6,7 +6,8 @@
 angular.module('ide').directive('editor', function () {
     return {
       scope: {
-        data: '='
+        data: '=',
+        events: '='
       },
 
       templateUrl: 'app/ide/directive/ide.editor.directive.html',

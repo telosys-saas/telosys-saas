@@ -17,6 +17,12 @@
     <h1>Telosys</h1>
     <a href="login">Login</a><br>
     <a href="createAccount">Create account</a>
+    <br>
+    <b><%
+        if (request.getSession().getAttribute("error") != null) {
+        out.println(request.getSession().getAttribute("error"));
+        }
+        %></b>
 </div>
 </body>
 

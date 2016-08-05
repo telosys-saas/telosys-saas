@@ -4,7 +4,8 @@ angular.module('ide').directive('workingfiles', function () {
   return {
     restrict: 'E',
     scope: {
-      data: '='
+      data: '=',
+      events: '='
     },
 
     templateUrl: 'app/ide/directive/ide.workingfiles.directive.html',
@@ -16,8 +17,8 @@ angular.module('ide').directive('workingfiles', function () {
        * @param file File to select
        */
       $scope.onClickFile = function (file) {
-        if ($scope.data.events.onClickFile != null) {
-          $scope.data.events.onClickFile(file.id);
+        if ($scope.events.onClickFile != null) {
+          $scope.events.onClickFile(file.id);
         }
       }
 

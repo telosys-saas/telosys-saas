@@ -3,6 +3,7 @@ package org.telosys.saas.servlet;
 import org.telosys.saas.util.Util;
 import org.telosys.tools.users.User;
 import org.telosys.tools.users.UsersManager;
+import org.telosys.tools.users.crypto.PasswordEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,25 +14,37 @@ import java.io.IOException;
 
 @WebServlet("/resetPassword/*")
 public class resetPassword extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PasswordEncoder passwordEncoder = new PasswordEncoder();
+        if(!Util.equalsAndNotEmpty(request.getParameter("password1"), request.getParameter("password2"))) {
+            throw new IllegalStateException("create user : password is not defined");
+        }
+        String login = (String) request.getSession().getAttribute("login");
+        UsersManager usersManager = UsersManager.getInstance();
+        User userExisting = usersManager.getUserByLogin(login);
+        if(userExisting == null){
+            throw new IllegalStateException("reset password : user doesn't exist");
+        }
+        userExisting.setEncryptedPassword(passwordEncoder.encrypt(request.getParameter("password1")));
+        usersManager.deleteUser(userExisting.getLogin());
+        usersManager.saveUser(userExisting);
+        response.sendRedirect("/");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        StringBuffer urlRequest = request.getRequestURL();
-        String[] parseUrlRequest = Util.splitWithNullIfEmpty(urlRequest.toString(), '/');
-        if(parseUrlRequest == null){
-            throw new IllegalStateException("reset password : bad link");
-        }
+        String urlRequest = request.getRequestURL().toString();
+        String[] parseUrlRequest = urlRequest.split("/");
         String login = parseUrlRequest[4];
         UsersManager usersManager = UsersManager.getInstance();
         User userExisting = usersManager.getUserByLogin(login);
         if(userExisting == null){
             throw new IllegalStateException("reset password : user doesn't exist");
         }
-        if(!usersManager.checkPassword(userExisting, parseUrlRequest[5])){
+        if(!userExisting.getEncryptedPassword().equals(parseUrlRequest[5])){
             throw new IllegalStateException("reset password : bad link");
         }
+        request.getSession().setAttribute("login",login);
         response.sendRedirect("/resetPassword.html");
     }
 }

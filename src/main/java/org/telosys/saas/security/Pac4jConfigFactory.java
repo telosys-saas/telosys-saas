@@ -26,8 +26,7 @@ public class Pac4jConfigFactory implements ConfigFactory {
     	List<Client> clients = new ArrayList<>();
     	
     	// User / Password form
-        FormClient formClient = new FormClient("/", new FormAuthenticator());
-		formClient.setLoginUrl("/login");
+        FormClient formClient = new FormClient("/login", new FormAuthenticator());
         clients.add(formClient);
 		LOG.info("[ENABLED] Authentification by user / password");
 

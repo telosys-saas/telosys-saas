@@ -30,6 +30,7 @@ public class forgetPassword extends HttpServlet {
                 " Sincerly," +
                 " The Telosys Team";
         gMail.send(userExisting.getMail(), "Reset Telosys password", bodyMail);
+        response.sendRedirect("/");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

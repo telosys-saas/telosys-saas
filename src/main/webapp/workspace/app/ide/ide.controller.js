@@ -20,7 +20,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         /** List of projects */
         projects: [],
         /** View to display */
-        isDisplay: null,
+        isDisplay: 'modeles',
         /** Common events */
         events: getCommonEvents(),
         /** The Telosys Tools Folder */
@@ -31,12 +31,18 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
          */
         models: {
           name: 'models',
+          /** Current project */
+          project: {},
+          /** All files of bundles as a tree*/
+          tree: {},
           /** All files of the project in only one level */
           allFiles: {},
           /** Working files */
           workingFiles: {},
           /** Selected file */
           selectedFile: null,
+          /** Counter of modified file */
+          countModifiedFile: 0,
           /** Open File */
           openFile: null,
           /** Select element in the treeview */
@@ -50,6 +56,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
          */
         bundles: {
           name: 'bundles',
+          /** Current project */
+          project: {},
           /** All files of bundles as a tree*/
           tree: {},
           /** All files of the project in only one level */
@@ -58,6 +66,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           workingFiles: {},
           /** Selected file */
           selectedFile: null,
+          /** Counter of modified file */
+          countModifiedFile: 0,
           /** Open File */
           openFile: null,
           /** Select element in the treeview */
@@ -71,6 +81,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
          */
         files: {
           name: 'files',
+          /** Current project */
+          project: {},
           /** All files of the project as a tree*/
           tree: {},
           /** All files of the project in only one level */
@@ -79,6 +91,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           workingFiles: {},
           /** Selected file */
           selectedFile: null,
+          /** Counter of modified file */
+          countModifiedFile: 0,
           /** Open File */
           openFile: null,
           /** Select element in the treeview */
@@ -253,6 +267,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      */
     $scope.saveAll = function (data) {
       $log.info("save all");
+      data.countModifiedFile = 0;
       for (var file in data.workingFiles) {
         FilesService.saveFileForProject($scope.profile.userId, data.project.id, data.workingFiles[file]);
         data.workingFiles[file].isModified = false;
@@ -270,14 +285,22 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      * @param file File to save
      */
     $scope.saveFile = function (data, file) {
+
       if (file) {
+        if(file.isModified) {
+          data.countModifiedFile--;
+        }
         $log.info('save file', file);
         FilesService.saveFileForProject($scope.profile.userId, data.project.id, file);
       } else {
         $log.info('save selectedFile');
+        if(data.selectedFile.isModified){
+          data.countModifiedFile--;
+        }
         data.selectedFile.isModified = false;
         FilesService.saveFileForProject($scope.profile.userId, $scope.data.project.id, data.selectedFile);
       }
+
     };
 
     /**
@@ -375,8 +398,11 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      */
     $scope.onContentChange = function (data, fileId) {
       $log.info('onContentChange', fileId);
-      data.allFiles[fileId].isModified = true;
-      data.workingFiles[fileId] = data.allFiles[fileId];
+      if(!data.allFiles[fileId].isModified) {
+        data.countModifiedFile++;
+        data.allFiles[fileId].isModified = true;
+        data.workingFiles[fileId] = data.allFiles[fileId];
+      }
       $scope.safeApply();
     };
 
@@ -400,17 +426,17 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      * @param callback Callback to update the file content in the editor
      */
     $scope.onRefreshFile = function (data, callback) {
-      FilesService.getFileForProject($scope.profile.userId, data.project.id, data.selectedFile.id)
+
+      FilesService.getFileForProject($scope.profile.userId, $scope.data.project.id, data.selectedFile.id)
         .then(function (result) {
           var file = result.data;
           $log.info('refresh file', file);
           data.allFiles[file.id].hasContent = true;
           data.allFiles[file.id].content = file.content;
-          data.allFiles[file.id].isModified = false;
           data.selectedFile = data.allFiles[file.id];
           if (callback) {
             callback();
-          }
+          } 
         })
     };
 
@@ -435,7 +461,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       // When the creation is a success
       modalInstance.result.then(function (project) {
         console.log('modalInstance.result.then', project);
-        ProjectsService.getProjects(function (result) {
+        ProjectsService.getProjects(function () {
           $scope.projects.push(project);
         })
       })
@@ -453,14 +479,14 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
 
     function initFiles() {
       FilesService.getFilesForProject($scope.profile.user, $scope.data.project.id, function (result) {
-        $scope.data.files.tree = FilesService.convertFolderToJson(result, null, 'root');
+        $scope.data.files.tree = FilesService.convertFolderToJson(result, null, 'folder');
         $scope.data.files.allFiles = FilesService.getAllFilesFromTree(result);
       });
     }
 
     function initBundles() {
       var templateFolder = getFolderByName($scope.telosysFolder, "templates");
-      $scope.data.bundles.tree = FilesService.convertFolderToJson(templateFolder, null, 'root');
+      $scope.data.bundles.tree = FilesService.convertFolderToJson(templateFolder, null, 'bundle');
       $scope.data.bundles.allFiles = FilesService.getAllFilesFromTree(templateFolder);
     }
 
@@ -469,11 +495,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         .then(function (result) {
           var modelName = result.data[0].name;
           var modelFolder = getFolderByName($scope.telosysFolder, modelName);
-          if (modelFolder.files)
-            for (var i = 0; i < modelFolder.files.length; i++) {
-              var file = modelFolder.files[i];
-              $scope.data.models.allFiles[file.id] = FilesService.convertFileToJson(file);
-            }
+          $scope.data.models.tree = FilesService.convertFolderToJson(modelFolder, null, 'models');
+          $scope.data.models.allFiles = FilesService.getAllFilesFromTree(modelFolder);
         })
     }
 
@@ -521,7 +544,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
 
         // Get the current project
         ProjectsService.getProjectById($scope.profile.userId, $routeParams.projectId, function (result) {
-          $scope.data.project = result;
+          $scope.data.project = $scope.data.bundles.project = $scope.data.models.project = $scope.data.files.project = result;
           initTelosysFolder();
           initFiles();
           // Indicates that the IDE is initialized and can be displayed

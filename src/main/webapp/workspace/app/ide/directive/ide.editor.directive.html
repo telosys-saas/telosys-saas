@@ -1,15 +1,25 @@
-<div>
+<div ng-if="data.selectedFile.id">
     <ul class="nav nav-tabs">
         <li ng-repeat="file in data.workingFiles" class="collection-item truncate"
             ng-class="{'active': file.id == data.selectedFile.id}"
             ng-click="events.onClickFile(data, file.id)">
-            <a href><i ng-if="file.isModified" class="fa fa-circle" style="padding-right: 5px"></i>{{file.name}}</a>
+            <a href>
+                <i ng-if="file.isModified" class="fa fa-circle" style="padding-right: 5px"></i>{{file.name}}
+            </a>
+            <a href ng-click="events.onCloseFile(data, file.id); $event.stopPropagation()">
+                <i class="fa fa-times fa-lg delete"></i></a>
         </li>
         <li ng-if="data.openFile!=null && data.workingFiles[data.openFile.id]==null"
             ng-class="{'active': data.selectedFile.id == data.openFile.id}"
             ng-click="events.onClickFile(data, data.openFile.id)">
-            <a href><i ng-if="data.openFile.isModified" class="fa fa-circle" style="padding-right: 5px"></i><i>{{data.openFile.name}} <span
-                    style="font-size: smaller; color: gray;">{{data.openFile.path}}</span></i></a>
+            <a href>
+                <i ng-if="data.openFile.isModified" class="fa fa-circle" style="padding-right: 5px"></i>
+                <i>{{data.openFile.name}} <span
+                        style="font-size: smaller; color: gray;">{{data.openFile.path}}</span></i>
+            </a>
+            <a href ng-click="events.onCloseFile(data, file.id); $event.stopPropagation()">
+                <i class="fa fa-times fa-lg delete"></i>
+            </a>
         </li>
     </ul>
 </div>

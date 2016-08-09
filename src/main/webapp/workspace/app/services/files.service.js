@@ -31,21 +31,51 @@ angular.module('app')
        * @returns JSON Folder
        */
       convertFolderToJson: function (folder, parent, type) {
-        
-        if (type == 'root') {
-          var currentNode = {
-            id: '@@_root_@@',
-            text: folder.name,
-            type: 'project',
-            children: []
-          };
-        } else {
-          var currentNode = {
-            id: folder.id,
-            text: folder.name,
-            type: folder.type,
-            children: []
-          };
+
+        var currentNode;
+        switch (type) {
+          case 'files' :
+          {
+            currentNode = {
+              id: '@@_root_@@',
+              text: folder.name,
+              type: 'files',
+              children: []
+            };
+          }
+            break;
+
+          case 'models' :
+          {
+            currentNode = {
+              id: '@@_root_@@',
+              text: folder.name,
+              type: 'models',
+              children: []
+            };
+          }
+            break;
+
+          case 'bundle' :
+          {
+            currentNode = {
+              id: '@@_root_@@',
+              text: folder.name,
+              type: 'bundle',
+              children: []
+            };
+          }
+            break;
+
+          default:
+          {
+            currentNode = {
+              id: folder.id,
+              text: folder.name,
+              type: folder.type,
+              children: []
+            };
+          }break;
         }
 
         if (!parent) {
@@ -76,10 +106,11 @@ angular.module('app')
           }
         }
         return currentNode;
-      },
+      }
+      ,
 
       /**
-       * Convert the object file to JSON for the tree 
+       * Convert the object file to JSON for the tree
        * @param file File to convert
        * @returns JSON File
        */
@@ -92,12 +123,13 @@ angular.module('app')
           hasContent: false
         };
         return currentNode;
-      },
+      }
+      ,
 
       /**
        * All project files as an array in only one level (no subFolder)
        * @param folder Folder
-       * @returns map of files 
+       * @returns map of files
        */
       getAllFilesFromTree: function (folder) {
         var allFiles = {};
@@ -105,7 +137,7 @@ angular.module('app')
           for (var i = 0; i < folder.folders.length; i++) {
             var folderSub = folder.folders[i];
             var tempAllFiles = this.getAllFilesFromTree(folderSub);
-            for(var fileId in tempAllFiles){
+            for (var fileId in tempAllFiles) {
               allFiles[fileId] = tempAllFiles[fileId];
             }
           }
@@ -117,7 +149,8 @@ angular.module('app')
           }
         }
         return allFiles;
-      },
+      }
+      ,
 
       /**
        * Get one file from the server for the user and the selected project
@@ -134,7 +167,8 @@ angular.module('app')
           .catch(function (e) {
             console.log(e);
           });
-      },
+      }
+      ,
 
       /**
        * @param userId User ID
@@ -153,7 +187,8 @@ angular.module('app')
           .catch(function (e) {
             console.log(e);
           });
-      },
+      }
+      ,
 
       /**
        * Create a new file in the current project
@@ -173,7 +208,8 @@ angular.module('app')
           .catch(function (e) {
             console.log(e);
           });
-      },
+      }
+      ,
 
       /**
        * Save the file for the current project
@@ -193,7 +229,8 @@ angular.module('app')
           .catch(function (e) {
             console.log(e);
           });
-      },
+      }
+      ,
 
       /**
        * Delete the file for the current project
@@ -210,7 +247,8 @@ angular.module('app')
           .catch(function (e) {
             console.log(e);
           });
-      },
+      }
+      ,
 
       /**
        * Delete the folder for the current project
@@ -230,4 +268,5 @@ angular.module('app')
           });
       }
     }
-  }]);
+  }
+  ]);

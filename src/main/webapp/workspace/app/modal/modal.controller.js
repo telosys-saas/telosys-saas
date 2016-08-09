@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 'FilesService', 'ProjectsService', 'data',
-  function ($scope, $uibModalInstance, FilesService, ProjectsService, data) {
+angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 'FilesService', 'ProjectsService', 'BundlesService', 'data',
+  function ($scope, $uibModalInstance, FilesService, ProjectsService, BundlesService, data) {
 
     /** authentication */
     $scope.profile = {

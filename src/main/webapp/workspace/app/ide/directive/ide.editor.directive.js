@@ -230,7 +230,7 @@ angular.module('ide').directive('editor', function () {
          */
         $scope.refreshFile = function () {
           if ($scope.events.onRefreshFile) {
-            $scope.events.onRefreshFile(function () {
+            $scope.events.onRefreshFile($scope.data, function () {
               var formatedFileId = $scope.formatFileId($scope.data.selectedFile.id);
               $scope.editors[formatedFileId].editor.setValue($scope.data.selectedFile.content);
             });
@@ -239,5 +239,4 @@ angular.module('ide').directive('editor', function () {
       }
     }
   }
-)
-;
+);

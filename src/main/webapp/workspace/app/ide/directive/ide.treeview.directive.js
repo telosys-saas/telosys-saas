@@ -11,7 +11,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
     templateUrl: 'app/ide/directive/ide.treeview.directive.html',
 
     link: function ($scope, element, attrs) {
-      
+
       $scope.events = $scope.data.events;
 
       /**
@@ -24,9 +24,9 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           nodeParent = {
             id: '@@_root_@@'
           };
-          $scope.onCreateFile(nodeParent, tree)();
+          $scope.onCreateFile(nodeParent, tree);
         } else {
-          $scope.onCreateFile(nodeParent, tree)();
+          $scope.onCreateFile(nodeParent, tree);
         }
       };
 
@@ -37,15 +37,14 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
        * @returns {Function}
        */
       $scope.onCreateFile = function (nodeParent, tree) {
-        return (function (obj) {
           // Modal window to create a new file
           var modalInstance = $uibModal.open({
             templateUrl: 'app/modal/modal.createfile.html',
             controller: 'modalCtrl',
             resolve: {
               data: {
-                  nodeParent: nodeParent,
-                  project: $scope.data.project
+                nodeParent: nodeParent,
+                project: $scope.data.project
               }
             }
           });
@@ -65,7 +64,6 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
               $scope.events.onCreateFile($scope.data, file);
             }
           });
-        });
       };
 
       /**
@@ -79,9 +77,9 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           nodeParent = {
             id: '@@_root_@@'
           };
-          $scope.onCreateFolder(nodeParent, tree)();
+          $scope.onCreateFolder(nodeParent, tree);
         } else {
-          $scope.onCreateFolder(nodeParent, tree)();
+          $scope.onCreateFolder(nodeParent, tree);
         }
       };
 
@@ -91,7 +89,6 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
        * @param tree Treeview
        */
       $scope.onCreateFolder = function (nodeParent, tree) {
-        return (function (obj) {
           // Modal window to create a new file
           var modalInstance = $uibModal.open({
             templateUrl: 'app/modal/modal.createfolder.html',
@@ -119,7 +116,38 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
               $scope.events.onCreateFolder($scope.data, folder);
             }
           });
-        });
+      };
+
+      /**
+       * Add bundle to the project
+       */
+      $scope.addBundle = function () {
+          // Modal window to create a new file
+          var modalInstance = $uibModal.open({
+            templateUrl: 'app/modal/modal.addbundle.html',
+            controller: 'modalCtrl',
+            resolve: {
+              data: {
+                bundles: $scope.data.tree.children
+              }
+            }
+          });
+
+          modalInstance.result.then(function (folder) {
+            // When the creation is a success
+            var node = {
+              id: folder.id,
+              text: folder.name,
+              type: folder.type,
+              nodeParentId: folder.folderParentId
+            };
+            // Add the node to the tree
+            tree.create_node(nodeParent, node);
+            console.log('creating node', node);
+            if ($scope.events.onCreateFolder) {
+              $scope.events.onCreateFolder($scope.data, folder);
+            }
+          });
       };
 
       /**
@@ -128,7 +156,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
       $scope.collapseAll = function () {
         console.log('collapseAll');
         var tree = $(element[0].children[1]).jstree();
-        if(tree) {
+        if (tree) {
           tree.close_all();
         }
       };
@@ -184,6 +212,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
        * Treeview initialization
        */
       function init() {
+        console.log('init treeview', $scope.data);
         $(element[0].children[1]).jstree({
           'core': {
             'data': [
@@ -194,13 +223,22 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           },
           "types": {
             "default": {
-              "icon": "fa fa-folder-o"
+              "icon": "fa fa-exclamation"
             },
             "folder": {
               "icon": "fa fa-folder-o"
             },
             "file": {
               "icon": "fa fa-file-text-o"
+            },
+            "bundle": {
+              "icon": "fa fa-archive"
+            },
+            "models": {
+              "icon": "fa fa-cubes"
+            },
+            "entity": {
+              "icon": "fa fa-cube"
             }
           },
           "contextmenu": {
@@ -243,7 +281,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           var fileFound = $scope.data.allFiles[data.node.id];
           $scope.data.selectedElement = data.node;
           console.log('treeview one click', fileFound);
-          if (fileFound && (fileFound.type == 'file')) {
+          if (fileFound && (fileFound.type == 'file' || fileFound.type == 'entity')) {
             $scope.data.tree.selectedFile = fileFound;
             if ($scope.events.onClickFile) {
               $scope.events.onClickFile($scope.data, data.node.id);
@@ -260,6 +298,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           }
         }.bind(this));
       }
+
       init();
     }
   }

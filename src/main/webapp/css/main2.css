@@ -13,6 +13,22 @@ html div, html ul {
     position: relative;
 }
 
+.navbar-nav>li {
+    z-index: 3;
+}
+
+#idemaintoolbar {
+    position: relative;
+    z-index: 2;
+    height: 29px;
+    background-color: #f1f1f1;
+    border-bottom: 1px solid lightgrey;
+}
+
+#idemaintoolbar .navbar-nav>li>a {
+    padding: 4px;
+}
+
 .logo-telosys-min {
     display: inline-block;
     background: url("/images/telosys-logo-min.svg");

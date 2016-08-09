@@ -5,12 +5,22 @@ angular.module('ide')
     return {
       
       scope: {
-        data: '='
+        data: '=',
+        profile: '='
       },
 
       templateUrl: 'app/ide/directive/ide.toolbar.directive.html',
 
       link: function ($scope, element, attrs) {
+
+        $scope.events = $scope.data.events;
+
+        /**
+         * Change view
+         */
+        $scope.changeView = function(view) {
+          $scope.data.events.changeView(view);
+        };
 
         /**
          * Download the project in a ZIP file

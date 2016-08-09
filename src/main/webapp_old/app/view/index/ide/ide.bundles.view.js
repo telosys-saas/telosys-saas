@@ -11,7 +11,7 @@ var IDEBundles = {
       state.bundlesInPublicRepository = bundlesInPublicRepository;
 
       // Bundles in the project
-      ProjectsService.getBundlesOfProject(state.auth.userId, state.projectId, function(bundlesOfProject) {
+      ProjectsService.getBundlesOfProject(state.profile.userId, state.projectId, function(bundlesOfProject) {
         state.bundlesOfProject = bundlesOfProject;
         if(callback) {
           callback();
@@ -118,7 +118,7 @@ var IDEBundles = {
   addBundle: function(bundleName) {
     this.displayWait(bundleName);
     var state = Store.getState();
-    ProjectsService.addBundle(state.auth.userId, state.projectId, bundleName, function() {
+    ProjectsService.addBundle(state.profile.userId, state.projectId, bundleName, function() {
       console.log('Bundle added : ',bundleName);
       this.loadData(function() {
         IDETreeview.refreshAll();
@@ -129,7 +129,7 @@ var IDEBundles = {
 
   removeBundle: function(bundleName) {
     var state = Store.getState();
-    ProjectsService.removeBundle(state.auth.userId, state.projectId, bundleName, function() {
+    ProjectsService.removeBundle(state.profile.userId, state.projectId, bundleName, function() {
       console.log('Bundle removed : ',bundleName);
       this.loadData(function() {
         IDETreeview.refreshAll();

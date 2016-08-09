@@ -6,7 +6,7 @@ var ToolbarUserChangePassword = {
 
   loadData: function(callback) {
     var state = Store.getState();
-    AuthService.getAccount(state.auth.userId, function(account) {
+    AuthService.getAccount(state.profile.userId, function(account) {
       state.account = account;
       if(callback) {
         callback();

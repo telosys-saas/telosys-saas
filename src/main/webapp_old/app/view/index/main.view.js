@@ -18,7 +18,7 @@ var Main = {
     if(state.page == 'welcome') {
       page = 'welcome';
     }
-    if (!state.auth.authenticated) { // not authenticated
+    if (!state.profile.authenticated) { // not authenticated
       if (state.page != 'ide' && state.page != 'projects') {
         page = state.page;
       }
@@ -28,7 +28,7 @@ var Main = {
       }
     }
     if(!page) {
-      if (!state.auth.authenticated) { // not authenticated
+      if (!state.profile.authenticated) { // not authenticated
         page = 'welcome';
       }
       else { // authenticated

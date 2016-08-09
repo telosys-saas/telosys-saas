@@ -3,7 +3,7 @@ var AuthService = {
   status: function(callback) {
     var deferred = Q.defer();
     $.ajax({
-      url: host + "api/v1/auth/user",
+      url: host + "api/v1/profile/user",
       dataType: 'json'
     })
       .done(function (msg) {

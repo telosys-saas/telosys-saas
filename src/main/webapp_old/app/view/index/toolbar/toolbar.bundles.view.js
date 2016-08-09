@@ -22,7 +22,7 @@ var ToolbarBundles = {
       state.bundlesInPublicRepository = bundlesInPublicRepository;
 
       // Bundles in the project
-      ProjectsService.getBundlesOfProject(state.auth.userId, state.projectId, function(bundlesOfProject) {
+      ProjectsService.getBundlesOfProject(state.profile.userId, state.projectId, function(bundlesOfProject) {
         state.bundlesOfProject = bundlesOfProject;
         console.log('bundles : ',bundlesOfProject);
         if(callback) {
@@ -111,7 +111,7 @@ var ToolbarBundles = {
 
   addBundle: function(bundleName) {
     var state = Store.getState();
-    ProjectsService.addBundle(state.auth.userId, state.projectId, bundleName, function() {
+    ProjectsService.addBundle(state.profile.userId, state.projectId, bundleName, function() {
       console.log('Bundle added : ',bundleName);
       this.loadData(function() {
         this.displayModal();
@@ -122,7 +122,7 @@ var ToolbarBundles = {
 
   removeBundle: function(bundleName) {
     var state = Store.getState();
-    ProjectsService.removeBundle(state.auth.userId, state.projectId, bundleName, function() {
+    ProjectsService.removeBundle(state.profile.userId, state.projectId, bundleName, function() {
       console.log('Bundle removed : ',bundleName);
       this.loadData(function() {
         this.displayModal();

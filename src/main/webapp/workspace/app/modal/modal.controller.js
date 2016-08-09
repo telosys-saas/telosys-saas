@@ -4,7 +4,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
   function ($scope, $uibModalInstance, FilesService, ProjectsService, data) {
 
     /** authentication */
-    $scope.auth = {
+    $scope.profile = {
       userId: 'user'
     };
 
@@ -32,7 +32,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      */
     $scope.createProject = function () {
       console.log('createProject modal');
-      ProjectsService.createProject($scope.auth.userId, $scope.projectName)
+      ProjectsService.createProject($scope.profile.userId, $scope.projectName)
         .then(function (result) {
           var project = result.data;
           $uibModalInstance.close(project);
@@ -61,7 +61,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
           folderParentId: $scope.data.nodeParent.id
         }
       }
-      FilesService.createFolderForProject($scope.auth.userId, $scope.data.project.id, folder)
+      FilesService.createFolderForProject($scope.profile.userId, $scope.data.project.id, folder)
         .then(function (result) {
           var folder = result.data;
           console.log('createFolderForProject', folder);
@@ -95,7 +95,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
           folderParentId: $scope.data.nodeParent.id
         }
       }
-      FilesService.createFileForProject($scope.auth.userId, $scope.data.project.id, file)
+      FilesService.createFileForProject($scope.profile.userId, $scope.data.project.id, file)
         .then(function (result) {
           var file = result.data;
           console.log('createFileForProject', file);

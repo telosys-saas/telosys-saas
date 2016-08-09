@@ -2,9 +2,9 @@
     <i class="mdi mdi-camera-timer"></i>
     Open editors
     <div style="float:right">
-        <a href ng-click="$event.stopPropagation(); data.events.saveAll();"><i
+        <a href ng-click="$event.stopPropagation(); events.saveAll(data);"><i
                 class="fa fa-floppy-o"></i></a>
-        <a href ng-click="$event.stopPropagation(); data.events.closeAll();"><i
+        <a href ng-click="$event.stopPropagation(); events.closeAll(data);"><i
                 class="fa fa-times"></i></a>
     </div>
 </div>
@@ -12,12 +12,11 @@
     <ul class="collection">
         <li ng-repeat="file in data.workingFiles" class="collection-item"
             ng-class="{'working-file-selected': file.id == data.selectedFile.id}"
-            ng-click="onClickFile(file)">
-            <a href ng-click="data.events.onCloseFile(file.id); $event.stopPropagation()">
+            ng-click="onClickFile(data, file)">
+            <a href ng-click="events.onCloseFile(data, file.id); $event.stopPropagation()">
                 <i ng-if="!file.isModified" class="fa fa-times fa-lg delete"></i>
             </a>
             <i ng-if="file.isModified" class="fa fa-circle" style="padding-right: 15px"></i>
-            &nbsp;
             <a href>{{file.name}} <span style="font-size: smaller; color: gray;">{{file.path}}</span></a>
         </li>
         <li ng-if="data.openFile!=null && data.workingFiles[data.openFile.id]==null"
@@ -25,7 +24,7 @@
             ng-class="{'working-file-selected': data.openFile.id == data.selectedFile.id}"
             ng-click="onClickFile(data.openFile)">
             <a href ng-if="!data.openFile.isModified"
-               ng-click="$event.stopPropagation(); data.events.onCloseFile(data.openFile.id);">
+               ng-click="$event.stopPropagation(); events.onCloseFile(data, data.openFile.id);">
                 <i class="fa fa-times fa-lg delete"></i>
             </a>
             <i ng-if="data.openFile.isModified" class="fa fa-circle" style="padding-right: 15px"></i>

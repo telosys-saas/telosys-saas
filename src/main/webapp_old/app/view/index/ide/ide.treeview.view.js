@@ -5,13 +5,13 @@ var IDETreeview = {
     var state = Store.getState();
     state.tree = {};
     FilesService
-      .getFilesForProject(state.auth.userId, state.projectId)
+      .getFilesForProject(state.profile.userId, state.projectId)
       .then(function(rootFolder) {
         var root = this.convertFolderToJson(rootTree, null, 'root');
         state.tree.root = root;
 
         return TelosysService
-          .getTelosysFolderForProject(state.auth.userId, state.projectId)
+          .getTelosysFolderForProject(state.profile.userId, state.projectId)
       }.bind(this))
       .then(function(telosysFolder) {
         var telosys = this.convertFolderToJson(telosysFolder, null, 'telosys');
@@ -43,7 +43,7 @@ var IDETreeview = {
                     "bundle" : {
                       "icon" : "fa fa-archive"
                     },
-                    "model" : {
+                    "models" : {
                       "icon" : "fa fa-cubes"
                     },
                     "entity" : {
@@ -85,7 +85,7 @@ var IDETreeview = {
                           action: this.onCreateModel(node, tree)
                         };
                       }
-                      if(node.type == 'model') {
+                      if(node.type == 'models') {
                         items.CreateFolder = {
                           label: "Create entity",
                           action: this.onCreateModelEntity(node, tree)
@@ -155,14 +155,14 @@ var IDETreeview = {
   refreshAll: function() {
     var state = Store.getState();
     FilesService
-      .getFilesForProject(state.auth.userId, state.projectId)
+      .getFilesForProject(state.profile.userId, state.projectId)
       .then(function(rootFolder) {
         state.tree = {};
         var root = this.convertFolderToJson(rootTree, null);
         state.tree.root = root;
 
         return TelosysService
-          .getTelosysFolderForProject(state.auth.userId, state.projectId)
+          .getTelosysFolderForProject(state.profile.userId, state.projectId)
       }.bind(this))
       .then(function(telosysFolder) {
         var telosys = this.convertFolderToJson(telosysFolder, null);
@@ -198,7 +198,7 @@ var IDETreeview = {
     if(data.node.type == 'folder') {
       data.instance.toggle_node(data.node);
     }
-    if(data.node.type == 'telosys' || data.node.type == 'bundles' || data.node.type == 'bundle' || data.node.type == 'model') {
+    if(data.node.type == 'telosys' || data.node.type == 'bundles' || data.node.type == 'bundle' || data.node.type == 'models') {
       if(!data.instance.is_open(data.node)) {
         data.instance.open_node(data.node);
       }
@@ -208,7 +208,7 @@ var IDETreeview = {
       if(data.node.type == 'bundles') {
         IDEBundles.open();
       }
-      if(data.node.type == 'model') {
+      if(data.node.type == 'models') {
         var state = Store.getState();
         state.modelName = data.node.text;
         IDEGeneration.open();
@@ -250,7 +250,7 @@ var IDETreeview = {
           };
         }
         tree.set_id(node,file.id);
-        FilesService.createFileForProject(state.auth.userId, state.projectId, file, function(folder) {
+        FilesService.createFileForProject(state.profile.userId, state.projectId, file, function(folder) {
           console.log('file created', file);
         });
       });
@@ -279,7 +279,7 @@ var IDETreeview = {
           };
         }
         tree.set_id(node,folder.id);
-        FilesService.createFolderForProject(state.auth.userId, state.projectId, folder, function(folder) {
+        FilesService.createFolderForProject(state.profile.userId, state.projectId, folder, function(folder) {
           console.log('folder created', folder);
         });
       });
@@ -289,13 +289,13 @@ var IDETreeview = {
   onCreateModel: function(nodeParent, tree) {
     return (function (obj) {
       var node = {
-        type: 'model'
+        type: 'models'
       };
       node = tree.create_node(nodeParent, node);
       tree.edit(node, null, function(node, status) {
         var state = Store.getState();
         tree.set_id(node,node.text);
-        ProjectsService.createModel(state.auth.userId, state.projectId, node.text, function(model) {
+        ProjectsService.createModel(state.profile.userId, state.projectId, node.text, function(model) {
           console.log('model created', model);
           IDETreeview.refreshAll();
         });
@@ -328,7 +328,7 @@ var IDETreeview = {
           folderParentId: nodeParent.id
         };
         tree.set_id(node,entity.id);
-        TelosysService.createEntityForModel(state.auth.userId, projectId, modelName, entity.name, function() {
+        TelosysService.createEntityForModel(state.profile.userId, projectId, modelName, entity.name, function() {
           console.log('entity file created', entity.name);
           IDETreeview.refreshAll();
         });
@@ -342,14 +342,14 @@ var IDETreeview = {
       var state = Store.getState();
       if(node.type == 'file' || node.type == 'entity') {
         var fileId = node.id;
-        FilesService.deleteFileForProject(state.auth.userId, state.projectId, fileId, function() {
+        FilesService.deleteFileForProject(state.profile.userId, state.projectId, fileId, function() {
           console.log("File '"+node.id+"' deleted");
           IDEAction.closeFile(node.id);
         });
       }
       if(node.type == 'folder') {
         var folderId = node.id;
-        FilesService.deleteFolderForProject(state.auth.userId, state.projectId, folderId, function() {
+        FilesService.deleteFolderForProject(state.profile.userId, state.projectId, folderId, function() {
           console.log("Folder '"+node.id+"' deleted");
           for(var openFileId in state.openFiles) {
             if(openFileId.indexOf(node.id) != -1) {
@@ -358,9 +358,9 @@ var IDETreeview = {
           }
         });
       }
-      if(node.type == 'model') {
+      if(node.type == 'models') {
         var modelName = node.text;
-        ProjectsService.deleteModel(state.auth.userId, state.projectId, modelName, function() {
+        ProjectsService.deleteModel(state.profile.userId, state.projectId, modelName, function() {
           console.log("Model '"+modelName+"' deleted");
           for(var openFileId in state.openFiles) {
             if(openFileId.indexOf(modelName) != -1) {

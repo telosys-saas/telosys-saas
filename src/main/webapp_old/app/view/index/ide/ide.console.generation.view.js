@@ -123,7 +123,7 @@ var IDEConsoleGeneration = {
       var posBegin = error.message.indexOf('Entity : "') + 10;
       var posEnd = error.message.indexOf('"', posBegin);
       var entityName = error.message.substring(posBegin, posEnd);
-      var entityFileId = 'TelosysTools/' + generation.model + '_model/' + entityName + '.entity';
+      var entityFileId = 'TelosysTools/' + generation.models + '_model/' + entityName + '.entity';
 
       var posBegin = posEnd + 2;
       if(error.message.indexOf('Exception :', posBegin) != -1) {

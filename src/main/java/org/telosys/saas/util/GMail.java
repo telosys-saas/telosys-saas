@@ -19,7 +19,7 @@ public class GMail {
 			Properties mailServerProperties;
 			mailServerProperties = System.getProperties();
 			mailServerProperties.put("mail.smtp.port", "587");
-			mailServerProperties.put("mail.smtp.auth", "true");
+			mailServerProperties.put("mail.smtp.profile", "true");
 			mailServerProperties.put("mail.smtp.starttls.enable", "true");
 
 			Session getMailSession;

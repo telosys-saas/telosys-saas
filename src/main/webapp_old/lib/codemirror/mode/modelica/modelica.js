@@ -66,7 +66,7 @@
 
       var cur = stream.current();
 
-      if(state.sol && (cur == "package" || cur == "model" || cur == "when" || cur == "connector")) state.level++;
+      if(state.sol && (cur == "package" || cur == "models" || cur == "when" || cur == "connector")) state.level++;
       else if(state.sol && cur == "end" && state.level > 0) state.level--;
 
       state.tokenize = null;

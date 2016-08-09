@@ -9,7 +9,7 @@ angular.module('app')
       status: function () {
         return $http({
           method: 'GET',
-          url: host + 'api/v1/auth/user',
+          url: host + 'api/v1/profile/user',
           dataType: 'json'
         })
           .catch(function (e) {

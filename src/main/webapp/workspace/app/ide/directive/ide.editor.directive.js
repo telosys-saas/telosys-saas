@@ -6,13 +6,15 @@
 angular.module('ide').directive('editor', function () {
     return {
       scope: {
-        data: '=',
-        events: '='
+        data: '='
       },
-
+      
       templateUrl: 'app/ide/directive/ide.editor.directive.html',
 
       link: function ($scope, element, attrs) {
+
+        $scope.events = $scope.data.events;
+
         /**
          * Watch "selected file", when the selected file change
          * @param oldValue : before change
@@ -98,11 +100,11 @@ angular.module('ide').directive('editor', function () {
           extraKeys: {
             'Ctrl-S': function (cm) {
               console.log('Ctrl-S save method');
-              $scope.saveFile();
+              $scope.saveFile($scope.data);
             },
             'Cmd-S': function (cm) {
               console.log('Cmd-S save method');
-              $scope.saveFile();
+              $scope.saveFile($scope.data);
             }
           }
         };
@@ -116,8 +118,8 @@ angular.module('ide').directive('editor', function () {
          * Save the current selected file
          */
         $scope.saveFile = function () {
-          if ($scope.data.events.saveFile) {
-            $scope.data.events.saveFile();
+          if ($scope.events.saveFile) {
+            $scope.events.saveFile($scope.data);
           }
         };
 
@@ -128,8 +130,8 @@ angular.module('ide').directive('editor', function () {
           if ($scope.data.selectedFile == null) {
             return;
           }
-          if ($scope.data.events.onCloseFile) {
-              $scope.data.events.onCloseFile($scope.data.selectedFile.id);
+          if ($scope.events.onCloseFile) {
+              $scope.events.onCloseFile($scope.data, $scope.data.selectedFile.id);
             }
         };
 
@@ -218,8 +220,8 @@ angular.module('ide').directive('editor', function () {
         $scope.onContentChange = function () {
           var formatedFileId = $scope.formatFileId($scope.data.selectedFile.id);
           $scope.data.selectedFile.content = $scope.editors[formatedFileId].editor.getValue();
-          if ($scope.data.events.onContentChange) {
-            $scope.data.events.onContentChange($scope.data.selectedFile.id);
+          if ($scope.events.onContentChange) {
+            $scope.events.onContentChange($scope.data, $scope.data.selectedFile.id);
           }
         };
 
@@ -227,8 +229,8 @@ angular.module('ide').directive('editor', function () {
          * Refresh the file content
          */
         $scope.refreshFile = function () {
-          if ($scope.data.events.onRefreshFile) {
-            $scope.data.events.onRefreshFile(function () {
+          if ($scope.events.onRefreshFile) {
+            $scope.events.onRefreshFile(function () {
               var formatedFileId = $scope.formatFileId($scope.data.selectedFile.id);
               $scope.editors[formatedFileId].editor.setValue($scope.data.selectedFile.content);
             });

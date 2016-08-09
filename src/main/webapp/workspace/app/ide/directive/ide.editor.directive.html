@@ -2,12 +2,12 @@
     <ul class="nav nav-tabs">
         <li ng-repeat="file in data.workingFiles" class="collection-item truncate"
             ng-class="{'active': file.id == data.selectedFile.id}"
-            ng-click="data.events.onClickFile(file.id)">
+            ng-click="events.onClickFile(data, file.id)">
             <a href><i ng-if="file.isModified" class="fa fa-circle" style="padding-right: 5px"></i>{{file.name}}</a>
         </li>
         <li ng-if="data.openFile!=null && data.workingFiles[data.openFile.id]==null"
             ng-class="{'active': data.selectedFile.id == data.openFile.id}"
-            ng-click="data.events.onClickFile(data.openFile.id)">
+            ng-click="events.onClickFile(data, data.openFile.id)">
             <a href><i ng-if="data.openFile.isModified" class="fa fa-circle" style="padding-right: 5px"></i><i>{{data.openFile.name}} <span
                     style="font-size: smaller; color: gray;">{{data.openFile.path}}</span></i></a>
         </li>
@@ -15,21 +15,20 @@
 </div>
 <div id="editorToolbar" class="editorToolbar" ng-if="data.selectedFile">
     <div>
-        <button class="btn btn-success" ng-click="saveFile()">
+        <button class="btn btn-success" ng-click="saveFile(data)">
             <span class="fa fa-floppy-o fa-lg"></span> &nbsp;Save
         </button>
         &nbsp;
         <i ng-if="data.selectedFile.isModified" class="fa fa-circle"></i>
         <span> {{data.selectedFile.name}}</span>
         <div style="float:right" class="icons">
-            <button class="btn btn-default" ng-click="refreshFile()">
+            <button class="btn btn-default" ng-click="refreshFile(data)">
                 <span class="fa fa-refresh fa-lg"></span> &nbsp;Refresh
             </button>
-            <button class="btn btn-default" ng-click="closeSelectedFile()">
+            <button class="btn btn-default" ng-click="closeSelectedFile(data)">
                 <span class="fa fa-times fa-lg"></span> &nbsp;Close
             </button>
         </div>
     </div>
 </div>
 <div id="editorCodemirror" class="editorCodemirror"></div>
-{{data.name}}

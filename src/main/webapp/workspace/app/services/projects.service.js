@@ -65,6 +65,25 @@ angular.module('app')
       },
 
       /**
+       * Launch the code generation
+       * @param userId User ID
+       * @param projectName Current project Name
+       * @param generation
+       * @returns {*}
+       */
+      launchGeneration: function (userId, projectName, generation) {
+        return $http({
+          method: "PUT",
+          url: host + "api/v1/users/"+userId+"/projects/"+projectName+"/action/generate",
+          dataType: 'json',
+          data: JSON.stringify(generation)
+        })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
+
+      /**
        * Download the project in a ZIP file
        * @param userId User ID
        * @param projectName Project name

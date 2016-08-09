@@ -8,7 +8,7 @@ var Store = {
 
     AuthService.status()
       .then(function(auth) {
-        this.state.auth = auth;
+        this.state.profile = profile;
         deferred.resolve(this.state);
 
       }.bind(this))

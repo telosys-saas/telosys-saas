@@ -21,7 +21,7 @@ var Toolbar = {
          '<a href="#!" class="brand-logo left" style="position: relative; margin-right: 20px; ">Telosys</a>' +
          '<ul id="nav-mobile" class="hide-on-med-and-down left">';
 
-    if(state.auth.userId != null) {
+    if(state.profile.userId != null) {
       html += 
         '<li id="toolbarProjects">' +
           '<a class="dropdown-button" href="#" data-activates="toolbarProjectsList">' +

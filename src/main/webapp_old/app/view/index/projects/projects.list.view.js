@@ -3,7 +3,7 @@ var ProjectsList = {
 
   init: function() {
     var state = Store.getState();
-    ProjectsService.loadProjects(state.auth.userId, function(projects) {
+    ProjectsService.loadProjects(state.profile.userId, function(projects) {
       var html = '';
       for (var i = 0; i < projects.length; i++) {
         var project = projects[i];

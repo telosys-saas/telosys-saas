@@ -2,14 +2,14 @@ var Websocket = {
 
   init: function() {
     var state = Store.getState();
-    if(state.auth.userId && state.projectId) {
+    if(state.profile.userId && state.projectId) {
       this.create();
     }
   },
 
   create: function() {
     var state = Store.getState();
-    var ws = new WebSocket("ws://127.0.0.1:8080/ws/users/"+state.auth.userId+"/projects/"+state.projectId);
+    var ws = new WebSocket("ws://127.0.0.1:8080/ws/users/"+state.profile.userId+"/projects/"+state.projectId);
 
     ws.onopen = function () {
       console.log("Opened! ");

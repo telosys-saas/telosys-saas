@@ -1,8 +1,8 @@
 var ToolbarProjects = {
   init: function() {
     var state = Store.getState();
-    if(state.auth.authenticated) {
-      ProjectsService.loadProjects(state.auth.userId, function(projects) {
+    if(state.profile.authenticated) {
+      ProjectsService.loadProjects(state.profile.userId, function(projects) {
         var html = '';
 
         html += 

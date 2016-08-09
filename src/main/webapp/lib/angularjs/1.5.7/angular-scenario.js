@@ -29114,7 +29114,7 @@ function $$TestabilityProvider() {
       var prefixes = ['ng-', 'data-ng-', 'ng\\:'];
       for (var p = 0; p < prefixes.length; ++p) {
         var attributeEquals = opt_exactMatch ? '=' : '*=';
-        var selector = '[' + prefixes[p] + 'model' + attributeEquals + '"' + expression + '"]';
+        var selector = '[' + prefixes[p] + 'models' + attributeEquals + '"' + expression + '"]';
         var elements = element.querySelectorAll(selector);
         if (elements.length) {
           return elements;
@@ -32747,7 +32747,7 @@ var inputType = {
         browser.executeScript(scr);
       }
 
-      it('should initialize to model', function() {
+      it(models, function() {
         expect(value.getText()).toContain('2010-12-28T14:57:00');
         expect(valid.getText()).toContain('myForm.input.$valid = true');
       });

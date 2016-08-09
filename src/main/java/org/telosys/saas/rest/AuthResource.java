@@ -20,7 +20,7 @@ import org.pac4j.core.profile.ProfileManager;
 import org.pac4j.core.profile.UserProfile;
 import org.slf4j.LoggerFactory;
 
-@Path("/auth")
+@Path("/profile")
 public class AuthResource {
 
     @GET

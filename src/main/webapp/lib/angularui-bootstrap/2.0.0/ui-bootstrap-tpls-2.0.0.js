@@ -6660,7 +6660,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
               scope.matches.push({
                 id: getMatchId(i),
                 label: parserResult.viewMapper(scope, locals),
-                model: matches[i]
+                models: matches[i]
               });
             }
 
@@ -6774,7 +6774,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
       var model, item;
 
       selected = true;
-      locals[parserResult.itemName] = item = scope.matches[activeIdx].model;
+      locals[parserResult.itemName] = item = scope.matches[activeIdx].models;
       model = parserResult.modelMapper(originalScope, locals);
       $setModelValue(originalScope, model);
       modelCtrl.$setValidity('editable', true);

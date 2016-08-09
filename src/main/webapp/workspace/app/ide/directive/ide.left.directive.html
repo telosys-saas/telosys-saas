@@ -1,9 +1,13 @@
 <div id="main-left">
     <div>
-        <workingfiles data="data" events="events"></workingfiles>
+        <workingfiles data="data"></workingfiles>
     </div>
     <div>
-        <treeview data="data" events="events"></treeview>
+        <treeview data="data" ng-if="data.name=='files' || data.name=='bundles'"></treeview>
     </div>
+    <ul class="collection">
+        <li class="collection-item" ng-repeat="entity in data.allFiles" ng-if="data.name=='models'">
+            <a href ng-click="data.events.onClickFile(data)">{{entity.text}}</a>
+        </li>
+    </ul>
 </div>
-{{data.name}}

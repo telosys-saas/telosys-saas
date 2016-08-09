@@ -1451,11 +1451,11 @@
 			/**
 			 * triggered when new data is inserted to the tree model
 			 * @event
-			 * @name model.jstree
+			 * @name models.jstree
 			 * @param {Array} nodes an array of node IDs
 			 * @param {String} parent the parent ID of the nodes
 			 */
-			this.trigger('model', { "nodes" : dpc, 'parent' : par });
+			this.trigger('models', { "nodes" : dpc, 'parent' : par });
 			if(par !== $.jstree.root) {
 				this._node_changed(par);
 				this.redraw();
@@ -1465,7 +1465,7 @@
 				this.redraw(true);
 			}
 			if(this._data.core.selected.length !== s) {
-				this.trigger('changed', { 'action' : 'model', 'selected' : this._data.core.selected });
+				this.trigger('changed', { 'action' : 'models', 'selected' : this._data.core.selected });
 			}
 			cb.call(this, true);
 		},
@@ -1799,7 +1799,7 @@
 						this._data.core.selected = this._data.core.selected.concat(rslt.add);
 					}
 
-					this.trigger('model', { "nodes" : rslt.dpc, 'parent' : rslt.par });
+					this.trigger('models', { "nodes" : rslt.dpc, 'parent' : rslt.par });
 
 					if(rslt.par !== $.jstree.root) {
 						this._node_changed(rslt.par);
@@ -1810,7 +1810,7 @@
 						this.redraw(true);
 					}
 					if(rslt.add.length) {
-						this.trigger('changed', { 'action' : 'model', 'selected' : this._data.core.selected });
+						this.trigger('changed', { 'action' : 'models', 'selected' : this._data.core.selected });
 					}
 					cb.call(this, true);
 				};
@@ -3672,7 +3672,7 @@
 			dpc = [];
 			dpc.push(node);
 			dpc = dpc.concat(tmp.children_d);
-			this.trigger('model', { "nodes" : dpc, "parent" : par.id });
+			this.trigger('models', { "nodes" : dpc, "parent" : par.id });
 
 			par.children_d = par.children_d.concat(dpc);
 			for(i = 0, j = par.parents.length; i < j; i++) {
@@ -4113,7 +4113,7 @@
 			dpc = [];
 			dpc.push(node);
 			dpc = dpc.concat(tmp.children_d);
-			this.trigger('model', { "nodes" : dpc, "parent" : new_par.id });
+			this.trigger('models', { "nodes" : dpc, "parent" : new_par.id });
 
 			// insert into new parent and up
 			for(i = 0, j = new_par.parents.length; i < j; i++) {
@@ -4759,7 +4759,7 @@
 			}
 			if(!this.settings.checkbox.tie_selection) {
 				this.element
-					.on('model.jstree', $.proxy(function (e, data) {
+					.on('models.jstree', $.proxy(function (e, data) {
 						var m = this._model.data,
 							p = m[data.parent],
 							dpc = data.nodes,
@@ -4774,7 +4774,7 @@
 			}
 			if(this.settings.checkbox.cascade.indexOf('up') !== -1 || this.settings.checkbox.cascade.indexOf('down') !== -1) {
 				this.element
-					.on('model.jstree', $.proxy(function (e, data) {
+					.on('models.jstree', $.proxy(function (e, data) {
 							var m = this._model.data,
 								p = m[data.parent],
 								dpc = data.nodes,
@@ -7182,7 +7182,7 @@
 		this.bind = function () {
 			parent.bind.call(this);
 			this.element
-				.on("model.jstree", $.proxy(function (e, data) {
+				.on("models.jstree", $.proxy(function (e, data) {
 						this.sort(data.parent, true);
 					}, this))
 				.on("rename_node.jstree create_node.jstree", $.proxy(function (e, data) {
@@ -7379,7 +7379,7 @@
 		};
 		this.bind = function () {
 			this.element
-				.on('model.jstree', $.proxy(function (e, data) {
+				.on('models.jstree', $.proxy(function (e, data) {
 						var m = this._model.data,
 							dpc = data.nodes,
 							t = this.settings.types,

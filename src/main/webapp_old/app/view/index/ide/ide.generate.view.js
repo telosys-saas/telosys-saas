@@ -20,7 +20,7 @@ var IDEGenerate = {
     $('#generateButton').css('disabled', true);
 
     var state = Store.getState();
-    ProjectsService.launchGeneration(state.auth.userId, state.projectId, function(result) {
+    ProjectsService.launchGeneration(state.profile.userId, state.projectId, function(result) {
       console.log("Generation complete - result : ", result);
       $('#generateButton').css('disabled', false);
       if(result.numberOfGenerationErrors != 0) {

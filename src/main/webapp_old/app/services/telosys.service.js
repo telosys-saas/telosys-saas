@@ -44,7 +44,7 @@ var TelosysService = {
       .fail(function (jqXHR, textStatus) {
         console.log(textStatus);
       });
-  },
+  }
 
 
 };

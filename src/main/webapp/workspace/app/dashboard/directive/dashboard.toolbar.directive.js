@@ -43,7 +43,7 @@ angular.module('dashboard')
         
         $scope.logout = function() {
           console.log(document.location);
-          document.location = 'auth/logout?url='+document.location.href;
+          document.location = 'profile/logout?url='+document.location.href;
         };
       }
     }

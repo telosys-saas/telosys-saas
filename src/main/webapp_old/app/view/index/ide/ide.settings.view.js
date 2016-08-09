@@ -5,7 +5,7 @@ var IDESettings = {
 
   loadData: function(callback) {
     var state = Store.getState();
-    ProjectsService.getProjectConfiguration(state.auth.userId, state.projectId, function(projectConfiguration) {
+    ProjectsService.getProjectConfiguration(state.profile.userId, state.projectId, function(projectConfiguration) {
       state.projectConfiguration = projectConfiguration;
       if(callback) {
         callback();
@@ -153,7 +153,7 @@ var IDESettings = {
     variables.DOC = document.getElementById('configTelosysCfg_DOC').value;
     variables.TMP = document.getElementById('configTelosysCfg_TMP').value;
 
-    ProjectsService.saveProjectConfiguration(state.auth.userId, state.projectId, state.projectConfiguration, function(isOk) {
+    ProjectsService.saveProjectConfiguration(state.profile.userId, state.projectId, state.projectConfiguration, function(isOk) {
 
     });
   }

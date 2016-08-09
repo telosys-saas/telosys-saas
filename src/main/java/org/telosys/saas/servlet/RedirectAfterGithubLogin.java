@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Redirect after login
  */
-@WebServlet("/auth/github")
+@WebServlet("/profile/github")
 public class RedirectAfterGithubLogin extends HttpServlet {
 
     @Override

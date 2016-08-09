@@ -1,17 +1,16 @@
-<idetoolbar data="data"></idetoolbar>
+<idetoolbar data="data" profile="profile"></idetoolbar>
 <div style="width: 100%; height: 100%; position: relative" ng-if="initialized">
     <div id="left" class="content" style="position: absolute; left: 0; width: calc(25% - 10px); top: 0; bottom: 0">
-        <left data="data.model" events="data.events" ng-show="data.isDisplay=='model'"></left>
-        <left data="data.bundles" events="data.events" ng-show="data.isDisplay=='bundles'"></left>
-        <left data="data.files" events="data.events" ng-show="data.isDisplay=='files'"></left>
+        <left data="data.models" ng-show="data.isDisplay=='models'"></left>
+        <left data="data.bundles" ng-show="data.isDisplay=='bundles'"></left>
+        <left data="data.files" ng-show="data.isDisplay=='files'"></left>
     </div>
     <div id="editor" class="content" style="position: absolute; right: 0; width: 75%; height: 75%; top: 0;">
-        <editor data="data.model" events="data.events" ng-show="data.isDisplay=='model'"></editor>
-        <editor data="data.bundles" events="data.events" ng-show="data.isDisplay=='bundles'"></editor>
-        <editor data="data.files" events="data.events" ng-show="data.isDisplay=='files'"></editor>
+        <editor data="data.models" ng-show="data.isDisplay=='models'"></editor>
+        <editor data="data.bundles" ng-show="data.isDisplay=='bundles'"></editor>
+        <editor data="data.files" ng-show="data.isDisplay=='files'"></editor>
     </div>
     <div id="console" class="content" style="position: absolute; right: 0; width: 75%; height: calc(25% - 10px); bottom: 0;">
         <console></console>
     </div>
 </div>
-{{data}}

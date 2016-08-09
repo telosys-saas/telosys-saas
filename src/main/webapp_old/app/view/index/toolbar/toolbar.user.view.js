@@ -7,20 +7,20 @@ var ToolbarUser = {
       '<ul id="nav-mobile" class="hide-on-med-and-down left">' +
         '<li><a class="dropdown-button" href="#" data-activates="toolbarUserMenu" style="font-size: 20px">'
         
-    if(state.auth.authenticated) {
-      if(state.auth.avatar && state.auth.avatar != 'null') {
+    if(state.profile.authenticated) {
+      if(state.profile.avatar && state.profile.avatar != 'null') {
         html += 
-          '<img src="'+state.auth.avatar+'" style="float: left; margin: 11px; height: 36px; border-radius: 50%; box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)" /> &nbsp;'
+          '<img src="'+state.profile.avatar+'" style="float: left; margin: 11px; height: 36px; border-radius: 50%; box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)" /> &nbsp;'
       } else {
         html += 
           '<span class="fa fa-user"></span> &nbsp;'
       }
-      if(state.auth.login) {
+      if(state.profile.login) {
         html +=
-          state.auth.login;
+          state.profile.login;
       } else {
         html +=
-          state.auth.userId;
+          state.profile.userId;
       }
     } else {
       html += 
@@ -33,7 +33,7 @@ var ToolbarUser = {
     $('#toolbarUser').html(html);
 
     var html = '';
-    if(!state.auth.authenticated) {
+    if(!state.profile.authenticated) {
       html += 
         '<li><a href="#!" onclick="ToolbarUser.login()">Log in</a></li>' +
         '<li><a href="#!" onclick="Login.createAccount()">Create an account</a></li>'
@@ -49,7 +49,7 @@ var ToolbarUser = {
 
   logout: function() {
 	console.log(document.location)
-    document.location = 'auth/logout?url='+document.location.href;
+    document.location = 'profile/logout?url='+document.location.href;
   },
 
   login: function() {

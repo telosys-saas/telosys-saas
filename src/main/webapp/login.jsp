@@ -41,7 +41,7 @@
         <div class="row text-right" style="margin-top: 20px">
             <button class="btn btn-primary">Sign in</button>
         </div>
-        <button class="btn btn-large black light" type="button" onclick="document.location = '/auth/github'">
+        <button class="btn btn-large black light" type="button" onclick="document.location = '/profile/github'">
             <span class="fa fa-github fa-2x"></span>
             &nbsp; &nbsp; &nbsp; Sign in with GitHub
         </button>

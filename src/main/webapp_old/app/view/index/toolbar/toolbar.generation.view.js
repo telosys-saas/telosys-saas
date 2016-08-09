@@ -17,10 +17,10 @@ var ToolbarGeneration = {
   loadData: function(callback) {
     var state = Store.getState();
 
-    ProjectsService.getBundlesOfProject(state.auth.userId, state.projectId, function(bundlesOfProject) {
+    ProjectsService.getBundlesOfProject(state.profile.userId, state.projectId, function(bundlesOfProject) {
       state.bundlesOfProject = bundlesOfProject;
 
-      ProjectsService.getModels(state.auth.userId, state.projectId, function (models) {
+      ProjectsService.getModels(state.profile.userId, state.projectId, function (models) {
         state.models = models;
         console.log(models);
         if (callback) {

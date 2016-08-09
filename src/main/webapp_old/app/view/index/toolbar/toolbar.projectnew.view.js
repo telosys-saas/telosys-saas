@@ -35,7 +35,7 @@ var ToolbarProjectnew = {
   createProject: function() {
     var projectName = document.getElementById('projectnewname').value;
     var state = Store.getState();
-    ProjectsService.createProject(state.auth.userId, projectName, function(isOk) {
+    ProjectsService.createProject(state.profile.userId, projectName, function(isOk) {
       if(isOk) {
         Store.init()
           .then(function(state) {

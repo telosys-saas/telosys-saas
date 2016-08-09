@@ -21,11 +21,11 @@ var IDEGeneration = {
   loadData: function(callback) {
     var state = Store.getState();
 
-    ProjectsService.getBundlesOfProject(state.auth.userId, state.projectId, function(bundlesOfProject) {
+    ProjectsService.getBundlesOfProject(state.profile.userId, state.projectId, function(bundlesOfProject) {
       state.bundlesOfProject = bundlesOfProject;
 
-      ProjectsService.getModel(state.auth.userId, state.projectId, state.modelName, function (model) {
-        state.model = model;
+      ProjectsService.getModel(state.profile.userId, state.projectId, state.modelName, function (model) {
+        state.models = model;
         console.log(model);
 
         if (callback) {
@@ -45,7 +45,7 @@ var IDEGeneration = {
       '<div class="row">' +
         '<div class="col s12"><h4>' + state.modelName + '</h4></div>'
 
-    var model = state.model;
+    var model = state.models;
     if(model.parsingErrors == null || model.parsingErrors.length == 0) {
       html += 
         '<div class="col s6">' +
@@ -229,7 +229,7 @@ var IDEGeneration = {
       for (var i = 0; i < bundles.length; i++) {
         var bundle = bundles[i];
         var generation = {
-          model: model,
+          models: model,
           entities: entities,
           bundle: bundle
         };
@@ -255,13 +255,13 @@ var IDEGeneration = {
         i++;
         if (i < generations.length) {
           var generation = generations[i];
-          ProjectsService.launchGeneration(state.auth.userId, state.projectId, generation, launchGenerationCallback);
+          ProjectsService.launchGeneration(state.profile.userId, state.projectId, generation, launchGenerationCallback);
         } else {
           IDEGeneration.launchGenerationCallbackEnd();
         }
       }.bind(this));
 
-      ProjectsService.launchGeneration(state.auth.userId, state.projectId, generation, launchGenerationCallback);
+      ProjectsService.launchGeneration(state.profile.userId, state.projectId, generation, launchGenerationCallback);
     }
   },
 

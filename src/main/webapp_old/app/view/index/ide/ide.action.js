@@ -36,7 +36,7 @@ var IDEAction = {
         id: fileId,
         content: state.openFiles[fileId].editor.getValue()
       };
-      FilesService.saveFileForProject(state.auth.userId, state.projectId, file,
+      FilesService.saveFileForProject(state.profile.userId, state.projectId, file,
         function () {
           console.log('file saved : ',fileId);
           IDEEditorCodemirror.setFileIsModified(fileId, false);

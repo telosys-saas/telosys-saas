@@ -85,7 +85,7 @@ var IDEConsoleModel = {
 
   refresh: function() {
     var state = Store.getState();
-    ProjectsService.getModels(state.auth.userId, state.projectId, function (models) {
+    ProjectsService.getModels(state.profile.userId, state.projectId, function (models) {
       state.models = models;
       console.log(models);
 

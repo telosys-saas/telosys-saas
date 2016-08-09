@@ -43,7 +43,7 @@ var IDEEditorCodemirror = {
 
   loadFile: function() {
     var state = Store.getState();
-    FilesService.getFileForProject(state.auth.userId, state.projectId, state.fileId, function (file) {
+    FilesService.getFileForProject(state.profile.userId, state.projectId, state.fileId, function (file) {
 
       var editorOptions = {
         value: file.content,
@@ -81,7 +81,7 @@ var IDEEditorCodemirror = {
     if(state.openFiles[fileId] && (!state.openFiles[fileId].isModified || forceRefresh)) {
       state.openFiles[fileId].isRefreshed = true;
       if(state.fileId == fileId) {
-        FilesService.getFileForProject(state.auth.userId, state.projectId, fileId, function (file) {
+        FilesService.getFileForProject(state.profile.userId, state.projectId, fileId, function (file) {
 
           var editor = state.openFiles[file.id].editor;
 

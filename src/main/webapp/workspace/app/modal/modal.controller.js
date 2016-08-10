@@ -1,12 +1,10 @@
 'use strict';
 
-angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 'FilesService', 'ProjectsService', 'BundlesService', 'data',
-  function ($scope, $uibModalInstance, FilesService, ProjectsService, BundlesService, data) {
+angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 'FilesService', 'ProjectsService', 'BundlesService', 'ModelService', 'AuthService', 'data',
+  function ($scope, $uibModalInstance, FilesService, ProjectsService, BundlesService, ModelService, AuthService, data) {
 
     /** authentication */
-    $scope.profile = {
-      userId: 'user'
-    };
+    $scope.profile = {};
 
     // data
     $scope.data = data;
@@ -26,6 +24,11 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      * The new file name
      */
     $scope.fileName = "";
+
+    /**
+     * The new entity name
+     */
+    $scope.entityName = "";
 
     /**
      * Create a new project
@@ -64,11 +67,11 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
       FilesService.createFolderForProject($scope.profile.userId, $scope.data.project.id, folder)
         .then(function (result) {
           var folder = result.data;
-          console.log('createFolderForProject', folder);
           if (folder.existing == true) {
             $scope.errorMessage = "Folder already exists";
           } else {
-            $uibModalInstance.close(folder);
+            $scope.data.refreshAll();
+            $uibModalInstance.close();
           }
         });
     };
@@ -98,15 +101,15 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
       FilesService.createFileForProject($scope.profile.userId, $scope.data.project.id, file)
         .then(function (result) {
           var file = result.data;
-          console.log('createFileForProject', file);
           if (file.existing == true) {
             $scope.errorMessage = "File already exists";
           } else {
-            $uibModalInstance.close(file);
+            $scope.data.refreshAll();
+            $uibModalInstance.close();
           }
         });
     };
-    
+
     /**
      * Save current file
      */
@@ -116,11 +119,51 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     };
 
     /**
+     * Add bundle to the current project
+     */
+    $scope.addBundle = function (bundleName) {
+      BundlesService.addBundle($scope.profile.userId, $scope.data.project.id, bundleName)
+        .then(function () {
+          $scope.data.refreshAll();
+        })
+
+    };
+
+    /**
+     * Add bundle to the current project
+     */
+    $scope.removeBundle = function (bundleName) {
+      BundlesService.removeBundle($scope.profile.userId, $scope.data.project.id, bundleName)
+        .then(function () {
+          $scope.data.refreshAll();
+        })
+    };
+
+    /**
+     * Create an entity
+     */
+    $scope.createEntity = function () {
+      ModelService.createEntityForModel($scope.profile.userId, $scope.data.project.id, $scope.data.modelName, $scope.entityName)
+        .then(function () {
+          $scope.data.refreshAll();
+          $uibModalInstance.close();
+        })
+    };
+
+    /**
      * Close the modal window
      */
     $scope.cancel = function () {
       console.log('cancel modal');
       $uibModalInstance.dismiss();
     };
-  }])
-;
+
+    function init() {
+      AuthService.status().then(function (result) {
+        $scope.profile = result.data;
+      })
+    }
+
+    init();
+
+  }]);

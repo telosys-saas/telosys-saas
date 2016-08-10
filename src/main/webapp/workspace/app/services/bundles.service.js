@@ -34,6 +34,31 @@ angular.module('app')
           .catch(function (e) {
             console.log(e);
           });
+      },
+
+      /**
+       * Add a bundle to the project
+       */
+      addBundle: function (userId, projectName, bundleName) {
+        return $http({
+          method: "PUT",
+          url: host + "api/v1/users/"+userId+"/projects/"+projectName+"/bundles/"+bundleName,
+          dataType: 'json'
+        })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
+
+      removeBundle: function (userId, projectName, bundleName) {
+        return $http({
+          method: "DELETE",
+          url: host + "api/v1/users/"+userId+"/projects/"+projectName+"/bundles/"+bundleName,
+          dataType: 'json'
+        })
+          .catch(function (e) {
+            console.log(e);
+          });
       }
     }
   }]);

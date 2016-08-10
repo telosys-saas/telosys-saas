@@ -13,14 +13,11 @@ angular.module('app')
        * @param userId User ID
        * @returns {*}
        */
-      getProjects: function (userId, callback) {
+      getProjects: function (userId) {
         return $http({
           method: 'GET',
           url: host + 'api/v1/users/' + userId + '/projects'
         })
-          .then(function (result) {
-            if (callback) callback(result.data);
-          })
       },
 
       /**
@@ -30,16 +27,14 @@ angular.module('app')
        * @param callback Callback
        * @returns {*}
        */
-      getProjectById: function (userId, projectId, callback) {
+      getProjectById: function (userId, projectId) {
         return $http({
           method: 'GET',
           url: host + 'api/v1/users/' + userId + '/projects/' + projectId
         })
-          .then(function (result) {
-            if (callback) {
-              callback(result.data);
-            }
-          })
+          .catch(function (e) {
+            console.log(e);
+          });
       },
 
       /**

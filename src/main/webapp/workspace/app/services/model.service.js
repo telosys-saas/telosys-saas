@@ -27,6 +27,17 @@ angular.module('app')
           .catch(function (e) {
           console.log(e);
         });
+      },
+
+      createEntityForModel: function(userId, projectId, modelName, entityName) {
+        return $http({
+          method: "PUT",
+          url: host + "api/v1/users/"+userId+"/projects/"+projectId+"/models/"+modelName+"/entities/"+entityName,
+          dataType: 'json'
+        })
+          .catch(function (e) {
+            console.log(e);
+          });
       }
     }
   }]);

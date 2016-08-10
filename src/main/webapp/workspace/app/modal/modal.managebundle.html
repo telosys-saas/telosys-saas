@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h3 class="modal-title">Add bundle</h3>
+</div>
+<div class="modal-body">
+    <div class="modal-header">
+        <h4>Current bundles of the project</h4>
+    </div>
+    <ul class="bundles-list">
+        <li class="bundlemodal" ng-repeat="bundle in data.bundlesForProject">
+            <i class="fa fa-archive"></i>
+            {{bundle.text}}
+            <button class="btn btn-red" style="float:right" ng-click="event.stopPropagation();removeBundle(bundle.text)">Remove</button>
+        </li>
+    </ul>
+    <div class="modal-header">
+        <h4>Bundles in the public repository</h4>
+    </div>
+    <ul class="bundles-list">
+        <li class="bundlemodal" ng-repeat="bundle in data.allBundles">
+            <i class="fa fa-archive left-align"></i>
+            {{bundle.name}}
+            <button class="btn btn-primary" style="float:right" ng-click="event.stopPropagation();addBundle(bundle.name)">Add</button>
+        </li>
+    </ul>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Close</button>
+</div>

@@ -14,13 +14,11 @@ angular.module('app')
        * @param callback Callback function
        */
       getFilesForProject: function (userId, projectId, callback) {
-        $http({
+        return $http({
           method: 'GET',
           url: host + 'api/v1/users/' + userId + '/projects/' + projectId + '/workspace'
         })
-          .then(function (result) {
-            if (callback) callback(result.data);
-          })
+
       },
 
       /**

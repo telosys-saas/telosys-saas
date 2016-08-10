@@ -45,17 +45,23 @@ angular.module('dashboard')
        * Init the dashboard toolbar
        */
       function init() {
-        AuthService.status().then(function (result) {
-          console.log('authentication:', result.data);
-          $scope.profile = result.data;
-          if ($scope.profile.authenticated == true) {
-            ProjectsService.getProjects($scope.profile.userId, function (result) {
-              $scope.projects = result;
-            })
-          }else {
+        AuthService.status()
+          .then(function (result) {
+            console.log('authentication:', result.data);
+            $scope.profile = result.data;
+            if (!$scope.profile.authenticated) {
+              $location.path('/error');
+              return {};
+            }
+            return ProjectsService.getProjects($scope.profile.userId);
+          })
+          .then(function (result) {
+            $scope.projects = result.data;
+          })
+          .catch(function(e) {
+            console.log(e);
             $location.path('/error');
-          }
-        })
+          });
       }
       init();
 

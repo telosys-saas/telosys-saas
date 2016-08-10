@@ -13,6 +13,30 @@ html div, html ul {
     position: relative;
 }
 
+/*
+.navbar {
+    background-color: #0277bd;
+    border: none;
+    border-radius: 0;
+}
+
+.navbar-default .navbar-brand, .navbar-default .navbar-nav>li>a, .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+    color: white;
+}
+
+.navbar-default .navbar-brand, .navbar-default .navbar-nav>li>a, .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+    color: white;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    background-color: #c9ebff;
+}
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+    background-color: #c9ebff;
+    border-color: black;
+}
+*/
+
 .navbar-nav>li {
     z-index: 3;
 }
@@ -211,4 +235,57 @@ footer {
 .nav-tabs>li>a {
     margin: 3px 0 0 5px;
     padding: 5px 10px;
+}
+
+.bundlemodal{
+    list-style-type: none;
+}
+
+.right{
+    float: right;
+}
+
+.badge{
+    background-color: grey;
+}
+
+.btn-red{
+    color: white;
+    background-color: #F44336;
+}
+
+.modal-dialog .modal-title {
+    padding: 10px 15px 10px 15px;
+}
+
+.modal-dialog .modal-header {
+    padding: 0;
+}
+
+.modal-dialog .modal-header h4{
+    margin-top: 20px;
+}
+
+.modal-dialog .bundlemodal {
+    width: 100%;
+    display: inline-block;
+    padding: 2px;
+    line-height: 34px;
+
+}
+.modal-dialog .bundlemodal:hover {
+    background-color: #f3f3f3;
+}
+
+.modal-dialog .bundlemodal i.fa {
+    padding: 10px;
+}
+
+.modal-dialog .modal-body {
+    padding: 0 15px;
+}
+
+.modal-dialog .bundles-list {
+    max-height: 300px;
+    overflow-y: auto;
 }

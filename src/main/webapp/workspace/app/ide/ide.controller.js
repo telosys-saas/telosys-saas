@@ -20,7 +20,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         /** List of projects */
         projects: [],
         /** View to display */
-        isDisplay: 'modeles',
+        isDisplay: 'bundles',
         /** Common events */
         events: getCommonEvents(),
         /** The Telosys Tools Folder */
@@ -34,7 +34,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           /** Current project */
           project: {},
           /** All files of bundles as a tree*/
-          tree: {},
+          tree: [],
           /** All files of the project in only one level */
           allFiles: {},
           /** Working files */
@@ -137,7 +137,9 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         // Donwload the project in zip file
         onDownload: $scope.onDownload,
         // change the view to display
-        changeView: $scope.changeView
+        changeView: $scope.changeView,
+        // Launch the generation
+        generation: $scope.generation
       }
     }
 
@@ -411,17 +413,32 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      * Refresh all opened files
      */
     $scope.refreshAllFiles = function (callback) {
-      initFiles(callback);
+      FilesService.getFilesForProject($scope.profile.user, $scope.data.project.id, function (result) {
+        $scope.data.files.tree = FilesService.convertFolderToJson(result, null, 'folder');
+        $scope.data.files.allFiles = FilesService.getAllFilesFromTree(result);
+        if (callback) {
+          callback();
+        }
+      });
     };
 
     /**
      * Refresh all models
      */
     $scope.refreshAllModels = function (callback) {
-      TelosysService.getTelosysFolderForProject($scope.profile.userId, $scope.data.project.id)
+      getTelosysFolder()
         .then(function (result) {
           $scope.telosysFolder = result.data;
-          initModels(callback);
+          ModelService.getModels($scope.profile.userId, $scope.data.project.id)
+            .then(function (result) {
+              var modelName = result.data[0].name;
+              var modelFolder = getFolderByName($scope.telosysFolder, modelName);
+              $scope.data.models.tree = FilesService.convertFolderToJson(modelFolder, null, 'models');
+              $scope.data.models.allFiles = FilesService.getAllFilesFromTree(modelFolder);
+              if (callback) {
+                callback();
+              }
+            })
         })
     };
 
@@ -429,10 +446,20 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      * Refresh all bundles
      */
     $scope.refreshAllBundles = function (callback) {
-      TelosysService.getTelosysFolderForProject($scope.profile.userId, $scope.data.project.id)
+      getTelosysFolder()
         .then(function (result) {
           $scope.telosysFolder = result.data;
-          initBundles(callback);
+          var templateFolder = getFolderByName($scope.telosysFolder, 'templates');
+          $scope.data.bundles.tree = FilesService.convertFolderToJson(templateFolder, null, 'bundle');
+          $scope.data.bundles.allFiles = FilesService.getAllFilesFromTree(templateFolder);
+          // Get the list of bundles
+          BundlesService.getBundlesInPublicRepository()
+            .then(function (result) {
+              $scope.data.bundles.allBundles = result.data;
+              if (callback) {
+                callback();
+              }
+            });
         })
     };
 
@@ -463,70 +490,15 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     };
 
     /**
-     * Create a new project
+     * Launch the generation
      */
-    $scope.addProject = function () {
-      console.log('addProject');
-      // Modal window to create a new file
-      var modalInstance = $uibModal.open({
-        templateUrl: 'app/dashboard/modal/modal.createproject.html',
-        controller: 'ideModalCtrl'
-      });
-
-      // When the creation is a success
-      modalInstance.result.then(function (project) {
-        console.log('modalInstance.result.then', project);
-        ProjectsService.getProjects(function () {
-          $scope.projects.push(project);
-        })
-      })
+    $scope.generation = function () {
+      ProjectsService.launchGeneration($scope.profile.userId,$scope.data.project.id);
     };
 
-    function initTelosysFolder() {
-      TelosysService.getTelosysFolderForProject($scope.profile.userId, $scope.data.project.id)
-        .then(function (result) {
-            $scope.telosysFolder = result.data;
-            initBundles();
-            initModels();
-          }
-        )
-    }
 
-    function initFiles(callback) {
-      FilesService.getFilesForProject($scope.profile.user, $scope.data.project.id, function (result) {
-        $scope.data.files.tree = FilesService.convertFolderToJson(result, null, 'folder');
-        $scope.data.files.allFiles = FilesService.getAllFilesFromTree(result);
-        if (callback) {
-          callback();
-        }
-      });
-    }
-
-    function initBundles(callback) {
-      var templateFolder = getFolderByName($scope.telosysFolder, 'templates');
-      $scope.data.bundles.tree = FilesService.convertFolderToJson(templateFolder, null, 'bundle');
-      $scope.data.bundles.allFiles = FilesService.getAllFilesFromTree(templateFolder);
-      // Get the list of bundles
-      BundlesService.getBundlesInPublicRepository()
-        .then(function (result) {
-          $scope.data.bundles.allBundles = result.data;
-          if (callback) {
-            callback();
-          }
-        });
-    }
-
-    function initModels(callback) {
-      ModelService.getModels($scope.profile.userId, $scope.data.project.id)
-        .then(function (result) {
-          var modelName = result.data[0].name;
-          var modelFolder = getFolderByName($scope.telosysFolder, modelName);
-          $scope.data.models.tree = FilesService.convertFolderToJson(modelFolder, null, 'models');
-          $scope.data.models.allFiles = FilesService.getAllFilesFromTree(modelFolder);
-          if (callback) {
-            callback();
-          }
-        })
+    function getTelosysFolder() {
+      return TelosysService.getTelosysFolderForProject($scope.profile.userId, $scope.data.project.id);
     }
 
     /**
@@ -549,7 +521,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       AuthService.status().then(function (result) {
         $scope.profile = result.data;
         $scope.data.isDisplay = 'models';
-        if(callback) callback($scope.profile.authenticated);
+        if (callback) callback($scope.profile.authenticated);
       });
     }
 
@@ -559,7 +531,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     function init() {
       initData();
 
-      getAuthStatus(function(authenticated) {
+      getAuthStatus(function (authenticated) {
         if (!authenticated) {
           console.log('authenticated false');
           return;
@@ -571,7 +543,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           })
           .then(function (result) {
             $scope.data.project = $scope.data.bundles.project = $scope.data.models.project = $scope.data.files.project = result.data;
-            return TelosysService.getTelosysFolderForProject($scope.profile.userId, $scope.data.project.id);
+            return getTelosysFolder();
           })
           .then(function (result) {
             $scope.telosysFolder = result.data;
@@ -598,52 +570,23 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           })
           .then(function (result) {
             var models = result.data;
-            if(models && models.length>0) {
-              var modelName = models[0].name;
-              var modelFolder = getFolderByName($scope.telosysFolder, modelName);
-              $scope.data.models.tree = FilesService.convertFolderToJson(modelFolder, null, 'models');
-              $scope.data.models.allFiles = FilesService.getAllFilesFromTree(modelFolder);
+            if (models && models.length > 0) {
+              for(var index = 0; index < models.length; index++) {
+                var modelName = models[index].name;
+                var modelFolder = getFolderByName($scope.telosysFolder, modelName);
+                $scope.data.models.tree.push(FilesService.convertFolderToJson(modelFolder, null, 'models'));
+                $scope.data.models.allFiles = FilesService.getAllFilesFromTree(modelFolder);
+              }
             }
-
             // Indicates that the IDE is initialized and can be displayed
-
-            $scope.data.isDisplay = 'bundles';
             $scope.initialized = true;
           })
           .catch(function (e) {
             console.log(e);
           });
       });
-      /*
-      // Verify authentication
-      AuthService.status().then(function (result) {
-        $scope.profile = result.data;
-        $scope.data.isDisplay = 'models';
-        if (!$scope.profile.authenticated) {
-          console.log('authenticated false');
-          return;
-        }
-
-        // List of projects for the toolbar
-        ProjectsService.getProjects($scope.profile.userId, function (result) {
-          $scope.data.projects = result;
-        });
-
-        // Get the current project
-        ProjectsService.getProjectById($scope.profile.userId, $routeParams.projectId, function (result) {
-          $scope.data.project = $scope.data.bundles.project = $scope.data.models.project = $scope.data.files.project = result;
-          //initTelosysFolder();
-          //initFiles();
-
-
-
-          // Indicates that the IDE is initialized and can be displayed
-          $scope.initialized = true;
-        });
-      })
-      */
-
     }
+
     init();
   }
 

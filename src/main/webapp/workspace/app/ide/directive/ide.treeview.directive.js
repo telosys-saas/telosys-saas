@@ -32,7 +32,6 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
       /**
        * During file creation
        * @param nodeParent Node parent
-       * @param tree Treeview
        * @returns {Function}
        */
       $scope.onCreateFile = function (nodeParent) {
@@ -55,7 +54,6 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
        */
       $scope.createFolder = function () {
         console.log('create Folder');
-        var tree = $(element[0].children[1]).jstree();
         var nodeParent = $scope.data.selectedElement;
         if (nodeParent == null) {
           nodeParent = {
@@ -70,7 +68,6 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
       /**
        * During folder creation
        * @param nodeParent Node parent
-       * @param tree Treeview
        */
       $scope.onCreateFolder = function (nodeParent) {
         // Modal window to create a new file
@@ -122,6 +119,18 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
         });
       };
 
+      $scope.createModel = function () {
+        $uibModal.open({
+          templateUrl: 'app/modal/modal.createmodel.html',
+          controller: 'modalCtrl',
+          resolve: {
+            data: {
+              project: $scope.data.project
+            }
+          }
+        });
+      };
+
       /**
        * Collapse all elements in the treeview
        */
@@ -143,7 +152,6 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           tree.settings.core.data = $scope.data.tree;
           tree.refresh();
         });
-
       };
 
 
@@ -153,18 +161,16 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
        * @param tree Treeview
        */
       $scope.onRemove = function (node, tree) {
-        return (function (obj) {
           console.log('onRemove');
           tree.delete_node(node);
-          if (node.type == 'folder') {
+          if (node.type == 'folder' || node.type == 'models') {
             var folderId = node.id;
             $scope.events.onDeleteFolder($scope.data, folderId)
           }
-          if (node.type == 'file') {
+          if (node.type == 'file' || node.type == 'entity') {
             var fileId = node.id;
             $scope.events.onDeleteFile($scope.data, fileId);
           }
-        });
       };
 
       /**
@@ -184,21 +190,23 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
       };
 
       /**
-       * Delete the selected element (entity or model) in the treeview
+       * Delete the selected element (model or entity) in the treeview
        */
       $scope.deleteSelectedElementForModels = function () {
         var elementToDelete = $scope.data.selectedElement;
+        var tree = $(element[0].children[1]).jstree();
         console.log('deleteSelectedElement', $scope.data.selectedElement);
-        if (elementToDelete && elementToDelete != null && elementToDelete.id != '@@_root_@@') {
+        if (elementToDelete && elementToDelete != null) {
           var result = confirm("Voulez-vous supprimer \"" + elementToDelete.text + "\" ?");
           if (result) {
-            if(elementToDelete.type == 'entity'){
-
+            if(elementToDelete.type == 'entity') {
+              $scope.onRemove(elementToDelete, tree);
+              $scope.data.selectedElement = null;
             }
-            if(elementToDelete.type == 'models'){
-
+            if(elementToDelete.type == 'models') {
+              $scope.onRemove(elementToDelete, tree);
+              $scope.data.selectedElement = null;
             }
-            $scope.refreshAll();
           }
         }
       };
@@ -209,9 +217,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
       function init() {
         $(element[0].children[1]).jstree({
           'core': {
-            'data': [
-              $scope.data.tree
-            ],
+            'data': $scope.data.tree,
             // so that create works
             "check_callback": true
           },
@@ -274,7 +280,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
         $(element[0].children[1]).bind("activate_node.jstree", function (e, data) {
           var fileFound = $scope.data.allFiles[data.node.id];
           $scope.data.selectedElement = data.node;
-          console.log('treeview one click', fileFound);
+          console.log('treeview one click', $scope.data.selectedElement);
           if (fileFound && (fileFound.type == 'file' || fileFound.type == 'entity')) {
             $scope.data.tree.selectedFile = fileFound;
             if ($scope.events.onClickFile) {

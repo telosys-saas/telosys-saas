@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 'FilesService', 'ProjectsService', 'BundlesService', 'ModelService', 'AuthService', 'data',
-  function ($scope, $uibModalInstance, FilesService, ProjectsService, BundlesService, ModelService, AuthService, data) {
+angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 'FilesService', 'ProjectsService', 'BundlesService', 'ModelService', 'AuthService', '$uibModal', 'data',
+  function ($scope, $uibModalInstance, FilesService, ProjectsService, BundlesService, ModelService, AuthService, $uibModal, data) {
 
     /** authentication */
     $scope.profile = {};
@@ -16,10 +16,13 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      */
     $scope.projectName = "";
     /**
+     * The new model name
+     */
+    $scope.modelName = "";
+    /**
      * The new folder name
      */
     $scope.folderName = "";
-
     /**
      * The new file name
      */
@@ -39,6 +42,16 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
         .then(function (result) {
           var project = result.data;
           $uibModalInstance.close(project);
+          $uibModal.open({
+            templateUrl: 'app/modal/modal.createmodel.html',
+            controller: 'modalCtrl',
+            resolve: {
+              data: {
+                project: project,
+                modelName: $scope.projectName
+              }
+            }
+          });
         })
     };
 
@@ -130,12 +143,25 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     };
 
     /**
-     * Add bundle to the current project
+     * Remove bundle
      */
     $scope.removeBundle = function (bundleName) {
       BundlesService.removeBundle($scope.profile.userId, $scope.data.project.id, bundleName)
         .then(function () {
           $scope.data.refreshAll();
+        })
+    };
+
+    /**
+     * Create a new model
+     */
+    $scope.createModel = function () {
+      ModelService.createModel($scope.profile.userId, $scope.data.project.id, $scope.modelName)
+        .then(function () {
+          if ($scope.data.refreshAll) {
+            $scope.data.refreshAll();
+          }
+          $uibModalInstance.close();
         })
     };
 
@@ -154,13 +180,15 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      * Close the modal window
      */
     $scope.cancel = function () {
-      console.log('cancel modal');
       $uibModalInstance.dismiss();
     };
 
     function init() {
       AuthService.status().then(function (result) {
         $scope.profile = result.data;
+        if(data.modelName){
+          $scope.modelName = data.modelName.toLowerCase();
+        }
       })
     }
 

@@ -9,7 +9,6 @@ angular.module('app')
       
       /**
        * Get the list of all projects
-       * @param callback Callback function
        * @param userId User ID
        * @returns {*}
        */
@@ -18,13 +17,15 @@ angular.module('app')
           method: 'GET',
           url: host + 'api/v1/users/' + userId + '/projects'
         })
+          .catch(function (e) {
+            console.log(e);
+          });
       },
 
       /**
        * Get the project with the projectId
        * @param userId User ID
        * @param projectId Project ID
-       * @param callback Callback
        * @returns {*}
        */
       getProjectById: function (userId, projectId) {

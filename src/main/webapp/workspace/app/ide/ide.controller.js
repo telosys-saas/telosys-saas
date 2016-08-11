@@ -12,6 +12,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     /** Indicates if the IDE is initialized and could be displayed */
     $scope.initialized = false;
 
+    $scope.defaultView = 'generation';
+
     function initData() {
       /** IDE data */
       $scope.data = {
@@ -20,7 +22,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         /** List of projects */
         projects: [],
         /** View to display */
-        isDisplay: 'bundles',
+        isDisplay: $scope.defaultView,
         /** Common events */
         events: getCommonEvents(),
         /** The Telosys Tools Folder */
@@ -520,7 +522,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     function getAuthStatus(callback) {
       AuthService.status().then(function (result) {
         $scope.profile = result.data;
-        $scope.data.isDisplay = 'models';
         if (callback) callback($scope.profile.authenticated);
       });
     }

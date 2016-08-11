@@ -1,7 +1,8 @@
 var app = angular.module('app', [
-    'ngRoute',
-    'ngAnimate',
-    'dashboard',
-    'modal',
-    'ide'
+  'ngRoute',
+  'ngAnimate',
+  'directives',
+  'dashboard',
+  'modal',
+  'ide'
 ]);

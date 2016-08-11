@@ -1,0 +1,12 @@
+<ul ng-if="elts">
+    <li ng-repeat="elt in elts">
+        <checkbox2 html-id="elt.id" name="elt.name" label="elt.label"
+                   checked="isSelected(elt)" indeterminate="isIndeterminate(elt)" onchange="onchange" elt="elt"></checkbox2>
+        <ul ng-if="elt.elts">
+            <li ng-repeat="subelt in elt.elts" style="margin-left: 50px">
+                <checkbox2 html-id="subelt.id" name="subelt.name" label="subelt.label"
+                           checked="subelt.isChecked" onchange="onchange" elt="subelt"></checkbox2>
+            </li>
+        </ul>
+    </li>
+</ul>

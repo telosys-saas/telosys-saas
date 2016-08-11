@@ -146,6 +146,7 @@ html div, html ul {
 
 .content {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    background-color: white;
 }
 
 .navbar {
@@ -182,7 +183,7 @@ footer {
 
 .card-content {
     width: 100%;
-    min-height: 100px;
+    min-height: 125px;
     border-bottom: 1px solid #efefef;
     padding: 20px;
 }
@@ -288,4 +289,8 @@ footer {
 .modal-dialog .bundles-list {
     max-height: 300px;
     overflow-y: auto;
+}
+
+.generation {
+
 }

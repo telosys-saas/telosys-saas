@@ -1,6 +1,19 @@
-<div class="content" style="position: absolute; left: 0; width: calc(50%); top: 0; bottom: 0">
-    Something ...
+<div style="height: 75%">
+    <h2 style="margin: 0">Generation</h2>
+    <div class="row">
+    <div class="col-sm-6">
+        <h4>Models</h4>
+        <tree name="models" elts="data.models"></tree>
+    </div>
+    <div class="col-sm-6">
+        <h4>Bundles</h4>
+        <tre name="bundles" elts="data.bundles"></tre>
+    </div>
+    </div>
+    <div style="width: 100%; text-align:center; margin-top: 15px">
+        <button class="btn btn-primary" ng-click="data.events.generation()">Generate</button>
+    </div>
 </div>
-<div class="content" style="position: absolute; right: 0; width: calc(50%); top: 0; bottom: 0">
-    ... and something else
+<div id="console" ng-if="data.isDisplay=='generation'" style="height: 25%;">
+    <console></console>
 </div>

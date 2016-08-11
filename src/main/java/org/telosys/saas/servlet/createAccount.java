@@ -22,7 +22,6 @@ import java.security.SecureRandom;
 public class createAccount extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PasswordEncoder passwordEncoder = new PasswordEncoder();
         UsersManager usersManager = UsersManager.getInstance();
         Memory memory = Memory.getMemory();
         GMail gMail = new GMail();

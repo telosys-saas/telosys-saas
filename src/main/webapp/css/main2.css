@@ -281,8 +281,8 @@ footer {
     padding: 10px;
 }
 
-.modal-dialog .modal-body {
-    padding: 0 15px;
+.modal-dialog .modal-body h3 {
+    margin-top: -10px;
 }
 
 .modal-dialog .bundles-list {

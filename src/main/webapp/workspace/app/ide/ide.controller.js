@@ -33,8 +33,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           name: 'models',
           /** Current project */
           project: {},
-          /** All files of bundles as a tree*/
-          tree: [],
+          /** All files of models as a tree*/
+          tree: {},
           /** All files of the project in only one level */
           allFiles: {},
           /** Working files */
@@ -525,6 +525,26 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       });
     }
 
+    function getBundles(){
+      // Get Bundles
+      var templateFolder = getFolderByName($scope.telosysFolder, 'templates');
+      $scope.data.bundles.tree = FilesService.convertFolderToJson(templateFolder, null, 'bundle');
+      $scope.data.bundles.allFiles = FilesService.getAllFilesFromTree(templateFolder);
+      // Public bundles
+      return BundlesService.getBundlesInPublicRepository();
+    }
+
+    function initModels(models){
+      if (models && models.length > 0) {
+        for(var index = 0; index < 1; index++) {
+          var modelName = models[index].name;
+          var modelFolder = getFolderByName($scope.telosysFolder, modelName);
+          $scope.data.models.tree = FilesService.convertFolderToJson(modelFolder, null, 'models');
+          $scope.data.models.allFiles = FilesService.getAllFilesFromTree(modelFolder);
+        }
+      }
+    }
+
     /**
      * Initialize the IDE
      */
@@ -538,46 +558,38 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         }
         ProjectsService.getProjects($scope.profile.userId)
           .then(function (result) {
+            // Get the selected project by the user
             $scope.data.projects = result.data;
             return ProjectsService.getProjectById($scope.profile.userId, $routeParams.projectId);
           })
           .then(function (result) {
+            // Init the current project
             $scope.data.project = $scope.data.bundles.project = $scope.data.models.project = $scope.data.files.project = result.data;
+            // Get the telosys folder
             return getTelosysFolder();
           })
           .then(function (result) {
+            // Init the telosys folder
             $scope.telosysFolder = result.data;
-
-            // Init Files
+            // Get Files
             return FilesService.getFilesForProject($scope.profile.user, $scope.data.project.id);
           })
           .then(function (result) {
+            // Init Files
             $scope.data.files.tree = FilesService.convertFolderToJson(result.data, null, 'folder');
             $scope.data.files.allFiles = FilesService.getAllFilesFromTree(result.data);
-
-            // Init Bundles
-            var templateFolder = getFolderByName($scope.telosysFolder, 'templates');
-            $scope.data.bundles.tree = FilesService.convertFolderToJson(templateFolder, null, 'bundle');
-            $scope.data.bundles.allFiles = FilesService.getAllFilesFromTree(templateFolder);
-            // Public bundles
-            return BundlesService.getBundlesInPublicRepository();
+            // Get bundles
+            return getBundles();
           })
           .then(function (result) {
+            // Init bundles
             $scope.data.bundles.allBundles = result.data;
-
-            // Init Models
+            //Get models
             return ModelService.getModels($scope.profile.userId, $scope.data.project.id)
           })
           .then(function (result) {
-            var models = result.data;
-            if (models && models.length > 0) {
-              for(var index = 0; index < models.length; index++) {
-                var modelName = models[index].name;
-                var modelFolder = getFolderByName($scope.telosysFolder, modelName);
-                $scope.data.models.tree.push(FilesService.convertFolderToJson(modelFolder, null, 'models'));
-                $scope.data.models.allFiles = FilesService.getAllFilesFromTree(modelFolder);
-              }
-            }
+            // Init models
+            initModels(result.data);
             // Indicates that the IDE is initialized and can be displayed
             $scope.initialized = true;
           })

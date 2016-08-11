@@ -3,8 +3,8 @@
 <div style="width: 100%; height: 100%; position: relative" ng-if="initialized">
     <div id="left" class="content" ng-if="data.isDisplay!='generation'" style="position: absolute; left: 0; width: calc(25% - 10px); top: 0; bottom: 0">
         <left data="data.models" ng-show="data.isDisplay=='models'"></left>
-        <left data="data.bundles" ng-show="data.isDisplay=='bundles'"></left>
-        <left data="data.files" ng-show="data.isDisplay=='files'"></left>
+        <!--<left data="data.bundles" ng-show="data.isDisplay=='bundles'"></left>
+        <left data="data.files" ng-show="data.isDisplay=='files'"></left>-->
     </div>
     <div id="editor" class="content" ng-if="data.isDisplay!='generation'" style="position: absolute; right: 0; width: 75%; height: 75%; top: 0;">
         <editor data="data.models" ng-show="data.isDisplay=='models'"></editor>

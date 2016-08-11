@@ -41,18 +41,43 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
       ProjectsService.createProject($scope.profile.userId, $scope.projectName)
         .then(function (result) {
           var project = result.data;
-          $uibModalInstance.close(project);
-          $uibModal.open({
-            templateUrl: 'app/modal/modal.createmodel.html',
-            controller: 'modalCtrl',
-            resolve: {
-              data: {
-                project: project,
-                modelName: $scope.projectName
+          ModelService.createModel($scope.profile.userId, project.id, $scope.modelName)
+            .then(function () {
+              if ($scope.data.refreshAll) {
+                $scope.data.refreshAll();
               }
-            }
-          });
+              $uibModalInstance.close(project);
+            })
         })
+    };
+
+    /**
+     * User changes the project name
+     */
+    $scope.projectNameChange = function () {
+      if(!$scope.hasUserChangedModelName) {
+        $scope.modelName = $scope.projectName;
+      }
+    };
+
+    /**
+     * User changes the model name
+     */
+    $scope.modelNameChange = function () {
+      if($scope.modelName == null || $scope.modelName == '') {
+        delete $scope.hasUserChangedModelName;
+      } else {
+        $scope.hasUserChangedModelName = true;
+      }
+    };
+
+    /**
+     * User changes the model name
+     */
+    $scope.modelNameOnBlur = function () {
+      if($scope.modelName == null || $scope.modelName == '') {
+        $scope.modelName = $scope.projectName;
+      }
     };
 
     /**
@@ -186,7 +211,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     function init() {
       AuthService.status().then(function (result) {
         $scope.profile = result.data;
-        if(data.modelName){
+        if (data.modelName) {
           $scope.modelName = data.modelName.toLowerCase();
         }
       })
@@ -194,4 +219,5 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
 
     init();
 
-  }]);
+  }
+]);

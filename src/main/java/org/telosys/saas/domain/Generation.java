@@ -11,6 +11,7 @@ public class Generation implements Serializable {
 	private String model;
 	private List<String> entities = new ArrayList<>();
 	private String bundle;
+	private List<String> templates;
 	
 	public List<String> getEntities() {
 		return entities;
@@ -31,4 +32,11 @@ public class Generation implements Serializable {
 		this.bundle = bundle;
 	}
 
+	public List<String> getTemplates() {
+		return templates;
+	}
+
+	public void setTemplates(List<String> templates) {
+		this.templates = templates;
+	}
 }

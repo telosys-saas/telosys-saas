@@ -3,6 +3,7 @@ package org.telosys.saas.servlet;
 import org.telosys.saas.util.GMail;
 import org.telosys.saas.util.Util;
 import org.telosys.tools.users.User;
+import org.telosys.tools.users.UserType;
 import org.telosys.tools.users.UsersManager;
 import org.telosys.tools.users.crypto.PasswordEncoder;
 
@@ -42,8 +43,7 @@ public class createAccount extends HttpServlet {
         }
         // TODO search by mail
         // Create the new user
-        User user = new User();
-        user.setLogin(request.getParameter("login"));
+        User user = new User(UserType.TELOSYS_USER, request.getParameter("login"));
         user.setMail(request.getParameter("mail"));
         user.setEncryptedPassword(request.getParameter("password1"));
         // Save the new user in memory

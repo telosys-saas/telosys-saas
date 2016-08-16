@@ -19,6 +19,7 @@ import org.telosys.saas.domain.UserChangePassword;
 import org.telosys.saas.domain.UserCreation;
 import org.telosys.saas.util.Util;
 import org.telosys.tools.users.User;
+import org.telosys.tools.users.UserType;
 import org.telosys.tools.users.UsersManager;
 
 @Path("/users")
@@ -55,8 +56,7 @@ public class UsersResource {
 		if(userExisting != null) {
 			throw new IllegalStateException("create user : user already exists");
 		}
-		User user = new User();
-		user.setLogin(userCreation.getLogin());
+		User user = new User(UserType.TELOSYS_USER,userCreation.getLogin());
 		user.setMail(userCreation.getMail());
 		usersManager.saveUser(user, userCreation.getPassword());
 		return user;

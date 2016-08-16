@@ -10,6 +10,7 @@ import java.io.IOException;
 import org.junit.Test;
 import org.pac4j.http.credentials.UsernamePasswordCredentials;
 import org.telosys.tools.users.User;
+import org.telosys.tools.users.UserType;
 import org.telosys.tools.users.UsersManager;
 import org.telosys.tools.users.crypto.PasswordEncoder;
 
@@ -27,8 +28,7 @@ public class FormAuthenticatorITest {
 		UsersManager.setUsersFileName(temp.getAbsolutePath());
 		
 		// user creation in user file
-		User user = new User();
-		user.setLogin("username");
+		User user = new User(UserType.TELOSYS_USER,"username");
 		UsersManager.getInstance().saveUser(user, "password");
 		
 		// When

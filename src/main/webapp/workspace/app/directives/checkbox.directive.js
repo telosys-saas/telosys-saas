@@ -4,7 +4,7 @@
  * Checkbox view
  */
 angular.module('directives')
-  .directive('checkbox2', function () {
+  .directive('checkbox', function () {
     return {
       scope: {
         htmlId: '=',
@@ -15,7 +15,8 @@ angular.module('directives')
         onchange: '=',
         elt: '='
       },
-      templateUrl: 'app/directives/checkbox2.directive.html',
+      transclude: true,
+      templateUrl: 'app/directives/checkbox.directive.html',
 
       link: function ($scope, element, attrs) {
 

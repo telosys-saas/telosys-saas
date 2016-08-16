@@ -28,6 +28,7 @@ import org.telosys.tools.commons.cfg.TelosysToolsCfg;
 import org.telosys.tools.commons.variables.Variable;
 import org.telosys.tools.dsl.DslModelUtil;
 import org.telosys.tools.generator.GeneratorException;
+import org.telosys.tools.generator.target.TargetDefinition;
 import org.telosys.tools.generator.task.ErrorReport;
 import org.telosys.tools.generator.task.GenerationTaskResult;
 
@@ -251,14 +252,22 @@ public class ProjectService {
 	}
 
 	public GenerationResult launchGeneration(UserProfile user, Project project, Generation generation) {
-		return launchGenerationByEntityAndBundle(user, project, generation.getModel(), generation.getEntities(), generation.getBundle());
+		return launchGenerationByEntityAndBundle(user, project, generation.getModel(), generation.getEntities(), generation.getBundle(), generation.getTemplates() );
 	}
 
-	public GenerationResult launchGenerationByEntityAndBundle(UserProfile user, Project project, String modelName, List<String> entityNames, String bundleName) {
+	public GenerationResult launchGenerationByEntityAndBundle(UserProfile user, Project project, String modelName, List<String> entityNames, String bundleName, List<String> templatesName) {
 		TelosysProject telosysProject = getTelosysProject(user, project);
 		try {
 			org.telosys.tools.generic.model.Model genericModel = telosysProject.loadModel(modelName+".model");
-			GenerationTaskResult generationTaskResult = telosysProject.launchGeneration(genericModel, entityNames, bundleName);
+
+			List<TargetDefinition> targetDefinitions =  telosysProject.loadTargetsDefinitions(bundleName).getTemplatesTargets();
+			List<TargetDefinition> targetDefinitions1 = new ArrayList<>();
+			for(TargetDefinition targetDefinition : targetDefinitions){
+				if(templatesName.contains(targetDefinition.getTemplate())){
+					targetDefinitions1.add(targetDefinition);
+				}
+			}
+			GenerationTaskResult generationTaskResult = telosysProject.launchGeneration(genericModel, entityNames, bundleName, targetDefinitions1, true);
 			
 			GenerationResult generationResult = new GenerationResult();
 			generationResult.setNumberOfFilesGenerated(generationTaskResult.getNumberOfFilesGenerated());

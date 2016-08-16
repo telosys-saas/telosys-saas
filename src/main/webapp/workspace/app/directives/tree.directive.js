@@ -1,50 +1,61 @@
 'use strict';
 
 /**
- * Generation view
+ * Tree for generation view
  */
 angular.module('directives')
   .directive('tree', function () {
     return {
       scope: {
         name: '=',
-        elts: '='
+        data: '='
       },
       templateUrl: 'app/directives/tree.directive.html',
 
       link: function ($scope) {
 
-        $scope.init = function () {
-          $scope.elts = [
-            {
-              id: 'elt-1', name: 'elt1', label: 'Element 1', elts: [
-              {id: 'elt-1-1', name: 'elt11', label: 'Element 1.1'},
-              {id: 'elt-1-2', name: 'elt12', label: 'Element 1.2'},
-              {id: 'elt-1-3', name: 'elt13', label: 'Element 1.3'}
-            ]
-            },
-            {
-              id: 'elt-2', name: 'elt2', label: 'Element 2', elts: [
-              {id: 'elt-2-1', name: 'elt21', label: 'Element 2.1'},
-              {id: 'elt-2-2', name: 'elt22', label: 'Element 2.2'},
-              {id: 'elt-2-3', name: 'elt23', label: 'Element 2.3'}
-            ]
-            }
-          ];
+        $scope.selectedElement = {};
 
-          for (var i = 0; i < $scope.elts.length; i++) {
-            var elt = $scope.elts[i];
-            for (var j = 0; j < elt.elts.length; j++) {
-              var subelt = elt.elts[j];
-              subelt.parent = elt;
-            }
+        $scope.init = function () {
+          $scope.elts = [];
+          for (var parentIndex = 0; parentIndex < $scope.data.tree.length; parentIndex++) {
+            var rootNode = {
+              id: $scope.data.tree[parentIndex].id,
+              name: $scope.data.tree[parentIndex].text,
+              label: $scope.data.tree[parentIndex].text,
+              type: $scope.data.tree[parentIndex].type,
+              elts: []
+
+            };
+            $scope.elts.push(rootNode);
+            convertDataToTree(parentIndex);
           }
+          if ($scope.elts[0]) {
+            $scope.selectedElement = $scope.elts[0];
+          }
+          console.log('$scope.elts :', $scope.elts);
         };
+
+        function convertDataToTree(parentIndex) {
+          for (var childIndex = 0; childIndex < $scope.data.tree[parentIndex].children.length; childIndex++) {
+            var childNode = $scope.data.tree[parentIndex].children[childIndex];
+            var elt = {
+              id: childNode.id,
+              name: childNode.text,
+              label: childNode.text,
+              type: childNode.type,
+              parent: $scope.elts[parentIndex]
+            };
+            $scope.elts[parentIndex].elts.push(elt);
+          }
+        }
 
         $scope.onchange = function (elt, isChecked) {
           console.log('onchange', elt.id, isChecked, elt.isSelected);
           elt.isSelected = isChecked;
-
+          if($scope.data.allFiles[elt.id]) {
+            $scope.data.allFiles[elt.id].isSelectedForGeneration = elt.isSelected;
+          }
           // select children
           if (elt.elts instanceof Array) {
             for (var i = 0; i < elt.elts.length; i++) {
@@ -54,7 +65,7 @@ angular.module('directives')
           }
         };
 
-        $scope.selectChild = function(elt, isChecked) {
+        $scope.selectChild = function (elt, isChecked) {
           elt.isChecked = isChecked;
           elt.isSelected = isChecked;
 
@@ -105,6 +116,11 @@ angular.module('directives')
           } else {
             return false;
           }
+        };
+
+        $scope.changeSelectedElement = function (element) {
+          console.log('changeSelectedElement', element);
+          $scope.selectedElement = element;
         };
 
         $scope.init();

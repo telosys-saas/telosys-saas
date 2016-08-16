@@ -218,7 +218,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
         console.log('init treeview', $scope.data.name, $scope.data.tree);
         $(element[0].children[1]).jstree({
           'core': {
-            'data': [$scope.data.tree],
+            'data': $scope.data.tree,
             // so that create works
             "check_callback": true
           },

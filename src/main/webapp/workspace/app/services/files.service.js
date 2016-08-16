@@ -31,15 +31,15 @@ angular.module('app')
        * @returns JSON Folder
        */
       convertFolderToJson: function (folder, parent, type) {
-
+        
         var currentNode;
         switch (type) {
           case 'files' :
           {
             currentNode = {
-              id: '@@_root_@@',
+              id: folder.id,
               text: folder.name,
-              type: 'files',
+              type: type,
               children: []
             };
           }
@@ -48,7 +48,7 @@ angular.module('app')
           case 'models' :
           {
             currentNode = {
-              id: '@@_root_@@',
+              id: folder.id,
               text: folder.name,
               type: 'models',
               children: []
@@ -59,9 +59,9 @@ angular.module('app')
           case 'bundle' :
           {
             currentNode = {
-              id: '@@_root_@@',
+              id: folder.id,
               text: folder.name,
-              type: 'bundle',
+              type: type,
               children: []
             };
           }

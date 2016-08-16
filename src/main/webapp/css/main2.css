@@ -3,7 +3,8 @@ html, body {
 }
 
 html div, html ul {
-    margin: 0; padding: 0
+    margin: 0;
+    padding: 0
 }
 
 #main {
@@ -37,7 +38,7 @@ html div, html ul {
 }
 */
 
-.navbar-nav>li {
+.navbar-nav > li {
     z-index: 3;
 }
 
@@ -49,7 +50,7 @@ html div, html ul {
     border-bottom: 1px solid lightgrey;
 }
 
-#idemaintoolbar .navbar-nav>li>a {
+#idemaintoolbar .navbar-nav > li > a {
     padding: 4px;
 }
 
@@ -176,7 +177,7 @@ footer {
 }
 
 .card {
-    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     background-color: white;
     width: 95%;
 }
@@ -213,13 +214,13 @@ footer {
     background-color: #D7EFFF;
 }
 
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
     cursor: default;
     border-color: #ccc;
     border-bottom-color: transparent;
 }
 
-.nav-tabs>li>a, .nav-tabs>li>a:focus, .nav-tabs>li>a:hover {
+.nav-tabs > li > a, .nav-tabs > li > a:focus, .nav-tabs > li > a:hover {
     color: #555;
     cursor: default;
     background-color: #f8f8f8;
@@ -229,28 +230,28 @@ footer {
     cursor: pointer;
 }
 
-.nav-tabs>li>a:hover {
+.nav-tabs > li > a:hover {
     background-color: #edf4ff;
 }
 
-.nav-tabs>li>a {
+.nav-tabs > li > a {
     margin: 3px 0 0 5px;
     padding: 5px 10px;
 }
 
-.bundlemodal{
+.bundlemodal {
     list-style-type: none;
 }
 
-.right{
+.right {
     float: right;
 }
 
-.badge{
+.badge {
     background-color: grey;
 }
 
-.btn-red{
+.btn-red {
     color: white;
     background-color: #F44336;
 }
@@ -263,7 +264,7 @@ footer {
     padding: 0;
 }
 
-.modal-dialog .modal-header h4{
+.modal-dialog .modal-header h4 {
     margin-top: 20px;
 }
 
@@ -274,6 +275,7 @@ footer {
     line-height: 34px;
 
 }
+
 .modal-dialog .bundlemodal:hover {
     background-color: #f3f3f3;
 }
@@ -291,6 +293,22 @@ footer {
     overflow-y: auto;
 }
 
-.generation {
+.generationTitle {
+    border-bottom: 1px solid lightgrey;
+}
 
+.generation ul > li {
+    list-style: none;
+    margin: 0;
+}
+
+.generation ul > li input {
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.generation ul > li label {
+    line-height: 25px;
+    cursor: pointer;
+    margin: -4px 0 0 0;
 }

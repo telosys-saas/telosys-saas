@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.pac4j.core.profile.UserProfile;
 import org.telosys.saas.dao.StorageDao;
 import org.telosys.saas.dao.StorageDaoProvider;
@@ -232,21 +235,20 @@ public class ProjectService {
 			telosysToolsCfg.setTMP(projectVariables.getTMP());
 			telosysToolsCfg.setRootPackage(projectVariables.getROOT_PKG());
 			telosysToolsCfg.setEntityPackage(projectVariables.getENTITY_PKG());
-			
-			/*
-			Map<Object, Object> specificVariables = new ObjectMapper().convertValue(projectVariables.getSpecificVariables(), HashMap.class);
-			List<Variable> variables = new ArrayList<Variable>();
-			for(Object key : specificVariables.keySet()) {
+
+			/*Map<Object, Object> specificVariables = new ObjectMapper().convertValue(projectVariables.getSpecificVariables(), HashMap.class);*/
+			JSONObject json = (JSONObject)new JSONParser().parse(projectVariables.getSpecificVariables());
+			List<Variable> variables = new ArrayList<>();
+			for(Object key : json.keySet()) {
 				String name = (String) key;
-				String value = String.valueOf(specificVariables.get(key));
+				String value = String.valueOf(json.get(key));
 				Variable variable = new Variable(name, value);
 				variables.add(variable);
 			}
 			telosysToolsCfg.setSpecificVariables(variables);
-			*/
-			
 			telosysProject.saveTelosysToolsCfg(telosysToolsCfg);
-		} catch (TelosysToolsException e) {
+
+		} catch (TelosysToolsException | ParseException e) {
 			throw new IllegalStateException(e);
 		}
 	}

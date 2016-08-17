@@ -629,8 +629,26 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       }
     }
 
-    $scope.saveConfig = function () {
+    /**
+     * Init the configuration of the project
+     * @param config configuration project from the server
+     */
+    function initConfiguration(config) {
+      // Init the environment variables
+      $scope.data.configuration.variables = config.variables;
+      // Init the specific variables
+      $scope.data.configuration.variables.specificVariables = JSON.parse(config.variables.specificVariables);
+      $scope.data.configuration.variables.specificVariablesKeys = Object.keys($scope.data.configuration.variables.specificVariables);
+    }
 
+    /**
+     * Save the new configuration of the project
+     */
+    $scope.saveConfig = function () {
+      ProjectsService.saveProjectConfiguration($scope.profile.userId, $routeParams.projectId, $scope.data.configuration)
+        .then(function(result){
+          initConfiguration(result.data);
+        })
     };
 
     /**
@@ -684,24 +702,9 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
             return ProjectsService.getProjectConfiguration($scope.profile.userId, $scope.data.project.id);
           })
           .then(function (result) {
-            console.log('getProjectConfiguration', result);
-            var config = result.data.variables;
-            // Init the specific variables
-            $scope.data.configuration.variables = {
-              SRC: config.SRC,
-              RES: config.RES,
-              WEB: config.WEB,
-              TEST_SRC: config.TEST_SRC,
-              TEST_RES: config.TEST_RES,
-              DOC: config.DOC,
-              TMP: config.TMP,
-              ENTITY_PKG: config.ENTITY_PKG,
-              ROOT_PKG: config.ROOT_PKG
-            };
-            // Init the specific variables
-            $scope.data.configuration.specificVariables = JSON.parse(config.specificVariables);
+            // Init the configuration of the project
+            initConfiguration(result.data);
             // Indicates that the IDE is initialized and can be displayed
-            console.log('getProjectConfiguration inited', $scope.data.configuration);
             $scope.initialized = true;
           })
           .catch(function (e) {

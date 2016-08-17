@@ -12,23 +12,20 @@
     <div ng-if="displayTab == 'generation'" id="consoleGeneration" class="col s12">
         <ul ng-if="hasError">
             <li ng-repeat="error in errors">
-                <tr>
-                    <td class="center-align" style="padding:0; font-size: 22px; line-height: 22px"><span
-                            class="mdi mdi-alert-circle fa-2x"></span></td>
-                    <td ng-click="events.onClickFile(error.templateFileId)"><a href>{{error.templateName}}</a></td>
-                    <td ng-click="events.onClickFile(error.templateFileId)"><a href>Line {{error.numLine}}</a></td>
-                    <td ng-click="events.onClickFile(error.entityFileId)"><a href>{{error.entityName}}</a>
-                    </td>
-                    <td>{{error.message}}</td>
-                </tr>
+                <ul>
+                    <li ng-click="events.onClickFile(error.templateFileId)"><a href>{{error.templateName}}</a></li>
+                    <li ng-click="events.onClickFile(error.templateFileId)"><a href>{{error.templateName}}</a></li>
+                    <li ng-click="events.onClickFile(error.entityFileId)"><a href>{{error.entityName}}</a></li>
+                    <li>{{error.message}}</li>
+                </ul>
             </li>
         </ul>
         <div ng-if="!hasError && hasError != null">
-            <tr>
-                <td>{{result.numberOfFilesGenerated}} file(s) generated.</td> <br><br>
-                <td>{{result.numberOfGenerationErrors}} generation error(s).</td> <br><br>
-                <td>{{result.numberOfResourcesCopied}}  resources(s) copied.</td> <br><br>
-            <tr>
+            <ul>
+                <li class="resultGeneration">{{result.numberOfFilesGenerated}} file(s) generated.</li>
+                <li class="resultGeneration">{{result.numberOfGenerationErrors}} generation error(s).</li>
+                <li class="resultGeneration">{{result.numberOfResourcesCopied}}  resources(s) copied.</li>
+            </ul>
         </div>
     </div>
 </div>

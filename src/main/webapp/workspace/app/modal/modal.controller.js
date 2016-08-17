@@ -34,6 +34,16 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     $scope.entityName = "";
 
     /**
+     * The new specific variable
+     */
+    $scope.specificVariable = {
+      name:"",
+      value: ""
+    };
+    
+    
+
+    /**
      * Create a new project
      */
     $scope.createProject = function () {
@@ -199,6 +209,13 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
           $scope.data.refreshAll();
           $uibModalInstance.close();
         })
+    };
+
+    /**
+     * Add a specific variable to the project
+     */
+    $scope.addVariable = function () {
+      $uibModalInstance.close($scope.specificVariable);
     };
 
     /**

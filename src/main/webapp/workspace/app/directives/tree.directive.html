@@ -1,13 +1,19 @@
-<label class="generationTitle" for="repeatSelect" ng-if="data.name=='models'"> Models: </label>
-<label class="generationTitle" for="repeatSelect" ng-if="data.name=='bundles'"> Bundles: </label>
-<select name="repeatSelect" id="repeatSelect">
-    <option ng-repeat="element in elts" ng-value="element.id" ng-click="changeSelectedElement(element)">{{element.name}}</option>
-</select>
+<div class="generationTitle">
+    <label for="repeatSelect" ng-if="data.name=='models'"> Models: </label>
+    <label for="repeatSelect" ng-if="data.name=='bundles'"> Bundles: </label>
+    <select name="repeatSelect" id="repeatSelect">
+        <option ng-repeat="element in elts" ng-value="element.id" ng-click="changeSelectedElement(element)">
+            {{element.name}}
+        </option>
+    </select>
+</div>
 
 <ul ng-if="selectedElement.elts">
     <checkbox html-id="selectedElement.id" name="selectedElement.name" label="'Select all'"
-              checked="isSelected(selectedElement)" indeterminate="isIndeterminate(selectedElement)" onchange="onchange" elt="selectedElement"></checkbox>
-    <li ng-repeat="subelt in selectedElement.elts" ng-if="subelt.type=='file' || subelt.type=='entity'" style="margin-left: 50px">
+              checked="isSelected(selectedElement)" indeterminate="isIndeterminate(selectedElement)" onchange="onchange"
+              elt="selectedElement"></checkbox>
+    <li ng-repeat="subelt in selectedElement.elts" ng-if="subelt.type=='file' || subelt.type=='entity'"
+        style="margin-left: 50px">
         <checkbox html-id="subelt.id" name="subelt.name" label="subelt.label"
                   checked="subelt.isChecked" onchange="onchange" elt="subelt"></checkbox>
     </li>

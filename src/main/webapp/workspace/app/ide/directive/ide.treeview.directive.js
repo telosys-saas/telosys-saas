@@ -327,7 +327,6 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
             }
           }
         }.bind(this));
-        $scope.collapseAll();
       }
 
       init();

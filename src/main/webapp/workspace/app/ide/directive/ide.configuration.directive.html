@@ -24,37 +24,37 @@
             <div class="form-group">
                 <label for="source">Sources ${SRC} :</label>
                 <input id="source" class="form-control"
-                       ng-model="data.variables.sources">
+                       ng-model="data.variables.SRC">
             </div>
             <div class="form-group">
                 <label for="resources">Resources ${RES} :</label>
                 <input id="resources" class="form-control"
-                       ng-model="data.variables.resources">
+                       ng-model="data.variables.RES">
             </div>
             <div class="form-group">
-                <label for="webContent">Web content ${WEB} :</label>
-                <input id="webContent" class="form-control"
-                       ng-model="data.variables.webContent">
+                <label for="web-content">Web content ${WEB} :</label>
+                <input id="web-content" class="form-control"
+                       ng-model="data.variables.WEB">
             </div>
             <div class="form-group">
-                <label for="testSources">Tests sources ${TEST_SRC} :</label>
-                <input id="testSources" class="form-control"
-                       ng-model="data.variables.testSources">
+                <label for="test-sources">Tests sources ${TEST_SRC} :</label>
+                <input id="test-sources" class="form-control"
+                       ng-model="data.variables.TEST_SRC">
             </div>
             <div class="form-group">
-                <label for="testResources">Tests resources ${TEST_RES} :</label>
-                <input id="testResources" class="form-control"
-                       ng-model="data.variables.testResources">
+                <label for="test-resources">Tests resources ${TEST_RES} :</label>
+                <input id="test-resources" class="form-control"
+                       ng-model="data.variables.TEST_RES">
             </div>
             <div class="form-group">
                 <label for="documentation">Documentation ${DOC} :</label>
                 <input id="documentation" class="form-control"
-                       ng-model="data.variables.documentation">
+                       ng-model="data.variables.DOC">
             </div>
             <div class="form-group">
-                <label for="temporaryFiles">Temporay files ${TMP} :</label>
-                <input id="temporaryFiles" class="form-control"
-                       ng-model="data.variables.temporaryFiles">
+                <label for="temporary-files">Temporay files ${TMP} :</label>
+                <input id="temporary-files" class="form-control"
+                       ng-model="data.variables.TMP">
             </div>
         </div>
 
@@ -62,20 +62,42 @@
     <div ng-if="displayTab=='packages'" id="packagesTab" class="col s12">
         <div class="modal-body">
             <div class="form-group">
-                <label for="rootPkg">Root package ${ROOT_PKG} :</label>
-                <input id="rootPkg" class="form-control"
-                       ng-model="data.variables.rootPkg">
+                <label for="root-pkg">Root package ${ROOT_PKG} :</label>
+                <input id="root-pkg" class="form-control"
+                       ng-model="data.variables.ROOT_PKG">
             </div>
             <div class="form-group">
-                <label for="entityPkg">Entity classes package ${ENTITY_PKG} :</label>
-                <input id="entityPkg" class="form-control"
-                       ng-model="data.variables.entityPkg">
+                <label for="entity-pkg">Entity classes package ${ENTITY_PKG} :</label>
+                <input id="entity-pkg" class="form-control"
+                       ng-model="data.variables.ENTITY_PKG">
             </div>
         </div>
     </div>
-    <div ng-if="displayTab=='variables'" id="variablesTab" class="col s12"></div>
-    <div ng-if="displayTab=='templates'" id="templatesTab" class="col s12"></div>
-    <button class="btn btn-success" style="float: right" ng-click="saveConfig()">
-        <span class="fa fa-floppy-o fa-lg"></span> &nbsp;Save
-    </button>
+    <div ng-if="displayTab=='variables'" id="variablesTab" class="col s12">
+        <div class="container">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-class="{active: selectedRow==key}" ng-repeat="key in data.variables.specificVariablesKeys" ng-click="selectRow(key)">
+                    <td>{{key}}</td>
+                    <td>{{data.variables.specificVariables[key]}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-info" type="button" ng-click="addVariable()">Add</button>
+            <button class="btn btn-info" type="button" ng-click="deleteVariable()">Delete</button>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div ng-if="displayTab=='templates'" id="templatesTab" class="col s12"></div>
+<button class="btn btn-success" style="float: right" ng-click="saveConfig()">
+    <span class="fa fa-floppy-o fa-lg"></span> &nbsp;Save
+</button>
 </div>

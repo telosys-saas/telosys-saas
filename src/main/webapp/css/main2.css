@@ -294,6 +294,7 @@ footer {
 }
 
 .generationTitle {
+    padding-bottom: 5px;
     border-bottom: 1px solid lightgrey;
 }
 
@@ -311,4 +312,8 @@ footer {
     line-height: 25px;
     cursor: pointer;
     margin: -4px 0 0 0;
+}
+
+.resultGeneration{
+    padding: 10px;
 }

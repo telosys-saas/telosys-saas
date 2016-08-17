@@ -109,7 +109,7 @@ angular.module('app')
           projectConfiguration.variables.specificVariables = JSON.stringify(projectConfiguration.variables.specificVariables);
         }
 
-        $http({
+        return $http({
           method: "PUT",
           url: host + "api/v1/users/"+userId+"/projects/"+projectName+"/configuration",
           dataType: 'json',
@@ -119,10 +119,6 @@ angular.module('app')
           .catch(function (e) {
             console.log(e);
           });
-
-        if(projectConfiguration && projectConfiguration.variables && projectConfiguration.variables.specificVariables) {
-          projectConfiguration.variables.specificVariables = JSON.parse(projectConfiguration.variables.specificVariables);
-        }
       }
     }
   }]);

@@ -72,7 +72,7 @@ var IDETreeview = {
                       if(node.id == '@@_root_@@' || node.type == 'folder' || node.type == 'bundle') {
                         items.CreateFile = {
                           label: "Create file",
-                          action: this.onCreateFile(node, tree)
+                          action: this.onCreateFile(node)
                         };
                         items.CreateFolder = {
                           label: "Create folder",

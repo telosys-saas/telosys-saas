@@ -86,6 +86,43 @@ angular.module('app')
        */
       downloadZip: function (userId, projectName) {
         document.location = host + "api/v1/users/" + userId + "/projects/" + projectName + "/zip";
+      },
+
+      /**
+       * Get the configuration of the current project
+       * @param userId
+       * @param projectName
+       * @param callback
+       */
+      getProjectConfiguration: function (userId, projectName) {
+        return $http({
+          url: host + "api/v1/users/"+userId+"/projects/"+projectName+"/configuration",
+          dataType: 'json'
+        })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
+
+      saveProjectConfiguration: function (userId, projectName, projectConfiguration) {
+        if(projectConfiguration && projectConfiguration.variables && projectConfiguration.variables.specificVariables) {
+          projectConfiguration.variables.specificVariables = JSON.stringify(projectConfiguration.variables.specificVariables);
+        }
+
+        $http({
+          method: "PUT",
+          url: host + "api/v1/users/"+userId+"/projects/"+projectName+"/configuration",
+          dataType: 'json',
+          contentType: 'application/json',
+          data: JSON.stringify(projectConfiguration)
+        })
+          .catch(function (e) {
+            console.log(e);
+          });
+
+        if(projectConfiguration && projectConfiguration.variables && projectConfiguration.variables.specificVariables) {
+          projectConfiguration.variables.specificVariables = JSON.parse(projectConfiguration.variables.specificVariables);
+        }
       }
     }
   }]);

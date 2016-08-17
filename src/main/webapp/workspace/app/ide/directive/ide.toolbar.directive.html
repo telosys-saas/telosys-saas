@@ -24,6 +24,10 @@
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">Model <span class="badge" ng-if="data.models.countModifiedFile != 0">{{data.models.countModifiedFile}}</span></a>
                 </li>
+                <li class="dropdown"  ng-click="changeView('configuration')" ng-class="{active : data.isDisplay=='configuration'}">
+                    <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Configuration</a>
+                </li>
                 <li class="dropdown"  ng-click="changeView('bundles')" ng-class="{active : data.isDisplay=='bundles'}">
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">Templates bundles <span class="badge" ng-if="data.bundles.countModifiedFile != 0">{{data.bundles.countModifiedFile}}</span></a>

@@ -1,0 +1,81 @@
+<div>
+    <div class="col s12">
+        <ul class="nav nav-tabs">
+            <li ng-class="{'active': displayTab=='folders'}"
+                ng-click="onClickTab('folders')">
+                <a href>Folders</a>
+            </li>
+            <li ng-class="{'active': displayTab=='packages'}"
+                ng-click="onClickTab('packages')">
+                <a href>Packages</a>
+            </li>
+            <li ng-class="{'active': displayTab=='variables'}"
+                ng-click="onClickTab('variables')">
+                <a href>Variables</a>
+            </li>
+            <li ng-class="{'active': displayTab=='templates'}"
+                ng-click="onClickTab('templates')">
+                <a href>Templates</a>
+            </li>
+        </ul>
+    </div>
+    <div ng-if="displayTab=='folders'" id="folderTab" class="col s12">
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="source">Sources ${SRC} :</label>
+                <input id="source" class="form-control"
+                       ng-model="data.variables.sources">
+            </div>
+            <div class="form-group">
+                <label for="resources">Resources ${RES} :</label>
+                <input id="resources" class="form-control"
+                       ng-model="data.variables.resources">
+            </div>
+            <div class="form-group">
+                <label for="webContent">Web content ${WEB} :</label>
+                <input id="webContent" class="form-control"
+                       ng-model="data.variables.webContent">
+            </div>
+            <div class="form-group">
+                <label for="testSources">Tests sources ${TEST_SRC} :</label>
+                <input id="testSources" class="form-control"
+                       ng-model="data.variables.testSources">
+            </div>
+            <div class="form-group">
+                <label for="testResources">Tests resources ${TEST_RES} :</label>
+                <input id="testResources" class="form-control"
+                       ng-model="data.variables.testResources">
+            </div>
+            <div class="form-group">
+                <label for="documentation">Documentation ${DOC} :</label>
+                <input id="documentation" class="form-control"
+                       ng-model="data.variables.documentation">
+            </div>
+            <div class="form-group">
+                <label for="temporaryFiles">Temporay files ${TMP} :</label>
+                <input id="temporaryFiles" class="form-control"
+                       ng-model="data.variables.temporaryFiles">
+            </div>
+        </div>
+
+    </div>
+    <div ng-if="displayTab=='packages'" id="packagesTab" class="col s12">
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="rootPkg">Root package ${ROOT_PKG} :</label>
+                <input id="rootPkg" class="form-control"
+                       ng-model="data.variables.rootPkg">
+            </div>
+            <div class="form-group">
+                <label for="entityPkg">Entity classes package ${ENTITY_PKG} :</label>
+                <input id="entityPkg" class="form-control"
+                       ng-model="data.variables.entityPkg">
+            </div>
+        </div>
+    </div>
+    <div ng-if="displayTab=='variables'" id="variablesTab" class="col s12"></div>
+    <div ng-if="displayTab=='templates'" id="templatesTab" class="col s12"></div>
+    <button class="btn btn-success" style="float: right" ng-click="saveConfig()">
+        <span class="fa fa-floppy-o fa-lg"></span> &nbsp;Save
+    </button>
+</div>

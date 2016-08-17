@@ -1,6 +1,6 @@
 <idetoolbar data="data" profile="profile"></idetoolbar>
 <!--idemaintoolbar data="data" profile="profile"></idemaintoolbar-->
-<div style="width: 100%; height: 100%; position: relative" ng-if="initialized && data.isDisplay!='generation'">
+<div style="width: 100%; height: 100%; position: relative" ng-if="initialized && data.isDisplay!='generation' && data.isDisplay!='configuration'">
     <div id="left" class="content" style="position: absolute; left: 0; width: calc(25% - 10px); top: 0; bottom: 0">
         <left data="data.models" ng-show="data.isDisplay=='models'"></left>
         <left data="data.bundles" ng-show="data.isDisplay=='bundles'"></left>
@@ -17,4 +17,7 @@
 </div>
 <div style="width: 100%; height: 100%; position: relative" ng-if="initialized && data.isDisplay=='generation'">
     <generation class="generation" data="data" ng-show="data.isDisplay=='generation'"></generation>
+</div>
+<div style="width: 100%; height: 100%; position: relative" ng-if="initialized && data.isDisplay=='configuration'">
+    <configuration class="genration" data="data.configuration" ng-show="data.isDisplay=='configuration'"></configuration>
 </div>

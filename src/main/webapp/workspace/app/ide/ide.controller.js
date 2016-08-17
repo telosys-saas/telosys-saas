@@ -13,7 +13,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     /** Indicates if the IDE is initialized and could be displayed */
     $scope.initialized = false;
 
-    $scope.defaultView = 'generation';
+    $scope.defaultView = 'configuration';
 
     function initData() {
       /** IDE data */
@@ -28,6 +28,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         events: getCommonEvents(),
         /** The Telosys Tools Folder */
         telosysFolder: {},
+        /** The result of the generation */
+        generationResults: [],
 
         /**
          * Data for model created by the user
@@ -104,6 +106,14 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           selectedElement: null,
           /** IDE events redirected to controller functions */
           events: getEventsForFiles()
+        },
+
+        configuration: {
+          name: 'configuration',
+          /** The environment variables of the current project*/
+          variables: {},
+          /** IDE events redirected to controller functions */
+          events: getEventsForConfig()
         }
       };
     }
@@ -170,6 +180,15 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     function getEventsForModels() {
       var events = getCommonEvents();
       events.refreshAll = $scope.refreshAllModels;
+      return events;
+    }
+
+    /**
+     * Events functions of this controller which will be called by sub components to manage user actions
+     */
+    function getEventsForConfig() {
+      var events = getCommonEvents();
+      events.saveConfig = $scope.saveConfig;
       return events;
     }
 
@@ -241,6 +260,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         $scope.saveFile(data);
       }
       $log.info("close file", fileId);
+      // Select the next file to display
       var workingFilesArray = [];
       var indexFile;
       for (var fileKey in data.workingFiles) {
@@ -458,6 +478,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           $scope.telosysFolder = result.data;
           var templateFolder = getFolderByName($scope.telosysFolder, 'templates');
           if (templateFolder.folders) {
+            $scope.data.bundles.tree = [];
             for (var index = 0; index < templateFolder.folders.length; index++) {
               templateFolder.folders[index].id = '@@_root_@@_' + index;
               $scope.data.bundles.tree.push(FilesService.convertFolderToJson(templateFolder.folders[index], null, 'bundle'));
@@ -522,7 +543,13 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       if (i < $scope.generations.length) {
         var generation = $scope.generations[i];
         $scope.launchGenerationCallback = (function launchGenerationCallback(generation, result) {
-          console.log(result);
+          console.log('generation callback', result);
+          var generationResult = {
+            generation: generation,
+            result: result,
+            isDisplay: false
+          };
+          $scope.data.generationResults.push(generationResult);
           // next generation
           i++;
           if (i < $scope.generations.length) {
@@ -530,7 +557,11 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
             ProjectsService.launchGeneration($scope.profile.userId, $scope.data.project.id, generation)
               .then(function (result) {
                 $scope.launchGenerationCallback(generation, result);
+
               })
+          } else {
+            // When the generation is finished, get the generated file
+            $scope.refreshAllFiles();
           }
         });
         ProjectsService.launchGeneration($scope.profile.userId, $scope.data.project.id, generation)
@@ -539,7 +570,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           });
       }
     };
-
 
     function getTelosysFolder() {
       return TelosysService.getTelosysFolderForProject($scope.profile.userId, $scope.data.project.id);
@@ -587,6 +617,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         folders: []
       };
       if (models && models.length > 0) {
+        $scope.data.models.tree = [];
         for (var index = 0; index < models.length; index++) {
           var modelName = models[index].name;
           var modelFolder = getFolderByName($scope.telosysFolder, modelName);
@@ -597,6 +628,10 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         $scope.data.models.allFiles = FilesService.getAllFilesFromTree(allModelsFolder);
       }
     }
+
+    $scope.saveConfig = function () {
+
+    };
 
     /**
      * Initialize the IDE
@@ -645,7 +680,28 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           .then(function (result) {
             // Init models
             initModels(result.data);
+            // Get the configuration of the project
+            return ProjectsService.getProjectConfiguration($scope.profile.userId, $scope.data.project.id);
+          })
+          .then(function (result) {
+            console.log('getProjectConfiguration', result);
+            var config = result.data.variables;
+            // Init the specific variables
+            $scope.data.configuration.variables = {
+              SRC: config.SRC,
+              RES: config.RES,
+              WEB: config.WEB,
+              TEST_SRC: config.TEST_SRC,
+              TEST_RES: config.TEST_RES,
+              DOC: config.DOC,
+              TMP: config.TMP,
+              ENTITY_PKG: config.ENTITY_PKG,
+              ROOT_PKG: config.ROOT_PKG
+            };
+            // Init the specific variables
+            $scope.data.configuration.specificVariables = JSON.parse(config.specificVariables);
             // Indicates that the IDE is initialized and can be displayed
+            console.log('getProjectConfiguration inited', $scope.data.configuration);
             $scope.initialized = true;
           })
           .catch(function (e) {

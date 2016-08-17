@@ -2,33 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="93bd2800-babb-4683-a80f-4022e6ca4b9e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/directives/checkbox.directive.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/workspace/app/directives/checkbox2.directive.html" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_telosys_telosys_tools_api_3_0_0_SNAPSHOT.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_telosys_telosys_tools_api_3_0_0_SNAPSHOT.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_telosys_telosys_tools_commons_3_0_0_SNAPSHOT.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_telosys_telosys_tools_commons_3_0_0_SNAPSHOT.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_telosys_telosys_tools_database_3_0_0_SNAPSHOT.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_telosys_telosys_tools_database_3_0_0_SNAPSHOT.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_telosys_telosys_tools_dsl_parser_3_0_0_SNAPSHOT.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_telosys_telosys_tools_dsl_parser_3_0_0_SNAPSHOT.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_telosys_telosys_tools_generator_3_0_0_SNAPSHOT.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_telosys_telosys_tools_generator_3_0_0_SNAPSHOT.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_telosys_telosys_tools_generator_engine_3_0_0_SNAPSHOT.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_telosys_telosys_tools_generator_engine_3_0_0_SNAPSHOT.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_telosys_telosys_tools_generic_model_3_0_0_SNAPSHOT.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_telosys_telosys_tools_generic_model_3_0_0_SNAPSHOT.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_telosys_telosys_tools_repository_3_0_0_SNAPSHOT.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_telosys_telosys_tools_repository_3_0_0_SNAPSHOT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.configuration.directive.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.configuration.directive.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/telosys/saas/domain/Generation.java" afterPath="$PROJECT_DIR$/src/main/java/org/telosys/saas/domain/Generation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/telosys/saas/rest/UsersResource.java" afterPath="$PROJECT_DIR$/src/main/java/org/telosys/saas/rest/UsersResource.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/telosys/saas/services/ProjectService.java" afterPath="$PROJECT_DIR$/src/main/java/org/telosys/saas/services/ProjectService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/telosys/saas/servlet/createAccount.java" afterPath="$PROJECT_DIR$/src/main/java/org/telosys/saas/servlet/createAccount.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/css/main2.css" afterPath="$PROJECT_DIR$/src/main/webapp/css/main2.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/workspace/app/directives/tree.directive.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/directives/tree.directive.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/workspace/app/directives/tree.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/directives/tree.directive.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.console.directive.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.console.directive.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.console.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.console.directive.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.generation.directive.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.generation.directive.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.generation.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.generation.directive.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.left.directive.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.left.directive.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.toolbar.directive.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.toolbar.directive.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.treeview.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.treeview.directive.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/ide.controller.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/ide.controller.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/ide.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/ide.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/workspace/app/services/files.service.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/services/files.service.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/workspace/app/services/projects.service.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/services/projects.service.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/workspace/index.html" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/org/telosys/saas/security/FormAuthenticatorITest.java" afterPath="$PROJECT_DIR$/src/test/java/org/telosys/saas/security/FormAuthenticatorITest.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/workspace/app/directives/checkbox2.directive.js" afterPath="$PROJECT_DIR$/src/main/webapp/workspace/app/directives/checkbox.directive.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp_old/app/view/index/ide/ide.treeview.view.js" afterPath="$PROJECT_DIR$/src/main/webapp_old/app/view/index/ide/ide.treeview.view.js" />
     </list>
     <ignored path="telosys-saas.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -61,51 +49,84 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="checkbox.directive.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/directives/checkbox.directive.js">
+      <file leaf-file-name="ide.configuration.directive.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.configuration.directive.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="24" column="40" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
+            <state relative-caret-position="288">
+              <caret line="77" column="78" selection-start-line="77" selection-start-column="78" selection-end-line="77" selection-end-column="78" />
+              <folding>
+                <element signature="n#div#2;n#div#0;n#!!top" expanded="false" />
+                <element signature="n#style#0;n#button#0;n#div#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ide.configuration.directive.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.configuration.directive.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="24" column="42" selection-start-line="24" selection-start-column="42" selection-end-line="24" selection-end-column="42" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="checkbox.directive.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/directives/checkbox.directive.html">
+      <file leaf-file-name="ide.controller.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/ide.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="66">
-              <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
+            <state relative-caret-position="191">
+              <caret line="693" column="24" selection-start-line="693" selection-start-column="24" selection-end-line="693" selection-end-column="24" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tree.directive.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/directives/tree.directive.html">
+      <file leaf-file-name="projects.service.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/services/projects.service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="7" column="34" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
+            <state relative-caret-position="180">
+              <caret line="106" column="6" selection-start-line="106" selection-start-column="6" selection-end-line="106" selection-end-column="6" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="directives.module.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/directives/directives.module.js">
+      <file leaf-file-name="ide.settings.view.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp_old/app/view/index/ide/ide.settings.view.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="44">
-              <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
+            <state relative-caret-position="326">
+              <caret line="155" column="20" selection-start-line="155" selection-start-column="20" selection-end-line="155" selection-end-column="20" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tree.directive.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/directives/tree.directive.js">
+      <file leaf-file-name="toolbar.settings.view.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp_old/app/view/index/toolbar/toolbar.settings.view.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="924">
-              <caret line="42" column="31" selection-start-line="42" selection-start-column="31" selection-end-line="42" selection-end-column="31" />
+            <state relative-caret-position="392">
+              <caret line="165" column="20" selection-start-line="165" selection-start-column="20" selection-end-line="165" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="projects.service.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp_old/app/services/projects.service.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="62">
+              <caret line="43" column="10" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ide.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/ide.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="363">
+              <caret line="21" column="61" selection-start-line="21" selection-start-column="61" selection-end-line="21" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -117,8 +138,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
-        <option value="JavaScript File" />
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -138,30 +159,20 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/dashboard/dashboard.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp_old/app/services/projects.service.js" />
-        <option value="$PROJECT_DIR$/src/main/java/org/telosys/saas/domain/Entity.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/services/telosys.service.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.workingfiles.directive.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.workingfiles.directive.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.left.directive.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.maintoolbar.directive.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.maintoolbar.directive.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.editor.directive.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.addBundle.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.editor.directive.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.addbundle.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/services/bundles.service.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.createentity..html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.left.directive.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.managebundle.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.treeview.directive.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/dashboard/dashboard.controller.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/dashboard/directive/dashboard.toolbar.directive.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.toolbar.directive.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/services/model.service.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/services/projects.service.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.toolbar.directive.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.createmodel.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.controller.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.createproject.html" />
@@ -170,10 +181,7 @@
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/tree/tree.directive.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/app.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/directives/directives.module.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/workspace/index.html" />
         <option value="$PROJECT_DIR$/src/main/java/org/telosys/saas/servlet/createAccount.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.treeview.directive.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/ide.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/directives/checkbox2.directive.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/directives/checkbox2.directive.js" />
         <option value="$PROJECT_DIR$/src/main/java/org/telosys/saas/rest/UsersResource.java" />
@@ -181,14 +189,27 @@
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/directives/checkbox.directive.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/css/main2.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/services/files.service.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.generation.directive.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/directives/tree.directive.html" />
         <option value="$PROJECT_DIR$/src/main/java/org/telosys/saas/rest/ProjectResource.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/telosys/saas/domain/Generation.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.generation.directive.js" />
         <option value="$PROJECT_DIR$/src/main/java/org/telosys/saas/services/ProjectService.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/ide.controller.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/directives/tree.directive.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/workspace/index.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.left.directive.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.generation.directive.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.generation.directive.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp_old/app/services/projects.service.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.console.directive.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp_old/app/view/index/ide/ide.treeview.view.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.treeview.directive.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.toolbar.directive.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.console.directive.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/ide.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.editor.directive.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.configuration.directive.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.configuration.directive.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/services/projects.service.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/workspace/app/ide/ide.controller.js" />
       </list>
     </option>
   </component>
@@ -252,7 +273,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -321,6 +341,84 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="webapp_old" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="telosys-saas-angular" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="telosys-saas-angular" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp_old" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="telosys-saas-angular" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="telosys-saas-angular" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp_old" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="telosys-saas-angular" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="telosys-saas-angular" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="webapp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -411,7 +509,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="directives" />
+              <option name="myItemId" value="services" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -433,13 +531,90 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="workspace" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ide" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="telosys-saas-angular" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="telosys-saas-angular" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="workspace" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ide" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="directive" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="telosys-saas-angular" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="telosys-saas-angular" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="saas" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -453,9 +628,16 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="js-jscs-nodeInterpreter" value="C:\Apps\nodejs\node.exe" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="SearchEverywhereHistoryKey" value="files&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/workspace/app/services/files.service.js&#10;ge&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/java/org/telosys/saas/domain/Generation.java&#10;gene&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/java/org/telosys/saas/domain/Generation.java&#10;ide.c&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/workspace/app/ide/ide.controller.js&#10;genera&#9;PSI&#9;JAVA://org.telosys.saas.domain.Generation&#10;gener&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/java/org/telosys/saas/domain/Generation.java&#10;filesS&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/workspace/app/services/files.service.js&#10;plug&#9;ACTION&#9;WelcomeScreen.DevelopPlugins&#10;Generat&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/java/org/telosys/saas/domain/Generation.java&#10;User&#9;FILE&#9;jar://C:/Users/fpaquere/.m2/repository/org/telosys/telosys-tools-api/3.0.0-SNAPSHOT/telosys-tools-api-3.0.0-20160811.133127-5.jar!/org/telosys/tools/users/User.class&#10;main&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/css/main2.css&#10;main2&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/css/main2.css&#10;File&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/workspace/app/services/files.service.js&#10;Ent&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/java/org/telosys/saas/domain/Entity.java&#10;Mo&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/java/org/telosys/saas/domain/Model.java&#10;models&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/workspace/app/services/model.service.js&#10;mode&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/workspace/app/services/model.service.js&#10;cal&#9;FILE&#9;jar://C:/Users/fpaquere/.m2/repository/org/pac4j/j2e-pac4j/1.2.1/j2e-pac4j-1.2.1.jar!/org/pac4j/j2e/filter/CallbackFilter.class&#10;call&#9;FILE&#9;jar://C:/Users/fpaquere/.m2/repository/org/pac4j/j2e-pac4j/1.2.1/j2e-pac4j-1.2.1.jar!/org/pac4j/j2e/filter/CallbackFilter.class&#10;ca&#9;FILE&#9;jar://C:/Users/fpaquere/.m2/repository/org/pac4j/j2e-pac4j/1.2.1/j2e-pac4j-1.2.1.jar!/org/pac4j/j2e/filter/CallbackFilter.class&#10;edit&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-2/src/main/webapp/app/ide/directive/ide.editor.directive.js&#10;left.h&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-2/src/main/webapp/app/ide/directive/ide.left.directive.html&#10;folder&#9;PSI&#9;JAVA://org.telosys.saas.domain.Folder" />
+    <property name="SearchEverywhereHistoryKey" value="contr&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/workspace/app/ide/ide.controller.js&#10;ide.cont&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/workspace/app/ide/ide.controller.js&#10;ide.c&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/workspace/app/ide/directive/ide.console.directive.js&#10;gene&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/workspace/app/ide/directive/ide.generation.directive.js&#10;cont&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/workspace/app/ide/ide.controller.js&#10;files&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/workspace/app/services/files.service.js&#10;ge&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/java/org/telosys/saas/domain/Generation.java&#10;genera&#9;PSI&#9;JAVA://org.telosys.saas.domain.Generation&#10;gener&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/java/org/telosys/saas/domain/Generation.java&#10;filesS&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/workspace/app/services/files.service.js&#10;plug&#9;ACTION&#9;WelcomeScreen.DevelopPlugins&#10;Generat&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/java/org/telosys/saas/domain/Generation.java&#10;User&#9;FILE&#9;jar://C:/Users/fpaquere/.m2/repository/org/telosys/telosys-tools-api/3.0.0-SNAPSHOT/telosys-tools-api-3.0.0-20160811.133127-5.jar!/org/telosys/tools/users/User.class&#10;main&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/css/main2.css&#10;main2&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/css/main2.css&#10;File&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/workspace/app/services/files.service.js&#10;Ent&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/java/org/telosys/saas/domain/Entity.java&#10;Mo&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/java/org/telosys/saas/domain/Model.java&#10;models&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/workspace/app/services/model.service.js&#10;mode&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-angular/src/main/webapp/workspace/app/services/model.service.js&#10;cal&#9;FILE&#9;jar://C:/Users/fpaquere/.m2/repository/org/pac4j/j2e-pac4j/1.2.1/j2e-pac4j-1.2.1.jar!/org/pac4j/j2e/filter/CallbackFilter.class&#10;call&#9;FILE&#9;jar://C:/Users/fpaquere/.m2/repository/org/pac4j/j2e-pac4j/1.2.1/j2e-pac4j-1.2.1.jar!/org/pac4j/j2e/filter/CallbackFilter.class&#10;ca&#9;FILE&#9;jar://C:/Users/fpaquere/.m2/repository/org/pac4j/j2e-pac4j/1.2.1/j2e-pac4j-1.2.1.jar!/org/pac4j/j2e/filter/CallbackFilter.class&#10;edit&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-2/src/main/webapp/app/ide/directive/ide.editor.directive.js&#10;left.h&#9;FILE&#9;file://D:/Users/fpaquere/Documents/saas/telosys-saas-2/src/main/webapp/app/ide/directive/ide.left.directive.html&#10;folder&#9;PSI&#9;JAVA://org.telosys.saas.domain.Folder" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Users\fpaquere\Documents\saas\telosys-saas-angular\src\main\webapp" />
+      <recent name="D:\Users\fpaquere\Documents\saas\telosys-saas-angular\src\main\webapp\workspace" />
+      <recent name="D:\Users\fpaquere\Documents\saas\telosys-saas-angular\src\main\webapp\workscpace" />
+      <recent name="D:\Users\fpaquere\Documents\saas\telosys-saas-2\src\main\webapp\app\modal" />
+      <recent name="D:\Users\fpaquere\Documents\saas\telosys-saas-2\src\main\webapp\app\" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.telosys.saas.security" />
     </key>
@@ -465,13 +647,6 @@
       <recent name="D:\Users\fpaquere\Documents\saas\telosys-saas-angular\src\main\webapp\workspace\app\ide" />
       <recent name="D:\Users\fpaquere\Documents\saas\telosys-saas-angular\src\main\webapp" />
       <recent name="D:\Users\fpaquere\Documents\saas\telosys-saas-2\src\main\webapp\app\modal" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Users\fpaquere\Documents\saas\telosys-saas-angular\src\main\webapp" />
-      <recent name="D:\Users\fpaquere\Documents\saas\telosys-saas-angular\src\main\webapp\workspace" />
-      <recent name="D:\Users\fpaquere\Documents\saas\telosys-saas-angular\src\main\webapp\workscpace" />
-      <recent name="D:\Users\fpaquere\Documents\saas\telosys-saas-2\src\main\webapp\app\modal" />
-      <recent name="D:\Users\fpaquere\Documents\saas\telosys-saas-2\src\main\webapp\app\" />
     </key>
   </component>
   <component name="RunManager" selected="Tomcat Server.saas">
@@ -1054,7 +1229,8 @@
       <workItem from="1471289868753" duration="37000" />
       <workItem from="1471289925173" duration="27000" />
       <workItem from="1471330357702" duration="26074000" />
-      <workItem from="1471361916487" duration="8000" />
+      <workItem from="1471361916487" duration="55000" />
+      <workItem from="1471417320909" duration="15652000" />
     </task>
     <task id="LOCAL-00001" summary="Start telosys saas 2">
       <created>1468857299874</created>
@@ -1259,11 +1435,18 @@
       <option name="project" value="LOCAL" />
       <updated>1470922101596</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="generate code">
+      <created>1471361961724</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1471361961724</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="532363000" />
+    <option name="totallyTimeSpent" value="548062000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1280,6 +1463,7 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905483" sideWeight="0.49517167" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905483" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905483" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1287,6 +1471,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921347" sideWeight="0.49785408" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5710956" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4235706" sideWeight="0.4946352" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32672113" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1294,15 +1479,13 @@
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18186696" sideWeight="0.5324232" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32905483" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18186696" sideWeight="0.52158695" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35822636" sideWeight="0.49356222" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905483" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4235706" sideWeight="0.4946352" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35472578" sideWeight="0.49356222" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905483" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1341,7 +1524,8 @@
     <MESSAGE value="templates bundles" />
     <MESSAGE value="create project with model&#10;start generation directive" />
     <MESSAGE value="create project" />
-    <option name="LAST_COMMIT_MESSAGE" value="create project" />
+    <MESSAGE value="generate code" />
+    <option name="LAST_COMMIT_MESSAGE" value="generate code" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1354,171 +1538,10 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/dashboard/dashboard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/dashboard/dashboard.module.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/dashboard/dashboard.routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.createfile.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.createmodel.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.createproject.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/services/model.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-166">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.createfolder.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.createentity.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="32" column="7" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/org/telosys/saas/security/FormAuthenticatorITest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="27" column="24" selection-start-line="27" selection-start-column="24" selection-end-line="27" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/telosys/saas/rest/UsersResource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="58" column="76" selection-start-line="58" selection-start-column="76" selection-end-line="58" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/telosys/saas/dao/FileStorageDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4224">
-          <caret line="213" column="0" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.workingfiles.directive.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.maintoolbar.directive.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.left.directive.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.editor.directive.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3638">
-          <caret line="45" column="34" selection-start-line="45" selection-start-column="34" selection-end-line="45" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.console.directive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.left.directive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.maintoolbar.directive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.editor.directive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="836">
-          <caret line="38" column="6" selection-start-line="38" selection-start-column="6" selection-end-line="38" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/todoList.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
           <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/ide.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="10" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1386">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1533,6 +1556,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="139">
           <caret line="295" column="18" selection-start-line="295" selection-start-column="18" selection-end-line="295" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1540,55 +1564,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
           <caret line="13" column="47" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.treeview.directive.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2420">
-          <caret line="110" column="32" selection-start-line="110" selection-start-column="23" selection-end-line="110" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.generation.directive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/services/projects.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13">
-          <caret line="57" column="31" selection-start-line="57" selection-start-column="31" selection-end-line="57" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp_old/app/view/index/ide/ide.generation.view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="245" column="93" selection-start-line="245" selection-start-column="93" selection-end-line="245" selection-end-column="93" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/telosys/saas/rest/ProjectsResource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-162">
-          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp_old/app/services/projects.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="287" column="45" selection-start-line="287" selection-start-column="45" selection-end-line="287" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.console.directive.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -1627,17 +1602,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/telosys/saas/rest/ProjectResource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="340" column="23" selection-start-line="340" selection-start-column="23" selection-end-line="340" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/telosys/saas/services/ProjectService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="62">
           <caret line="261" column="0" selection-start-line="261" selection-start-column="0" selection-end-line="261" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1648,24 +1617,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.generation.directive.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="726">
-          <caret line="33" column="23" selection-start-line="33" selection-start-column="23" selection-end-line="33" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/ide.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="389" column="33" selection-start-line="389" selection-start-column="33" selection-end-line="389" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/services/files.service.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2860">
           <caret line="133" column="6" selection-start-line="133" selection-start-column="6" selection-end-line="133" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1673,29 +1629,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding>
+            <element signature="e#556#557#0" expanded="true" />
+            <element signature="e#774#775#0" expanded="true" />
+            <element signature="e#797#798#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/directives/checkbox.directive.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="24" column="40" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/directives/directives.module.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/directives/tree.directive.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="924">
-          <caret line="42" column="31" selection-start-line="42" selection-start-column="31" selection-end-line="42" selection-end-column="31" />
+        <state relative-caret-position="308">
+          <caret line="23" column="40" selection-start-line="23" selection-start-column="40" selection-end-line="23" selection-end-column="40" />
           <folding />
         </state>
       </provider>
@@ -1710,8 +1655,301 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/directives/tree.directive.html">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/directives/directives.module.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/directives/tree.directive.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="473">
+          <caret line="42" column="31" selection-start-line="42" selection-start-column="31" selection-end-line="42" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.workingfiles.directive.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.left.directive.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.left.directive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp_old/app/view/index/ide/ide.generate.view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-198">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.generation.directive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="15" column="6" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.generation.directive.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="19" column="45" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp_old/app/view/index/ide/ide.console.generation.view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="44" column="49" selection-start-line="44" selection-start-column="49" selection-end-line="44" selection-end-column="49" />
+          <folding>
+            <marker date="1470728631572" expanded="true" signature="260:271" ph="..." />
+            <marker date="1470728631572" expanded="true" signature="1445:1490" ph="..." />
+            <marker date="1470728631572" expanded="true" signature="2288:2299" ph="..." />
+            <marker date="1470728631572" expanded="true" signature="2849:2860" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp_old/app/view/index/ide/ide.generation.view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="251" column="23" selection-start-line="251" selection-start-column="23" selection-end-line="251" selection-end-column="23" />
+          <folding>
+            <marker date="1470728631334" expanded="true" signature="3314:3359" ph="..." />
+            <marker date="1470728631334" expanded="true" signature="4280:4297" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp_old/app/view/index/ide/ide.treeview.view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="260" column="28" selection-start-line="260" selection-start-column="4" selection-end-line="260" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.treeview.directive.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="260" column="25" selection-start-line="260" selection-start-column="25" selection-end-line="260" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
-          <caret line="7" column="34" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
+          <caret line="43" column="52" selection-start-line="43" selection-start-column="52" selection-end-line="43" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.treeview.directive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="21" column="48" selection-start-line="21" selection-start-column="48" selection-end-line="21" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.console.directive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="10" column="77" selection-start-line="10" selection-start-column="77" selection-end-line="10" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.console.directive.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.createproject.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="20" column="6" selection-start-line="3" selection-start-column="0" selection-end-line="20" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="556">
+          <caret line="133" column="48" selection-start-line="133" selection-start-column="48" selection-end-line="133" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/telosys/saas/rest/ProjectsResource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="47" column="4" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/telosys/saas/rest/ProjectResource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="84" column="17" selection-start-line="84" selection-start-column="17" selection-end-line="84" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/telosys/saas/domain/ProjectConfigurationConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/telosys/saas/domain/ProjectConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="32" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/telosys/saas/domain/ProjectConfigurationVariables.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="17" column="40" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/modal/modal.createentity.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.toolbar.directive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="43" column="59" selection-start-line="43" selection-start-column="39" selection-end-line="43" selection-end-column="59" />
+          <folding>
+            <element signature="n#style#0;n#ul#1;n#div#1;n#div#0;n#nav#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.editor.directive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="25" column="14" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/ide.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="363">
+          <caret line="21" column="61" selection-start-line="21" selection-start-column="61" selection-end-line="21" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.editor.directive.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-594">
+          <caret line="15" column="43" selection-start-line="15" selection-start-column="43" selection-end-line="15" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.configuration.directive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="77" column="78" selection-start-line="77" selection-start-column="78" selection-end-line="77" selection-end-column="78" />
+          <folding>
+            <element signature="n#div#2;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#button#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp_old/app/services/projects.service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="62">
+          <caret line="43" column="10" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/services/projects.service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="106" column="6" selection-start-line="106" selection-start-column="6" selection-end-line="106" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp_old/app/view/index/ide/ide.settings.view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="155" column="20" selection-start-line="155" selection-start-column="20" selection-end-line="155" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp_old/app/view/index/toolbar/toolbar.settings.view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="165" column="20" selection-start-line="165" selection-start-column="20" selection-end-line="165" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/directive/ide.configuration.directive.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="24" column="42" selection-start-line="24" selection-start-column="42" selection-end-line="24" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/workspace/app/ide/ide.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="693" column="24" selection-start-line="693" selection-start-column="24" selection-end-line="693" selection-end-column="24" />
           <folding />
         </state>
       </provider>

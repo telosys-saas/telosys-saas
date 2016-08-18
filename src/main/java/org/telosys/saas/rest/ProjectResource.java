@@ -122,13 +122,13 @@ public class ProjectResource {
         return bundleService.getBundlesOfProject(user, project);
     }
 
-    @Path("/bundles/{bundleName}")
+    @Path("/bundles/{githubUserName}/{bundleName}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public void addBundleToTheProject(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @PathParam("bundleName") String bundleName) {
+    public void addBundleToTheProject(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @PathParam("githubUserName") String githubUserName, @PathParam("bundleName") String bundleName) {
         UserProfile user = getUser();
         Project project = storage.getProjectForUser(user, projectId);
-        projectService.addBundleToTheProject(user, project, bundleName);
+        projectService.addBundleToTheProject(user, project, githubUserName, bundleName);
     }
 
     @Path("/bundles/{bundleName}")
@@ -205,7 +205,7 @@ public class ProjectResource {
             // Create
             storage.createFolderForProjectAndUser(user, project, folderToSave);
         } else {
-           folderToSave.setExisting(true);
+            folderToSave.setExisting(true);
         }
         return folderToSave;
     }

@@ -170,10 +170,10 @@ public class ProjectService {
 		return entity;
 	}
 
-	public void addBundleToTheProject(UserProfile user, Project project, String bundleName) {
+	public void addBundleToTheProject(UserProfile user, Project project, String githubUserName, String bundleName) {
 		TelosysProject telosysProject = getTelosysProject(user, project);
 		try {
-			telosysProject.downloadAndInstallBundle("telosys-tools", bundleName);
+			telosysProject.downloadAndInstallBundle(githubUserName, bundleName);
 		} catch (TelosysToolsException e) {
 			throw new IllegalStateException(e);
 		}

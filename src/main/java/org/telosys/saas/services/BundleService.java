@@ -41,7 +41,7 @@ public class BundleService {
 	protected List<String> getBundlesInRepository(String githubUser) {
 		try {
 			TelosysProject telosysProject = new TelosysProject("");
-			List<String> bundleNames = telosysProject.getBundlesList("telosys-tools");
+			List<String> bundleNames = telosysProject.getBundlesList(githubUser);
 			return bundleNames;
 		} catch (TelosysToolsException e) {
 			throw new IllegalStateException(e);

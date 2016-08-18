@@ -3,25 +3,37 @@
 </div>
 <div class="modal-body">
     <div class="modal-header">
-        <h4>Current bundles of the project</h4>
-    </div>
-    <ul class="bundles-list">
-        <li class="bundlemodal" ng-repeat="bundle in data.bundlesForProject">
-            <i class="fa fa-archive"></i>
-            {{bundle.text}}
-            <button class="btn btn-red" style="float:right" ng-click="event.stopPropagation();removeBundle(bundle.text)">Remove</button>
-        </li>
-    </ul>
-    <div class="modal-header">
         <h4>Bundles in the public repository</h4>
     </div>
-    <ul class="bundles-list">
-        <li class="bundlemodal" ng-repeat="bundle in data.allBundles">
-            <i class="fa fa-archive left-align"></i>
-            {{bundle.name}}
-            <button class="btn btn-primary" style="float:right" ng-click="event.stopPropagation();addBundle(bundle.name)">Add</button>
-        </li>
-    </ul>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="githubUserName">GitHub repository name :</label>
+            <input id="githubUserName" class="form-control"
+                   ng-model="data.githubUserName" placeholder="{{data.githubUserName}}">
+            <button class="btn btn-info" style="margin-top: 10px" type="button" ng-click="getbundles()">Get available
+                bundles
+            </button>
+        </div>
+        <div class="container">
+            <div class="col-md-4">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-class="{active: selectedBundle==bundle}" ng-repeat="bundle in data.allBundles"
+                        ng-click="selectBundle(bundle)">
+                        <td>{{bundle.name}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-info" type="button" ng-click="downloadBundle()">Download selected bundles
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="modal-footer">
     <button class="btn btn-warning" type="button" ng-click="cancel()">Close</button>

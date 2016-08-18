@@ -98,8 +98,9 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           resolve: {
             data: {
               project: $scope.data.project,
-              bundlesForProject: $scope.data.tree.children,
+              bundlesOfProject: $scope.data.bundlesOfProject,
               allBundles: $scope.data.allBundles,
+              githubUserName: $scope.data.githubUserName,
               refreshAll: $scope.refreshAll
             }
           }
@@ -172,7 +173,16 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
         return (function (obj) {
           console.log('onRemove');
           tree.delete_node(node);
-          if (node.type == 'folder' || node.type == 'models') {
+          if (node.type == 'models') {
+            var folderId = 'TelosysTools/' + node.text + '_model';
+            var fileModelId = 'TelosysTools/' + node.text + '.model';
+            //$scope.events.onDeleteFolder($scope.data, folderId);
+            $scope.events.onDeleteFile($scope.data, fileModelId)
+          }
+          if (node.type == 'bundle') {
+            $scope.events.removeBundle(node.text);
+          }
+          if (node.type == 'folder') {
             var folderId = node.id;
             $scope.events.onDeleteFolder($scope.data, folderId)
           }
@@ -221,6 +231,10 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
         }
       };
 
+      $scope.removeProject = function () {
+        console.log('removeProject');
+      };
+
       /**
        * Treeview initialization
        */
@@ -257,7 +271,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
             "items": function (node) {
               var tree = $(element[0].children[1]).jstree(true);
               var items = {};
-              if (node.type == 'folder' || node.type == 'bundle') {
+              if ($scope.data.name == 'files' && node.id == '@@_root_@@') {
                 items.CreateFile = {
                   label: "Create file",
                   action: $scope.onCreateFile(node)
@@ -266,37 +280,51 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
                   label: "Create folder",
                   action: $scope.onCreateFolder(node)
                 };
-              }
-              if (node.type == 'folder') {
-                items.RemoveFolder = {
-                  label: "Remove folder",
-                  action: $scope.onRemove(node, tree)
+
+              } else {
+                if (node.type == 'folder' || node.type == 'bundle') {
+                  items.CreateFile = {
+                    label: "Create file",
+                    action: $scope.onCreateFile(node)
+                  };
+                  items.CreateFolder = {
+                    label: "Create folder",
+                    action: $scope.onCreateFolder(node)
+                  };
                 }
-              }
-              if (node.type == 'file') {
-                items.RemoveFile = {
-                  label: "Remove file ",
-                  action: $scope.onRemove(node, tree)
+                if (node.type == 'folder') {
+                  items.RemoveFolder = {
+                    label: "Remove folder",
+                    action: $scope.onRemove(node, tree)
+                  }
                 }
-              }
-              if (node.type == 'models') {
-                items.CreateFolder = {
-                  label: "Create model",
-                  action: $scope.createModel
-                };
-                items.RemoveFolder = {
-                  label: "Remove model",
-                  action: $scope.onRemove(node, tree)
+                if (node.type == 'bundle') {
+                  items.RemoveFolder = {
+                    label: "Remove bundle",
+                    action: $scope.onRemove(node, tree)
+                  }
                 }
-              }
-              if (node.type == 'entity') {
-                items.CreateEntity = {
-                  label: "Create entity",
-                  action: $scope.createEntity
-                };
-                items.RemoveFolder = {
-                  label: "Remove entity",
-                  action: $scope.onRemove(node, tree)
+                if (node.type == 'file') {
+                  items.RemoveFile = {
+                    label: "Remove file ",
+                    action: $scope.onRemove(node, tree)
+                  }
+                }
+                if (node.type == 'models') {
+                  items.CreateFolder = {
+                    label: "Create entity",
+                    action: $scope.createEntity
+                  };
+                  items.RemoveFolder = {
+                    label: "Remove model",
+                    action: $scope.onRemove(node, tree)
+                  }
+                }
+                if (node.type == 'entity') {
+                  items.RemoveFolder = {
+                    label: "Remove entity",
+                    action: $scope.onRemove(node, tree)
+                  }
                 }
               }
               return items;

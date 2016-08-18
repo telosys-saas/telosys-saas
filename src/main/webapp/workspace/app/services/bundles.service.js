@@ -7,28 +7,25 @@ angular.module('app')
 
     return {
 
-      /**
-       * Get the public bundles from github
-       * @returns {*}
-       */
-      getBundlesInPublicRepository: function () {
+      getBundlesOfProject: function (userId, projectName) {
         return $http({
           method: 'GET',
-          url: host + "api/v1/bundles",
+          url: host + "api/v1/users/"+userId+"/projects/"+projectName+"/bundles",
           dataType: 'json'
         })
           .catch(function (e) {
             console.log(e);
           });
       },
-
+      
       /**
-       * Get bundles files
+       * Get the public bundles from github
+       * @returns {*}
        */
-      getBundlesFiles: function (userId, projectName) {
+      getBundlesInPublicRepository: function (githubRepository) {
         return $http({
-          method: "GET",
-          url: host + "api/v1/users/" + userId + "/projects/" + projectName + "/bundles",
+          method: 'GET',
+          url: host + "api/v1/bundles/"+githubRepository,
           dataType: 'json'
         })
           .catch(function (e) {
@@ -39,10 +36,10 @@ angular.module('app')
       /**
        * Add a bundle to the project
        */
-      addBundle: function (userId, projectName, bundleName) {
+      addBundle: function (userId, projectName, githubUserName, bundleName) {
         return $http({
           method: "PUT",
-          url: host + "api/v1/users/"+userId+"/projects/"+projectName+"/bundles/"+bundleName,
+          url: host + "api/v1/users/" + userId + "/projects/" + projectName + "/bundles/" + githubUserName + "/" + bundleName,
           dataType: 'json'
         })
           .catch(function (e) {

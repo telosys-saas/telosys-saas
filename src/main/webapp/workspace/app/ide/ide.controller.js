@@ -77,8 +77,12 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           openFile: null,
           /** Select element in the treeview */
           selectedElement: null,
+          /** Bundles of the project */
+          bundlesOfProject: {},
           /** All bundles in public repository */
           allBundles: {},
+          /** Git hub user name to get the bundle */
+          githubUserName: 'telosys-tools',
           /** IDE events redirected to controller functions */
           events: getEventsForBundles()
         },
@@ -113,7 +117,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           /** The environment variables of the current project*/
           variables: {},
           /** IDE events redirected to controller functions */
-          events: getEventsForConfig()
+          events: getEventsForConfiguration()
         }
       };
     }
@@ -170,6 +174,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      */
     function getEventsForBundles() {
       var events = getCommonEvents();
+      events.removeBundle = $scope.removeBundle;
       events.refreshAll = $scope.refreshAllBundles;
       return events;
     }
@@ -186,7 +191,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     /**
      * Events functions of this controller which will be called by sub components to manage user actions
      */
-    function getEventsForConfig() {
+    function getEventsForConfiguration() {
       var events = getCommonEvents();
       events.saveConfig = $scope.saveConfig;
       return events;
@@ -367,15 +372,28 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      */
     $scope.onDeleteFile = function (data, fileId) {
       FilesService.deleteFileForProject($scope.profile.userId, data.project.id, fileId);
-      delete data.workingFiles[fileId];
-      if (data.selectedFile.id == fileId) {
+      if(data.workingFiles[fileId]) {
+        delete data.workingFiles[fileId];
+      }
+      if (data.selectedFile && data.selectedFile.id == fileId) {
         data.selectedFile = null;
       }
-      if (data.openFile.id == fileId) {
+      if (data.openFile && data.openFile.id == fileId) {
         data.openFile = null;
       }
     };
 
+    /**
+     * Remove bundle
+     */
+    $scope.removeBundle = function (bundleName) {
+      BundlesService.removeBundle($scope.profile.userId, $scope.data.project.id, bundleName)
+        .then(function () {
+          delete $scope.data.bundles.bundlesOfProject[bundleName];
+          $scope.refreshAllBundles();
+        })
+    };
+    
     /**
      * Select a file
      * @param fileId File id to select
@@ -484,9 +502,13 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
               $scope.data.bundles.tree.push(FilesService.convertFolderToJson(templateFolder.folders[index], null, 'bundle'));
             }
             $scope.data.bundles.allFiles = FilesService.getAllFilesFromTree(templateFolder);
-          }
-          if (callback) {
-            callback();
+            BundlesService.getBundlesInPublicRepository($scope.data.bundles.githubUserName)
+              .then(function (result) {
+                $scope.data.bundles.allBundles = result.data;
+                if (callback) {
+                  callback();
+                }
+              });
           }
         });
 
@@ -598,7 +620,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       });
     }
 
-    function getBundles() {
+    function initBundles() {
       // Get Bundles
       var templateFolder = getFolderByName($scope.telosysFolder, 'templates');
       if (templateFolder.folders) {
@@ -609,7 +631,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         $scope.data.bundles.allFiles = FilesService.getAllFilesFromTree(templateFolder);
       }
       // Public bundles
-      return BundlesService.getBundlesInPublicRepository();
+      return BundlesService.getBundlesOfProject($scope.profile.userId, $scope.data.project.id);
     }
 
     function initModels(models) {
@@ -640,13 +662,20 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       $scope.data.configuration.variables.specificVariables = JSON.parse(config.variables.specificVariables);
       $scope.data.configuration.variables.specificVariablesKeys = Object.keys($scope.data.configuration.variables.specificVariables);
     }
+    
+    function convertBundleArrayToBundleMap(bundelArray) {
+      for(var index = 0; index < bundelArray.length; index++){
+        var bundle = bundelArray[index];
+        $scope.data.bundles.bundlesOfProject[bundle.name] = bundle;
+      }
+    }
 
     /**
      * Save the new configuration of the project
      */
     $scope.saveConfig = function () {
       ProjectsService.saveProjectConfiguration($scope.profile.userId, $routeParams.projectId, $scope.data.configuration)
-        .then(function(result){
+        .then(function (result) {
           initConfiguration(result.data);
         })
     };
@@ -656,7 +685,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      */
     function init() {
       initData();
-
       getAuthStatus(function (authenticated) {
         if (!authenticated) {
           console.log('authenticated false');
@@ -687,7 +715,12 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
             $scope.data.files.tree.push(FilesService.convertFolderToJson(filesFoder, null, 'folder'));
             $scope.data.files.allFiles = FilesService.getAllFilesFromTree(result.data);
             // Get bundles
-            return getBundles();
+            return initBundles();
+          })
+          .then(function (result) {
+            convertBundleArrayToBundleMap(result.data);
+            // Get bundles from Github repository
+            return BundlesService.getBundlesInPublicRepository($scope.data.bundles.githubUserName);
           })
           .then(function (result) {
             // Init bundles

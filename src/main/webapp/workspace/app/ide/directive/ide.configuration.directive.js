@@ -14,8 +14,13 @@ angular.module('ide')
 
       link: function ($scope, element, attrs) {
 
-        $scope.displayTab = 'variables';
-        $scope.selectedRow = null;
+        $scope.displayTab = 'folders';
+
+        /** Data for Variables tab*/
+        $scope.selectedVariable = null;
+
+        /** Data for Templates tab */
+        $scope.selectedBundle = null;
 
         $scope.onClickTab = function (tabToDisplay) {
           $scope.displayTab = tabToDisplay;
@@ -40,21 +45,24 @@ angular.module('ide')
               data: {}
             }
           });
-          
+
           modalInstance.result.then(function (specificVariable) {
             $scope.data.variables.specificVariables[specificVariable.name] = specificVariable.value;
             $scope.data.variables.specificVariablesKeys.push(specificVariable.name);
           })
         };
 
+        /**
+         * Delete a specific variable
+         */
         $scope.deleteVariable = function () {
-          delete $scope.data.variables.specificVariables[$scope.selectedRow];
+          delete $scope.data.variables.specificVariables[$scope.selectedVariable];
           $scope.data.variables.specificVariablesKeys = Object.keys($scope.data.variables.specificVariables);
         };
-        
-        $scope.selectRow = function (key) {
-          $scope.selectedRow = key;
-        }
+
+        $scope.selectVariable = function (key) {
+          $scope.selectedVariable = key;
+        };
       }
     }
   }]);

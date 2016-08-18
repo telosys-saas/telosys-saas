@@ -37,11 +37,13 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      * The new specific variable
      */
     $scope.specificVariable = {
-      name:"",
+      name: "",
       value: ""
     };
-    
-    
+
+    /** The selected bundle */
+    $scope.selectedBundle = {};
+
 
     /**
      * Create a new project
@@ -65,7 +67,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      * User changes the project name
      */
     $scope.projectNameChange = function () {
-      if(!$scope.hasUserChangedModelName) {
+      if (!$scope.hasUserChangedModelName) {
         $scope.modelName = $scope.projectName;
       }
     };
@@ -74,7 +76,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      * User changes the model name
      */
     $scope.modelNameChange = function () {
-      if($scope.modelName == null || $scope.modelName == '') {
+      if ($scope.modelName == null || $scope.modelName == '') {
         delete $scope.hasUserChangedModelName;
       } else {
         $scope.hasUserChangedModelName = true;
@@ -85,7 +87,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      * User changes the model name
      */
     $scope.modelNameOnBlur = function () {
-      if($scope.modelName == null || $scope.modelName == '') {
+      if ($scope.modelName == null || $scope.modelName == '') {
         $scope.modelName = $scope.projectName;
       }
     };
@@ -167,27 +169,6 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     };
 
     /**
-     * Add bundle to the current project
-     */
-    $scope.addBundle = function (bundleName) {
-      BundlesService.addBundle($scope.profile.userId, $scope.data.project.id, bundleName)
-        .then(function () {
-          $scope.data.refreshAll();
-        })
-
-    };
-
-    /**
-     * Remove bundle
-     */
-    $scope.removeBundle = function (bundleName) {
-      BundlesService.removeBundle($scope.profile.userId, $scope.data.project.id, bundleName)
-        .then(function () {
-          $scope.data.refreshAll();
-        })
-    };
-
-    /**
      * Create a new model
      */
     $scope.createModel = function () {
@@ -216,6 +197,31 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      */
     $scope.addVariable = function () {
       $uibModalInstance.close($scope.specificVariable);
+    };
+
+    /**
+     * Download the selected bundle from github
+     */
+    $scope.downloadBundle = function () {
+      BundlesService.addBundle($scope.profile.userId, $scope.data.project.id, $scope.data.githubUserName, $scope.selectedBundle.name)
+        .then(function () {
+          $scope.data.refreshAll();
+          $scope.data.bundlesOfProject[$scope.selectedBundle.name] = $scope.selectedBundle;
+        });
+    };
+
+    /**
+     * Get a list of bundles from github
+     */
+    $scope.getbundles = function () {
+      BundlesService.getBundlesInPublicRepository($scope.data.githubUserName)
+        .then(function (result) {
+          $scope.data.allBundles = result.data;
+        })
+    };
+
+    $scope.selectBundle = function (bundle) {
+      $scope.selectedBundle = bundle;
     };
 
     /**

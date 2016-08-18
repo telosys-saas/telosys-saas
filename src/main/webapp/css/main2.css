@@ -317,3 +317,7 @@ footer {
 .resultGeneration{
     padding: 10px;
 }
+
+.table-hover{
+    cursor: pointer;
+}

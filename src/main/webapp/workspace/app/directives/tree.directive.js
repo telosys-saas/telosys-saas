@@ -120,7 +120,11 @@ angular.module('directives')
 
         $scope.changeSelectedElement = function (element) {
           console.log('changeSelectedElement', element);
-          $scope.selectedElement = element;
+          if($scope.data.events.getTemplateForGeneration){
+            $scope.data.events.getTemplateForGeneration(element.name);
+          }else {
+            $scope.selectedElement = element;
+          }
         };
 
         $scope.init();

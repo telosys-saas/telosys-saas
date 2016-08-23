@@ -11,7 +11,6 @@ angular.module('app')
        * Get all files from the server for the user and the selected project
        * @param userId User ID
        * @param projectId Project ID
-       * @param callback Callback function
        */
       getFilesForProject: function (userId, projectId) {
         return $http({

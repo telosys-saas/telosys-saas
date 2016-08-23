@@ -12,17 +12,7 @@ import org.json.simple.parser.ParseException;
 import org.pac4j.core.profile.UserProfile;
 import org.telosys.saas.dao.StorageDao;
 import org.telosys.saas.dao.StorageDaoProvider;
-import org.telosys.saas.domain.Entity;
-import org.telosys.saas.domain.File;
-import org.telosys.saas.domain.Folder;
-import org.telosys.saas.domain.Generation;
-import org.telosys.saas.domain.GenerationErrorResult;
-import org.telosys.saas.domain.GenerationResult;
-import org.telosys.saas.domain.Model;
-import org.telosys.saas.domain.ParsingError;
-import org.telosys.saas.domain.Project;
-import org.telosys.saas.domain.ProjectConfiguration;
-import org.telosys.saas.domain.ProjectConfigurationVariables;
+import org.telosys.saas.domain.*;
 import org.telosys.saas.util.FileUtil;
 import org.telosys.tools.api.GenericModelLoader;
 import org.telosys.tools.api.TelosysProject;
@@ -253,6 +243,21 @@ public class ProjectService {
 		}
 	}
 
+	public List<Template> getTemplatesForGeneration(UserProfile user, Project project, String bundleName){
+		TelosysProject telosysProject = getTelosysProject(user, project);
+		List<Template> templateList = new ArrayList<>();
+		try {
+			List<TargetDefinition> targetDefinitions = telosysProject.loadTargetsDefinitions(bundleName).getTemplatesTargets();
+			for(TargetDefinition targetDefinition : targetDefinitions){
+				Template template = new Template(targetDefinition);
+				templateList.add(template);
+			}
+			return templateList;
+		}catch (TelosysToolsException | GeneratorException e){
+			throw new IllegalStateException(e);
+		}
+	}
+
 	public GenerationResult launchGeneration(UserProfile user, Project project, Generation generation) {
 		return launchGenerationByEntityAndBundle(user, project, generation.getModel(), generation.getEntities(), generation.getBundle(), generation.getTemplates() );
 	}
@@ -283,9 +288,7 @@ public class ProjectService {
 				generationResult.getErrors().add(error);
 			}
 			return generationResult;
-		} catch (TelosysToolsException e) {
-			throw new IllegalStateException(e);
-		} catch (GeneratorException e) {
+		} catch (TelosysToolsException | GeneratorException e) {
 			throw new IllegalStateException(e);
 		}
 	}

@@ -2,7 +2,7 @@
     <label for="repeatSelect" ng-if="data.name=='models'"> Models: </label>
     <label for="repeatSelect" ng-if="data.name=='bundles'"> Bundles: </label>
     <select name="repeatSelect" id="repeatSelect">
-        <option ng-repeat="element in elts" ng-value="element.id" ng-click="changeSelectedElement(element)">
+        <option ng-repeat="element in elts" ng-model="element.id" ng-change="changeSelectedElement(element)">
             {{element.name}}
         </option>
     </select>

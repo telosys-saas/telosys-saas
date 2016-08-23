@@ -1,19 +1,20 @@
 <div style="height: 75%; padding: 15px;">
     <div class="container">
-        <div class="row" style="overflow-y: auto;">
+        <div class="row"">
             <h2 style="margin: 0">Generation</h2>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <tree data="data.models"></tree>
             </div>
-            <div class="col-sm-6">
-                <tree data="data.bundles"></tree>
+            <div class="col-sm-8">
+                <generationtable data="data.bundles"></generationtable>
             </div>
-        </div>
-        <div style="width: 100%; text-align:center; margin-top: 15px">
-            <button class="btn btn-primary" ng-click="submitGeneration()">Generate</button>
         </div>
     </div>
 </div>
+<div style="width: 100%; text-align:center; margin-top: 15px">
+    <button class="btn btn-primary" ng-click="submitGeneration()">Generate</button>
+</div>
+
 <div id="console" ng-if="data.isDisplay=='generation'" style="height: 25%;">
     <console generation-results="data.generationResults" events="data.events"></console>
 </div>

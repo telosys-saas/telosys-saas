@@ -17,19 +17,15 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.pac4j.core.context.J2EContext;
 import org.pac4j.core.profile.ProfileManager;
 import org.pac4j.core.profile.UserProfile;
 import org.telosys.saas.dao.StorageDao;
 import org.telosys.saas.dao.StorageDaoProvider;
-import org.telosys.saas.domain.Bundle;
-import org.telosys.saas.domain.File;
-import org.telosys.saas.domain.Folder;
-import org.telosys.saas.domain.Generation;
-import org.telosys.saas.domain.GenerationResult;
-import org.telosys.saas.domain.Model;
-import org.telosys.saas.domain.Project;
-import org.telosys.saas.domain.ProjectConfiguration;
+import org.telosys.saas.domain.*;
 import org.telosys.saas.services.BundleService;
 import org.telosys.saas.services.ProjectService;
 import org.telosys.saas.services.TelosysFolderService;
@@ -138,6 +134,23 @@ public class ProjectResource {
         UserProfile user = getUser();
         Project project = storage.getProjectForUser(user, projectId);
         projectService.removeBundleFromTheProject(user, project, bundleName);
+    }
+
+    @Path("/templates/{bundleName}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getTemplatesForGeneration(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @PathParam("bundleName") String bundleName){
+        UserProfile user = getUser();
+        Project project = storage.getProjectForUser(user, projectId);
+        List<Template> templateList = projectService.getTemplatesForGeneration(user, project, bundleName);
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json = null;
+        try {
+            json = ow.writeValueAsString(templateList);
+        } catch (JsonProcessingException e) {
+            throw new IllegalStateException(e);
+        }
+        return json;
     }
 
     /**

@@ -215,19 +215,17 @@ footer {
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
-    cursor: default;
     border-color: #ccc;
     border-bottom-color: transparent;
+    cursor: pointer;
 }
 
 .nav-tabs > li > a, .nav-tabs > li > a:focus, .nav-tabs > li > a:hover {
     color: #555;
-    cursor: default;
     background-color: #f8f8f8;
     border: 1px solid #ccc;
     min-width: 50px;
     text-align: center;
-    cursor: pointer;
 }
 
 .nav-tabs > li > a:hover {
@@ -237,6 +235,7 @@ footer {
 .nav-tabs > li > a {
     margin: 3px 0 0 5px;
     padding: 5px 10px;
+    cursor: pointer;
 }
 
 .bundlemodal {
@@ -320,4 +319,24 @@ footer {
 
 .table-hover{
     cursor: pointer;
+}
+
+.configuration {
+    background-color: #efefef;
+    display: block;
+    height: 100%;
+    padding: 20px;
+}
+
+.configuration > div {
+    background-color: white;
+    margin: 0px auto;
+    padding: 20px;
+    width: 50%;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+}
+
+.configuration > div > h2 {
+    margin: 0 0 20px 0;
+    padding: 0;
 }

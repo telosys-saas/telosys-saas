@@ -3,17 +3,20 @@
         <li ng-repeat="file in data.workingFiles" class="collection-item truncate"
             ng-class="{'active': file.id == data.selectedFile.id}"
             ng-click="events.onClickFile(data, file.id)">
-            <a href>
+            <a>
                 <i ng-if="file.isModified" class="fa fa-circle" style="padding-right: 5px"></i>{{file.name}}
+                <i class="fa fa-times" style="padding-left: 5px"
+                   ng-click="events.onCloseFile(data, file.id); $event.stopPropagation()"></i>
             </a>
         </li>
         <li ng-if="data.openFile!=null && data.workingFiles[data.openFile.id]==null"
             ng-class="{'active': data.selectedFile.id == data.openFile.id}"
             ng-click="events.onClickFile(data, data.openFile.id)">
-            <a href>
+            <a>
                 <i ng-if="data.openFile.isModified" class="fa fa-circle" style="padding-right: 5px"></i>
                 <i>{{data.openFile.name}} <span
                         style="font-size: smaller; color: gray;">{{data.openFile.path}}</span></i>
+                <i class="fa fa-times" title="close" ng-click="closeSelectedFile(data); $event.stopPropagation();"></i>
             </a>
         </li>
     </ul>
@@ -23,15 +26,18 @@
         <button class="btn btn-success" ng-click="saveFile(data)">
             <span class="fa fa-floppy-o fa-lg"></span> &nbsp;Save
         </button>
+        <button class="btn btn-success" ng-click="refreshFile()">
+            <span class="fa fa-refresh fa-lg"></span> &nbsp;Refresh
+        </button>
         &nbsp;
         <i ng-if="data.selectedFile.isModified" class="fa fa-circle"></i>
         <span> {{data.selectedFile.name}}</span>
         <div style="float:right" class="icons">
-            <button class="btn btn-default" ng-click="refreshFile(data)">
-                <span class="fa fa-refresh fa-lg"></span> &nbsp;Refresh
+            <button class="btn btn-default" ng-click="events.saveAll(data)">
+                <span class="fa fa-floppy-o fa-lg"></span> &nbsp;Save All
             </button>
-            <button class="btn btn-default" ng-click="closeSelectedFile(data)">
-                <span class="fa fa-times fa-lg"></span> &nbsp;Close
+            <button class="btn btn-default" ng-click="events.closeAll(data)">
+                <span class="fa fa-times fa-lg"></span> &nbsp;Close All
             </button>
         </div>
     </div>

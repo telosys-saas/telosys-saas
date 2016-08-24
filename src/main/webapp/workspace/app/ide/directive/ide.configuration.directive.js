@@ -14,7 +14,7 @@ angular.module('ide')
 
       link: function ($scope, element, attrs) {
 
-        $scope.displayTab = 'folders';
+        $scope.displayTab = 'packages';
 
         /** Data for Variables tab*/
         $scope.selectedVariable = null;

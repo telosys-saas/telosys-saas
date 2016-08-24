@@ -12,16 +12,18 @@ public class Template implements Serializable {
 
     private String absoluteFilePath;
 
-    private Boolean type;
+    private Boolean once;
 
-    private Boolean isSelected;
+    private Boolean selected;
+
+    private String type = "template";
 
     public Template(TargetDefinition targetDefinition) {
         this.name = targetDefinition.getTemplate();
         this.description = targetDefinition.getName();
-        this.absoluteFilePath = targetDefinition.getFullFileName();
-        this.type = targetDefinition.isOnce();
-        this.isSelected = false;
+        this.absoluteFilePath = null;
+        this.once = targetDefinition.isOnce();
+        this.selected = false;
     }
 
     public String getName() {
@@ -48,19 +50,27 @@ public class Template implements Serializable {
         this.absoluteFilePath = absoluteFilePath;
     }
 
-    public Boolean getType() {
-        return type;
+    public Boolean getOnce() {
+        return once;
     }
 
-    public void setType(Boolean type) {
-        this.type = type;
+    public void setOnce(Boolean once) {
+        this.once = once;
     }
 
     public Boolean getSelected() {
-        return isSelected;
+        return selected;
     }
 
     public void setSelected(Boolean selected) {
-        isSelected = selected;
+        selected = selected;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

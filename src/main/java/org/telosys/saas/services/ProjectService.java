@@ -250,6 +250,8 @@ public class ProjectService {
 			List<TargetDefinition> targetDefinitions = telosysProject.loadTargetsDefinitions(bundleName).getTemplatesTargets();
 			for(TargetDefinition targetDefinition : targetDefinitions){
 				Template template = new Template(targetDefinition);
+				String absoluteFilePath = "TelosysTools/templates/" + bundleName  + "/" + targetDefinition.getTemplate();
+				template.setAbsoluteFilePath(absoluteFilePath);
 				templateList.add(template);
 			}
 			return templateList;

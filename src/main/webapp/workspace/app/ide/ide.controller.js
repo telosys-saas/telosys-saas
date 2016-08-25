@@ -29,7 +29,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         /** The Telosys Tools Folder */
         telosysFolder: {},
         /** The result of the generation */
-        generationResults: [],
+        generationResults: null,
 
         /**
          * Data for model created by the user
@@ -83,8 +83,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           allBundles: {},
           /** Git hub user name to get the bundle */
           githubUserName: 'telosys-tools',
-          /** List of template object for the generation */
-          templatesForGeneration: [],
           /** IDE events redirected to controller functions */
           events: getEventsForBundles()
         },
@@ -123,16 +121,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           variables: {},
           /** IDE events redirected to controller functions */
           events: getEventsForConfiguration()
-        },
-
-        /**
-         * Data for the generation
-         */
-        generation: {
-          model: "",
-          entities: [],
-          bundle: "",
-          templates: []
         }
       };
     }
@@ -565,11 +553,11 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     $scope.generation = function (generation) {
       console.log('generation', generation);
       
-      ProjectsService.launchGeneration($scope.profile.userId, $scope.data.project.id,  generation)
+      return ProjectsService.launchGeneration($scope.profile.userId, $scope.data.project.id,  generation)
         .then(function (result) {
           console.log('Generation result',result);
+          $scope.data.generationResults = result.data;
           $scope.refreshAllFiles();
-
         });
     };
 

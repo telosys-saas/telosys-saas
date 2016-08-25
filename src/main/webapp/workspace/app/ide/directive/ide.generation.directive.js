@@ -72,7 +72,9 @@ angular.module('ide')
             }
           }
 
-          $scope.data.events.generation(generation);
+          $scope.data.events.generation(generation).then(function(result) {
+            console.log(result);
+          });
         };
 
       }

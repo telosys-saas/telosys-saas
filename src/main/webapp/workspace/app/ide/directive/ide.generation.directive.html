@@ -2,6 +2,18 @@
     <div class="col-sm-12">
         <h2>Generation</h2>
     </div>
+    <div class="col-sm-12" ng-if="data.generationResults">
+        <div class="alert alert-success" role="alert" ng-if="data.generationResults.numberOfGenerationErrors == 0">
+            <span ng-if="data.generationResults.numberOfGenerationErrors == 0">
+                <strong>Generation successfull</strong>
+                <p>
+                    File(s) generated(s): {{data.generationResults.numberOfFilesGenerated}}
+                    <br/>
+                    Resource File(s) copied(s): {{data.generationResults.numberOfResourcesCopied}}
+                </p>
+            </span>
+        </div>
+    </div>
     <div class="col-sm-6">
         <h3><span class="fa fa-cubes"></span> &nbsp;Models</h3>
     </div>
@@ -81,7 +93,9 @@
             </div>
         </form>
     </div>
-    <div class="col-sm-12"
+    <div class="col-sm-12" ng-if="false && data.generationResults">
+
+        {{data.generationResults}}
         <div id="console">
             <console generation-results="data.generationResults" events="data.events"></console>
         </div>

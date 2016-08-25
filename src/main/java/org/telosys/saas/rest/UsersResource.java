@@ -25,94 +25,94 @@ import org.telosys.tools.users.UsersManager;
 @Path("/users")
 public class UsersResource {
 
-	private UsersManager usersManager = UsersManager.getInstance();
+    private UsersManager usersManager = UsersManager.getInstance();
 
-	@Context
-	private HttpServletRequest request;
-	@Context
-	private HttpServletResponse response;
+    @Context
+    private HttpServletRequest request;
+    @Context
+    private HttpServletResponse response;
 
-	private UserProfile getUser() {
-		J2EContext context = new J2EContext(request, response);
-		ProfileManager<UserProfile> manager = new ProfileManager<>(context);
-		UserProfile profile = manager.get(true);
-		return profile;
-	}
-	
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public User saveUser(UserCreation userCreation) {
-		if(Util.isEmpty(userCreation.getLogin())) {
-			throw new IllegalStateException("create user : login is not defined");
-		}
-		if(Util.isEmpty(userCreation.getPassword())) {
-			throw new IllegalStateException("create user : password is not defined");
-		}
-		if(Util.isEmpty(userCreation.getMail())) {
-			throw new IllegalStateException("create user : mail is not defined");
-		}
-		User userExisting = usersManager.getUserByLogin(userCreation.getLogin());
-		if(userExisting != null) {
-			throw new IllegalStateException("create user : user already exists");
-		}
-		User user = new User(UserType.TELOSYS_USER,userCreation.getLogin());
-		user.setMail(userCreation.getMail());
-		usersManager.saveUser(user, userCreation.getPassword());
-		return user;
-	}
+    private UserProfile getUser() {
+        J2EContext context = new J2EContext(request, response);
+        ProfileManager<UserProfile> manager = new ProfileManager<>(context);
+        UserProfile profile = manager.get(true);
+        return profile;
+    }
 
-	@Path("{login}")
-	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public User saveUser(@PathParam("login") String login, User user) {
-		if(!Util.equalsAndNotEmpty(user.getLogin(), login)) {
-			throw new IllegalStateException("save user : logins are not the same");
-		}
-		UserProfile authenticatedUser = getUser();
-		if(!Util.equalsAndNotEmpty(authenticatedUser.getId(), login)) {
-			throw new IllegalStateException("save user : not authorized");
-		}
-		usersManager.saveUser(user);
-		return user;
-	}
-	
-	@Path("{login}/action/changePassword")
-	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public User changePassword(@PathParam("login") String login, UserChangePassword userChangePassword) {
-		if(Util.isEmpty(login)) {
-			throw new IllegalStateException("change password: login is not defined");
-		}
-		if(Util.isEmpty(userChangePassword.getOldPassword())) {
-			throw new IllegalStateException("change password : old password is not defined");
-		}
-		if(Util.isEmpty(userChangePassword.getPassword())) {
-			throw new IllegalStateException("change password : password is not defined");
-		}
-		UserProfile authenticatedUser = getUser();
-		if(!Util.equalsAndNotEmpty(authenticatedUser.getId(), login)) {
-			throw new IllegalStateException("change password : not authorized");
-		}
-		User user = usersManager.getUserByLogin(login);
-		if ( ! usersManager.checkPassword(user, userChangePassword.getOldPassword() ) ) {
-			throw new IllegalStateException("change password : old password is not valid");
-		}
-		usersManager.saveUser(user, userChangePassword.getPassword());
-		return user;
-	}
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public User saveUser(UserCreation userCreation) {
+        if (Util.isEmpty(userCreation.getLogin())) {
+            throw new IllegalStateException("create user : login is not defined");
+        }
+        if (Util.isEmpty(userCreation.getPassword())) {
+            throw new IllegalStateException("create user : password is not defined");
+        }
+        if (Util.isEmpty(userCreation.getMail())) {
+            throw new IllegalStateException("create user : mail is not defined");
+        }
+        User userExisting = usersManager.getUserByLogin(userCreation.getLogin());
+        if (userExisting != null) {
+            throw new IllegalStateException("create user : user already exists");
+        }
+        User user = new User(UserType.TELOSYS_USER, userCreation.getLogin());
+        user.setMail(userCreation.getMail());
+        usersManager.saveUser(user, userCreation.getPassword());
+        return user;
+    }
 
-	@Path("{login}")
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public User getUser(@PathParam("login") String login) {
-		UserProfile authenticatedUser = getUser();
-		if(!Util.equalsAndNotEmpty(authenticatedUser.getId(), login)) {
-			throw new IllegalStateException("save user : not authorized");
-		}
-		return usersManager.getUserByLogin(login);
-	}
-	
+    @Path("{login}")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public User saveUser(@PathParam("login") String login, User user) {
+        if (!Util.equalsAndNotEmpty(user.getLogin(), login)) {
+            throw new IllegalStateException("save user : logins are not the same");
+        }
+        UserProfile authenticatedUser = getUser();
+        if (!Util.equalsAndNotEmpty(authenticatedUser.getId(), login)) {
+            throw new IllegalStateException("save user : not authorized");
+        }
+        usersManager.saveUser(user);
+        return user;
+    }
+
+    @Path("{login}/action/changePassword")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public User changePassword(@PathParam("login") String login, UserChangePassword userChangePassword) {
+        if (Util.isEmpty(login)) {
+            throw new IllegalStateException("change password: login is not defined");
+        }
+        if (Util.isEmpty(userChangePassword.getOldPassword())) {
+            throw new IllegalStateException("change password : old password is not defined");
+        }
+        if (Util.isEmpty(userChangePassword.getPassword())) {
+            throw new IllegalStateException("change password : password is not defined");
+        }
+        UserProfile authenticatedUser = getUser();
+        if (!Util.equalsAndNotEmpty(authenticatedUser.getId(), login)) {
+            throw new IllegalStateException("change password : not authorized");
+        }
+        User user = usersManager.getUserByLogin(login);
+        if (!usersManager.checkPassword(user, userChangePassword.getOldPassword())) {
+            throw new IllegalStateException("change password : old password is not valid");
+        }
+        usersManager.saveUser(user, userChangePassword.getPassword());
+        return user;
+    }
+
+    @Path("{login}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public User getUser(@PathParam("login") String login) {
+        UserProfile authenticatedUser = getUser();
+        if (!Util.equalsAndNotEmpty(authenticatedUser.getId(), login)) {
+            throw new IllegalStateException("save user : not authorized");
+        }
+        return usersManager.getUserByLogin(login);
+    }
+
 }

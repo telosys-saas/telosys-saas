@@ -13,7 +13,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     /** Indicates if the IDE is initialized and could be displayed */
     $scope.initialized = false;
 
-    $scope.defaultView = 'configuration'; //'generation';
+    $scope.defaultView = 'generation';
 
     function initData() {
       /** IDE data */
@@ -562,19 +562,22 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     /**
      * Launch the generation
      */
-    $scope.generation = function () {
-      console.log('generation', $scope.data.generation);
+    $scope.generation = function (generation) {
+      console.log('generation', generation);
       
-      ProjectsService.launchGeneration($scope.profile.userId, $scope.data.project.id,  $scope.data.generation)
-        .then(function () {
-          $scope.refreshAllFiles()
+      ProjectsService.launchGeneration($scope.profile.userId, $scope.data.project.id,  generation)
+        .then(function (result) {
+          console.log('Generation result',result);
+          $scope.refreshAllFiles();
+
         });
     };
 
-    $scope.getTemplateForGeneration = function (bundleName) {
+    $scope.getTemplateForGeneration = function (bundleName, callback) {
       ProjectsService.getTemplateForGeneration($scope.profile.userId, $scope.data.project.id, bundleName)
         .then(function (result) {
-          $scope.data.bundles.templatesForGeneration = result.data;
+          //$scope.data.bundles.templatesForGeneration = result.data;
+          if (callback) callback(result);
         })
     };
 
@@ -673,7 +676,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       getAuthStatus(function (authenticated) {
         if (!authenticated) {
           console.log('authenticated false');
-          return;
+          document.location = '../login.jsp';
         }
         ProjectsService.getProjects($scope.profile.userId)
           .then(function (result) {

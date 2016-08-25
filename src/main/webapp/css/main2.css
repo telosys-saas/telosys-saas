@@ -7,6 +7,10 @@ html div, html ul {
     padding: 0
 }
 
+.center-align {
+    text-align: center;
+}
+
 .right-align {
     text-align: right;
 }
@@ -361,4 +365,29 @@ footer {
 .control-label-thin {
     font-weight: normal;
     color: #6b6b6b;
+}
+
+.generation-selection {
+    margin-top: 10px;
+    background-color: #efefef;
+    height: 450px;
+    overflow-y: auto;
+    border: 1px solid #cecece;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.generation-selection-line {
+    margin: 3px 3px;
+    border: 0px solid #dedede;
+    background-color: white;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.25);
+}
+
+.generation-selection-line:hover {
+    box-shadow: 0 1px 1px rgba(0,0,0,0.13);
+}
+
+.generation-selection-line-selected {
+    background-color: rgba(238, 250, 252, 1);
 }

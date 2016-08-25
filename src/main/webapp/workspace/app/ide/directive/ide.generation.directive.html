@@ -1,20 +1,89 @@
-<div style="height: 75%; padding: 15px;">
-    <div class="container">
-        <div class="row">
-            <h2>Generation</h2>
-            <div class="col-sm-4">
-                <generationtable data="data.models" selected-generation="data.generation"></generationtable>
-            </div>
-            <div class="col-sm-8">
-                <generationtable data="data.bundles" selected-generation="data.generation"></generationtable>
+<div class="row">
+    <div class="col-sm-12">
+        <h2>Generation</h2>
+    </div>
+    <div class="col-sm-6">
+        <h3><span class="fa fa-cubes"></span> &nbsp;Models</h3>
+    </div>
+    <div class="col-sm-6">
+        <h3><span class="fa fa-archive"></span> &nbsp;Bundles</h3>
+    </div>
+    <div class="col-sm-6">
+        <select class="form-control"
+                ng-options="model.text for model in data.models.tree"
+                ng-model="selectedModel" ng-change="changeSelectedModel()">
+        </select>
+    </div>
+    <div class="col-sm-6">
+        <select class="form-control"
+                ng-options="bundle.text for bundle in data.bundles.tree | filter:data.events.getTemplateForGeneration"
+                ng-model="selectedBundle" ng-change="changeSelectedBundle()">
+        </select>
+    </div>
+    <div class="col-sm-6">
+        <div class="container-fluid generation-selection" ng-if="selectedModel">
+            <div class="row generation-selection-line"
+                 style="cursor: pointer"
+                 ng-repeat="entity in modelEntitys"
+                 ng-click="selectEntity(entity)"
+                 ng-class="{'generation-selection-line-selected':entity.selected}">
+                <div class="col-sm-11">
+                    <div class="checkbox" style="word-wrap: break-word;">
+                        <label class="control-label" for="entity_{{$index}}">
+                            <input type="checkbox" ng-model="entity.selected" id="entity_{{$index}}" />
+                            {{entity.text}}
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="checkbox">
+                        <a href ng-click="goToModelEntity(entity.id)"><i
+                                class="fa fa-external-link"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div style="width: 100%; text-align:center; margin-top: 15px">
-    <button class="btn btn-primary" ng-click="submitGeneration()">Generate</button>
-</div>
-
-<div id="console" ng-if="data.isDisplay=='generation'" style="height: 25%;">
-    <console generation-results="data.generationResults" events="data.events"></console>
+    <div class="col-sm-6">
+        <div class="container-fluid generation-selection" ng-if="selectedBundle">
+            <div class="row generation-selection-line"
+                 style="cursor: pointer"
+                 ng-repeat="template in bundleTemplates"
+                 ng-click="selectTemplate(template)"
+                 ng-class="{'generation-selection-line-selected':template.selected}">
+                <div class="col-sm-11">
+                    <div class="checkbox" style="word-wrap: break-word;">
+                        <label class="control-label" for="template_{{$index}}">
+                            <input type="checkbox" ng-model="template.selected" id="template_{{$index}}" />
+                            {{template.name}}
+                            <br/>
+                            <span class="control-label-thin">{{template.description}}</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="checkbox">
+                        <a href ng-click="goToBundleTemplate(template.absoluteFilePath)"><i
+                            class="fa fa-external-link"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12" style="margin-top: 20px">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-12 center-align">
+                    <button class="btn btn-primary" ng-click="submitGeneration()">
+                        <span class="fa fa-play-circle fa-lg"></span> &nbsp;Generate
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-12"
+        <div id="console">
+            <console generation-results="data.generationResults" events="data.events"></console>
+        </div>
+    </div>
 </div>

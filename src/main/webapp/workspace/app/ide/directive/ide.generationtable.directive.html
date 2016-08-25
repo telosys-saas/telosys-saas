@@ -1,3 +1,6 @@
+<h3 ng-if="data.name=='models'"><span class="fa fa-cubes"></span> &nbsp;Models</h3>
+<h3 ng-if="data.name=='bundles'"><span class="fa fa-archive"></span> &nbsp;Bundles</h3>
+<!--
 <div class="generationTitle">
     <label for="repeatSelect" ng-if="data.name=='bundles'"> Bundles:&nbsp;</label>
     <label for="repeatSelect" ng-if="data.name=='models'"> Models:&nbsp;</label>
@@ -8,6 +11,25 @@
     </select>&nbsp;
     <a href ng-if="data.name=='bundles'" ng-click="goToBundleConfiguration()"><i
             class="fa fa-external-link"></i></a>
+</div>
+<div class="col s6" ng-if="data.name=='models'">
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Entity class name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="entity in selectedModel.entities">
+                <td><input type="checkbox" ng-model="entity.selected"
+                           ng-change="onSelect(entity)"/></td>
+                <td>{{entity.text}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 <div class="col s6" ng-if="data.name=='bundles'">
     <div class="container">
@@ -36,22 +58,4 @@
         </table>
     </div>
 </div>
-<div class="col s6" ng-if="data.name=='models'">
-    <div class="container">
-        <table class="table">
-            <thead>
-            <tr>
-                <th></th>
-                <th>Entity class name</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="entity in selectedModel.entities">
-                <td><input type="checkbox" ng-model="entity.selected"
-                           ng-change="onSelect(entity)"/></td>
-                <td>{{entity.text}}</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+-->

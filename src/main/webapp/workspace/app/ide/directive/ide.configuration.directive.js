@@ -14,7 +14,7 @@ angular.module('ide')
 
       link: function ($scope, element, attrs) {
 
-        $scope.displayTab = 'packages';
+        $scope.displayTab = 'variables';
 
         /** Data for Variables tab*/
         $scope.selectedVariable = null;
@@ -48,16 +48,23 @@ angular.module('ide')
 
           modalInstance.result.then(function (specificVariable) {
             $scope.data.variables.specificVariables[specificVariable.name] = specificVariable.value;
-            $scope.data.variables.specificVariablesKeys.push(specificVariable.name);
           })
         };
+
+        $scope.rowToDeletes = {};
 
         /**
          * Delete a specific variable
          */
         $scope.deleteVariable = function () {
-          delete $scope.data.variables.specificVariables[$scope.selectedVariable];
-          $scope.data.variables.specificVariablesKeys = Object.keys($scope.data.variables.specificVariables);
+          if($scope.rowToDeletes) {
+            for(var key in $scope.rowToDeletes) {
+              if($scope.rowToDeletes[key]) {
+                delete $scope.data.variables.specificVariables[key];
+              }
+            }
+          }
+          $scope.rowToDeletes = {};
         };
 
         $scope.selectVariable = function (key) {

@@ -15,9 +15,9 @@
         <console></console>
     </div>
 </div>
-<div style="width: 100%; height: 100%; position: relative" ng-if="initialized && data.isDisplay=='generation'">
-    <generation class="generation" data="data" ng-show="data.isDisplay=='generation'"></generation>
+<div class="layout" ng-if="initialized && data.isDisplay=='configuration'">
+    <configuration class="configuration container" data="data.configuration" ng-show="data.isDisplay=='configuration'"></configuration>
 </div>
-<div style="width: 100%; height: 100%; position: relative" ng-if="initialized && data.isDisplay=='configuration'">
-    <configuration class="configuration" data="data.configuration" ng-show="data.isDisplay=='configuration'"></configuration>
+<div class="layout" style="width: 100%; height: 100%; position: relative" ng-if="initialized && data.isDisplay=='generation'">
+    <generation class="generation container" data="data" ng-show="data.isDisplay=='generation'"></generation>
 </div>

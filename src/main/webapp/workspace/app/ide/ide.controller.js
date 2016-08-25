@@ -13,7 +13,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     /** Indicates if the IDE is initialized and could be displayed */
     $scope.initialized = false;
 
-    $scope.defaultView = 'configuration';
+    $scope.defaultView = 'configuration'; //'generation';
 
     function initData() {
       /** IDE data */

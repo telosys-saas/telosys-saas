@@ -17,18 +17,20 @@ angular.module('ide')
 
         // The selected Model
         $scope.selectedModel = {};
+        // The selected element
+        $scope.selectedElement = {};
 
-        $scope.changeSelectedElement = function (element) {
-          console.log('changeSelectedElement', element);
+        $scope.changeSelectedElement = function () {
+          console.log('changeSelectedElement', $scope.selectedElement.text);
           if ($scope.data.name == 'bundles') {
-            if (element == null) {
+            if (element == "") {
               $scope.selectedGeneration.bundle = "";
               $scope.data.templatesForGeneration = null;
               return;
             }
             if ($scope.data.events.getTemplateForGeneration) {
-              $scope.data.events.getTemplateForGeneration(element.text);
-              $scope.selectedGeneration.bundle = element.text;
+              $scope.data.events.getTemplateForGeneration($scope.selectedElement.text);
+              $scope.selectedGeneration.bundle = $scope.selectedElement.text;
               return;
             }
           }
@@ -38,9 +40,9 @@ angular.module('ide')
               $scope.selectedModel = null;
               return;
             }
-            $scope.selectedGeneration.model = element.text;
+            $scope.selectedGeneration.model = $scope.selectedElement.text;
             $scope.selectedModel = element;
-            $scope.selectedModel.entities = element.children;
+            $scope.selectedModel.entities = $scope.selectedElement.children;
           }
         };
 

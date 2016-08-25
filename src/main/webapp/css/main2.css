@@ -7,6 +7,10 @@ html div, html ul {
     padding: 0
 }
 
+.right-align {
+    text-align: right;
+}
+
 #main {
     width: 100%;
     height: 100%;
@@ -182,6 +186,10 @@ footer {
     width: 95%;
 }
 
+.card:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+}
+
 .card-content {
     width: 100%;
     min-height: 125px;
@@ -321,22 +329,36 @@ footer {
     cursor: pointer;
 }
 
-.configuration {
+.layout {
+    width: 100%;
+    height: 100%;
+    position: relative;
     background-color: #efefef;
+    display: block;
+}
+
+
+.tab-content > h3 {
+    margin-left: 5px;
+}
+
+.configuration, .generation {
     display: block;
     height: 100%;
     padding: 20px;
 }
 
-.configuration > div {
+.configuration > div, .generation > div {
     background-color: white;
-    margin: 0px auto;
-    padding: 20px;
-    width: 50%;
     box-shadow: 0 1px 4px rgba(0,0,0,0.25);
 }
 
-.configuration > div > h2 {
+.configuration > div > h2, .generation > div > h2 {
     margin: 0 0 20px 0;
     padding: 0;
+}
+
+.control-label-thin {
+    font-weight: normal;
+    color: #6b6b6b;
 }

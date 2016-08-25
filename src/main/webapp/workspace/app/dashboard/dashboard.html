@@ -1,18 +1,18 @@
 <dashboardtoolbar projects="projects" profile="profile"></dashboardtoolbar>
 <div class="container-fluid dashboard">
-    <div style="float:right; padding: 20px;">
-        <button class="btn btn-success" ng-click="addProject()">
-            <span class="fa fa-plus"></span> ADD NEW PROJECT
-        </button>
-    </div>
-    <div class="col-12">
-        <h2 style="display: inline-block">Projects</h2>
-    </div>
+    <div class="row">
+        <div style="float:right; padding: 20px;">
+            <button class="btn btn-success" ng-click="addProject()">
+                <span class="fa fa-plus"></span> ADD NEW PROJECT
+            </button>
+        </div>
+        <div class="col-12">
+            <h2 style="display: inline-block; margin-left: 13px;">Projects</h2>
+        </div>
 
-    <div class="col-12">
-        <div class="row">
-            <div class="col-sm-2" ng-repeat="project in projects">
-                <div class="card" style="cursor: pointer" ng-click="goToProject(project.id)" >
+        <div class="col-sm-12">
+            <div class="col-sm-3" ng-repeat="project in projects">
+                <div class="card" style="cursor: pointer;" ng-click="goToProject(project.id)" >
                     <div class="card-content">
                         <span class="card-title">{{project.name}}</span>
                     </div>
@@ -21,7 +21,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

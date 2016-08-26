@@ -9,23 +9,37 @@
         </ul>
     </div>
     <div ng-if="displayTab=='model'" id="consoleModel" class="col s12"></div>
-    <div ng-if="displayTab == 'generation'" id="consoleGeneration" class="col s12">
-        <ul ng-if="hasError">
-            <li ng-repeat="error in errors">
-                <ul>
-                    <li ng-click="events.onClickFile(error.templateFileId)"><a href>{{error.templateName}}</a></li>
-                    <li ng-click="events.onClickFile(error.templateFileId)"><a href>{{error.templateName}}</a></li>
-                    <li ng-click="events.onClickFile(error.entityFileId)"><a href>{{error.entityName}}</a></li>
-                    <li>{{error.message}}</li>
-                </ul>
-            </li>
-        </ul>
-        <div ng-if="!hasError && hasError != null">
-            <ul>
-                <li class="resultGeneration">{{result.numberOfFilesGenerated}} file(s) generated.</li>
-                <li class="resultGeneration">{{result.numberOfGenerationErrors}} generation error(s).</li>
-                <li class="resultGeneration">{{result.numberOfResourcesCopied}}  resources(s) copied.</li>
-            </ul>
+    <div ng-if="displayTab == 'generation'" id="consoleGeneration" class="col-sm-   12">
+        <div class="col-sm-12" ng-if="data.generation.generationResults">
+            <div class="alert alert-success" role="alert"
+                 ng-if="data.generation.generationResults.numberOfGenerationErrors == 0 || data.generation.generationResults.numberOfFilesGenerated > 0 || data.generationResults.numberOfResourcesCopied > 0">
+                <strong>Generation sucessfull</strong>
+                <p>
+                    File(s) generated(s): {{data.generation.generationResults.numberOfFilesGenerated}}
+                    <br/>
+                    Resource File(s) copied(s): {{data.generation.generationResults.numberOfResourcesCopied}}
+                </p>
+            </div>
+            <div class="alert alert-danger" role="alert" ng-if="data.generation.generationResults.numberOfGenerationErrors > 0">
+                <strong>Generation errors</strong>
+                <div class="container-fluid console-error">
+                    <div class="row console-error-line"
+                         ng-repeat="error in data.generation.generationResults.errorTransformeds">
+                        <div class="col-sm-6">
+                            Template:
+                            <a href ng-click="goToBundleTemplate(error.templateName)">{{error.templateName}}
+                                (line {{error.numLine}})</a>
+                        </div>
+                        <div class="col-sm-6">
+                            Model Entity:
+                            <a href ng-click="goToModelEntity(error.entityName)">{{error.entityName}}</a>
+                        </div>
+                        <div class="col-sm-12">
+                            <pre>{{error.message}}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

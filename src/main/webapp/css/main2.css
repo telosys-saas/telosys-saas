@@ -360,13 +360,17 @@ footer {
     margin-left: 5px;
 }
 
-.configuration, .generation {
+.configuration {
     display: block;
     height: 100%;
     padding: 20px;
 }
 
-.configuration > div, .generation > div {
+.generation{
+    padding : 15px 15px 0px 10px;
+}
+
+.configuration > div {
     background-color: white;
     box-shadow: 0 1px 4px rgba(0,0,0,0.25);
 }
@@ -408,6 +412,10 @@ footer {
 
 .generation-selection-line-selected {
     background-color: rgba(238, 250, 252, 1);
+}
+
+.card-generation{
+    cursor: pointer;
 }
 
 /*

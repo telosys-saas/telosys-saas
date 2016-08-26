@@ -28,8 +28,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         events: getCommonEvents(),
         /** The Telosys Tools Folder */
         telosysFolder: {},
-        /** The result of the generation */
-        generationResults: null,
 
         /**
          * Data for model created by the user
@@ -121,6 +119,18 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           variables: {},
           /** IDE events redirected to controller functions */
           events: getEventsForConfiguration()
+        },
+
+        generation: {
+          model: "",
+          entities: [],
+          bundle: "",
+          templates: [],
+          generationResults: null,
+          selectedModelEntitys: null,
+          selectedBundleTemplates: null,
+          selectedModel: {},
+          selectedBundle: {}
         }
       };
     }
@@ -550,72 +560,23 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     /**
      * Launch the generation
      */
-    $scope.generation = function (generation) {
-      console.log('generation', generation);
-      $scope.data.generation = generation;
+    $scope.generation = function () {
+      console.log('generation', $scope.data.generation);
+      var generation = {
+        model: $scope.data.generation.model,
+        entities: $scope.data.generation.entities,
+        bundle: $scope.data.generation.bundle,
+        templates: $scope.data.generation.templates
+      };
 
-      return ProjectsService.launchGeneration($scope.profile.userId, $scope.data.project.id,  generation)
+      ProjectsService.launchGeneration($scope.profile.userId, $scope.data.project.id, generation)
         .then(function (result) {
-          console.log('Generation result',result);
-          if(result.data) {
-            // Transform error messages
-            result.data.errorTransformeds = $scope.transformGenerationErrors(generation, result.data.errors);
-          }
-          $scope.data.generationResults = result.data;
+          console.log('Generation result', result);
+          $scope.data.generation.generationResults = result.data;
           $scope.refreshAllFiles();
         });
     };
 
-    $scope.transformGenerationErrors = function(generation, errors) {
-        if(!errors) return [];
-        var errorTransformeds = [];
-        for(var i=0; i<errors.length; i++) {
-            var error = errors[i];
-            var errorTransformed = $scope.transformGenerationError(generation, error);
-            errorTransformeds.push(errorTransformed);
-        }
-        return errorTransformeds;
-    };
-
-    $scope.transformGenerationError = function(generation, error) {
-      try {
-        var posBegin = error.message.indexOf('Template "') + 10;
-        var posEnd = error.message.indexOf('"', posBegin);
-        var templateName = error.message.substring(posBegin, posEnd);
-        var templateFileId = 'TelosysTools/templates/' + generation.bundle + '/' + templateName;
-
-        var posBegin = error.message.indexOf(' ( line ') + 8;
-        var posEnd = error.message.indexOf(' )', posBegin);
-        var numLine = error.message.substring(posBegin, posEnd);
-
-        var posBegin = error.message.indexOf('Entity "') + 8;
-        var posEnd = error.message.indexOf('"', posBegin);
-        var entityName = error.message.substring(posBegin, posEnd);
-        var entityFileId = 'TelosysTools/' + generation.model + '_model/' + entityName + '.entity';
-
-        var posBegin = posEnd + 2;
-        if(error.message.indexOf('Exception ', posBegin) != -1) {
-          posBegin = error.message.indexOf('Exception \'', posBegin);
-        }
-        var message = error.message.substring(posBegin);
-
-        if(message.lastIndexOf('\n\n') == message.length-2) {
-          message = message.substring(0, message.lastIndexOf('\n\n'));
-        }
-
-        return {
-          entityName: entityName,
-          entityFileId: entityFileId,
-          templateName: templateName,
-          templateFileId: templateFileId,
-          numLine: numLine,
-          message: message
-        };
-
-      } catch(e) {
-        throw e;
-      }
-    }
 
     $scope.getTemplateForGeneration = function (bundleName, callback) {
       ProjectsService.getTemplateForGeneration($scope.profile.userId, $scope.data.project.id, bundleName)

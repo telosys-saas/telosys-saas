@@ -1,30 +1,38 @@
 <div class="row">
-    <div class="col-sm-12">
-        <h2>Generation</h2>
-    </div>
-    <div class="col-sm-6">
+        <div class="col-sm-6">
         <h3><span class="fa fa-cubes"></span> &nbsp;Models</h3>
     </div>
     <div class="col-sm-6">
         <h3><span class="fa fa-archive"></span> &nbsp;Bundles</h3>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-5">
         <select class="form-control"
                 ng-options="model.text for model in data.models.tree"
-                ng-model="selectedModel" ng-change="changeSelectedModel()">
+                ng-model="data.generation.selectedModel" ng-change="changeSelectedModel()">
         </select>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-1">
+        <div class="checkbox">
+            <a href ng-click="selectAllEntity()"><i class="fa fa-check-square-o fa-lg" style="padding-right: 10px;"></i></a>
+            <a href ng-click="deselectAllEntity()"><i class="fa fa-square-o fa-lg"></i></a>
+        </div>
+    </div>
+    <div class="col-sm-5">
         <select class="form-control"
                 ng-options="bundle.text for bundle in data.bundles.tree | filter:data.events.getTemplateForGeneration"
-                ng-model="selectedBundle" ng-change="changeSelectedBundle()">
+                ng-model="data.generation.selectedBundle" ng-change="changeSelectedBundle()">
         </select>
     </div>
+    <div class="col-sm-1">
+        <div class="checkbox" >
+            <a href ng-click="selectAllTemplate()"><i class="fa fa-check-square-o fa-lg" style="padding-right: 10px;"></i></a>
+            <a href ng-click="deselectAllTemplate()"><i class="fa fa-square-o fa-lg"></i></a>
+        </div>
+    </div>
     <div class="col-sm-6">
-        <div class="container-fluid generation-selection" ng-if="selectedModel">
-            <div class="row generation-selection-line"
-                 style="cursor: pointer"
-                 ng-repeat="entity in modelEntitys"
+        <div class="container-fluid generation-selection" ng-if="data.generation.selectedModel">
+            <div class="row generation-selection-line card-generation"
+                 ng-repeat="entity in data.generation.selectedModelEntitys"
                  ng-click="selectEntity(entity)"
                  ng-class="{'generation-selection-line-selected':entity.selected}">
                 <div class="col-sm-11">
@@ -45,13 +53,12 @@
         </div>
     </div>
     <div class="col-sm-6">
-        <div class="container-fluid generation-selection" ng-if="selectedBundle">
-            <div class="row generation-selection-line"
-                 style="cursor: pointer"
-                 ng-repeat="template in bundleTemplates"
+        <div class="container-fluid generation-selection" ng-if="data.generation.selectedBundle">
+            <div class="row generation-selection-line card-generation"
+                 ng-repeat="template in data.generation.selectedBundleTemplates"
                  ng-click="selectTemplate(template)"
                  ng-class="{'generation-selection-line-selected':template.selected}">
-                <div class="col-sm-11">
+                <div class="col-sm-10">
                     <div class="checkbox" style="word-wrap: break-word;">
                         <label class="control-label" for="template_{{$index}}">
                             <input type="checkbox" ng-model="template.selected" id="template_{{$index}}" />
@@ -59,6 +66,12 @@
                             <br/>
                             <span class="control-label-thin">{{template.description}}</span>
                         </label>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="checkbox">
+                        <i ng-if="!template.once" class="fa fa-asterisk"></i>
+                        <i ng-if="template.once">1</i>
                     </div>
                 </div>
                 <div class="col-sm-1">
@@ -80,41 +93,5 @@
                 </div>
             </div>
         </form>
-    </div>
-    <div class="col-sm-12" ng-if="data.generationResults && displayResultGeneration">
-        <div class="alert alert-success" role="alert" ng-if="data.generationResults.numberOfGenerationErrors == 0 || data.generationResults.numberOfFilesGenerated > 0 || data.generationResults.numberOfResourcesCopied > 0">
-            <strong>Generation successfull</strong>
-            <p>
-                File(s) generated(s): {{data.generationResults.numberOfFilesGenerated}}
-                <br/>
-                Resource File(s) copied(s): {{data.generationResults.numberOfResourcesCopied}}
-            </p>
-        </div>
-        <div class="alert alert-danger" role="alert" ng-if="data.generationResults.numberOfGenerationErrors > 0">
-            <strong>Generation errors</strong>
-            <div class="container-fluid console-error">
-                <div class="row console-error-line"
-                     ng-repeat="error in data.generationResults.errorTransformeds">
-                    <div class="col-sm-6">
-                        Template:
-                        <a href ng-click="goToBundleTemplate(template.absoluteFilePath)">{{error.templateName}} (line {{error.numLine}})</a>
-                    </div>
-                    <div class="col-sm-6">
-                        Model Entity:
-                        <a href ng-click="goToModelEntity(entity.id)">{{error.entityName}}</a>
-                    </div>
-                    <div class="col-sm-12">
-                        <pre>{{error.message}}</pre>
-                    </div>
-                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-12" ng-if="false && data.generationResults">
-
-        {{data.generationResults}}
-        <div id="console">
-            <console generation-results="data.generationResults" events="data.events"></console>
-        </div>
     </div>
 </div>

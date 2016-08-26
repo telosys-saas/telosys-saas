@@ -7,46 +7,34 @@ angular.module('ide')
   .directive('console', function () {
     return {
 
-      scope : {
-        generationResults: '=',
-        events: '='
+      scope: {
+        data: '='
       },
 
       templateUrl: 'app/ide/directive/ide.console.directive.html',
 
       link: function ($scope, element, attrs) {
 
-        $scope.displayTab = 'model';
-        $scope.hasError = null;
-        $scope.errors = [];
+        $scope.displayTab = 'generation';
+        $scope.errorTransformeds = [];
 
-        $scope.$watchCollection('generationResults', function () {
-          $scope.displayTab = 'generation';
-          console.log('console generationResults', $scope.generationResults);
-          for (var indexResult = 0; indexResult < $scope.generationResults.length; indexResult++) {
-            var generationResult = $scope.generationResults[indexResult];
-            if (!generationResult.isDisplay) {
-              generationResult.isDisplay = true;
-              if (generationResult.result && generationResult.result.errors && generationResult.result.errors.length > 0) {
-                $scope.hasError = true;
-                for (var j = 0; j < generationResult.result.errors.length; j++) {
-                  var errorAsStr = generationResult.result.errors[j];
-                  var error = $scope.getErrorAsObject(generationResult.generation, errorAsStr);
-                  $scope.errors.push(error);
-                }
-              }else{
-                $scope.hasError = false;
-                $scope.result = {
-                  numberOfFilesGenerated : generationResult.result.data.numberOfFilesGenerated,
-                  numberOfGenerationErrors : generationResult.result.data.numberOfGenerationErrors,
-                  numberOfResourcesCopied : generationResult.result.data.numberOfResourcesCopied
-                }
-              }
-            }
-          }
+        $scope.$watch('data.generation.generationResults', function () {
+          console.log('console generationResults', $scope.data.generation.generationResults);
+          $scope.errorTransformeds  = $scope.transformGenerationErrors($scope.data.generation, $scope.data.generation.generationResults);
         });
 
-        $scope.getErrorAsObject = function (generation, error) {
+        $scope.transformGenerationErrors = function (generation, errors) {
+          if (!errors) return [];
+          var errorTransformeds = [];
+          for (var i = 0; i < errors.length; i++) {
+            var error = errors[i];
+            var errorTransformed = $scope.transformGenerationError(generation, error);
+            errorTransformeds.push(errorTransformed);
+          }
+          return errorTransformeds;
+        };
+
+        $scope.transformGenerationError = function (generation, error) {
           try {
             var posBegin = error.message.indexOf('Template "') + 10;
             var posEnd = error.message.indexOf('"', posBegin);
@@ -57,16 +45,20 @@ angular.module('ide')
             var posEnd = error.message.indexOf(' )', posBegin);
             var numLine = error.message.substring(posBegin, posEnd);
 
-            var posBegin = error.message.indexOf('Entity : "') + 10;
+            var posBegin = error.message.indexOf('Entity "') + 8;
             var posEnd = error.message.indexOf('"', posBegin);
             var entityName = error.message.substring(posBegin, posEnd);
-            var entityFileId = 'TelosysTools/' + generation.models + '_model/' + entityName + '.entity';
+            var entityFileId = 'TelosysTools/' + generation.model + '_model/' + entityName + '.entity';
 
             var posBegin = posEnd + 2;
-            if (error.message.indexOf('Exception :', posBegin) != -1) {
-              posBegin = error.message.indexOf('Exception :', posBegin) + 11;
+            if (error.message.indexOf('Exception ', posBegin) != -1) {
+              posBegin = error.message.indexOf('Exception \'', posBegin);
             }
             var message = error.message.substring(posBegin);
+
+            if (message.lastIndexOf('\n\n') == message.length - 2) {
+              message = message.substring(0, message.lastIndexOf('\n\n'));
+            }
 
             return {
               entityName: entityName,
@@ -76,14 +68,11 @@ angular.module('ide')
               numLine: numLine,
               message: message
             };
-
           } catch (e) {
-            return {
-              message: message
-            }
+            throw e;
           }
         };
-
+        
         $scope.onClickTab = function (tabToDisplay) {
           $scope.displayTab = tabToDisplay;
         }

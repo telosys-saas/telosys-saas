@@ -40,6 +40,10 @@
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false"><i class="mdi mdi-file-multiple"></i> Generated files <span class="badge" ng-if="data.files.countModifiedFile != 0">{{data.files.countModifiedFile}}</span></a>
                 </li>
+                <li class="dropdown"  ng-click="download()">
+                    <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false"><i class="mdi mdi-download mdi-18px"></i> Download Project</a>
+                </li>
             </ul>
             <ul class="nav navbar-nav" style="float: right">
                 <li class="dropdown">

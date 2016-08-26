@@ -2,18 +2,6 @@
     <div class="col-sm-12">
         <h2>Generation</h2>
     </div>
-    <div class="col-sm-12" ng-if="data.generationResults">
-        <div class="alert alert-success" role="alert" ng-if="data.generationResults.numberOfGenerationErrors == 0">
-            <span ng-if="data.generationResults.numberOfGenerationErrors == 0">
-                <strong>Generation successfull</strong>
-                <p>
-                    File(s) generated(s): {{data.generationResults.numberOfFilesGenerated}}
-                    <br/>
-                    Resource File(s) copied(s): {{data.generationResults.numberOfResourcesCopied}}
-                </p>
-            </span>
-        </div>
-    </div>
     <div class="col-sm-6">
         <h3><span class="fa fa-cubes"></span> &nbsp;Models</h3>
     </div>
@@ -92,6 +80,35 @@
                 </div>
             </div>
         </form>
+    </div>
+    <div class="col-sm-12" ng-if="data.generationResults && displayResultGeneration">
+        <div class="alert alert-success" role="alert" ng-if="data.generationResults.numberOfGenerationErrors == 0 || data.generationResults.numberOfFilesGenerated > 0 || data.generationResults.numberOfResourcesCopied > 0">
+            <strong>Generation successfull</strong>
+            <p>
+                File(s) generated(s): {{data.generationResults.numberOfFilesGenerated}}
+                <br/>
+                Resource File(s) copied(s): {{data.generationResults.numberOfResourcesCopied}}
+            </p>
+        </div>
+        <div class="alert alert-danger" role="alert" ng-if="data.generationResults.numberOfGenerationErrors > 0">
+            <strong>Generation errors</strong>
+            <div class="container-fluid console-error">
+                <div class="row console-error-line"
+                     ng-repeat="error in data.generationResults.errorTransformeds">
+                    <div class="col-sm-6">
+                        Template:
+                        <a href ng-click="goToBundleTemplate(template.absoluteFilePath)">{{error.templateName}} (line {{error.numLine}})</a>
+                    </div>
+                    <div class="col-sm-6">
+                        Model Entity:
+                        <a href ng-click="goToModelEntity(entity.id)">{{error.entityName}}</a>
+                    </div>
+                    <div class="col-sm-12">
+                        <pre>{{error.message}}</pre>
+                    </div>
+                 </div>
+            </div>
+        </div>
     </div>
     <div class="col-sm-12" ng-if="false && data.generationResults">
 

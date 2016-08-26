@@ -44,6 +44,12 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     /** The selected bundle */
     $scope.selectedBundle = {};
 
+    /** The new password */
+    $scope.changePassword = {
+      oldPassword: "",
+      password: "",
+      confirmPassword: ""
+    };
 
     /**
      * Create a new project
@@ -223,6 +229,22 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     $scope.selectBundle = function (bundle) {
       $scope.selectedBundle = bundle;
     };
+    
+    $scope.confirmPasswordChange = function () {
+      if($scope.changePassword.confirmPassword != $scope.changePassword.password){
+        $scope.passwordDontMatch = true;
+      }else{
+        $scope.passwordDontMatch = false;
+      }
+    };
+
+    $scope.submitNewPassword = function () {
+      if($scope.passwordDontMatch){
+        return
+      }
+      AuthService.changePassword($scope.profile.userId, $scope.changePassword);
+      $uibModalInstance.close();
+    };
 
     /**
      * Close the modal window
@@ -243,4 +265,5 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     init();
 
   }
-]);
+])
+;

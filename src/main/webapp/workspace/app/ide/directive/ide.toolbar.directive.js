@@ -48,6 +48,17 @@ angular.module('ide')
             $scope.data.projects.push(project);
           })
         };
+        
+        $scope.changePassword = function () {
+          var modalInstance = $uibModal.open({
+            templateUrl: 'app/modal/modal.changepassword.html',
+            controller: 'modalCtrl',
+            resolve: {
+              data: {}
+            }
+          });
+        }
+        
       }
   }
   }]);

@@ -552,14 +552,70 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      */
     $scope.generation = function (generation) {
       console.log('generation', generation);
-      
+      $scope.data.generation = generation;
+
       return ProjectsService.launchGeneration($scope.profile.userId, $scope.data.project.id,  generation)
         .then(function (result) {
           console.log('Generation result',result);
+          if(result.data) {
+            // Transform error messages
+            result.data.errorTransformeds = $scope.transformGenerationErrors(generation, result.data.errors);
+          }
           $scope.data.generationResults = result.data;
           $scope.refreshAllFiles();
         });
     };
+
+    $scope.transformGenerationErrors = function(generation, errors) {
+        if(!errors) return [];
+        var errorTransformeds = [];
+        for(var i=0; i<errors.length; i++) {
+            var error = errors[i];
+            var errorTransformed = $scope.transformGenerationError(generation, error);
+            errorTransformeds.push(errorTransformed);
+        }
+        return errorTransformeds;
+    };
+
+    $scope.transformGenerationError = function(generation, error) {
+      try {
+        var posBegin = error.message.indexOf('Template "') + 10;
+        var posEnd = error.message.indexOf('"', posBegin);
+        var templateName = error.message.substring(posBegin, posEnd);
+        var templateFileId = 'TelosysTools/templates/' + generation.bundle + '/' + templateName;
+
+        var posBegin = error.message.indexOf(' ( line ') + 8;
+        var posEnd = error.message.indexOf(' )', posBegin);
+        var numLine = error.message.substring(posBegin, posEnd);
+
+        var posBegin = error.message.indexOf('Entity "') + 8;
+        var posEnd = error.message.indexOf('"', posBegin);
+        var entityName = error.message.substring(posBegin, posEnd);
+        var entityFileId = 'TelosysTools/' + generation.model + '_model/' + entityName + '.entity';
+
+        var posBegin = posEnd + 2;
+        if(error.message.indexOf('Exception ', posBegin) != -1) {
+          posBegin = error.message.indexOf('Exception \'', posBegin);
+        }
+        var message = error.message.substring(posBegin);
+
+        if(message.lastIndexOf('\n\n') == message.length-2) {
+          message = message.substring(0, message.lastIndexOf('\n\n'));
+        }
+
+        return {
+          entityName: entityName,
+          entityFileId: entityFileId,
+          templateName: templateName,
+          templateFileId: templateFileId,
+          numLine: numLine,
+          message: message
+        };
+
+      } catch(e) {
+        throw e;
+      }
+    }
 
     $scope.getTemplateForGeneration = function (bundleName, callback) {
       ProjectsService.getTemplateForGeneration($scope.profile.userId, $scope.data.project.id, bundleName)

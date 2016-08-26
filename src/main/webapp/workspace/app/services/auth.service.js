@@ -25,20 +25,16 @@ angular.module('app')
       /**
        * Change the current password of the user
        * @param login User login
-       * @param oldPassword Old password
-       * @param password NEw password
+       * @param changePassword Old and New password
        * @returns {*}
        */
-      changePassword: function (login, oldPassword, password) {
+      changePassword: function (login, changePassword) {
         return $http({
           method: "PUT",
           url: host + "api/v1/users/" + login + "/action/changePassword",
           dataType: 'json',
           contentType: 'application/json',
-          data: JSON.stringify({
-            oldPassword: oldPassword,
-            password: password
-          })
+          data: JSON.stringify(changePassword)
         })
           .catch(function (e) {
             console.log(e);

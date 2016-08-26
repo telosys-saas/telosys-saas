@@ -17,6 +17,7 @@ angular.module('ide')
 
         $scope.selectedModelEntitys = {};
         $scope.selectedBundleTemplates = {};
+        $scope.displayResultGeneration = null;
 
         $scope.changeSelectedModel = function () {
           console.log('changeSelectedModel', $scope.selectedModel);
@@ -47,6 +48,7 @@ angular.module('ide')
         };
 
         $scope.submitGeneration = function () {
+          $scope.displayResultGeneration = true;
           var generation = {
             model: "",
             entities: [],
@@ -57,26 +59,31 @@ angular.module('ide')
           if($scope.selectedModel) {
             generation.model = $scope.selectedModel.text;
           }
-          for(var entity in $scope.modelEntitys) {
+          for(var index = 0; index < $scope.modelEntitys.length; index++) {
+            var entity = $scope.modelEntitys[index];
             if(entity.selected) {
-              generation.entities.push(entity.name);
+              generation.entities.push(entity.text);
             }
           }
 
           if($scope.selectedBundle) {
             generation.bundle = $scope.selectedBundle.text;
           }
-          for(var template in $scope.bundleTemplates) {
+          for(var index = 0; index < $scope.bundleTemplates.length; index++) {
+            var template = $scope.bundleTemplates[index];
             if(template.selected) {
               generation.templates.push(template.name);
             }
           }
 
-          $scope.data.events.generation(generation).then(function(result) {
-            console.log(result);
-          });
+          $scope.data.events.generation(generation);
         };
 
+        function init() {
+          $scope.displayResultGeneration = false;
+        }
+
+        init();
       }
     }
   });

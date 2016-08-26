@@ -7,6 +7,20 @@ html div, html ul {
     padding: 0
 }
 
+.alert-danger {
+    background-color: #fff5f5;
+}
+
+.h1, .h2, .h3, h1, h2, h3 {
+    margin-top: 15px;
+    margin-bottom: 8px;
+}
+
+div.checkbox {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 .center-align {
     text-align: center;
 }
@@ -362,6 +376,10 @@ footer {
     padding: 0;
 }
 
+.generation h3 {
+    margin-top: 0;
+}
+
 .control-label-thin {
     font-weight: normal;
     color: #6b6b6b;
@@ -390,4 +408,47 @@ footer {
 
 .generation-selection-line-selected {
     background-color: rgba(238, 250, 252, 1);
+}
+
+/*
+.console-error {
+    margin-top: 10px;
+    background-color: rgb(218, 200, 200);
+    max-height: 450px;
+    overflow-y: auto;
+    border: 1px solid #e2bdbd;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+*/
+
+.console-error {
+    margin-top: 0;
+    background-color: transparent;
+    max-height: 450px;
+    overflow-y: auto;
+    border: none;
+    padding: 0;
+}
+
+.console-error-line {
+    margin: 14px 3px;
+    border: 0px solid #dedede;
+    background-color: #ffffff;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.25);
+    padding: 10px 15px;
+}
+
+.console-error-line pre {
+    background-color: rgba(255, 255, 255, 0.55);
+    font-size: 14px;
+    color: #a94442;
+    border: 1px solid #ffeeee;
+    padding: 5px 15px;
+    margin: 5px 0 0 0;
+}
+
+.console-error-line a {
+    color: #a94442;
+    text-decoration: underline;
 }

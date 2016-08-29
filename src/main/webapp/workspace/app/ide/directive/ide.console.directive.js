@@ -18,9 +18,9 @@ angular.module('ide')
         $scope.displayTab = 'generation';
         $scope.errorTransformeds = [];
 
-        $scope.$watch('data.generation.generationResults', function () {
-          console.log('console generationResults', $scope.data.generation.generationResults);
-          $scope.errorTransformeds  = $scope.transformGenerationErrors($scope.data.generation, $scope.data.generation.generationResults);
+        $scope.$watch('data.generationResults', function () {
+          console.log('console generationResults', $scope.data.generationResults);
+          $scope.errorTransformeds  = $scope.transformGenerationErrors($scope.data, $scope.data.generationResults.errors);
         });
 
         $scope.transformGenerationErrors = function (generation, errors) {

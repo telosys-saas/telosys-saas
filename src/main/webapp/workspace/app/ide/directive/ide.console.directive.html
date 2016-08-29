@@ -10,21 +10,21 @@
     </div>
     <div ng-if="displayTab=='model'" id="consoleModel" class="col s12"></div>
     <div ng-if="displayTab == 'generation'" id="consoleGeneration" class="col-sm-   12">
-        <div class="col-sm-12" ng-if="data.generation.generationResults">
+        <div class="col-sm-12" ng-if="data.generationResults">
             <div class="alert alert-success" role="alert"
-                 ng-if="data.generation.generationResults.numberOfGenerationErrors == 0 || data.generation.generationResults.numberOfFilesGenerated > 0 || data.generationResults.numberOfResourcesCopied > 0">
+                 ng-if="data.generationResults.numberOfGenerationErrors == 0 || data.generationResults.numberOfFilesGenerated > 0 || data.generationResults.numberOfResourcesCopied > 0">
                 <strong>Generation sucessfull</strong>
                 <p>
-                    File(s) generated(s): {{data.generation.generationResults.numberOfFilesGenerated}}
+                    File(s) generated(s): {{data.generationResults.numberOfFilesGenerated}}
                     <br/>
-                    Resource File(s) copied(s): {{data.generation.generationResults.numberOfResourcesCopied}}
+                    Resource File(s) copied(s): {{data.generationResults.numberOfResourcesCopied}}
                 </p>
             </div>
-            <div class="alert alert-danger" role="alert" ng-if="data.generation.generationResults.numberOfGenerationErrors > 0">
+            <div class="alert alert-danger" role="alert" ng-if="data.generationResults.numberOfGenerationErrors > 0">
                 <strong>Generation errors</strong>
                 <div class="container-fluid console-error">
                     <div class="row console-error-line"
-                         ng-repeat="error in data.generation.generationResults.errorTransformeds">
+                         ng-repeat="error in errorTransformeds">
                         <div class="col-sm-6">
                             Template:
                             <a href ng-click="goToBundleTemplate(error.templateName)">{{error.templateName}}

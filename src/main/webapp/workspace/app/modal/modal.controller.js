@@ -9,6 +9,8 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     // data
     $scope.data = data;
 
+    $scope.displayTab = 'folders';
+
     $scope.errorMessage = "";
 
     /**
@@ -244,6 +246,10 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
       }
       AuthService.changePassword($scope.profile.userId, $scope.changePassword);
       $uibModalInstance.close();
+    };
+
+    $scope.onClickTab = function (tabToDisplay) {
+      $scope.displayTab = tabToDisplay;
     };
 
     /**

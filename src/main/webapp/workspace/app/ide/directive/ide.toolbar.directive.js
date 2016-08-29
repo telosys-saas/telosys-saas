@@ -57,6 +57,16 @@ angular.module('ide')
               data: {}
             }
           });
+        };
+
+        $scope.openConfiguration = function () {
+          var modalInstance = $uibModal.open({
+            templateUrl: 'app/modal/modal.configuration.html',
+            controller: 'modalCtrl',
+            resolve: {
+              data: $scope.data.configuration
+            }
+          });
         }
         
       }

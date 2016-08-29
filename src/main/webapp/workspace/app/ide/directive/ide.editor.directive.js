@@ -12,7 +12,7 @@ angular.module('ide').directive('editor', function () {
       templateUrl: 'app/ide/directive/ide.editor.directive.html',
 
       link: function ($scope, element, attrs) {
-
+        
         $scope.events = $scope.data.events;
 
         /**

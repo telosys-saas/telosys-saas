@@ -5,12 +5,6 @@
     <div class="col-sm-6">
         <h3><span class="fa fa-archive"></span> &nbsp;Bundles</h3>
     </div>
-    <div class="col-sm-5">
-        <select class="form-control"
-                ng-options="model.text for model in data.models.tree"
-                ng-model="data.generation.selectedModel" ng-change="changeSelectedModel()">
-        </select>
-    </div>
     <div class="col-sm-1">
         <div class="checkbox">
             <a href ng-click="selectAllEntity()"><i class="fa fa-check-square-o fa-lg" style="padding-right: 10px;"></i></a>
@@ -19,14 +13,26 @@
     </div>
     <div class="col-sm-5">
         <select class="form-control"
-                ng-options="bundle.text for bundle in data.bundles.tree | filter:data.events.getTemplateForGeneration"
-                ng-model="data.generation.selectedBundle" ng-change="changeSelectedBundle()">
+                ng-options="model.text for model in data.models.tree"
+                ng-model="data.generation.selectedModel" ng-change="changeSelectedModel()">
         </select>
     </div>
     <div class="col-sm-1">
         <div class="checkbox" >
             <a href ng-click="selectAllTemplate()"><i class="fa fa-check-square-o fa-lg" style="padding-right: 10px;"></i></a>
             <a href ng-click="deselectAllTemplate()"><i class="fa fa-square-o fa-lg"></i></a>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <select class="form-control"
+                ng-options="bundle.text for bundle in data.bundles.tree | filter:data.events.getTemplateForGeneration"
+                ng-model="data.generation.selectedBundle" ng-change="changeSelectedBundle()">
+        </select>
+    </div>
+    <div class="col-sm-1">
+        <div class="checkbox">
+            <a href ng-click="goToBundleConfiguration()"><i
+                    class="fa fa-external-link"></i></a>
         </div>
     </div>
     <div class="col-sm-6">

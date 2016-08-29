@@ -126,11 +126,12 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           entities: [],
           bundle: "",
           templates: [],
-          generationResults: null,
+          generationResults: [],
           selectedModelEntitys: null,
           selectedBundleTemplates: null,
           selectedModel: {},
-          selectedBundle: {}
+          selectedBundle: {},
+          events: getCommonEvents()
         }
       };
     }
@@ -332,7 +333,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      * @param file File to save
      */
     $scope.saveFile = function (data, file) {
-
       if (file) {
         if (file.isModified) {
           data.countModifiedFile--;
@@ -572,7 +572,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       ProjectsService.launchGeneration($scope.profile.userId, $scope.data.project.id, generation)
         .then(function (result) {
           console.log('Generation result', result);
-          $scope.data.generation.generationResults = result.data;
+          $scope.data.generation.generationResults.push(result.data);
           $scope.refreshAllFiles();
         });
     };

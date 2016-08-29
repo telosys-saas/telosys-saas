@@ -1,0 +1,190 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Configuration</h3>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs">
+                            <li ng-class="{'active': displayTab=='folders'}"
+                                ng-click="onClickTab('folders')">
+                                <a href>Folders</a>
+                            </li>
+                            <li ng-class="{'active': displayTab=='packages'}"
+                                ng-click="onClickTab('packages')">
+                                <a href>Packages</a>
+                            </li>
+                            <li ng-class="{'active': displayTab=='variables'}"
+                                ng-click="onClickTab('variables')">
+                                <a href>Variables</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Folders -->
+                    <div ng-if="displayTab=='folders'" id="folderTab" class="tab-content col-sm-12">
+                        <h3>Folders</h3>
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="source" class="col-sm-3 control-label">Sources <br/><span
+                                        class="control-label-thin">${SRC}</span></label>
+                                <div class="col-sm-9">
+                                    <input id="source" class="form-control" ng-model="data.variables.SRC">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="resources" class="col-sm-3 control-label">Resources <br/><span
+                                        class="control-label-thin">${RES}</span></label>
+                                <div class="col-sm-9">
+                                    <input id="resources" class="form-control" ng-model="data.variables.RES">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="web-content" class="col-sm-3 control-label">Web content <br/><span
+                                        class="control-label-thin">${WEB}</span></label>
+                                <div class="col-sm-9">
+                                    <input id="web-content" class="form-control" ng-model="data.variables.WEB">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="test-sources" class="col-sm-3 control-label">Tests sources <br/><span
+                                        class="control-label-thin">${TEST_SRC}</span></label>
+                                <div class="col-sm-9">
+                                    <input id="test-sources" class="form-control" ng-model="data.variables.TEST_SRC">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <label for="test-resources" class="col-sm-3 control-label">Tests resources <br/><span
+                                                class="control-label-thin">${TEST_RES}</span></label>
+                                        <div class="col-sm-9">
+                                            <input id="test-resources" class="form-control"
+                                                   ng-model="data.variables.TEST_RES">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="documentation" class="col-sm-3 control-label">Documentation <br/><span
+                                        class="control-label-thin">${DOC}</span></label>
+                                <div class="col-sm-9">
+                                    <input id="documentation" class="form-control" ng-model="data.variables.DOC">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="temporary-files" class="col-sm-3 control-label">Temporay files <br/><span
+                                        class="control-label-thin">${TMP}</span></label>
+                                <div class="col-sm-9">
+                                    <input id="temporary-files" class="form-control" ng-model="data.variables.TMP">
+                                </div>
+                            </div>
+                            <!-- Enregistrer -->
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9 right-align">
+                                    <button class="btn btn-success" ng-click="saveConfig()">
+                                        <span class="fa fa-floppy-o fa-lg"></span> &nbsp;Save
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Packages -->
+                    <div ng-if="displayTab=='packages'" id="packagesTab" class="col-sm-12">
+                        <h3>Packages</h3>
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="root-pkg" class="col-sm-3 control-label">Root package <br/><span
+                                        class="control-label-thin">${ROOT_PKG}</span></label>
+                                <div class="col-sm-9">
+                                    <input id="root-pkg" class="form-control" ng-model="data.variables.ROOT_PKG">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="entity-pkg" class="col-sm-3 control-label">Entity classes package <br/><span
+                                        class="control-label-thin">${ENTITY_PKG}</span></label>
+                                <div class="col-sm-9">
+                                    <input id="entity-pkg" class="form-control" ng-model="data.variables.ENTITY_PKG">
+                                </div>
+                            </div>
+                            <!-- Enregistrer -->
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9 right-align">
+                                    <button class="btn btn-success" ng-click="saveConfig()">
+                                        <span class="fa fa-floppy-o fa-lg"></span> &nbsp;Save
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Variables -->
+                    <div ng-if="displayTab=='variables'" id="variablesTab" class="col-sm-12">
+                        <h3>Variables</h3>
+                        <form class="form-horizontal">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <h4>Variable name</h4>
+                            </div>
+                            <div class="col-sm-6">
+                                <h4>Variable value</h4>
+                            </div>
+                            <div class="col-sm-1 col-sm-offset-1">
+                                <div class="form-group" ng-repeat="(key, value) in data.variables.specificVariables">
+                                    <div class="col-sm-12 right-align">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" ng-model="rowToDeletes[key]"/>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-repeat="(key, value) in data.variables.specificVariables">
+                                    <div class="col-sm-12">
+                                        <input type="text" ng-model="key" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-repeat="(key, value) in data.variables.specificVariables">
+                                    <div class="col-sm-12">
+                                        <input type="text" ng-model="value" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-3 col-sm-offset-2">
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <button class="btn btn-danger btn-block" type="button"
+                                                ng-click="deleteVariable()">Delete
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button class="btn btn-info btn-block" type="button" ng-click="addVariable()">
+                                            Add
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Enregistrer -->
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10 right-align">
+                                    <button class="btn btn-success" ng-click="saveConfig()">
+                                        <span class="fa fa-floppy-o fa-lg"></span> &nbsp;Save
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

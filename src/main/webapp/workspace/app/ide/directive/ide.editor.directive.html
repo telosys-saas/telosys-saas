@@ -2,7 +2,7 @@
     <ul class="nav nav-tabs">
         <li ng-repeat="file in data.workingFiles" class="collection-item truncate"
             ng-class="{'active': file.id == data.selectedFile.id}"
-            ng-click="events.onClickFile(data, file.id)">
+            ng-click="data.events.onClickFile(data, file.id)">
             <a>
                 <i ng-if="file.isModified" class="fa fa-circle" style="padding-right: 5px"></i>{{file.name}}
                 <i class="fa fa-times" style="padding-left: 5px"

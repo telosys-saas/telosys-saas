@@ -16,11 +16,11 @@ angular.module('ide')
       link: function ($scope, element, attrs) {
 
         $scope.displayTab = 'generation';
-        $scope.errorTransformeds = [];
 
-        $scope.$watch('data.generationResults', function () {
-          console.log('console generationResults', $scope.data.generationResults);
-          $scope.errorTransformeds  = $scope.transformGenerationErrors($scope.data, $scope.data.generationResults.errors);
+        $scope.$watchCollection('data.generation.generationResults', function () {
+          console.log('console generationResults', $scope.data.generation.generationResults);
+          var lastIndex = $scope.data.generation.generationResults.length - 1;
+          $scope.data.generation.generationResults[lastIndex].errorTransformeds = $scope.transformGenerationErrors($scope.data.generation, $scope.data.generation.generationResults[lastIndex].errors);
         });
 
         $scope.transformGenerationErrors = function (generation, errors) {
@@ -29,7 +29,7 @@ angular.module('ide')
           for (var i = 0; i < errors.length; i++) {
             var error = errors[i];
             var errorTransformed = $scope.transformGenerationError(generation, error);
-            errorTransformeds.push(errorTransformed);
+           errorTransformeds.push(errorTransformed);
           }
           return errorTransformeds;
         };
@@ -75,7 +75,22 @@ angular.module('ide')
         
         $scope.onClickTab = function (tabToDisplay) {
           $scope.displayTab = tabToDisplay;
+        };
+
+        $scope.goToBundleTemplate = function (fileId) {
+          console.log('goToBundleTemplate', fileId);
+          $scope.data.events.onClickFile($scope.data.bundles, fileId);
+        };
+
+        $scope.goToModelEntity = function (fileId) {
+          console.log('goToModelEntity', fileId);
+          $scope.data.events.onClickFile($scope.data.models, fileId);
+        };
+        
+        $scope.clearLog = function () {
+          $scope.data.generation.generationResults = [];
         }
+
       }
     }
   });

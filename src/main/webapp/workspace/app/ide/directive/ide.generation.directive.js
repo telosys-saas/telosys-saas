@@ -29,14 +29,6 @@ angular.module('ide')
 
         $scope.selectEntity = function (entity) {
           entity.selected = !entity.selected;
-          if (entity.selected) {
-            $scope.data.generation.entities.push(entity.text);
-          } else {
-            var index = $scope.data.generation.entities.indexOf(entity.name);
-            if (index) {
-              $scope.data.generation.entities.splice(index, 1);
-            }
-          }
         };
 
         $scope.selectAllEntity = function () {
@@ -61,6 +53,11 @@ angular.module('ide')
         };
 
         // Bundle and Template function
+        $scope.goToBundleTemplate = function (fileId) {
+          console.log('goToBundleTemplate', fileId);
+          $scope.data.events.onClickFile($scope.data.bundles, fileId);
+        };
+
         $scope.changeSelectedBundle = function () {
           console.log('changeSelectedBundle', $scope.data.generation.selectedBundle);
           $scope.data.bundles.events.getTemplateForGeneration($scope.data.generation.selectedBundle.text, function (result) {
@@ -69,29 +66,8 @@ angular.module('ide')
           });
         };
 
-        $scope.goToBundleTemplate = function (fileId) {
-          console.log('goToBundleTemplate', fileId);
-          $scope.data.events.onClickFile($scope.data.bundles, fileId);
-        };
-
-        $scope.goToBundleConfiguration = function () {
-          if($scope.data.generation.selectedGeneration.bundle || $scope.data.generation.selectedGeneration.bundle != "") {
-            var fileId = 'TelosysTools/templates/' + $scope.data.generation.selectedGeneration.bundle + '/templates.cfg';
-            $scope.goToFile(fileId);
-          }
-        };
-
-
         $scope.selectTemplate = function (template) {
           template.selected = !template.selected;
-          if (template.selected) {
-            $scope.data.generation.templates.push(template.name);
-          } else {
-            var index = $scope.data.generation.templates.indexOf(template.name);
-            if (index) {
-              $scope.data.generation.templates.splice(index, 1);
-            }
-          }
         };
 
         $scope.selectAllTemplate = function () {
@@ -116,7 +92,28 @@ angular.module('ide')
         };
 
         $scope.submitGeneration = function () {
+          $scope.data.generation.entities = [];
+          $scope.data.generation.templates = [];
+          for(var index = 0; index < $scope.data.generation.selectedModelEntitys.length; index++){
+            var entity = $scope.data.generation.selectedModelEntitys[index];
+            if(entity.selected){
+              $scope.data.generation.entities.push(entity.text);
+            }
+          }
+          for(var index = 0; index < $scope.data.generation.selectedBundleTemplates.length; index++){
+            var template = $scope.data.generation.selectedBundleTemplates[index];
+            if(template.selected){
+              $scope.data.generation.templates.push(template.name);
+            }
+          }
           $scope.data.events.generation();
+        };
+
+        $scope.goToBundleConfiguration = function () {
+          if ($scope.data.generation.bundle || $scope.data.generation.bundle != "") {
+            var fileId = 'TelosysTools/templates/' + $scope.data.generation.bundle + '/templates.cfg';
+            $scope.goToBundleTemplate(fileId);
+          }
         };
 
         function init() {

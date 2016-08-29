@@ -431,12 +431,12 @@ footer {
 */
 
 .console-error {
-    margin-top: 0;
+    margin-top: 10px;
     background-color: transparent;
-    max-height: 450px;
-    overflow-y: auto;
     border: none;
     padding: 0;
+    max-height: 160px;
+    overflow-y: auto;
 }
 
 .console-error-line {
@@ -459,4 +459,8 @@ footer {
 .console-error-line a {
     color: #a94442;
     text-decoration: underline;
+}
+
+.console-btn{
+    margin: 2px 5px;
 }

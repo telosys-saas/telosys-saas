@@ -1,41 +1,51 @@
 <div>
-    <div class="col s12">
+    <div>
         <ul class="nav nav-tabs">
             <li ng-class="{'active': displayTab == 'model'}"
                 ng-click="onClickTab('model')"><a href>Models<span id="consoleModelTitleStatus"></span></a></li>
             <li ng-class="{'active': displayTab == 'generation'}"
                 ng-click="onClickTab('generation')"><a href>Generations<span
                     id="consoleGenerationTitleStatus"></span></a></li>
+            <li class="console-btn" style="float:right;">
+                <button class="btn btn-info" ng-click="clearLog()">Clear</button>
+            </li>
         </ul>
+
     </div>
-    <div ng-if="displayTab=='model'" id="consoleModel" class="col s12"></div>
-    <div ng-if="displayTab == 'generation'" id="consoleGeneration" class="col-sm-   12">
-        <div class="col-sm-12" ng-if="data.generationResults">
-            <div class="alert alert-success" role="alert"
-                 ng-if="data.generationResults.numberOfGenerationErrors == 0 || data.generationResults.numberOfFilesGenerated > 0 || data.generationResults.numberOfResourcesCopied > 0">
-                <strong>Generation sucessfull</strong>
-                <p>
-                    File(s) generated(s): {{data.generationResults.numberOfFilesGenerated}}
-                    <br/>
-                    Resource File(s) copied(s): {{data.generationResults.numberOfResourcesCopied}}
-                </p>
-            </div>
-            <div class="alert alert-danger" role="alert" ng-if="data.generationResults.numberOfGenerationErrors > 0">
-                <strong>Generation errors</strong>
-                <div class="container-fluid console-error">
-                    <div class="row console-error-line"
-                         ng-repeat="error in errorTransformeds">
-                        <div class="col-sm-6">
-                            Template:
-                            <a href ng-click="goToBundleTemplate(error.templateName)">{{error.templateName}}
-                                (line {{error.numLine}})</a>
-                        </div>
-                        <div class="col-sm-6">
-                            Model Entity:
-                            <a href ng-click="goToModelEntity(error.entityName)">{{error.entityName}}</a>
-                        </div>
-                        <div class="col-sm-12">
-                            <pre>{{error.message}}</pre>
+    <div ng-if="displayTab=='model'" id="consoleModel" class="col-sm-12"></div>
+    <div class="console-error">
+        <div ng-if="displayTab == 'generation'" id="consoleGeneration" class="col-sm-12"
+             ng-repeat="generationsResult in data.generation.generationResults">
+            <h4>Generation n°{{$index+1}}</h4>
+            <div class="col-sm-12" ng-if="data.generation.generationResults">
+                <div class="alert alert-success" role="alert"
+                     ng-if="generationsResult.numberOfGenerationErrors == 0 || generationsResult.numberOfFilesGenerated > 0 || generationsResult.numberOfResourcesCopied > 0"
+                     style="margin-top: 10px">
+                    <strong>Generation successful</strong>
+                    <p>
+                        File(s) generated(s): {{generationsResult.numberOfFilesGenerated}}
+                        <br/>
+                        Resource File(s) copied(s): {{generationsResult.numberOfResourcesCopied}}
+                    </p>
+                </div>
+                <div class="alert alert-danger" role="alert"
+                     ng-if="generationsResult.numberOfGenerationErrors > 0">
+                    <strong>Generation errors</strong>
+                    <div class="container-fluid">
+                        <div class="row console-error-line"
+                             ng-repeat="error in generationsResult.errorTransformeds">
+                            <div class="col-sm-6">
+                                Template:
+                                <a href ng-click="goToBundleTemplate(error.templateFileId)">{{error.templateName}}
+                                    (line {{error.numLine}})</a>
+                            </div>
+                            <div class="col-sm-6">
+                                Model Entity:
+                                <a href ng-click="goToModelEntity(error.entityFileId)">{{error.entityName}}</a>
+                            </div>
+                            <div class="col-sm-12">
+                                <pre>{{error.message}}</pre>
+                            </div>
                         </div>
                     </div>
                 </div>

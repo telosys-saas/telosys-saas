@@ -48,6 +48,6 @@ public class resetPassword extends HttpServlet {
         }
         // Save the user's login in the session
         request.getSession().setAttribute("login",userExisting.getLogin());
-        response.sendRedirect("/resetPassword.html");
+        response.sendRedirect("/resetPassword.jsp");
     }
 }

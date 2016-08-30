@@ -20,20 +20,52 @@ angular.module('ide')
         $scope.$watchCollection('data.generation.generationResults', function () {
           console.log('console generationResults', $scope.data.generation.generationResults);
           $scope.data.generation.errorTransformeds = $scope.transformGenerationErrors($scope.data.generation, $scope.data.generation.generationResults.errors);
+          $scope.displayTab = 'generation';
         });
 
         $scope.$watchCollection('data.models.modelErrors', function () {
           console.log('console modelErrors', $scope.data.models.modelErrors);
-          $scope.data.models.countModelsErrors = 0;
-          $scope.data.models.errorTransformeds = {};
-          for(var index = 0; index < $scope.data.models.modelErrors.length; index++) {
-            var model = $scope.data.models.modelErrors[index];
-            $scope.data.models.countModelsErrors += model.parsingErrors.length;
-            if(model.parsingErrors.length > 0) {
-              $scope.data.models.hasError = true;
-             $scope.data.models.errorTransformeds[model.name] = $scope.transformModelsErrors(model.name,model.parsingErrors);
+          // Model entity errors
+          var modelErrors = $scope.data.models.modelErrors;
+
+          // Nb errors
+          var countModelsErrors = 0;
+          for(var index = 0; index < modelErrors.length; index++) {
+            var model = modelErrors[index];
+            if(model.parsingErrors) {
+              model.hasError = true;
+              countModelsErrors += model.parsingErrors.length;
+            }else{
+              model.hasError = false;
             }
           }
+          $scope.data.models.countModelsErrors = countModelsErrors;
+
+          // Errors to display in console
+          var errorTransformeds = [];
+          for(var i=0; i<modelErrors.length; i++) {
+            var model = modelErrors[i];
+            var modelName = model.name;
+            var entityErrors = model.parsingErrors;
+            if(!entityErrors) continue;
+
+            for(var j=0; j<entityErrors.length; j++){
+              var error = entityErrors[j];
+              var entityName = error.entityName;
+              var message = error.message;
+
+              var errorTransformed = {
+                entityFileId : 'TelosysTools/' + modelName + '_model/' + entityName + '.entity',
+                entityName : entityName,
+                modelName: modelName,
+                message: message
+              };
+
+              errorTransformeds.push(errorTransformed);
+            }
+          }
+          $scope.data.models.errorTransformeds = errorTransformeds;
+          $scope.displayTab = 'model';
         });
         
         $scope.transformGenerationErrors = function (generation, errors) {
@@ -86,20 +118,11 @@ angular.module('ide')
           }
         };
 
-        $scope.transformModelsErrors = function(modelName,modelErrors){
-          var errorTransformeds = [];
-          for(var index = 0; index < modelErrors.length; index++){
-            var error = modelErrors[index];
-            var errorTransformed = $scope.transformModelsError(modelName,error);
-            errorTransformeds.push(errorTransformed);
-          }
-          return errorTransformeds;
-        };
-
         $scope.transformModelsError = function(modelName,error){
           return {
             entityFileId : 'TelosysTools/' + modelName + '_model/' + error.entityName + '.entity',
             entityName : error.entityName,
+            modelName: modelName,
             message: error.message
           }
         };

@@ -18,13 +18,22 @@ angular.module('ide')
         $scope.changeSelectedModel = function () {
           console.log('changeSelectedModel', $scope.data.generation.selectedModel);
           $scope.data.generation.selectedModelEntitys = $scope.data.generation.selectedModel.children;
-          $scope.checkModelError();
+          //$scope.checkModelError();
           $scope.selectAllEntity();
           $scope.data.generation.model = $scope.data.generation.selectedModel.text;
         };
 
         $scope.checkModelError = function () {
-          console.log('checkModelError',$scope.data.generation.selectedModelEntitys)
+          $scope.generationIsOk = true;
+          console.log('checkModelError',$scope.data.generation.selectedModelEntitys);
+          for(var i = 0; i < $scope.data.model.modelErrors.length; i++){
+            var model = $scope.data.model.modelErrors[i];
+            if(model.name = $scope.data.generation.model){
+              if(model.hasError){
+                $scope.generationIsOk = false;
+              }
+            }
+          }
         };
 
         $scope.goToModelEntity = function (fileId) {

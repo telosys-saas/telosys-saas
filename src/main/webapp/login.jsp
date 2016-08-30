@@ -41,7 +41,7 @@
             </div>
             <% } %>
             <div class="form-group">
-                <input name="login" id="login" type="text" class="form-control input-lg" placeholder="Username" />
+                <input name="username" id="username" type="text" class="form-control input-lg" placeholder="Username" />
             </div>
             <div class="form-group">
                 <input name="password" id="password" type="password" class="form-control input-lg" placeholder="Password" />

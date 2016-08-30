@@ -1,5 +1,7 @@
 package org.telosys.saas.servlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.telosys.saas.util.Util;
 import org.telosys.tools.users.User;
 import org.telosys.tools.users.UsersManager;
@@ -16,9 +18,12 @@ import java.io.IOException;
  * Servlet to reset the password for a user
  */
 @WebServlet("/resetPassword/*")
-public class resetPassword extends HttpServlet {
+public class ResetPassword extends HttpServlet {
+
+    protected static final Logger LOG = LoggerFactory.getLogger(ResetPassword.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        LOG.info("doPost - BEGIN");
         PasswordEncoder passwordEncoder = new PasswordEncoder();
         if(!Util.equalsAndNotEmpty(request.getParameter("password1"), request.getParameter("password2"))) {
             throw new IllegalStateException("create user : password is not defined");
@@ -34,9 +39,11 @@ public class resetPassword extends HttpServlet {
         usersManager.deleteUser(userExisting.getLogin());
         usersManager.saveUser(userExisting);
         response.sendRedirect("/");
+        LOG.info("doPost - END");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        LOG.info("doGet - BEGIN");
         // Find the user who match with the token in the url link
         String urlRequest = request.getRequestURL().toString();
         String[] parseUrlRequest = urlRequest.split("/");
@@ -49,5 +56,6 @@ public class resetPassword extends HttpServlet {
         // Save the user's login in the session
         request.getSession().setAttribute("login",userExisting.getLogin());
         response.sendRedirect("/resetPassword.jsp");
+        LOG.info("doGet - END");
     }
 }

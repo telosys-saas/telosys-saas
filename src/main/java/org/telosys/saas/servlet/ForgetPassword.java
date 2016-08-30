@@ -1,5 +1,7 @@
 package org.telosys.saas.servlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.telosys.saas.util.GMail;
 import org.telosys.saas.util.Util;
 import org.telosys.tools.users.User;
@@ -18,9 +20,12 @@ import java.security.SecureRandom;
  * Servlet used when a user lost is password
  */
 @WebServlet("/forgetPassword")
-public class forgetPassword extends HttpServlet {
+public class ForgetPassword extends HttpServlet {
+
+    protected static final Logger LOG = LoggerFactory.getLogger(ForgetPassword.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        LOG.info("doPost - BEGIN");
         UsersManager usersManager = UsersManager.getInstance();
         Memory memory = Memory.getMemory();
         GMail gMail = new GMail();
@@ -43,9 +48,12 @@ public class forgetPassword extends HttpServlet {
                 " The Telosys Team";
         gMail.send(userExisting.getMail(), "Reset Telosys password", bodyMail);
         response.sendRedirect("/");
+        LOG.info("doPost - END");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        LOG.info("doGet - BEGIN");
         response.sendRedirect("/forgetPassword.jsp");
+        LOG.info("doGet - END");
     }
 }

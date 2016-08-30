@@ -37,7 +37,7 @@
         <filter-class>org.pac4j.j2e.filter.CallbackFilter</filter-class>
         <init-param>
             <param-name>defaultUrl</param-name>
-            <param-value>workspace/</param-value>
+            <param-value>login/</param-value>
         </init-param>
     </filter>
     <filter-mapping>

@@ -14,30 +14,32 @@ import org.telosys.tools.users.UsersManager;
  */
 public class InitServletContextListener implements ServletContextListener {
 
-	protected static final Logger logger = LoggerFactory.getLogger(InitServletContextListener.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(InitServletContextListener.class);
 
 	/**
 	 * Initialization
 	 */
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		logger.info("Initialization");
-		logger.info("Loading configuration...");
+		LOG.info("contextInitialized - BEGIN");
+		LOG.info("Initialization");
+		LOG.info("Loading configuration...");
 		Configuration configuration = ConfigurationHolder.getConfiguration();
 		if ( configuration != null ) {
-			logger.info("Configuration loaded");
-			logger.info(" . data root path  = " + configuration.getDataRootPath() );
-			logger.info(" . users file path = " + configuration.getUsersFilePath() );
+			LOG.info("Configuration loaded");
+			LOG.info(" . data root path  = " + configuration.getDataRootPath() );
+			LOG.info(" . users file path = " + configuration.getUsersFilePath() );
 			UsersManager.setUsersFileName(configuration.getUsersFilePath());
-			logger.info("UsersManager initialized.");
+			LOG.info("UsersManager initialized.");
 		}
 		else {
 			
 		}
 //		String dataRootPath = configuration.getDataRootPath();
 //		String usersFilePath = dataRootPath + "/users.csv";
-//		logger.info("Users file : "+usersFilePath);
+//		LOG.info("Users file : "+usersFilePath);
 //		UsersManager.setUsersFileName(usersFilePath);
+		LOG.info("contextInitialized - END");
 	}
 
 	@Override

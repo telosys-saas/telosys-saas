@@ -1,5 +1,7 @@
 package org.telosys.saas.servlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.telosys.saas.util.GMail;
 import org.telosys.saas.util.Util;
 import org.telosys.tools.users.User;
@@ -20,9 +22,12 @@ import java.security.SecureRandom;
  * Servlet to create a new user account
  */
 @WebServlet("/createAccount")
-public class createAccount extends HttpServlet {
+public class CreateAccount extends HttpServlet {
+
+    protected static final Logger LOG = LoggerFactory.getLogger(CreateAccount.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        LOG.info("doPost - BEGIN");
         UsersManager usersManager = UsersManager.getInstance();
         Memory memory = Memory.getMemory();
         GMail gMail = new GMail();
@@ -60,9 +65,12 @@ public class createAccount extends HttpServlet {
         gMail.send(user.getMail(), subjectMail, bodyMail);
         // Redirect to the home page
         response.sendRedirect("/");
+        LOG.info("doPost - END");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        LOG.info("doGet - BEGIN");
         response.sendRedirect("createAccount.jsp");
+        LOG.info("doGet - END");
     }
 }

@@ -1,5 +1,7 @@
 package org.telosys.saas.servlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.telosys.tools.users.User;
 import org.telosys.tools.users.UsersManager;
 import org.telosys.tools.users.crypto.PasswordEncoder;
@@ -16,13 +18,17 @@ import java.io.IOException;
  * Servlet to validate the email address of a new user
  */
 @WebServlet("/confirmEmail/*")
-public class confirmEmail extends HttpServlet {
+public class ConfirmEmail extends HttpServlet {
+
+    protected static final Logger LOG = LoggerFactory.getLogger(ConfirmEmail.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        LOG.info("doPost - BEGIN");
+        LOG.info("doPost - END");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        LOG.info("doGet - BEGIN");
         String urlRequest = request.getRequestURL().toString();
         String[] parseUrlRequest = urlRequest.split("/");
         String token = parseUrlRequest[4];
@@ -34,5 +40,6 @@ public class confirmEmail extends HttpServlet {
         }
         usersManager.saveUser(user, user.getEncryptedPassword());
         response.sendRedirect("/login");
+        LOG.info("doGet - END");
     }
 }

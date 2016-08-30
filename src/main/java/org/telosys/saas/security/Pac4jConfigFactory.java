@@ -19,7 +19,9 @@ public class Pac4jConfigFactory implements ConfigFactory {
 	static final Logger LOG = LoggerFactory.getLogger(Pac4jConfigFactory.class);
 	
     @Override
-    public Config build() {        
+    public Config build() {
+		LOG.info("build - BEGIN");
+
     	Configuration configuration = ConfigurationHolder.getConfiguration();
     	
 		LOG.info("PAC4J Configuration");
@@ -43,7 +45,8 @@ public class Pac4jConfigFactory implements ConfigFactory {
     	} else {
     		LOG.info("[DISABLED] Github authentification - Missing configuration properties");
     	}
-        
+
+		LOG.info("build - END");
         return new Config(new Clients(configuration.getAuthRedirectUrl(), clients.toArray(new Client[] {})));
     }
 }

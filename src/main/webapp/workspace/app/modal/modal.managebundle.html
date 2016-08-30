@@ -1,40 +1,43 @@
-<div class="modal-header">
-    <h3 class="modal-title">Add bundle</h3>
-</div>
-<div class="modal-body">
+<div class="modal-content modal-lg">
     <div class="modal-header">
-        <h4>Bundles in the public repository</h4>
+        <h3 class="modal-title">Add bundle</h3>
     </div>
     <div class="modal-body">
-        <div class="form-group">
-            <label for="githubUserName">GitHub repository name :</label>
-            <input id="githubUserName" class="form-control"
-                   ng-model="data.githubUserName" placeholder="{{data.githubUserName}}">
-            <button class="btn btn-info" style="margin-top: 10px" type="button" ng-click="getbundles()">Get available
-                bundles
-            </button>
+        <div class="modal-header">
+            <h4>Bundles in the public repository</h4>
         </div>
-        <div class="container">
-            <div class="col-md-4">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-class="{active: selectedBundle==bundle}" ng-repeat="bundle in data.allBundles"
-                        ng-click="selectBundle(bundle)">
-                        <td>{{bundle.name}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <button class="btn btn-info" type="button" ng-click="downloadBundle()">Download selected bundles
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="githubUserName">GitHub repository name :</label>
+                <input id="githubUserName" class="form-control"
+                       ng-model="data.githubUserName" placeholder="{{data.githubUserName}}">
+                <button class="btn btn-info" style="margin-top: 10px" type="button" ng-click="getbundles()">Get
+                    available
+                    bundles
                 </button>
+            </div>
+            <div class="container">
+                <div class="col-md-4">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-class="{active: selectedBundle==bundle}" ng-repeat="bundle in data.allBundles"
+                            ng-click="selectBundle(bundle)">
+                            <td>{{bundle.name}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-info" type="button" ng-click="downloadBundle()">Download selected bundles
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Close</button>
+    <div class="modal-footer">
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Close</button>
+    </div>
 </div>

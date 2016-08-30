@@ -464,3 +464,7 @@ footer {
 .console-btn{
     margin: 2px 5px;
 }
+
+.configuration-checkbox{
+    padding-left: 30px;
+}

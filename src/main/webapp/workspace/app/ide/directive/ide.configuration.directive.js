@@ -19,9 +19,6 @@ angular.module('ide')
         /** Data for Variables tab*/
         $scope.selectedVariable = null;
 
-        /** Data for Templates tab */
-        $scope.selectedBundle = null;
-
         $scope.onClickTab = function (tabToDisplay) {
           $scope.displayTab = tabToDisplay;
         };

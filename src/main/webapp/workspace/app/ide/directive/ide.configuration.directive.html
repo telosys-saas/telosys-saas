@@ -5,15 +5,15 @@
     <div class="col-sm-12">
         <ul class="nav nav-tabs">
             <li ng-class="{'active': displayTab=='folders'}"
-                ng-click="onClickTab('folders')">
+                ng-click="onClickConfigurationTab('folders')">
                 <a href>Folders</a>
             </li>
             <li ng-class="{'active': displayTab=='packages'}"
-                ng-click="onClickTab('packages')">
+                ng-click="onClickConfigurationTab('packages')">
                 <a href>Packages</a>
             </li>
             <li ng-class="{'active': displayTab=='variables'}"
-                ng-click="onClickTab('variables')">
+                ng-click="onClickConfigurationTab('variables')">
                 <a href>Variables</a>
             </li>
         </ul>
@@ -146,10 +146,10 @@
             <div class="col-sm-3 col-sm-offset-2">
                 <div class="form-group">
                     <div class="col-sm-6">
-                        <button class="btn btn-danger btn-block" type="button" ng-click="deleteVariable()">Delete</button>
+                        <button class="btn btn-danger btn-block" type="button" ng-click="deleteConfigurationVariable()">Delete</button>
                     </div>
                     <div class="col-sm-6">
-                        <button class="btn btn-info btn-block" type="button" ng-click="addVariable()">Add</button>
+                        <button class="btn btn-info btn-block" type="button" ng-click="addConfigurationVariable()">Add</button>
                     </div>
                 </div>
             </div>

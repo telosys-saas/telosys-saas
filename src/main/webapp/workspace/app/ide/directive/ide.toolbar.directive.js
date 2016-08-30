@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('ide')
-  .directive('idetoolbar', ['$uibModal',function ($uibModal) {
+  .directive('idetoolbar', ['$uibModal', function ($uibModal) {
     return {
-      
+
       scope: {
         data: '=',
         profile: '='
@@ -18,7 +18,7 @@ angular.module('ide')
         /**
          * Change view
          */
-        $scope.changeView = function(view) {
+        $scope.changeView = function (view) {
           $scope.data.events.changeView(view);
         };
 
@@ -48,7 +48,7 @@ angular.module('ide')
             $scope.data.projects.push(project);
           })
         };
-        
+
         $scope.changePassword = function () {
           var modalInstance = $uibModal.open({
             templateUrl: 'app/modal/modal.changepassword.html',
@@ -60,15 +60,23 @@ angular.module('ide')
         };
 
         $scope.openConfiguration = function () {
-          var modalInstance = $uibModal.open({
-            templateUrl: 'app/modal/modal.configuration.html',
-            controller: 'modalCtrl',
-            resolve: {
-              data: $scope.data.configuration
-            }
+          $scope.data.configuration.events.getConfiguration(function () {
+            $scope.configuration = true;
+            var modalInstance = $uibModal.open({
+              templateUrl: 'app/modal/modal.configuration.html',
+              controller: 'modalCtrl',
+              resolve: {
+                data: $scope.data.configuration
+              }
+            });
+            modalInstance.result.then(function () {
+              $scope.configuration = false;
+            }, function () {
+              $scope.configuration = false;
+            });
           });
         }
-        
+
       }
-  }
+    }
   }]);

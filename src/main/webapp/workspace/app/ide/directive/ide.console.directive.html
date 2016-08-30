@@ -4,8 +4,13 @@
             <li ng-class="{'active': displayTab == 'model'}"
                 ng-click="onClickTab('model')"><a href>Models<span id="consoleModelTitleStatus"></span></a></li>
             <li ng-class="{'active': displayTab == 'generation'}"
-                ng-click="onClickTab('generation')"><a href>Generations<span
-                    id="consoleGenerationTitleStatus"></span></a></li>
+                ng-click="onClickTab('generation')">
+                <a href>Generations
+                    <span class="badge" ng-if="data.generation.generationResults.numberOfGenerationErrors">
+                        {{data.generation.generationResults.numberOfGenerationErrors}}
+                    </span>
+                </a>
+            </li>
             <li class="console-btn" style="float:right;">
                 <button class="btn btn-info" ng-click="clearLog()">Clear</button>
             </li>
@@ -14,26 +19,26 @@
     </div>
     <div ng-if="displayTab=='model'" id="consoleModel" class="col-sm-12"></div>
     <div class="console-error">
-        <div ng-if="displayTab == 'generation'" id="consoleGeneration" class="col-sm-12"
-             ng-repeat="generationsResult in data.generation.generationResults">
-            <h4>Generation n°{{$index+1}}</h4>
+        <div ng-if="displayTab == 'generation'" id="consoleGeneration" class="col-sm-12">
             <div class="col-sm-12" ng-if="data.generation.generationResults">
                 <div class="alert alert-success" role="alert"
-                     ng-if="generationsResult.numberOfGenerationErrors == 0 || generationsResult.numberOfFilesGenerated > 0 || generationsResult.numberOfResourcesCopied > 0"
+                     ng-if="data.generation.generationResults.numberOfGenerationErrors == 0 ||
+                            data.generation.generationResults.numberOfFilesGenerated > 0 ||
+                            data.generation.generationResults.numberOfResourcesCopied > 0"
                      style="margin-top: 10px">
                     <strong>Generation successful</strong>
                     <p>
-                        File(s) generated(s): {{generationsResult.numberOfFilesGenerated}}
+                        File(s) generated(s): {{ data.generation.generationResults.numberOfFilesGenerated}}
                         <br/>
-                        Resource File(s) copied(s): {{generationsResult.numberOfResourcesCopied}}
+                        Resource File(s) copied(s): {{ data.generation.generationResults.numberOfResourcesCopied}}
                     </p>
                 </div>
                 <div class="alert alert-danger" role="alert"
-                     ng-if="generationsResult.numberOfGenerationErrors > 0">
+                     ng-if=" data.generation.generationResults.numberOfGenerationErrors > 0">
                     <strong>Generation errors</strong>
                     <div class="container-fluid">
                         <div class="row console-error-line"
-                             ng-repeat="error in generationsResult.errorTransformeds">
+                             ng-repeat="error in  data.generation.errorTransformeds">
                             <div class="col-sm-6">
                                 Template:
                                 <a href ng-click="goToBundleTemplate(error.templateFileId)">{{error.templateName}}

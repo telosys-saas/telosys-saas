@@ -9,8 +9,6 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     // data
     $scope.data = data;
 
-    $scope.displayTab = 'folders';
-
     $scope.errorMessage = "";
 
     /**
@@ -34,7 +32,12 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      * The new entity name
      */
     $scope.entityName = "";
-
+    
+    /** Data for Configuration */
+    $scope.selectedVariable = null;
+    $scope.rowToDeletes = {};
+    $scope.displayConfigurationTab = 'folders';
+    $scope.rowToAdd = {};
     /**
      * The new specific variable
      */
@@ -45,7 +48,6 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
 
     /** The selected bundle */
     $scope.selectedBundle = {};
-
     /** The new password */
     $scope.changePassword = {
       oldPassword: "",
@@ -201,13 +203,6 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     };
 
     /**
-     * Add a specific variable to the project
-     */
-    $scope.addVariable = function () {
-      $uibModalInstance.close($scope.specificVariable);
-    };
-
-    /**
      * Download the selected bundle from github
      */
     $scope.downloadBundle = function () {
@@ -231,25 +226,86 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     $scope.selectBundle = function (bundle) {
       $scope.selectedBundle = bundle;
     };
-    
+
     $scope.confirmPasswordChange = function () {
-      if($scope.changePassword.confirmPassword != $scope.changePassword.password){
+      if ($scope.changePassword.confirmPassword != $scope.changePassword.password) {
         $scope.passwordDontMatch = true;
-      }else{
+      } else {
         $scope.passwordDontMatch = false;
       }
     };
 
     $scope.submitNewPassword = function () {
-      if($scope.passwordDontMatch){
+      if ($scope.passwordDontMatch) {
         return
       }
       AuthService.changePassword($scope.profile.userId, $scope.changePassword);
       $uibModalInstance.close();
     };
 
-    $scope.onClickTab = function (tabToDisplay) {
-      $scope.displayTab = tabToDisplay;
+    $scope.onClickConfigurationTab = function (tabToDisplay) {
+      $scope.displayConfigurationTab = tabToDisplay;
+    };
+
+    /**
+     * Apply the new configuration
+     */
+    $scope.applyConfig = function () {
+      console.log('saveConfig', $scope.data);
+      $scope.data.events.saveConfig();
+    };
+
+    /**
+     * Apply the new configuration
+     */
+    $scope.saveConfig = function () {
+      $scope.applyConfig();
+      $uibModalInstance.close();
+    };
+
+    /**
+     * Add a specific variable
+     */
+    $scope.addConfigurationVariable = function () {
+      var modalInstance = $uibModal.open({
+        templateUrl: 'app/modal/modal.addvariable.html',
+        controller: 'modalCtrl',
+        resolve: {
+          data: {}
+        }
+      });
+      modalInstance.opened.then(function () {
+        var modalWindows = document.getElementsByClassName("modal");
+        modalWindows[0].style.zIndex = 1060;
+      });
+      modalInstance.result.then(function (specificVariable) {
+        $scope.data.variables.specificVariables[specificVariable.name] = specificVariable.value;
+      })
+    };
+
+    /**
+     * Add a specific variable to the project
+     */
+    $scope.addSpecificVariable = function () {
+      $uibModalInstance.close($scope.specificVariable);
+    };
+
+    /**
+     * Delete a specific variable
+     */
+    $scope.deleteConfigurationVariable = function () {
+      if ($scope.rowToDeletes) {
+        for (var key in $scope.rowToDeletes) {
+          if ($scope.rowToDeletes[key]) {
+            delete $scope.data.variables.specificVariables[key];
+          }
+        }
+      }
+      $scope.rowToDeletes = {};
+    };
+
+    $scope.selectConfigurationVariable = function (key) {
+      $scope.selectedVariable = key;
     };
 
     /**
@@ -260,11 +316,9 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     };
 
     function init() {
+      console.log('init modal', data);
       AuthService.status().then(function (result) {
         $scope.profile = result.data;
-        if (data.modelName) {
-          $scope.modelName = data.modelName.toLowerCase();
-        }
       })
     }
 

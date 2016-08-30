@@ -28,9 +28,8 @@
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false"><span class="fa fa-archive"></span> Templates bundles <span class="badge" ng-if="data.bundles.countModifiedFile != 0">{{data.bundles.countModifiedFile}}</span></a>
                 </li>
-                <li class="dropdown"  ng-click="openConfiguration()" ng-class="{active : data.isDisplay=='configuration'}">
-                    <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false"><span class="fa fa-cog"></span> Configuration</a>
+                <li class="dropdown"  ng-click="openConfiguration()" ng-class="{active : configuration==true}">
+                    <a href class="dropdown-toggle" data-toggle="dropdown" role="button"><span class="fa fa-cog"></span> Configuration</a>
                 </li>
                 <li class="dropdown"  ng-click="changeView('generation')" ng-class="{active : data.isDisplay=='generation'}">
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"

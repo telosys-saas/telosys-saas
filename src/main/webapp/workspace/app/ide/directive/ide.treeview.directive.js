@@ -134,7 +134,8 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           controller: 'modalCtrl',
           resolve: {
             data: {
-              project: $scope.data.project
+              project: $scope.data.project,
+              refreshAll: $scope.refreshAll
             }
           }
         });
@@ -176,8 +177,8 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           if (node.type == 'models') {
             var folderId = 'TelosysTools/' + node.text + '_model';
             var fileModelId = 'TelosysTools/' + node.text + '.model';
-            //$scope.events.onDeleteFolder($scope.data, folderId);
-            $scope.events.onDeleteFile($scope.data, fileModelId)
+            $scope.events.onDeleteFolder($scope.data, folderId);
+            $scope.events.onDeleteFile($scope.data, fileModelId);
           }
           if (node.type == 'bundle') {
             $scope.events.removeBundle(node.text);
@@ -190,6 +191,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
             var fileId = node.id;
             $scope.events.onDeleteFile($scope.data, fileId);
           }
+          $scope.refreshAll();
         })
       };
 

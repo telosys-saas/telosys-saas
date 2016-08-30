@@ -116,6 +116,15 @@ angular.module('ide')
           }
         };
 
+        $scope.refreshModel = function () {
+          if ($scope.data.models.tree) {
+            if ($scope.data.models.tree[0]) {
+              $scope.data.generation.selectedModel = $scope.data.models.tree[0];
+              $scope.changeSelectedModel();
+            }
+          }
+        };
+
         function init() {
           if ($scope.data.generation.selectedModelEntitys == null) {
             if ($scope.data.models.tree) {

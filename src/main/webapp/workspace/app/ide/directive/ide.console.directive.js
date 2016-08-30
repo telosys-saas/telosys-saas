@@ -17,10 +17,9 @@ angular.module('ide')
 
         $scope.displayTab = 'generation';
 
-        $scope.$watchCollection('data.generation.generationResults', function () {
+        $scope.$watch('data.generation.generationResults', function () {
           console.log('console generationResults', $scope.data.generation.generationResults);
-          var lastIndex = $scope.data.generation.generationResults.length - 1;
-          $scope.data.generation.generationResults[lastIndex].errorTransformeds = $scope.transformGenerationErrors($scope.data.generation, $scope.data.generation.generationResults[lastIndex].errors);
+          $scope.data.generation.errorTransformeds = $scope.transformGenerationErrors($scope.data.generation, $scope.data.generation.generationResults.errors);
         });
 
         $scope.transformGenerationErrors = function (generation, errors) {
@@ -89,6 +88,7 @@ angular.module('ide')
         
         $scope.clearLog = function () {
           $scope.data.generation.generationResults = [];
+          $scope.data.generation.errorTransformeds = {};
         }
 
       }

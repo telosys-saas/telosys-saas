@@ -13,7 +13,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     /** Indicates if the IDE is initialized and could be displayed */
     $scope.initialized = false;
 
-    $scope.defaultView = 'generation';
+    $scope.defaultView = 'models';
 
     function initData() {
       /** IDE data */
@@ -127,6 +127,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           bundle: "",
           templates: [],
           generationResults: [],
+          errorTransformeds: {},
           selectedModelEntitys: null,
           selectedBundleTemplates: null,
           selectedModel: {},
@@ -209,6 +210,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     function getEventsForConfiguration() {
       var events = getCommonEvents();
       events.saveConfig = $scope.saveConfig;
+      events.getConfiguration = $scope.getConfiguration;
       return events;
     }
 
@@ -563,6 +565,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     $scope.generation = function () {
       console.log('generation', $scope.data.generation);
       var generation = {
+
         model: $scope.data.generation.model,
         entities: $scope.data.generation.entities,
         bundle: $scope.data.generation.bundle,
@@ -572,7 +575,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       ProjectsService.launchGeneration($scope.profile.userId, $scope.data.project.id, generation)
         .then(function (result) {
           console.log('Generation result', result);
-          $scope.data.generation.generationResults.push(result.data);
+          $scope.data.generation.generationResults = result.data;
           $scope.refreshAllFiles();
         });
     };
@@ -646,15 +649,22 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
 
     /**
      * Init the configuration of the project
-     * @param config configuration project from the server
+     * @param callback the callback function
      */
-    function initConfiguration(config) {
-      // Init the environment variables
-      $scope.data.configuration.variables = config.variables;
-      // Init the specific variables
-      $scope.data.configuration.variables.specificVariables = JSON.parse(config.variables.specificVariables);
-      $scope.data.configuration.variables.specificVariablesKeys = Object.keys($scope.data.configuration.variables.specificVariables);
-    }
+     $scope.getConfiguration = function(callback) {
+      ProjectsService.getProjectConfiguration($scope.profile.userId, $scope.data.project.id)
+        .then(function (result) {
+          var config = result.data;
+          // Init the environment variables
+          $scope.data.configuration.variables = config.variables;
+          // Init the specific variables
+          $scope.data.configuration.variables.specificVariables = JSON.parse(config.variables.specificVariables);
+          $scope.data.configuration.variables.specificVariablesKeys = Object.keys($scope.data.configuration.variables.specificVariables);
+          if(callback){
+            callback();
+          }
+        })
+    };
 
     function convertBundleArrayToBundleMap(bundelArray) {
       for (var index = 0; index < bundelArray.length; index++) {
@@ -672,6 +682,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           initConfiguration(result.data);
         })
     };
+
 
     /**
      * Initialize the IDE
@@ -725,11 +736,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
             // Init models
             initModels(result.data);
             // Get the configuration of the project
-            return ProjectsService.getProjectConfiguration($scope.profile.userId, $scope.data.project.id);
-          })
-          .then(function (result) {
-            // Init the configuration of the project
-            initConfiguration(result.data);
             // Indicates that the IDE is initialized and can be displayed
             $scope.initialized = true;
           })

@@ -50,6 +50,10 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           openFile: null,
           /** Select element in the treeview */
           selectedElement: null,
+          /** Model error */
+          modelErrors: [],
+          /** Errors to display in the console*/
+          errorTransformeds: {},
           /** IDE events redirected to controller functions */
           events: getEventsForModels()
         },
@@ -319,13 +323,13 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       $log.info("save all");
       data.countModifiedFile = 0;
       for (var file in data.workingFiles) {
-        FilesService.saveFileForProject($scope.profile.userId, data.project.id, data.workingFiles[file]);
+        $scope.saveFile(data, data.workingFiles[file]);
         data.workingFiles[file].isModified = false;
       }
       if (data.selectedFile) {
         if (!data.workingFiles[data.selectedFile.id]) {
           data.selectedFile.isModified = false;
-          FilesService.saveFileForProject($scope.profile.userId, data.project.id, data.selectedFile);
+          $scope.saveFile(data, data.selectedFile);
         }
       }
     };
@@ -335,20 +339,22 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      * @param file File to save
      */
     $scope.saveFile = function (data, file) {
-      if (file) {
-        if (file.isModified) {
-          data.countModifiedFile--;
-        }
-        $log.info('save file', file);
-        FilesService.saveFileForProject($scope.profile.userId, data.project.id, file);
-      } else {
-        $log.info('save selectedFile');
-        if (data.selectedFile.isModified) {
-          data.countModifiedFile--;
-        }
-        data.selectedFile.isModified = false;
-        FilesService.saveFileForProject($scope.profile.userId, $scope.data.project.id, data.selectedFile);
+      if (!file) {
+        file = data.selectedFile;
       }
+      if (file.isModified) {
+        if(data.countModifiedFile > 0) {
+          data.countModifiedFile--;
+        }
+        file.isModified = false;
+      }
+      $log.info('save file', file);
+      FilesService.saveFileForProject($scope.profile.userId, data.project.id, file)
+        .then(function () {
+          if(file.type == 'entity') {
+            $scope.getModels();
+          }
+        });
     };
 
     /**
@@ -644,14 +650,23 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           $scope.data.models.tree.push(FilesService.convertFolderToJson(modelFolder, null, 'models'));
         }
         $scope.data.models.allFiles = FilesService.getAllFilesFromTree(allModelsFolder);
+        $scope.getModels();
       }
     }
+
+    $scope.getModels = function () {
+      ModelService.getModels($scope.profile.userId, $scope.data.project.id)
+        .then(function (result) {
+          console.log('getModels', result);
+          $scope.data.models.modelErrors = result.data;
+        });
+    };
 
     /**
      * Init the configuration of the project
      * @param callback the callback function
      */
-     $scope.getConfiguration = function(callback) {
+    $scope.getConfiguration = function (callback) {
       ProjectsService.getProjectConfiguration($scope.profile.userId, $scope.data.project.id)
         .then(function (result) {
           var config = result.data;
@@ -660,7 +675,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           // Init the specific variables
           $scope.data.configuration.variables.specificVariables = JSON.parse(config.variables.specificVariables);
           $scope.data.configuration.variables.specificVariablesKeys = Object.keys($scope.data.configuration.variables.specificVariables);
-          if(callback){
+          if (callback) {
             callback();
           }
         })
@@ -747,4 +762,5 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
 
     init();
   }
-]);
+])
+;

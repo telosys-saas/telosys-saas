@@ -18,8 +18,13 @@ angular.module('ide')
         $scope.changeSelectedModel = function () {
           console.log('changeSelectedModel', $scope.data.generation.selectedModel);
           $scope.data.generation.selectedModelEntitys = $scope.data.generation.selectedModel.children;
+          $scope.checkModelError();
           $scope.selectAllEntity();
           $scope.data.generation.model = $scope.data.generation.selectedModel.text;
+        };
+
+        $scope.checkModelError = function () {
+          console.log('checkModelError',$scope.data.generation.selectedModelEntitys)
         };
 
         $scope.goToModelEntity = function (fileId) {

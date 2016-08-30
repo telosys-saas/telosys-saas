@@ -2,11 +2,17 @@
     <div>
         <ul class="nav nav-tabs">
             <li ng-class="{'active': displayTab == 'model'}"
-                ng-click="onClickTab('model')"><a href>Models<span id="consoleModelTitleStatus"></span></a></li>
+                ng-click="onClickTab('model')">
+                <a href>Models
+                    <span class="badge" ng-if="data.models.countModelsErrors > 0">
+                        {{data.models.countModelsErrors}}
+                    </span>
+                </a>
+            </li>
             <li ng-class="{'active': displayTab == 'generation'}"
                 ng-click="onClickTab('generation')">
                 <a href>Generations
-                    <span class="badge" ng-if="data.generation.generationResults.numberOfGenerationErrors">
+                    <span class="badge" ng-if="data.generation.generationResults.numberOfGenerationErrors > 0">
                         {{data.generation.generationResults.numberOfGenerationErrors}}
                     </span>
                 </a>
@@ -17,40 +23,60 @@
         </ul>
 
     </div>
-    <div ng-if="displayTab=='model'" id="consoleModel" class="col-sm-12"></div>
-    <div class="console-error">
-        <div ng-if="displayTab == 'generation'" id="consoleGeneration" class="col-sm-12">
-            <div class="col-sm-12" ng-if="data.generation.generationResults">
-                <div class="alert alert-success" role="alert"
-                     ng-if="data.generation.generationResults.numberOfGenerationErrors == 0 ||
+
+    <div ng-if="displayTab=='model'" id="consoleModel" class="console-error">
+        <div class="col-sm-12">
+            <div class="alert alert-danger" role="alert" ng-if="data.models.countModelsErrors > 0">
+                <strong>Model errors</strong>
+                <div class="container-fluid" ng-repeat="(key, errors) in  data.models.errorTransformeds">
+                    <div class="row console-error-line" ng-repeat="error in errors">
+                        <div class="col-sm-2">
+                            Model: {{key}}
+                        </div>
+                        <div class="col-sm-10">
+                            Entity:
+                            <a href ng-click="goToModelEntity(error.entityFileId)">{{error.entityName}}</a>
+                        </div>
+                        <div class="col-sm-12">
+                            <pre>{{error.message}}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="displayTab == 'generation'" id="consoleGeneration" class="console-error">
+        <div class="col-sm-12" ng-if="data.generation.generationResults">
+            <div class="alert alert-success" role="alert"
+                 ng-if="data.generation.generationResults.numberOfGenerationErrors == 0 ||
                             data.generation.generationResults.numberOfFilesGenerated > 0 ||
                             data.generation.generationResults.numberOfResourcesCopied > 0"
-                     style="margin-top: 10px">
-                    <strong>Generation successful</strong>
-                    <p>
-                        File(s) generated(s): {{ data.generation.generationResults.numberOfFilesGenerated}}
-                        <br/>
-                        Resource File(s) copied(s): {{ data.generation.generationResults.numberOfResourcesCopied}}
-                    </p>
-                </div>
-                <div class="alert alert-danger" role="alert"
-                     ng-if=" data.generation.generationResults.numberOfGenerationErrors > 0">
-                    <strong>Generation errors</strong>
-                    <div class="container-fluid">
-                        <div class="row console-error-line"
-                             ng-repeat="error in  data.generation.errorTransformeds">
-                            <div class="col-sm-6">
-                                Template:
-                                <a href ng-click="goToBundleTemplate(error.templateFileId)">{{error.templateName}}
-                                    (line {{error.numLine}})</a>
-                            </div>
-                            <div class="col-sm-6">
-                                Model Entity:
-                                <a href ng-click="goToModelEntity(error.entityFileId)">{{error.entityName}}</a>
-                            </div>
-                            <div class="col-sm-12">
-                                <pre>{{error.message}}</pre>
-                            </div>
+                 style="margin-top: 10px">
+                <strong>Generation successful</strong>
+                <p>
+                    File(s) generated(s): {{data.generation.generationResults.numberOfFilesGenerated}}
+                    <br/>
+                    Resource File(s) copied(s): {{data.generation.generationResults.numberOfResourcesCopied}}
+                </p>
+            </div>
+            <div class="alert alert-danger" role="alert"
+                 ng-if=" data.generation.generationResults.numberOfGenerationErrors > 0">
+                <strong>Generation errors</strong>
+                <div class="container-fluid">
+                    <div class="row console-error-line"
+                         ng-repeat="error in  data.generation.errorTransformeds">
+                        <div class="col-sm-6">
+                            Template:
+                            <a href ng-click="goToBundleTemplate(error.templateFileId)">{{error.templateName}}
+                                (line {{error.numLine}})</a>
+                        </div>
+                        <div class="col-sm-6">
+                            Model Entity:
+                            <a href ng-click="goToModelEntity(error.entityFileId)">{{error.entityName}}</a>
+                        </div>
+                        <div class="col-sm-12">
+                            <pre>{{error.message}}</pre>
                         </div>
                     </div>
                 </div>

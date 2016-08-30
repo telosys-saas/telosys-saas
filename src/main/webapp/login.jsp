@@ -13,41 +13,44 @@
 </head>
 
 <body>
-<h2>Sign in to Telosys SaaS</h2>
-<div class="col-sm-2">
-    <b><%
-        if (request.getSession().getAttribute("error") != null) {
-            out.println(request.getSession().getAttribute("error"));
-        }
-    %></b>
-    <form action="/callback" method="POST">
-        <input type="hidden" name="client_name" value="FormClient"/>
+    <div class="container">
         <div class="row">
-            <label class="label-control">
-                Login:
-            </label>
-            <div>
-                <input type="text" name="username" value="Fabien" class="form-control"/>
+            <div class="col-md-4 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Sign in to Telosys SaaS</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form name="loginform" action="" method="POST" accept-charset="UTF-8" role="form">
+                            <fieldset>
+                                <%
+                                    String errorDescription = (String) request.getAttribute("simpleShiroApplicationLoginFailure");
+                                    if (errorDescription!=null) {
+                                %>
+                                <div class="alert alert-danger">Login attempt was unsuccessful: <%=errorDescription%></div>
+                                <%
+                                    }
+                                %>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Username or Email" name="username" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="rememberMe" type="checkbox" value="true"> Remember Me
+                                    </label>
+                                </div>
+                                <input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row" style="margin-top: 10px">
-            <label class="label-control">
-                Password:
-            </label>
-            <div>
-                <input type="password" name="password" value="fabien" class="form-control"/>
-            </div>
-        </div>
-        <div class="row text-right" style="margin-top: 20px">
-            <button class="btn btn-primary">Sign in</button>
-        </div>
-        <button class="btn btn-large black light" type="button" onclick="document.location = '/profile/github'">
-            <span class="fa fa-github fa-2x"></span>
-            &nbsp; &nbsp; &nbsp; Sign in with GitHub
-        </button>
-    </form>
-    <a href="/forgetPassword"> Forget password</a>
-</div>
+    </div>
+
 </body>
 
 </html>

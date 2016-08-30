@@ -12,11 +12,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import org.pac4j.core.context.J2EContext;
-import org.pac4j.core.profile.ProfileManager;
-import org.pac4j.core.profile.UserProfile;
 import org.telosys.saas.domain.UserChangePassword;
 import org.telosys.saas.domain.UserCreation;
+import org.telosys.saas.security.Security;
 import org.telosys.saas.util.Util;
 import org.telosys.tools.users.User;
 import org.telosys.tools.users.UserType;
@@ -31,13 +29,6 @@ public class UsersResource {
     private HttpServletRequest request;
     @Context
     private HttpServletResponse response;
-
-    private UserProfile getUser() {
-        J2EContext context = new J2EContext(request, response);
-        ProfileManager<UserProfile> manager = new ProfileManager<>(context);
-        UserProfile profile = manager.get(true);
-        return profile;
-    }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -70,8 +61,8 @@ public class UsersResource {
         if (!Util.equalsAndNotEmpty(user.getLogin(), login)) {
             throw new IllegalStateException("save user : logins are not the same");
         }
-        UserProfile authenticatedUser = getUser();
-        if (!Util.equalsAndNotEmpty(authenticatedUser.getId(), login)) {
+        User authenticatedUser = Security.getUser();
+        if (!Util.equalsAndNotEmpty(authenticatedUser.getLogin(), login)) {
             throw new IllegalStateException("save user : not authorized");
         }
         usersManager.saveUser(user);
@@ -92,8 +83,8 @@ public class UsersResource {
         if (Util.isEmpty(userChangePassword.getPassword())) {
             throw new IllegalStateException("change password : password is not defined");
         }
-        UserProfile authenticatedUser = getUser();
-        if (!Util.equalsAndNotEmpty(authenticatedUser.getId(), login)) {
+        User authenticatedUser = Security.getUser();
+        if (!Util.equalsAndNotEmpty(authenticatedUser.getLogin(), login)) {
             throw new IllegalStateException("change password : not authorized");
         }
         User user = usersManager.getUserByLogin(login);
@@ -108,8 +99,8 @@ public class UsersResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public User getUser(@PathParam("login") String login) {
-        UserProfile authenticatedUser = getUser();
-        if (!Util.equalsAndNotEmpty(authenticatedUser.getId(), login)) {
+        User authenticatedUser = Security.getUser();
+        if (!Util.equalsAndNotEmpty(authenticatedUser.getLogin(), login)) {
             throw new IllegalStateException("save user : not authorized");
         }
         return usersManager.getUserByLogin(login);

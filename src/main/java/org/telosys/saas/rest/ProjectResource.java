@@ -20,15 +20,14 @@ import javax.ws.rs.core.Response;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import org.pac4j.core.context.J2EContext;
-import org.pac4j.core.profile.ProfileManager;
-import org.pac4j.core.profile.UserProfile;
 import org.telosys.saas.dao.StorageDao;
 import org.telosys.saas.dao.StorageDaoProvider;
 import org.telosys.saas.domain.*;
+import org.telosys.saas.security.Security;
 import org.telosys.saas.services.BundleService;
 import org.telosys.saas.services.ProjectService;
 import org.telosys.saas.services.TelosysFolderService;
+import org.telosys.tools.users.User;
 
 @Path("/users/{userId}/projects/{projectId}")
 public class ProjectResource {
@@ -45,19 +44,10 @@ public class ProjectResource {
     @Context
     private HttpServletResponse response;
 
-    private UserProfile getUser() {
-        J2EContext context = new J2EContext(request, response);
-        ProfileManager<UserProfile> manager = new ProfileManager<>(context);
-        UserProfile profile = manager.get(true);
-        return profile;
-
-        //return new GetUserProfile().getUser(request, response);
-    }
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Project getProject(@PathParam("userId") String userId, @PathParam("projectId") String projectId) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         return project;
     }
@@ -66,7 +56,7 @@ public class ProjectResource {
     @Path("/zip")
     @Produces("application/zip")
     public Response downloadZipProject(@PathParam("userId") String userId, @PathParam("projectId") String projectId) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         java.io.File file = storage.getFileZipToDownload(user, project);
         return Response.ok(file).header("Content-Disposition", "attachment; filename=\"" + projectId + ".zip\"").build();
@@ -76,7 +66,7 @@ public class ProjectResource {
     @Path("/configuration")
     @Produces(MediaType.APPLICATION_JSON)
     public ProjectConfiguration getProjectConfiguration(@PathParam("userId") String userId, @PathParam("projectId") String projectId) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         ProjectConfiguration projectConfiguration = projectService.getProjectConfiguration(user, project);
         return projectConfiguration;
@@ -87,7 +77,7 @@ public class ProjectResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public ProjectConfiguration saveProjectConfiguration(@PathParam("userId") String userId, @PathParam("projectId") String projectId, ProjectConfiguration projectConfiguration) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         projectService.saveProjectConfiguration(user, project, projectConfiguration);
         return projectConfiguration;
@@ -97,7 +87,7 @@ public class ProjectResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Project saveProject(@PathParam("userId") String userId, @PathParam("projectId") String projectId, Project project) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project projectExisting = storage.getProjectForUser(user, project.getId());
         if (projectExisting == null) {
             // Create
@@ -113,7 +103,7 @@ public class ProjectResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Bundle> getBundlesOfProject(@PathParam("userId") String userId, @PathParam("projectId") String projectId) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         return bundleService.getBundlesOfProject(user, project);
     }
@@ -122,7 +112,7 @@ public class ProjectResource {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public void addBundleToTheProject(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @PathParam("githubUserName") String githubUserName, @PathParam("bundleName") String bundleName) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         projectService.addBundleToTheProject(user, project, githubUserName, bundleName);
     }
@@ -131,7 +121,7 @@ public class ProjectResource {
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     public void removeBundleFromTheProject(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @PathParam("bundleName") String bundleName) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         projectService.removeBundleFromTheProject(user, project, bundleName);
     }
@@ -140,7 +130,7 @@ public class ProjectResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getTemplatesForGeneration(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @PathParam("bundleName") String bundleName){
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         List<Template> templateList = projectService.getTemplatesForGeneration(user, project, bundleName);
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
@@ -163,7 +153,7 @@ public class ProjectResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Folder getWorkspace(@PathParam("userId") String userId, @PathParam("projectId") String projectId) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         List<String> filters = new ArrayList<>();
         filters.add("TelosysTools");
@@ -181,7 +171,7 @@ public class ProjectResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Folder getTelosysFolder(@PathParam("userId") String userId, @PathParam("projectId") String projectId) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         return telosysFolderService.getTelosysFolder(user, project);
     }
@@ -191,7 +181,7 @@ public class ProjectResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Folder saveFolder(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @QueryParam("folderId") String folderId, Folder folderToSave) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         List<String> filters = new ArrayList<>();
         Folder folder = storage.getFolderForProjectAndUser(user, project, folderId, filters);
@@ -210,7 +200,7 @@ public class ProjectResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Folder createFolder(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @QueryParam("folderId") String folderId, Folder folderToSave) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         List<String> filters = new ArrayList<>();
         Folder folder = storage.getFolderForProjectAndUser(user, project, folderId, filters);
@@ -227,7 +217,7 @@ public class ProjectResource {
     @Path("/folders")
     @DELETE
     public void deleteFolder(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @QueryParam("folderId") String folderId) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         List<String> filters = new ArrayList<>();
         Folder folder = storage.getFolderForProjectAndUser(user, project, folderId, filters);
@@ -241,7 +231,7 @@ public class ProjectResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public File getFile(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @QueryParam("fileId") String fileId) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         return storage.getFileForProjectAndUser(user, project, fileId);
     }
@@ -251,7 +241,7 @@ public class ProjectResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public File saveFile(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @QueryParam("fileId") String fileId, File fileToSave) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         File file = storage.getFileForProjectAndUser(user, project, fileId);
         if (!file.isExisting()) {
@@ -269,7 +259,7 @@ public class ProjectResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public File createFile(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @QueryParam("fileId") String fileId, File fileToSave) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         File file = storage.getFileForProjectAndUser(user, project, fileId);
         if (!file.isExisting()) {
@@ -284,7 +274,7 @@ public class ProjectResource {
     @Path("/files")
     @DELETE
     public void deleteFile(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @QueryParam("fileId") String fileId) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         File file = storage.getFileForProjectAndUser(user, project, fileId);
         if (file == null) {
@@ -298,7 +288,7 @@ public class ProjectResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public ModelNames getModels(@PathParam("userId") String userId, @PathParam("projectId") String projectId) {
-    	UserProfile user = getUser(); 
+    	User user = Security.getUser(); 
     	Project project = storage.getProjectForUser(user, projectId);
     	List<String> names = projectService.getModelNames(user, project);
     	ModelNames modelNames = new ModelNames();
@@ -310,7 +300,7 @@ public class ProjectResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Model> getModels(@PathParam("userId") String userId, @PathParam("projectId") String projectId) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         return projectService.getModels(user, project);
     }
@@ -319,7 +309,7 @@ public class ProjectResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Model getModel(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @PathParam("modelName") String modelName) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         return projectService.getModel(user, project, modelName);
     }
@@ -328,7 +318,7 @@ public class ProjectResource {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Model saveModel(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @PathParam("modelName") String modelName) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         return projectService.createModel(user, project, modelName);
     }
@@ -337,7 +327,7 @@ public class ProjectResource {
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     public void deleteModel(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @PathParam("modelName") String modelName) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         projectService.deleteModel(user, project, modelName);
     }
@@ -346,7 +336,7 @@ public class ProjectResource {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public void createEntity(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @PathParam("modelName") String modelName, @PathParam("entityName") String entityName) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         projectService.createEntityForModel(user, project, modelName, entityName);
     }
@@ -356,7 +346,7 @@ public class ProjectResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public GenerationResult launchGeneration(@PathParam("userId") String userId, @PathParam("projectId") String projectId, Generation generation) {
-        UserProfile user = getUser();
+        User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         return projectService.launchGeneration(user, project, generation);
     }

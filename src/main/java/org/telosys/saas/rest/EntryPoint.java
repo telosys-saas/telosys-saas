@@ -1,5 +1,8 @@
 package org.telosys.saas.rest;
  
+import org.telosys.saas.security.Security;
+import org.telosys.tools.users.User;
+
 import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,10 +14,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import org.pac4j.core.context.J2EContext;
-import org.pac4j.core.profile.ProfileManager;
-import org.pac4j.core.profile.UserProfile;
- 
 @Path("/")
 public class EntryPoint {
 	
@@ -22,11 +21,9 @@ public class EntryPoint {
     @Path("status")
     @Produces(MediaType.TEXT_PLAIN)
     public String test(@Context HttpServletRequest request, @Context HttpServletResponse response) {
-    	J2EContext context = new J2EContext(request, response);
-        ProfileManager<UserProfile> manager = new ProfileManager<>(context);
         HttpSession session = request.getSession();
-        UserProfile profile = manager.get(true);
-        
+        User user = Security.getUser();
+
         StringBuffer sessionStr = new StringBuffer();
         Enumeration<String> attributeNames = session.getAttributeNames();
         while(attributeNames.hasMoreElements()) {
@@ -38,7 +35,7 @@ public class EntryPoint {
         	sessionStr.append(key+" : "+value);
         }
         
-        return "{ \"status\" : \"up\", \"session\" : [" + sessionStr.toString() + "], \"userProfile\" : [" + profile + "] }";
+        return "{ \"status\" : \"up\", \"session\" : [" + sessionStr.toString() + "], \"user\" : [" + user + "] }";
     }
 
 }

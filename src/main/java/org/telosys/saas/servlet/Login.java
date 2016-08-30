@@ -1,8 +1,6 @@
 package org.telosys.saas.servlet;
 
-import org.pac4j.core.context.J2EContext;
-import org.pac4j.core.profile.ProfileManager;
-import org.pac4j.core.profile.UserProfile;
+import org.telosys.saas.security.Security;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,17 +13,14 @@ import java.io.IOException;
  * Servlet to manage the log process
  */
 @WebServlet("/login/*")
-public class login extends HttpServlet {
+public class Login extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        J2EContext context = new J2EContext(request, response);
-        ProfileManager<UserProfile> manager = new ProfileManager<>(context);
-        UserProfile profile = manager.get(true);
         // Case : no user are authenticated
-        if (profile == null) {
+        if (!Security.isAuthenticated()) {
             // case : the user tries to login for the first time
             if (request.getSession().getAttribute("numberOfTry") == null) {
                 request.getSession().setAttribute("numberOfTry", 1);
@@ -44,7 +39,7 @@ public class login extends HttpServlet {
             }
         } else {
             // A user is already authenticated
-            response.sendRedirect("/workspace");
+            response.sendRedirect("/workspace/index.html");
         }
     }
 }

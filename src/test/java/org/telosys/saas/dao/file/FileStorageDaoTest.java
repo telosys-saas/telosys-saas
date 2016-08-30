@@ -3,7 +3,6 @@ package org.telosys.saas.dao.file;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.pac4j.core.profile.UserProfile;
 import org.telosys.saas.dao.StorageDao;
 import org.telosys.saas.dao.StorageDaoProvider;
 import org.telosys.saas.domain.File;
@@ -11,6 +10,8 @@ import org.telosys.saas.domain.Folder;
 import org.telosys.saas.domain.Project;
 
 import junit.tests.env.TestsEnv;
+import org.telosys.tools.users.User;
+import org.telosys.tools.users.UserType;
 
 public class FileStorageDaoTest {
 	
@@ -26,8 +27,7 @@ public class FileStorageDaoTest {
 		StorageDao fs = StorageDaoProvider.getStorageDao();
 		
 		// User
-		UserProfile user = new UserProfile();
-		user.setId("user1");
+		User user = new User(UserType.TELOSYS_USER, "user1");
 		// Project
 		Project project = new Project();
 		project.setId("project_test");

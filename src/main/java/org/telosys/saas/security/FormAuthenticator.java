@@ -1,22 +1,17 @@
 package org.telosys.saas.security;
 
-import org.pac4j.core.exception.CredentialsException;
-import org.pac4j.core.profile.CommonProfile;
-import org.pac4j.core.util.CommonHelper;
-import org.pac4j.http.credentials.UsernamePasswordCredentials;
-import org.pac4j.http.credentials.authenticator.UsernamePasswordAuthenticator;
-import org.pac4j.http.profile.HttpProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telosys.tools.users.User;
 import org.telosys.tools.users.UsersManager;
 
-public class FormAuthenticator implements UsernamePasswordAuthenticator {
+public class FormAuthenticator {
 
     protected static final Logger logger = LoggerFactory.getLogger(FormAuthenticator.class);
 
     private UsersManager usersManager = UsersManager.getInstance();
 
+    /*
     @Override
     public void validate(final UsernamePasswordCredentials credentials) {
         if (credentials == null) {
@@ -56,4 +51,5 @@ public class FormAuthenticator implements UsernamePasswordAuthenticator {
     protected void throwsException(final String message) {
         throw new CredentialsException(message);
     }
+    */
 }

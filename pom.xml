@@ -6,62 +6,54 @@
 	<groupId>org.telosys.saas</groupId>
 	<artifactId>telosys-saas</artifactId>
 	<version>0.1</version>
-
 	<packaging>war</packaging>
 	
-<repositories>
-	<repository>
-		<id>sonatype</id>
-		<name>Sonatype snapshots and releases</name>
-		<url>https://oss.sonatype.org/content/groups/public</url>
-		<snapshots>
-			<enabled>true</enabled>
-		</snapshots>
-	</repository>
-</repositories>
+	<repositories>
+		<repository>
+			<id>sonatype</id>
+			<name>Sonatype snapshots and releases</name>
+			<url>https://oss.sonatype.org/content/groups/public</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 	<properties>
-		<!-- <dropwizard.version>0.9.1</dropwizard.version> -->
-		<telosys.version>3.0.0-SNAPSHOT</telosys.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.7</java.version>
-		<jetty.version>9.3.6.v20151106</jetty.version>
-		<pac4j.version>1.8.2</pac4j.version>
-		<j2e-pac4j.version>1.2.1</j2e-pac4j.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<telosys.version>3.0.0-SNAPSHOT</telosys.version>
 	</properties>
 
 	<dependencies>
-<!-- 		<dependency>
+<!--
+		<dependency>
 			<groupId>org.telosys.webtools</groupId>
 			<artifactId>telosys-monitoring</artifactId>
 			<version>1.10</version>
 		</dependency>
- -->	
+ -->
+
+		<!-- Security with Apache SHIRO -->
 		<dependency>
-			<groupId>org.pac4j</groupId>
-			<artifactId>j2e-pac4j</artifactId>
-			<version>${j2e-pac4j.version}</version>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>1.2.4</version>
 		</dependency>
 		<dependency>
-			<groupId>org.pac4j</groupId>
-			<artifactId>pac4j-core</artifactId>
-			<version>${pac4j.version}</version>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-web</artifactId>
+			<version>1.2.4</version>
 		</dependency>
+
+		<!-- OAuth2 - Apache OLTU  -->
 		<dependency>
-			<groupId>org.pac4j</groupId>
-			<artifactId>pac4j-jwt</artifactId>
-			<version>${pac4j.version}</version>
+			<groupId>org.apache.oltu.oauth2</groupId>
+			<artifactId>org.apache.oltu.oauth2.client</artifactId>
+			<version>1.0.1</version>
 		</dependency>
-		<dependency>
-			<groupId>org.pac4j</groupId>
-			<artifactId>pac4j-http</artifactId>
-			<version>${pac4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.pac4j</groupId>
-			<artifactId>pac4j-oauth</artifactId>
-			<version>${pac4j.version}</version>
-		</dependency>
+
+		<!-- Log -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -72,7 +64,13 @@
 			<artifactId>slf4j-simple</artifactId>
 			<version>1.7.5</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
+		</dependency>
 
+		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -80,36 +78,7 @@
 			<scope>provided</scope>
 		</dependency>
 
-<!-- 
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-server</artifactId>
-			<version>${jetty.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-security</artifactId>
-			<version>${jetty.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-servlet</artifactId>
-			<version>${jetty.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty.websocket</groupId>
-			<artifactId>websocket-server</artifactId>
-			<version>${jetty.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty.websocket</groupId>
-			<artifactId>javax-websocket-server-impl</artifactId>
-			<version>${jetty.version}</version>
-		</dependency>
--->
-
+		<!-- JAX RS -->
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-server</artifactId>
@@ -136,6 +105,7 @@
 			<version>2.22.1</version>
 		</dependency>
 
+		<!-- Mail -->
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
@@ -146,11 +116,34 @@
 			<artifactId>javax.mail-api</artifactId>
 			<version>1.5.2</version>
 		</dependency>
+
+		<!-- JSON -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.8.1</version>
+		</dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.8.1</version>
+        </dependency>
+
+		<!-- Apache Commons -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
+		</dependency>
+
+		<!-- Telosys -->
 		<dependency>
 			<groupId>org.telosys</groupId>
 			<artifactId>telosys-tools-api</artifactId>
 			<version>${telosys.version}</version>
 		</dependency>
+
+		<!-- Tests -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -163,13 +156,7 @@
 			<version>1.9.5</version>
 			<scope>test</scope>
 		</dependency>
-		
-<!-- 		<dependency>
-		    <groupId>ch.qos.logback</groupId>
-		    <artifactId>logback-classic</artifactId>
-		    <version>1.1.7</version>
-		</dependency>
- -->	
+
  	</dependencies>
 
 	<build>

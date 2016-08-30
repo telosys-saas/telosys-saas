@@ -9,7 +9,6 @@ import java.util.Map;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.pac4j.core.profile.UserProfile;
 import org.telosys.saas.dao.StorageDao;
 import org.telosys.saas.dao.StorageDaoProvider;
 import org.telosys.saas.domain.*;
@@ -27,6 +26,7 @@ import org.telosys.tools.generator.task.GenerationTaskResult;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.telosys.tools.users.User;
 
 public class ProjectService {
 	
@@ -41,18 +41,18 @@ public class ProjectService {
 		this.storageDao = storageDao;
 	}
 	
-	public TelosysProject getTelosysProject(UserProfile user, Project project) {
+	public TelosysProject getTelosysProject(User user, Project project) {
 		String projectFolderAbsolutePath = storageDao.getProjectPath(user, project);
 		TelosysProject telosysProject = new TelosysProject(projectFolderAbsolutePath);
 		return telosysProject;
 	}
 	
-	public void initProject(UserProfile user, Project project) {
+	public void initProject(User user, Project project) {
 		TelosysProject telosysProject = getTelosysProject(user, project);
 		telosysProject.initProject();
 	}
 
-	public List<Model> getModels(UserProfile user, Project project) {
+	public List<Model> getModels(User user, Project project) {
 		List<Model> models = new ArrayList<Model>();
 		for(String modelName : getModelNames(user, project)) {
 			Model model = getModel(user, project, modelName);
@@ -63,7 +63,7 @@ public class ProjectService {
 		return models;
 	}
 
-	public List<String> getModelNames(UserProfile user, Project project) {
+	public List<String> getModelNames(User user, Project project) {
     	List<String> filters = new ArrayList<>();
 		Folder folder = storageDao.getFolderForProjectAndUser(user, project, "TelosysTools", filters);
 		List<String> modelNames = new ArrayList<>();
@@ -75,11 +75,11 @@ public class ProjectService {
 		return modelNames;
 	}
 
-	public String getModelPath(UserProfile user, Project project, String modelName) {
+	public String getModelPath(User user, Project project, String modelName) {
 		return FileUtil.join(storageDao.getProjectPath(user, project), "TelosysTools", modelName);
 	}
 
-	public Model getModel(UserProfile user, Project project, String modelName) {
+	public Model getModel(User user, Project project, String modelName) {
 		TelosysProject telosysProject = getTelosysProject(user, project);
 		try {
 			GenericModelLoader genericModelLoader = telosysProject.getGenericModelLoader() ;
@@ -112,7 +112,7 @@ public class ProjectService {
 		}
 	}
 
-	public Model createModel(UserProfile user, Project project, String modelName) {
+	public Model createModel(User user, Project project, String modelName) {
 		TelosysProject telosysProject = getTelosysProject(user, project);
 		try {
 			java.io.File file = telosysProject.getDslModelFile(modelName);
@@ -125,7 +125,7 @@ public class ProjectService {
 		}
 	}
 
-	public void deleteModel(UserProfile user, Project project, String modelName) {
+	public void deleteModel(User user, Project project, String modelName) {
 		TelosysProject telosysProject = getTelosysProject(user, project);
 		try {
 			java.io.File file = telosysProject.getDslModelFile(modelName);
@@ -160,7 +160,7 @@ public class ProjectService {
 		return entity;
 	}
 
-	public void addBundleToTheProject(UserProfile user, Project project, String githubUserName, String bundleName) {
+	public void addBundleToTheProject(User user, Project project, String githubUserName, String bundleName) {
 		TelosysProject telosysProject = getTelosysProject(user, project);
 		try {
 			telosysProject.downloadAndInstallBundle(githubUserName, bundleName);
@@ -169,14 +169,14 @@ public class ProjectService {
 		}
 	}
 
-	public void removeBundleFromTheProject(UserProfile user, Project project, String bundleName) {
+	public void removeBundleFromTheProject(User user, Project project, String bundleName) {
 		String folderTemplatesPath = FileUtil.join("TelosysTools","templates",bundleName);
     	List<String> filters = new ArrayList<>();
     	Folder folderBundle = storageDao.getFolderForProjectAndUser(user, project, folderTemplatesPath, filters);
     	storageDao.deleteFolderForProjectAndUser(user, project, folderBundle);
 	}
 
-	public ProjectConfiguration getProjectConfiguration(UserProfile user, Project project) {
+	public ProjectConfiguration getProjectConfiguration(User user, Project project) {
 		try {
 			TelosysProject telosysProject = getTelosysProject(user, project);
 			TelosysToolsCfg telosysToolsCfg = telosysProject.loadTelosysToolsCfg();
@@ -209,7 +209,7 @@ public class ProjectService {
 		}
 	}
 
-	public void saveProjectConfiguration(UserProfile user, Project project, ProjectConfiguration projectConfiguration) {
+	public void saveProjectConfiguration(User user, Project project, ProjectConfiguration projectConfiguration) {
 		try {
 			TelosysProject telosysProject = getTelosysProject(user, project);
 			TelosysToolsCfg telosysToolsCfg = telosysProject.loadTelosysToolsCfg();
@@ -243,7 +243,7 @@ public class ProjectService {
 		}
 	}
 
-	public List<Template> getTemplatesForGeneration(UserProfile user, Project project, String bundleName){
+	public List<Template> getTemplatesForGeneration(User user, Project project, String bundleName){
 		TelosysProject telosysProject = getTelosysProject(user, project);
 		List<Template> templateList = new ArrayList<>();
 		try {
@@ -260,11 +260,11 @@ public class ProjectService {
 		}
 	}
 
-	public GenerationResult launchGeneration(UserProfile user, Project project, Generation generation) {
+	public GenerationResult launchGeneration(User user, Project project, Generation generation) {
 		return launchGenerationByEntityAndBundle(user, project, generation.getModel(), generation.getEntities(), generation.getBundle(), generation.getTemplates() );
 	}
 
-	public GenerationResult launchGenerationByEntityAndBundle(UserProfile user, Project project, String modelName, List<String> entityNames, String bundleName, List<String> templatesName) {
+	public GenerationResult launchGenerationByEntityAndBundle(User user, Project project, String modelName, List<String> entityNames, String bundleName, List<String> templatesName) {
 		TelosysProject telosysProject = getTelosysProject(user, project);
 		try {
 			org.telosys.tools.generic.model.Model genericModel = telosysProject.loadModel(modelName+".model");
@@ -295,7 +295,7 @@ public class ProjectService {
 		}
 	}
 	
-	public GenerationResult launchGenerationByModelAndBundle(UserProfile user, Project project, String modelName, String bundleName) {
+	public GenerationResult launchGenerationByModelAndBundle(User user, Project project, String modelName, String bundleName) {
 		TelosysProject telosysProject = getTelosysProject(user, project);
 		try {
 			org.telosys.tools.generic.model.Model genericModel = telosysProject.loadModel(modelName+".model");
@@ -320,7 +320,7 @@ public class ProjectService {
 		}
 	}
 
-	public void createEntityForModel(UserProfile user, Project project, String modelName, String entityName) {
+	public void createEntityForModel(User user, Project project, String modelName, String entityName) {
 		TelosysProject telosysProject = getTelosysProject(user, project);
 		try {
 			java.io.File modelIOFile = telosysProject.getDslModelFile(modelName);

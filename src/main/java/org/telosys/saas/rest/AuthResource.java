@@ -15,10 +15,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.pac4j.core.context.J2EContext;
-import org.pac4j.core.profile.ProfileManager;
-import org.pac4j.core.profile.UserProfile;
 import org.slf4j.LoggerFactory;
+import org.telosys.saas.security.Security;
+import org.telosys.tools.users.User;
 
 @Path("/profile")
 public class AuthResource {
@@ -27,11 +26,9 @@ public class AuthResource {
     @Path("/user")
     @Produces(MediaType.APPLICATION_JSON)
     public String status(@Context HttpServletRequest request, @Context HttpServletResponse response) {
-    	J2EContext context = new J2EContext(request, response);
-        ProfileManager<UserProfile> manager = new ProfileManager<>(context);
         HttpSession session = request.getSession();
-        UserProfile profile = manager.get(true);
-        
+        User user = Security.getUser();
+
         StringBuffer sessionStr = new StringBuffer();
         Enumeration<String> attributeNames = session.getAttributeNames();
         while(attributeNames.hasMoreElements()) {
@@ -42,37 +39,31 @@ public class AuthResource {
         	}
         	sessionStr.append(key+" : "+value);
         }
-        
-        if(profile == null) {
+
+        boolean isAuthenticated = Security.isAuthenticated();
+        if(!Security.isAuthenticated()) {
         	return "{\"authenticated\":false}";
-        }
-        
-        String login;
-        if(profile.getAttribute("login") != null && profile.getAttribute("login") instanceof String) {
-        	login = (String) profile.getAttribute("login");
         } else {
-        	login = profile.getId();
+            StringBuffer buf = new StringBuffer();
+            buf.append("{\"authenticated\":true");
+            buf.append(", \"userId\": \"").append(user.getLogin()).append("\"");
+            buf.append(", \"login\": \"").append(user.getLogin()).append("\"");
+            if(user.getAvatar() == null || "".equals(user.getAvatar().trim())) {
+                buf.append(", \"avatar\": null");
+            } else {
+                buf.append(", \"avatar\": \"").append(user.getAvatar()).append("\"");
+            }
+            buf.append("}");
+            return buf.toString();
         }
-        
-        String avatar;
-        if(profile.getAttribute("avatar_url") != null && profile.getAttribute("avatar_url") instanceof String) {
-        	avatar = (String) profile.getAttribute("avatar_url");
-        } else {
-        	avatar = null;
-        }
-                 	
-        return "{\"authenticated\":" + (profile != null) + ", \"userId\": \""+profile.getId()+"\", \"login\": \""+login+"\", \"avatar\": \""+avatar+"\" }" ; //, \"session\" : [" + sessionStr.toString() + "], \"userProfile\" : [" + profile + "]}";
     }
 
     @GET
     @Path("info")
     @Produces(MediaType.APPLICATION_JSON)
     public String info(@Context HttpServletRequest request, @Context HttpServletResponse response) {
-    	J2EContext context = new J2EContext(request, response);
-        ProfileManager<UserProfile> manager = new ProfileManager<>(context);
         HttpSession session = request.getSession();
-        UserProfile profile = manager.get(true);
-        
+
         StringBuffer sessionStr = new StringBuffer();
         Enumeration<String> attributeNames = session.getAttributeNames();
         while(attributeNames.hasMoreElements()) {
@@ -83,11 +74,23 @@ public class AuthResource {
         	}
         	sessionStr.append(key+" : "+value);
         }
-        
-        if(profile == null) {
-        	return "{\"authenticated\":false}";
+
+        if(!Security.isAuthenticated()) {
+            return "{\"authenticated\":false}";
         } else {
-        	return "{\"authenticated\":" + (profile != null) + ", \"userId\": \""+profile.getId()+"\", \"session\" : [" + sessionStr.toString() + "], \"userProfile\" : [" + profile + "]}";
+            User user = Security.getUser();
+            StringBuffer buf = new StringBuffer();
+            buf.append("{\"authenticated\":true");
+            buf.append(", \"userId\": \"").append(user.getLogin()).append("\"");
+            buf.append(", \"login\": \"").append(user.getLogin()).append("\"");
+            buf.append(", \"avatar\": ");
+            if(user.getAvatar() == null || "".equals(user.getAvatar().trim())) {
+                buf.append(", \"avatar\": null");
+            } else {
+                buf.append(", \"avatar\": \"").append(user.getAvatar()).append("\"");
+            }
+            buf.append("}");
+            return buf.toString();
         }
     }
 

@@ -3,7 +3,6 @@ package org.telosys.saas.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.pac4j.core.profile.UserProfile;
 import org.telosys.saas.dao.StorageDao;
 import org.telosys.saas.dao.StorageDaoProvider;
 import org.telosys.saas.domain.Bundle;
@@ -12,6 +11,7 @@ import org.telosys.saas.domain.Project;
 import org.telosys.saas.util.FileUtil;
 import org.telosys.tools.api.TelosysProject;
 import org.telosys.tools.commons.TelosysToolsException;
+import org.telosys.tools.users.User;
 
 public class BundleService {
 	
@@ -48,7 +48,7 @@ public class BundleService {
 		}
 	}
 	
-	public List<Bundle> getBundlesOfProject(UserProfile user, Project project) {
+	public List<Bundle> getBundlesOfProject(User user, Project project) {
 		String folderTemplatesPath = FileUtil.join("TelosysTools","templates");
     	List<String> filters = new ArrayList<>();
     	Folder folderTemplates = storage.getFolderForProjectAndUser(user, project, folderTemplatesPath, filters);

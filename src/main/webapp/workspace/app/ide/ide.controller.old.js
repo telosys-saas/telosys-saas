@@ -383,12 +383,26 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      * @param fileId File id to open
      */
     $scope.onDoubleClickFile = function (data, fileId) {
-      $log.info('onDoubleClickFile', fileId);
+      console.log('onDoubleClickFile', fileId);
       var file = data.allFiles[fileId];
-      if (data.selectedFile.id != fileId) {
+
+      if (!data.workingFiles[fileId]) {
+        data.openFile = file;
+      }
+
+      if (!file.hasContent) {
+        FilesService.getFileForProject($scope.profile.userId, $scope.data.project.id, fileId)
+          .then(function (result) {
+            var file = result.data;
+            $log.info('getFileForProject', file);
+            data.allFiles[file.id].hasContent = true;
+            data.allFiles[file.id].content = file.content;
+            data.allFiles[file.id].isModified = false;
+            data.selectedFile = data.allFiles[file.id];
+          });
+      } else {
         data.selectedFile = file;
       }
-      data.workingFiles[file.id] = file;
       $scope.safeApply();
     };
 

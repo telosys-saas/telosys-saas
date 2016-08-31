@@ -20,7 +20,7 @@ angular.module('ide')
         $scope.$watchCollection('data.generation.generationResults', function () {
           console.log('console generationResults', $scope.data.generation.generationResults);
           $scope.data.generation.errorTransformeds = $scope.transformGenerationErrors($scope.data.generation, $scope.data.generation.generationResults.errors);
-          $scope.displayTab = 'generation';
+          $scope.displayTab = 'generation'
         });
 
         $scope.$watchCollection('data.models.modelErrors', function () {
@@ -30,12 +30,12 @@ angular.module('ide')
 
           // Nb errors
           var countModelsErrors = 0;
-          for(var index = 0; index < modelErrors.length; index++) {
+          for (var index = 0; index < modelErrors.length; index++) {
             var model = modelErrors[index];
-            if(model.parsingErrors) {
+            if (model.parsingErrors) {
               model.hasError = true;
               countModelsErrors += model.parsingErrors.length;
-            }else{
+            } else {
               model.hasError = false;
             }
           }
@@ -43,20 +43,20 @@ angular.module('ide')
 
           // Errors to display in console
           var errorTransformeds = [];
-          for(var i=0; i<modelErrors.length; i++) {
+          for (var i = 0; i < modelErrors.length; i++) {
             var model = modelErrors[i];
             var modelName = model.name;
             var entityErrors = model.parsingErrors;
-            if(!entityErrors) continue;
+            if (!entityErrors) continue;
 
-            for(var j=0; j<entityErrors.length; j++){
+            for (var j = 0; j < entityErrors.length; j++) {
               var error = entityErrors[j];
               var entityName = error.entityName;
               var message = error.message;
 
               var errorTransformed = {
-                entityFileId : 'TelosysTools/' + modelName + '_model/' + entityName + '.entity',
-                entityName : entityName,
+                entityFileId: 'TelosysTools/' + modelName + '_model/' + entityName + '.entity',
+                entityName: entityName,
                 modelName: modelName,
                 message: message
               };
@@ -65,16 +65,18 @@ angular.module('ide')
             }
           }
           $scope.data.models.errorTransformeds = errorTransformeds;
-          $scope.displayTab = 'model';
+          if ($scope.data.models.countModelsErrors > 0) {
+            $scope.displayTab = 'model';
+          }
         });
-        
+
         $scope.transformGenerationErrors = function (generation, errors) {
           if (!errors) return [];
           var errorTransformeds = [];
           for (var i = 0; i < errors.length; i++) {
             var error = errors[i];
             var errorTransformed = $scope.transformGenerationError(generation, error);
-           errorTransformeds.push(errorTransformed);
+            errorTransformeds.push(errorTransformed);
           }
           return errorTransformeds;
         };
@@ -118,33 +120,63 @@ angular.module('ide')
           }
         };
 
-        $scope.transformModelsError = function(modelName,error){
+        $scope.transformModelsError = function (modelName, error) {
           return {
-            entityFileId : 'TelosysTools/' + modelName + '_model/' + error.entityName + '.entity',
-            entityName : error.entityName,
+            entityFileId: 'TelosysTools/' + modelName + '_model/' + error.entityName + '.entity',
+            entityName: error.entityName,
             modelName: modelName,
             message: error.message
           }
         };
-        
+
         $scope.onClickTab = function (tabToDisplay) {
           $scope.displayTab = tabToDisplay;
         };
 
         $scope.goToBundleTemplate = function (fileId) {
           console.log('goToBundleTemplate', fileId);
-          $scope.data.events.onClickFile($scope.data.bundles, fileId);
+          $scope.data.events.onDoubleClickFile($scope.data.bundles, fileId);
         };
 
         $scope.goToModelEntity = function (fileId) {
           console.log('goToModelEntity', fileId);
-          $scope.data.events.onClickFile($scope.data.models, fileId);
+          $scope.data.events.onDoubleClickFile($scope.data.models, fileId);
         };
-        
+
         $scope.clearLog = function () {
           $scope.data.generation.generationResults = [];
           $scope.data.generation.errorTransformeds = {};
           $scope.data.models.countModelsErrors = 0;
+          $scope.generation.errorMessage = null;
+        };
+
+        $scope.generateAgain = function () {
+          $scope.data.generation.entities = [];
+          $scope.data.generation.templates = [];
+          for (var index = 0; index < $scope.data.generation.selectedModelEntitys.length; index++) {
+            var entity = $scope.data.generation.selectedModelEntitys[index];
+            if (entity.selected) {
+              $scope.data.generation.entities.push(entity.text);
+            }
+          }
+          if ($scope.data.generation.selectedBundleTemplates) {
+            for (var index = 0; index < $scope.data.generation.selectedBundleTemplates.length; index++) {
+              var template = $scope.data.generation.selectedBundleTemplates[index];
+              if (template.selected) {
+                $scope.data.generation.templates.push(template.name);
+              }
+            }
+          }
+          if ($scope.data.generation.templates.length == 0) {
+            $scope.data.generation.errorMessage = "Please select a template";
+            return;
+          }
+          if ($scope.data.generation.entities.length == 0) {
+            $scope.data.generation.errorMessage = "Please select an entity";
+            return;
+          }
+          $scope.data.generation.errorMessage = null;
+          $scope.data.generation.events.generate();
         }
       }
     }

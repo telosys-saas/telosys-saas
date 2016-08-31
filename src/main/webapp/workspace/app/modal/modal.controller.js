@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 'FilesService', 'ProjectsService', 'BundlesService', 'ModelService', 'AuthService', '$uibModal', 'data',
-  function ($scope, $uibModalInstance, FilesService, ProjectsService, BundlesService, ModelService, AuthService, $uibModal, data) {
+angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 'FilesService', 'ProjectsService', 'BundlesService', 'ModelService', 'AuthService', '$uibModal', '$location', 'data',
+  function ($scope, $uibModalInstance, FilesService, ProjectsService, BundlesService, ModelService, AuthService, $uibModal, $location, data) {
 
     /** authentication */
     $scope.profile = {};
@@ -32,7 +32,10 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      * The new entity name
      */
     $scope.entityName = "";
-    
+
+    /** The selected Model */
+    $scope.selectedModel = {};
+
     /** Data for Configuration */
     $scope.selectedVariable = null;
     $scope.rowToDeletes = {};
@@ -65,10 +68,8 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
           var project = result.data;
           ModelService.createModel($scope.profile.userId, project.id, $scope.modelName)
             .then(function () {
-              if ($scope.data.refreshAll) {
-                $scope.data.refreshAll();
-              }
-              $uibModalInstance.close(project);
+                $location.path('/ide/' + project.id);
+                $uibModalInstance.close(project);
             })
         })
     };
@@ -78,7 +79,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      */
     $scope.projectNameChange = function () {
       if (!$scope.hasUserChangedModelName) {
-        $scope.modelName = $scope.projectName;
+        $scope.modelName = $scope.projectName.toLowerCase();
       }
     };
 
@@ -88,8 +89,10 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     $scope.modelNameChange = function () {
       if ($scope.modelName == null || $scope.modelName == '') {
         delete $scope.hasUserChangedModelName;
+        $scope.noModelName = true;
       } else {
         $scope.hasUserChangedModelName = true;
+        $scope.noModelName = false;
       }
     };
 
@@ -98,7 +101,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      */
     $scope.modelNameOnBlur = function () {
       if ($scope.modelName == null || $scope.modelName == '') {
-        $scope.modelName = $scope.projectName;
+        $scope.modelName = $scope.projectName.toLowerCase();
       }
     };
 
@@ -164,7 +167,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
           if (file.existing == true) {
             $scope.errorMessage = "File already exists";
           } else {
-            $scope.data.refreshAll();
+            $scope.data.openCreatedFile(file.id);
             $uibModalInstance.close();
           }
         });
@@ -195,9 +198,9 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      * Create an entity
      */
     $scope.createEntity = function () {
-      ModelService.createEntityForModel($scope.profile.userId, $scope.data.project.id, $scope.data.modelName, $scope.entityName)
+      ModelService.createEntityForModel($scope.profile.userId, $scope.data.project.id, $scope.selectedModel.text, $scope.entityName)
         .then(function () {
-          $scope.data.refreshAll();
+          $scope.data.openCreatedFile('TelosysTools/'+$scope.selectedModel.text+'_model/'+$scope.entityName+'.entity');
           $uibModalInstance.close();
         })
     };
@@ -319,7 +322,10 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
       console.log('init modal', data);
       AuthService.status().then(function (result) {
         $scope.profile = result.data;
-      })
+      });
+      if($scope.data.models){
+        $scope.selectedModel = $scope.data.models[0];
+      }
     }
 
     init();

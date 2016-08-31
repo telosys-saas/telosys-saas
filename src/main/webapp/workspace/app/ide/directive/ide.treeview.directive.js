@@ -23,10 +23,9 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           nodeParent = {
             id: '@@_root_@@'
           };
-          $scope.onCreateFile(nodeParent);
-        } else {
-          $scope.onCreateFile(nodeParent);
         }
+        $scope.onCreateFile(nodeParent)();
+        
       };
 
       /**
@@ -44,7 +43,14 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
               data: {
                 nodeParent: nodeParent,
                 project: $scope.data.project,
-                refreshAll: $scope.refreshAll
+                openCreatedFile: function (fileId) {
+                  $scope.data.events.refreshAll(function () {
+                    var tree = $(element[0].children[1]).jstree();
+                    tree.settings.core.data = $scope.data.tree;
+                    tree.refresh();
+                    $scope.data.events.onDoubleClickFile($scope.data, fileId);
+                  });
+                }
               }
             }
           });
@@ -61,10 +67,8 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           nodeParent = {
             id: '@@_root_@@'
           };
-          $scope.onCreateFolder(nodeParent);
-        } else {
-          $scope.onCreateFolder(nodeParent);
         }
+        $scope.onCreateFolder(nodeParent)();
       };
 
       /**
@@ -111,18 +115,21 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
        * Manage the bundles for the current project
        */
       $scope.createEntity = function () {
-        if (!$scope.data.selectedElement || $scope.data.selectedElement.type != 'models') {
-          alert("Please select a model");
-          return;
-        }
         $uibModal.open({
           templateUrl: 'app/modal/modal.createentity.html',
           controller: 'modalCtrl',
           resolve: {
             data: {
-              modelName: $scope.data.selectedElement.text,
+              models: $scope.data.tree,
               project: $scope.data.project,
-              refreshAll: $scope.refreshAll
+              openCreatedFile: function (fileId) {
+                $scope.data.events.refreshAll(function () {
+                  var tree = $(element[0].children[1]).jstree();
+                  tree.settings.core.data = $scope.data.tree;
+                  tree.refresh();
+                  $scope.data.events.onDoubleClickFile($scope.data, fileId);
+                });
+              }
             }
           }
         });
@@ -343,14 +350,12 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           console.log('treeview one click', $scope.data.selectedElement);
           if (fileFound && (fileFound.type == 'file' || fileFound.type == 'entity')) {
             $scope.data.tree.selectedFile = fileFound;
-            if ($scope.events.onClickFile) {
-              $scope.events.onClickFile($scope.data, data.node.id);
-            }
           }
         }.bind(this));
 
         // double click
         $(element[0].children[1]).bind("dblclick.jstree", function () {
+          console.log('treeview double click', $scope.data.selectedElement);
           if ($scope.events.onDoubleClickFile) {
             if ($scope.data.tree.selectedFile != null) {
               $scope.events.onDoubleClickFile($scope.data, $scope.data.tree.selectedFile.id);

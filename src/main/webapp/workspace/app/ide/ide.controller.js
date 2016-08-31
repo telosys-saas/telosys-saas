@@ -46,8 +46,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           selectedFile: null,
           /** Counter of modified file */
           countModifiedFile: 0,
-          /** Open File */
-          openFile: null,
           /** Select element in the treeview */
           selectedElement: null,
           /** Model error */
@@ -75,8 +73,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           selectedFile: null,
           /** Counter of modified file */
           countModifiedFile: 0,
-          /** Open File */
-          openFile: null,
           /** Select element in the treeview */
           selectedElement: null,
           /** Bundles of the project */
@@ -106,8 +102,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           selectedFile: null,
           /** Counter of modified file */
           countModifiedFile: 0,
-          /** Open File */
-          openFile: null,
           /** Select element in the treeview */
           selectedElement: null,
           /** IDE events redirected to controller functions */
@@ -130,6 +124,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           entities: [],
           bundle: "",
           templates: [],
+          errorMessage: null,
           generationResults: [],
           errorTransformeds: {},
           selectedModelEntitys: null,
@@ -175,7 +170,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         // change the view to display
         changeView: $scope.changeView,
         // Launch the generation
-        generation: $scope.generation
+        generate: $scope.generate
       }
     }
 
@@ -269,10 +264,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         data.selectedFile.hasContent = true;
         data.selectedFile = null;
       }
-      if (data.openFile) {
-        data.openFile.hasContent = false;
-        data.openFile = null;
-      }
       console.log(data.workingFiles);
     };
 
@@ -307,12 +298,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           data.selectedFile = workingFilesArray[indexFile];
         }
       }
-      if (data.openFile) {
-        if (data.openFile.id == fileId) {
-          data.openFile.hasContent = false;
-          data.openFile = null;
-        }
-      }
       $scope.onClickFile(data, workingFilesArray[indexFile].id);
     };
 
@@ -343,7 +328,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         file = data.selectedFile;
       }
       if (file.isModified) {
-        if(data.countModifiedFile > 0) {
+        if (data.countModifiedFile > 0) {
           data.countModifiedFile--;
         }
         file.isModified = false;
@@ -351,7 +336,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       $log.info('save file', file);
       FilesService.saveFileForProject($scope.profile.userId, data.project.id, file)
         .then(function () {
-          if(file.type == 'entity') {
+          if (file.type == 'entity') {
             $scope.getModels();
           }
         });
@@ -400,9 +385,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       if (data.selectedFile && data.selectedFile.id == fileId) {
         data.selectedFile = null;
       }
-      if (data.openFile && data.openFile.id == fileId) {
-        data.openFile = null;
-      }
     };
 
     /**
@@ -422,16 +404,12 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      */
     $scope.onClickFile = function (data, fileId) {
       var file = data.allFiles[fileId];
-
-      if (!data.workingFiles[fileId]) {
-        data.openFile = file;
-      }
-
+      $log.info('onClickFile but do nothing', file);
       if (!file.hasContent) {
         FilesService.getFileForProject($scope.profile.userId, $scope.data.project.id, fileId)
           .then(function (result) {
             var file = result.data;
-            $log.info('getFileForProject', file);
+           
             data.allFiles[file.id].hasContent = true;
             data.allFiles[file.id].content = file.content;
             data.allFiles[file.id].isModified = false;
@@ -451,12 +429,26 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      * @param fileId File id to open
      */
     $scope.onDoubleClickFile = function (data, fileId) {
-      $log.info('onDoubleClickFile', fileId);
+
       var file = data.allFiles[fileId];
-      if (data.selectedFile.id != fileId) {
+      if (!file.hasContent) {
+        FilesService.getFileForProject($scope.profile.userId, $scope.data.project.id, fileId)
+          .then(function (result) {
+            var file = result.data;
+            $log.info('getFileForProject', file);
+            data.allFiles[file.id].hasContent = true;
+            data.allFiles[file.id].content = file.content;
+            data.allFiles[file.id].isModified = false;
+            data.selectedFile = data.allFiles[file.id];
+            data.workingFiles[file.id] = file;
+          });
+      } else {
         data.selectedFile = file;
+        data.workingFiles[file.id] = file;
       }
-      data.workingFiles[file.id] = file;
+      if ($scope.data.isDisplay != data.name) {
+        $scope.data.isDisplay = data.name;
+      }
       $scope.safeApply();
     };
 
@@ -568,10 +560,9 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     /**
      * Launch the generation
      */
-    $scope.generation = function () {
+    $scope.generate = function () {
       console.log('generation', $scope.data.generation);
       var generation = {
-
         model: $scope.data.generation.model,
         entities: $scope.data.generation.entities,
         bundle: $scope.data.generation.bundle,
@@ -674,7 +665,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           $scope.data.configuration.variables = config.variables;
           // Init the specific variables
           $scope.data.configuration.variables.specificVariables = JSON.parse(config.variables.specificVariables);
-          $scope.data.configuration.variables.specificVariablesKeys = Object.keys($scope.data.configuration.variables.specificVariables);
           if (callback) {
             callback();
           }
@@ -693,8 +683,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      */
     $scope.saveConfig = function () {
       ProjectsService.saveProjectConfiguration($scope.profile.userId, $routeParams.projectId, $scope.data.configuration)
-        .then(function (result) {
-          initConfiguration(result.data);
+        .then(function () {
+          $scope.getConfiguration();
         })
     };
 
@@ -750,7 +740,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           .then(function (result) {
             // Init models
             initModels(result.data);
-            // Get the configuration of the project
             // Indicates that the IDE is initialized and can be displayed
             $scope.initialized = true;
           })

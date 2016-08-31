@@ -16,7 +16,7 @@ angular.module('dashboard')
         profile: '='
       },
 
-      templateUrl: 'app/dashboard/directive/dashboard.toolbar.html',
+      templateUrl: 'app/dashboard/directive/dashboard.toolbar.directive.html',
 
       link: function ($scope, element, attrs) {
 
@@ -33,12 +33,6 @@ angular.module('dashboard')
               data: {}
             }
           });
-          
-          modalInstance.result.then(function (project) {
-            // When the creation is a success
-            console.log('modalInstance.result.then', project);
-            $scope.projects.push(project);
-          })
         };
         
         $scope.logout = function() {

@@ -43,10 +43,6 @@ angular.module('ide')
               data: {}
             }
           });
-          modalInstance.result.then(function (project) {
-            // When the creation is a success
-            $scope.data.projects.push(project);
-          })
         };
 
         $scope.changePassword = function () {

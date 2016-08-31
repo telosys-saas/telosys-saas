@@ -9,16 +9,6 @@
                    ng-click="events.onCloseFile(data, file.id); $event.stopPropagation()"></i>
             </a>
         </li>
-        <li ng-if="data.openFile!=null && data.workingFiles[data.openFile.id]==null"
-            ng-class="{'active': data.selectedFile.id == data.openFile.id}"
-            ng-click="events.onClickFile(data, data.openFile.id)">
-            <a>
-                <i ng-if="data.openFile.isModified" class="fa fa-circle" style="padding-right: 5px"></i>
-                <i>{{data.openFile.name}} <span
-                        style="font-size: smaller; color: gray;">{{data.openFile.path}}</span></i>
-                <i class="fa fa-times" title="close" ng-click="closeSelectedFile(data); $event.stopPropagation();"></i>
-            </a>
-        </li>
     </ul>
 </div>
 <div id="editorToolbar" class="editorToolbar" ng-if="data.selectedFile">

@@ -34,11 +34,6 @@ angular.module('dashboard')
             data: {}
           }
         });
-        modalInstance.result.then(function (project) {
-          // When the creation is a success
-          console.log('modalInstance.result.then', project);
-          $scope.projects.push(project);
-        })
       };
 
       /**

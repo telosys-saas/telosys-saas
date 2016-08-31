@@ -38,7 +38,7 @@ angular.module('ide')
 
         $scope.goToModelEntity = function (fileId) {
           console.log('goToModelEntity', fileId);
-          $scope.data.events.onClickFile($scope.data.models, fileId);
+          $scope.data.events.onDoubleClickFile($scope.data.models, fileId);
         };
 
         $scope.selectEntity = function (entity) {
@@ -69,7 +69,7 @@ angular.module('ide')
         // Bundle and Template function
         $scope.goToBundleTemplate = function (fileId) {
           console.log('goToBundleTemplate', fileId);
-          $scope.data.events.onClickFile($scope.data.bundles, fileId);
+          $scope.data.events.onDoubleClickFile($scope.data.bundles, fileId);
         };
 
         $scope.changeSelectedBundle = function () {
@@ -114,13 +114,24 @@ angular.module('ide')
               $scope.data.generation.entities.push(entity.text);
             }
           }
-          for(var index = 0; index < $scope.data.generation.selectedBundleTemplates.length; index++){
-            var template = $scope.data.generation.selectedBundleTemplates[index];
-            if(template.selected){
-              $scope.data.generation.templates.push(template.name);
+          if($scope.data.generation.selectedBundleTemplates) {
+            for (var index = 0; index < $scope.data.generation.selectedBundleTemplates.length; index++) {
+              var template = $scope.data.generation.selectedBundleTemplates[index];
+              if (template.selected) {
+                $scope.data.generation.templates.push(template.name);
+              }
             }
           }
-          $scope.data.events.generation();
+          if($scope.data.generation.templates.length == 0){
+            $scope.data.generation.errorMessage = "Please select a template";
+            return;
+          }
+          if($scope.data.generation.entities.length == 0){
+            $scope.data.generation.errorMessage = "Please select an entity";
+           return;
+          }
+          $scope.data.generation.errorMessage = null;
+          $scope.data.generation.events.generate();
         };
 
         $scope.goToBundleConfiguration = function () {

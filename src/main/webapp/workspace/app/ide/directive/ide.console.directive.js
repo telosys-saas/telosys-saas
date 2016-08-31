@@ -33,10 +33,7 @@ angular.module('ide')
           for (var index = 0; index < modelErrors.length; index++) {
             var model = modelErrors[index];
             if (model.parsingErrors) {
-              model.hasError = true;
               countModelsErrors += model.parsingErrors.length;
-            } else {
-              model.hasError = false;
             }
           }
           $scope.data.models.countModelsErrors = countModelsErrors;
@@ -60,7 +57,6 @@ angular.module('ide')
                 modelName: modelName,
                 message: message
               };
-
               errorTransformeds.push(errorTransformed);
             }
           }

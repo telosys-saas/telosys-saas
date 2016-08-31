@@ -124,7 +124,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           entities: [],
           bundle: "",
           templates: [],
-          errorMessage: null,
           generationResults: [],
           errorTransformeds: {},
           selectedModelEntitys: null,
@@ -276,7 +275,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         confirm("Voulez-vous enregistrez les modifications apportées à " + data.selectedFile.name + "?")) {
         $scope.saveFile(data);
       }
-      $log.info("close file", fileId);
+      console.log("close file", fileId);
       // Select the next file to display
       var workingFilesArray = [];
       var indexFile;
@@ -409,7 +408,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         FilesService.getFileForProject($scope.profile.userId, $scope.data.project.id, fileId)
           .then(function (result) {
             var file = result.data;
-           
             data.allFiles[file.id].hasContent = true;
             data.allFiles[file.id].content = file.content;
             data.allFiles[file.id].isModified = false;
@@ -429,13 +427,12 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      * @param fileId File id to open
      */
     $scope.onDoubleClickFile = function (data, fileId) {
-
       var file = data.allFiles[fileId];
       if (!file.hasContent) {
         FilesService.getFileForProject($scope.profile.userId, $scope.data.project.id, fileId)
           .then(function (result) {
             var file = result.data;
-            $log.info('getFileForProject', file);
+            console.log('getFileForProject', file);
             data.allFiles[file.id].hasContent = true;
             data.allFiles[file.id].content = file.content;
             data.allFiles[file.id].isModified = false;
@@ -641,7 +638,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           $scope.data.models.tree.push(FilesService.convertFolderToJson(modelFolder, null, 'models'));
         }
         $scope.data.models.allFiles = FilesService.getAllFilesFromTree(allModelsFolder);
-        $scope.getModels();
+        $scope.data.models.modelErrors = models;
       }
     }
 

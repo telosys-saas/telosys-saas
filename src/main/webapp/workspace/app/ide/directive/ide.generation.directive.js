@@ -17,20 +17,21 @@ angular.module('ide')
         // Model and Entity function
         $scope.changeSelectedModel = function () {
           console.log('changeSelectedModel', $scope.data.generation.selectedModel);
-          $scope.data.generation.selectedModelEntitys = $scope.data.generation.selectedModel.children;
-          //$scope.checkModelError();
-          $scope.selectAllEntity();
           $scope.data.generation.model = $scope.data.generation.selectedModel.text;
+          $scope.selectModelEntitys();
+          $scope.selectAllEntity();
         };
 
-        $scope.checkModelError = function () {
-          $scope.generationIsOk = true;
-          console.log('checkModelError',$scope.data.generation.selectedModelEntitys);
-          for(var i = 0; i < $scope.data.model.modelErrors.length; i++){
-            var model = $scope.data.model.modelErrors[i];
-            if(model.name = $scope.data.generation.model){
-              if(model.hasError){
-                $scope.generationIsOk = false;
+        $scope.selectModelEntitys = function () {
+          console.log('selectModelEntitys');
+          for (var i = 0; i < $scope.data.models.modelErrors.length; i++) {
+            var model = $scope.data.models.modelErrors[i];
+            if (model.name == $scope.data.generation.model) {
+              if (model.parsingErrors.length > 0) {
+                $scope.data.generation.selectedModelEntitys = null;
+                return;
+              } else {
+                $scope.data.generation.selectedModelEntitys = $scope.data.generation.selectedModel.children;
               }
             }
           }
@@ -47,7 +48,7 @@ angular.module('ide')
 
         $scope.selectAllEntity = function () {
           $scope.deselectAllEntity();
-          if ($scope.data.generation.selectedModel) {
+          if ($scope.data.generation.selectedModelEntitys) {
             for (var index = 0; index < $scope.data.generation.selectedModelEntitys.length; index++) {
               var entity = $scope.data.generation.selectedModelEntitys[index];
               entity.selected = false;
@@ -108,13 +109,13 @@ angular.module('ide')
         $scope.submitGeneration = function () {
           $scope.data.generation.entities = [];
           $scope.data.generation.templates = [];
-          for(var index = 0; index < $scope.data.generation.selectedModelEntitys.length; index++){
+          for (var index = 0; index < $scope.data.generation.selectedModelEntitys.length; index++) {
             var entity = $scope.data.generation.selectedModelEntitys[index];
-            if(entity.selected){
+            if (entity.selected) {
               $scope.data.generation.entities.push(entity.text);
             }
           }
-          if($scope.data.generation.selectedBundleTemplates) {
+          if ($scope.data.generation.selectedBundleTemplates) {
             for (var index = 0; index < $scope.data.generation.selectedBundleTemplates.length; index++) {
               var template = $scope.data.generation.selectedBundleTemplates[index];
               if (template.selected) {
@@ -122,13 +123,13 @@ angular.module('ide')
               }
             }
           }
-          if($scope.data.generation.templates.length == 0){
+          if ($scope.data.generation.templates.length == 0) {
             $scope.data.generation.errorMessage = "Please select a template";
             return;
           }
-          if($scope.data.generation.entities.length == 0){
+          if ($scope.data.generation.entities.length == 0) {
             $scope.data.generation.errorMessage = "Please select an entity";
-           return;
+            return;
           }
           $scope.data.generation.errorMessage = null;
           $scope.data.generation.events.generate();
@@ -142,12 +143,15 @@ angular.module('ide')
         };
 
         $scope.refreshModel = function () {
-          if ($scope.data.models.tree) {
-            if ($scope.data.models.tree[0]) {
-              $scope.data.generation.selectedModel = $scope.data.models.tree[0];
-              $scope.changeSelectedModel();
+          $scope.data.models.events.refreshAll(function () {
+            for (var index = 0; index < $scope.data.models.tree.length; index++) {
+              var model = $scope.data.models.tree[index];
+              if(model.text ==  $scope.data.generation.selectedModel.text){
+                $scope.data.generation.selectedModel = model;
+              }
             }
-          }
+            $scope.changeSelectedModel();
+          })
         };
 
         function init() {

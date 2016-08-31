@@ -65,11 +65,12 @@
         </div>
     </div>
     <div class="col-sm-6">
-        <div class="container-fluid generation-selection" ng-if="data.generation.selectedBundle">
+        <div class="container-fluid generation-selection">
             <div class="row generation-selection-line card-generation"
                  ng-repeat="template in data.generation.selectedBundleTemplates"
                  ng-click="selectTemplate(template)"
-                 ng-class="{'generation-selection-line-selected':template.selected}">
+                 ng-class="{'generation-selection-line-selected':template.selected}"
+                 ng-if="data.generation.selectedBundle">
                 <div class="col-sm-10">
                     <div class="checkbox" style="word-wrap: break-word;">
                         <label class="control-label" for="template_{{$index}}">

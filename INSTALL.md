@@ -18,7 +18,7 @@
 - sudo nano /etc/default/tomcat8
   - replace ```-Xmx128m``` by ```-Xmx512m``` in ```JAVA_OPTS``` line
 - sudo nano /etc/tomcat8/tomcat-users.xml
-  - add in <tomcat-users>:
+  - add in ```<tomcat-users>``` :
 ```
 <tomcat-users>
     <user username="admin" password="password" roles="manager-gui,admin-gui"/>
@@ -45,8 +45,13 @@ gmailPassword       = telosysteam1
 ```
 - sudo chown -R tomcat8:tomcat8 /opt/telosys-saas
 
-## TELOSYS_ROOT as an environnement variable
--
+## TELOSYS_ROOT variable
+- Edit ```context.xml```Tomcat file :
+- nano /etc/tomcat8/conf/context.xml
+- Add this line in ```<Context>``` :
+```
+<Environment name="TELOSYS_ROOT" type="java.lang.String" value="/opt/telosys-saas" override="false" />
+```
 
 # BUILD
 - mkdir ~/work

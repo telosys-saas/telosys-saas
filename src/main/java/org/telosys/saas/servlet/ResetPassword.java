@@ -16,7 +16,7 @@ import java.io.IOException;
  * Servlet to reset the password for a user
  */
 @WebServlet("/resetPassword/*")
-public class resetPassword extends HttpServlet {
+public class ResetPassword extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PasswordEncoder passwordEncoder = new PasswordEncoder();

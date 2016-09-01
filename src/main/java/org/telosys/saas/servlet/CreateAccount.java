@@ -20,7 +20,7 @@ import java.security.SecureRandom;
  * Servlet to create a new user account
  */
 @WebServlet("/createAccount")
-public class createAccount extends HttpServlet {
+public class CreateAccount extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UsersManager usersManager = UsersManager.getInstance();

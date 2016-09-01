@@ -18,7 +18,7 @@ import java.security.SecureRandom;
  * Servlet used when a user lost is password
  */
 @WebServlet("/forgetPassword")
-public class forgetPassword extends HttpServlet {
+public class ForgetPassword extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UsersManager usersManager = UsersManager.getInstance();

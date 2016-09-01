@@ -16,7 +16,7 @@ import java.io.IOException;
  * Servlet to validate the email address of a new user
  */
 @WebServlet("/confirmEmail/*")
-public class confirmEmail extends HttpServlet {
+public class ConfirmEmail extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

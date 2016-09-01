@@ -27,6 +27,9 @@
 - ```sudo service tomcat8 restart```
 - Test with URL : http://localhost:8080/manager/html
 
+## maven 3
+- ```apt-get install maven```
+
 ## Telosys data folder
 - ```mkdir /opt/telosys-saas```
 - ```nano /opt/telosys-saas/telosys-saas.properties```
@@ -42,5 +45,9 @@ gmailPassword       = telosysteam1
 ```
 
 # BUILD
+- mkdir ~/work
+- cd ~/work
 - git clone https://github.com/telosys-saas/telosys-saas.git
 - cd telosys-saas
+- mvn clean package
+- sudo cp target/telosys-saas.war /var/lib/tomcat8/webapps

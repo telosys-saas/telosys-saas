@@ -46,6 +46,6 @@ public class ForgetPassword extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("/forgetPassword.html");
+        response.sendRedirect("/forgetPassword.jsp");
     }
 }

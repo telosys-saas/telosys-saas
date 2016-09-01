@@ -63,6 +63,6 @@ public class CreateAccount extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("createAccount.html");
+        response.sendRedirect("createAccount.jsp");
     }
 }

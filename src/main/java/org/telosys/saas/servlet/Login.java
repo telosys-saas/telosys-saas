@@ -12,13 +12,19 @@ import java.io.IOException;
 /**
  * Servlet to manage the log process
  */
-@WebServlet("/login/*")
+@WebServlet("/login")
 public class Login extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if(Security.isAuthenticated()) {
+            response.sendRedirect("/workspace/index.html");
+            return;
+        }
+        response.sendRedirect("login.jsp");
+        /*
         // Case : no user are authenticated
         if (!Security.isAuthenticated()) {
             // case : the user tries to login for the first time
@@ -41,5 +47,6 @@ public class Login extends HttpServlet {
             // A user is already authenticated
             response.sendRedirect("/workspace/index.html");
         }
+        */
     }
 }

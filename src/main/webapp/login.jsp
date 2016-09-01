@@ -27,7 +27,7 @@
                                     String errorDescription = (String) request.getAttribute("simpleShiroApplicationLoginFailure");
                                     if (errorDescription!=null) {
                                 %>
-                                <div class="alert alert-danger">Login attempt was unsuccessful: <%=errorDescription%></div>
+                                <div class="alert alert-danger">Login attempt was unsuccessful</div>
                                 <%
                                     }
                                 %>
@@ -41,6 +41,9 @@
                                     <label>
                                         <input name="rememberMe" type="checkbox" value="true"> Remember Me
                                     </label>
+                                </div>
+                                <div>
+                                    <a href="/forgetPassword">Forget password</a>
                                 </div>
                                 <input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
                             </fieldset>

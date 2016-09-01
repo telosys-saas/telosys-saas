@@ -7,7 +7,7 @@
 <form name="createAccountForm" action="/forgetPassword" method="POST">
     <div class="row">
         <div class="input-field col s12">
-            <span class="card-title">Create an account</span>
+            <span class="card-title">Forget password</span>
         </div>
         <div class="input-field col s12">
             <i class="mdi mdi-account-circle prefix"></i>

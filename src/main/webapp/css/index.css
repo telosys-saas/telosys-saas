@@ -192,7 +192,7 @@ header {
 }
 
 header .container {
-    max-width: 1020px;
+    max-width: 1220px;
     margin: 0 auto;
 }
 
@@ -222,6 +222,10 @@ header .container .title {
     background-repeat: no-repeat;
     background-size: 100% 200px;
     padding-top: 10px;
+}
+
+.home-presentation {
+    margin-top: 40px;
 }
 
 .login {

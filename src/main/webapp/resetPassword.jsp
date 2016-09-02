@@ -38,7 +38,7 @@
             <h4>Reset password</h4>
         </div>
         <div class="login-body">
-            <form name="createAccountForm" action="/resetPassword" method="POST">
+            <form name="createAccountForm" action="resetPassword" method="POST">
                 <% if (request.getSession().getAttribute("success") != null) { %>
                 <div class="form-group">
                     <div class="alert alert-success">

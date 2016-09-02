@@ -38,7 +38,7 @@
             <h4>Create an account</h4>
         </div>
         <div class="login-body">
-            <form name="createAccountForm" action="/createAccount" method="POST">
+            <form name="createAccountForm" action="createAccount" method="POST">
                 <div class="form-group">
                     <a href="/profile/github" class="btn btn-default btn-lg btn-github btn-block" role="button"><i class="fa fa-github fa-2x"></i>Sign in with GitHub</a>
                 </div>

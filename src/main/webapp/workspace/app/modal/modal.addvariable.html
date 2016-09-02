@@ -1,21 +1,27 @@
-<div class="modal-header">
-    <h3 class="modal-title">Add variable</h3>
-</div>
-<div class="modal-body">
-    {{errorMessage}}
-    <div class="form-group">
-        <label for="variable-name">Variable name :</label>
-        <input id="variable-name" class="form-control" placeholder="Variable name"
-               ng-model="specificVariable.name" autofocus>
-    </div>
+<div class="modal-content">
+    <form>
+        <div class="modal-header">
+            <h3 class="modal-title">Add variable</h3>
+        </div>
 
-    <div class="form-group">
-        <label for="variable-value">Variable value :</label>
-        <input id="variable-value" class="form-control" placeholder="Variable value"
-               ng-model="specificVariable.value">
-    </div>
+        <div class="modal-body">
+            {{errorMessage}}
+            <div class="form-group">
+                <label for="variable-name">Variable name :</label>
+                <input id="variable-name" class="form-control" placeholder="Variable name"
+                       ng-model="specificVariable.name" autofocus>
+            </div>
+
+            <div class="form-group">
+                <label for="variable-value">Variable value :</label>
+                <input id="variable-value" class="form-control" placeholder="Variable value"
+                       ng-model="specificVariable.value">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="submit" ng-disabled="specificVariable.name == '' || specificVariable.value==''" ng-click="addSpecificVariable()">Add variable</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </form>
 </div>
-<div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="addSpecificVariable()">Add variable</button>
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-</div>
+

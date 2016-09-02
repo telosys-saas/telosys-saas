@@ -19,34 +19,22 @@ public class Login extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(Security.isAuthenticated()) {
+        // The user is already authenticated
+        if (Security.isAuthenticated()) {
             response.sendRedirect("/workspace/index.html");
             return;
         }
-        response.sendRedirect("login.jsp");
-        /*
-        // Case : no user are authenticated
-        if (!Security.isAuthenticated()) {
-            // case : the user tries to login for the first time
-            if (request.getSession().getAttribute("numberOfTry") == null) {
-                request.getSession().setAttribute("numberOfTry", 1);
-                response.sendRedirect("/login.jsp");
-            } else {
-                int numberOfTry = (int) request.getSession().getAttribute("numberOfTry");
-                // the user tries 3 times to login
-                if (numberOfTry >= 3) {
-                    request.getSession().setAttribute("error", "You reach the limit of login try.");
-                    response.sendRedirect("/");
-                } else {
-                    request.getSession().setAttribute("error", "Incorrect username or password.");
-                    request.getSession().setAttribute("numberOfTry", ++numberOfTry);
-                    response.sendRedirect("/login.jsp");
-                }
-            }
-        } else {
-            // A user is already authenticated
-            response.sendRedirect("/workspace/index.html");
+        // The user access to the login page for the first time
+        if (request.getSession().getAttribute("numberOfTry") == null) {
+            response.sendRedirect("/login.jsp");
+            return;
         }
-        */
+        int numberOfTry = (int) request.getSession().getAttribute("numberOfTry");
+        // THe user try 3 times to log in
+        if (numberOfTry >= 3) {
+            response.sendRedirect("/");
+            return;
+        }
+        response.sendRedirect("/login.jsp");
     }
 }

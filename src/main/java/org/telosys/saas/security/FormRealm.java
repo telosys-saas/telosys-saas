@@ -31,7 +31,7 @@ public class FormRealm extends AuthorizingRealm {
 		WHEN USER LOGS IN !!!
 		**/
 		
-		logger.info("doGetAuthorizationInfo(token)...");
+		logger.info("doGetAuthenticationInfo(token)...");
 		UsernamePasswordToken upToken = (UsernamePasswordToken) token;
 		String username = upToken.getUsername();
 		logger.info("doGetAuthorizationInfo(token) : username = " + username );
@@ -43,7 +43,7 @@ public class FormRealm extends AuthorizingRealm {
 		}
 
 		String password = new String(upToken.getPassword());
-		logger.info("doGetAuthorizationInfo(token) : password = " + password );
+		logger.info("doGetAuthenticationInfo(token) : password = " + password );
 
 		//--- Check user's password
 		if (!usersManager.checkPassword(user, password)) {

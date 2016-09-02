@@ -16,8 +16,8 @@
     <div class="collapsible-header active" ng-if="data.name=='models'">
         <i class="fa fa-cubes"></i> Model
         <div style="float:right">
-            <a href ng-click="$event.stopPropagation(); createEntity();"><i class="fa fa-cube"></i></a>
             <a href ng-click="$event.stopPropagation(); createModel();"><i class="fa fa-cubes"></i></a>
+            <a href ng-click="$event.stopPropagation(); createEntity();"><i class="fa fa-cube"></i></a>
             <a href ng-click="$event.stopPropagation(); deleteSelectedElementForModels();"><i
                     class="fa fa-trash-o"></i></a>
             <a href ng-click="$event.stopPropagation(); refreshAll();"><i class="fa fa-refresh"></i></a>

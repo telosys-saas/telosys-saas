@@ -1,11 +1,18 @@
-<div class="modal-header">
-    <h3 class="modal-title">Save file</h3>
-</div>
-<div class="modal-body">
-    <label>Voulez-vous enregistrez les modifications apportées à {{data.fileName}} ?</label>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="saveFile(true)">Save file</button>
-    <button class="btn btn-primary" type="button" ng-click="saveFile(false)">Do not save file</button>
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+<div class="modal-content">
+    <form>
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h3 class="modal-title">Save file</h3>
+            </div>
+            <div class="modal-body">
+                <label> '{{data.fileName}}' has been modified. Save changes ?</label>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" ng-click="saveFile(true)">Yes</button>
+                <button class="btn btn-primary" type="button" ng-click="saveFile(false)">No</button>
+                <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+            </div>
+        </div>
+    </form>
 </div>

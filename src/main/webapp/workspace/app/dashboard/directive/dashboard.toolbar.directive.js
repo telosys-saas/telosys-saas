@@ -39,6 +39,16 @@ angular.module('dashboard')
           console.log(document.location);
           document.location = 'profile/logout?url='+document.location.href;
         };
+
+        $scope.changePassword = function () {
+          var modalInstance = $uibModal.open({
+            templateUrl: 'app/modal/modal.changepassword.html',
+            controller: 'modalCtrl',
+            resolve: {
+              data: {}
+            }
+          });
+        };
       }
     }
   }]);

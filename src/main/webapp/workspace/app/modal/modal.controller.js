@@ -9,7 +9,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     // data
     $scope.data = data;
 
-    $scope.errorMessage = "";
+    $scope.errorMessage = '';
 
     /**
      * The new project name
@@ -18,20 +18,20 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     /**
      * The new model name
      */
-    $scope.modelName = "";
+    $scope.modelName = '';
     /**
      * The new folder name
      */
-    $scope.folderName = "";
+    $scope.folderName = '';
     /**
      * The new file name
      */
-    $scope.fileName = "";
+    $scope.fileName = '';
 
     /**
      * The new entity name
      */
-    $scope.entityName = "";
+    $scope.entityName = '';
 
     /** The selected Model */
     $scope.selectedModel = {};
@@ -45,17 +45,17 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      * The new specific variable
      */
     $scope.specificVariable = {
-      name: "",
-      value: ""
+      name: '',
+      value: ''
     };
 
     /** The selected bundle */
     $scope.selectedBundle = {};
     /** The new password */
     $scope.changePassword = {
-      oldPassword: "",
-      password: "",
-      confirmPassword: ""
+      oldPassword: '',
+      password: '',
+      confirmPassword: ''
     };
 
     /**
@@ -63,15 +63,17 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      */
     $scope.createProject = function () {
       console.log('createProject modal');
-      ProjectsService.createProject($scope.profile.userId, $scope.projectName)
-        .then(function (result) {
-          var project = result.data;
-          ModelService.createModel($scope.profile.userId, project.id, $scope.modelName)
-            .then(function () {
+      if($scope.projectName != "") {
+        ProjectsService.createProject($scope.profile.userId, $scope.projectName)
+          .then(function (result) {
+            var project = result.data;
+            ModelService.createModel($scope.profile.userId, project.id, $scope.modelName)
+              .then(function () {
                 $location.path('/ide/' + project.id);
                 $uibModalInstance.close(project);
-            })
-        })
+              })
+          })
+      }
     };
 
     /**
@@ -109,34 +111,36 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      * Create a new folder
      */
     $scope.createFolder = function () {
-      console.log('createFolder modal', $scope.data.nodeParent);
-      var folder = {};
-      // create the new folder object
-      if ($scope.data.nodeParent.id == '@@_root_@@') {
-        folder = {
-          id: $scope.folderName,
-          name: $scope.folderName,
-          type: 'folder',
-          folderParentId: ""
-        };
-      } else {
-        folder = {
-          id: $scope.data.nodeParent.id + '/' + $scope.folderName,
-          name: $scope.folderName,
-          type: 'folder',
-          folderParentId: $scope.data.nodeParent.id
-        }
-      }
-      FilesService.createFolderForProject($scope.profile.userId, $scope.data.project.id, folder)
-        .then(function (result) {
-          var folder = result.data;
-          if (folder.existing == true) {
-            $scope.errorMessage = "Folder already exists";
-          } else {
-            $scope.data.refreshAll();
-            $uibModalInstance.close();
+      console.log('createFolder modal', $scope.folderName);
+      if($scope.folderName != "") {
+        var folder = {};
+        // create the new folder object
+        if ($scope.data.nodeParent.id == '@@_root_@@') {
+          folder = {
+            id: $scope.folderName,
+            name: $scope.folderName,
+            type: 'folder',
+            folderParentId: ""
+          };
+        } else {
+          folder = {
+            id: $scope.data.nodeParent.id + '/' + $scope.folderName,
+            name: $scope.folderName,
+            type: 'folder',
+            folderParentId: $scope.data.nodeParent.id
           }
-        });
+        }
+        FilesService.createFolderForProject($scope.profile.userId, $scope.data.project.id, folder)
+          .then(function (result) {
+            var folder = result.data;
+            if (folder.existing == true) {
+              $scope.errorMessage = "Folder already exists";
+            } else {
+              $scope.data.refreshAll();
+              $uibModalInstance.close();
+            }
+          });
+      }
     };
 
     /**

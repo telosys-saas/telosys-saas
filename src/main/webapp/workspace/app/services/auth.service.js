@@ -18,7 +18,7 @@ angular.module('app')
           dataType: 'json'
         })
           .catch(function (e) {
-            console.log(e);
+            console.log('AuthService.status',e);
           });
       },
 

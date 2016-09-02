@@ -33,6 +33,7 @@ angular.module('ide').directive('editor', function () {
           } else if (oldValue != null) {
             // Case :
             // - the user closes the selected file
+            $scope.data.oldSelectedFile = oldValue;
             console.log("close editor", oldValue);
             $scope.closeEditor(oldValue.id);
           }

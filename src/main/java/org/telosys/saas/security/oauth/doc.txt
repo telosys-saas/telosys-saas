@@ -1,0 +1,29 @@
+
+FROM : https://github.com/zhangkaitao/shiro-example/tree/master/shiro-example-chapter17-client/src/main 
+
+--------------------------------------------------------------------------------
+
+SEE ALSO : mx.com.inftel.oss shiro-oauth2
+
+https://www.versioneye.com/java/mx.com.inftel.oss:shiro-oauth2/1.0 
+
+<dependency>
+    <groupId>mx.com.inftel.oss</groupId>
+    <artifactId>shiro-oauth2</artifactId>
+    <version>1.0</version>
+</dependency>
+
+3 "Shiro filters" for Facebook, Google, LiveConnect
+ Shiro AuthenticatingFilter 
+    --> AbstractOAuth2AuthenticatingFilter
+       --> FacebookLoginAuthenticatingFilter 
+       --> GoogleAccountsAuthenticatingFilter
+       --> LiveConnetAuthenticatingFilter
+       
+1 Exception
+1 Token : OAuth2AuthenticationToken implements AuthenticationToken )
+
+No OAuth framework ( like Apache oltu ) everything is done with basic http calls
+
+DOCUMENTATION (ES) : http://docplayer.es/4091506-Shiro-oauth2-1-0-manual.html  ( chap "4. Autenticando con Shiro OAuth2" )
+

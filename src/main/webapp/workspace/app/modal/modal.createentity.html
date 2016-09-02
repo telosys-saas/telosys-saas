@@ -1,24 +1,26 @@
-<div class="modal-header">
-
-    <h3 class="modal-title">Create an entity</h3>
-</div>
-
-<div class="modal-body">
+<div class="modal-content">
     <form class="form-horizontal" style="margin-left: 15px">
-        <div class="form-group">
-            <label>Model name :</label>
-            <select ng-options="model.text for model in data.models"
-                    ng-model="selectedModel">
-            </select>
+        <div class="modal-header">
+            <h3 class="modal-title">Create an entity</h3>
         </div>
-        <div class="form-group">
-            <label>Entity name :</label>
-            <input ng-model="entityName" autofocus>
-            &nbsp;{{errorMessage}}
+
+        <div class="modal-body">
+
+                <div class="form-group">
+                    <label>Model name :</label>
+                    <select ng-options="model.text for model in data.models"
+                            ng-model="selectedModel">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Entity name :</label>
+                    <input ng-model="entityName" autofocus>
+                    &nbsp;{{errorMessage}}
+                </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" ng-disabled="entityName==''" ng-click="createEntity()" autofocus>Create entity</button>
+                <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+            </div>
         </div>
     </form>
-    <div class="modal-footer">
-        <button class="btn btn-primary" type="button" ng-click="createEntity()" autofocus>Create entity</button>
-        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-    </div>
 </div>

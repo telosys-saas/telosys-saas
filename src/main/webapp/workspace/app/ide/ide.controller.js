@@ -3,9 +3,9 @@
 /**
  * IDE Controller
  */
-angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'ProjectsService', 'FilesService', 'BundlesService', 'TelosysService', 'ModelService', '$scope', '$routeParams', '$log', '$uibModal',
+angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'ProjectsService', 'FilesService', 'BundlesService', 'TelosysService', 'ModelService', '$scope', '$routeParams', '$uibModal',
 
-  function (AuthService, $location, ProjectsService, FilesService, BundlesService, TelosysService, ModelService, $scope, $routeParams, $log, $uibModal) {
+  function (AuthService, $location, ProjectsService, FilesService, BundlesService, TelosysService, ModelService, $scope, $routeParams, $uibModal) {
 
     /** authentication */
     $scope.profile = {};
@@ -44,6 +44,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           workingFiles: {},
           /** Selected file */
           selectedFile: null,
+          /** the old selected file */
+          oldSelectedFile: null,
           /** Counter of modified file */
           countModifiedFile: 0,
           /** Select element in the treeview */
@@ -226,7 +228,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     $scope.safeApply = function () {
       var phase = $scope.$root.$$phase;
       if (phase == '$apply' || phase == '$digest') {
-        $log.info("apply or digest already in progress")
+        console.log("apply or digest already in progress")
       } else {
         $scope.$apply();
       }
@@ -236,7 +238,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      * Close all editors
      */
     $scope.closeAll = function (data) {
-      $log.info("close all");
+      console.log("close all");
       var hasModifiedFile = false;
       // Check if one of the opened file is modified
       for (var fileOpened in data.workingFiles) {
@@ -271,40 +273,64 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      * @param fileId File id
      */
     $scope.onCloseFile = function (data, fileId) {
-      if (data.selectedFile.isModified &&
-        confirm("Voulez-vous enregistrez les modifications apportées à " + data.selectedFile.name + "?")) {
-        $scope.saveFile(data);
+      var file = data.allFiles[fileId];
+      if (file.isModified){
+        var modalInstance = $uibModal.open({
+          templateUrl: 'app/modal/modal.savefile.html',
+          controller: 'modalCtrl',
+          resolve: {
+            data: {
+              fileName: file.name
+            }
+          }
+        });
+        modalInstance.result.then(function (result) {
+          if(result){
+            $scope.saveFile(data,file);
+          }
+          if (data.countModifiedFile > 0) {
+            data.countModifiedFile--;
+          }
+          file.isModified = false;
+          $scope.onCloseFile(data,fileId);
+        })
       }
-      console.log("close file", fileId);
-      // Select the next file to display
-      var workingFilesArray = [];
-      var indexFile;
-      for (var fileKey in data.workingFiles) {
-        var tempFile = {};
-        tempFile = data.workingFiles[fileKey];
-        if (fileKey == fileId) {
-          indexFile = workingFilesArray.length - 1;
+      if(!modalInstance) {
+        console.log("close file", fileId);
+        // Select the next file to display
+        if (data.selectedFile) {
+          if (data.selectedFile.id == fileId) {
+            data.selectedFile = null;
+            var workingFilesArray = [];
+            var nextFileIndex;
+            for (var fileKey in data.workingFiles) {
+              if (fileKey == fileId) {
+                nextFileIndex = workingFilesArray.length - 1;
+              }
+              workingFilesArray.push(fileKey);
+            }
+            if (nextFileIndex == -1) {
+              if (workingFilesArray[1]) {
+                var nextFileId = workingFilesArray[1];
+              }
+            } else {
+              var nextFileId = workingFilesArray[nextFileIndex];
+            }
+            if (nextFileId) {
+              $scope.onClickFile(data, nextFileId);
+            }
+          }
+          data.allFiles[fileId].hasContent = false;
+          delete data.workingFiles[fileId];
         }
-        workingFilesArray.push(tempFile);
       }
-      console.log('workingFilesArray', workingFilesArray[indexFile]);
-      data.allFiles[fileId].hasContent = false;
-      delete data.workingFiles[fileId];
-
-      if (data.selectedFile) {
-        if (data.selectedFile.id == fileId) {
-          data.selectedFile.hasContent = true;
-          data.selectedFile = workingFilesArray[indexFile];
-        }
-      }
-      $scope.onClickFile(data, workingFilesArray[indexFile].id);
     };
 
     /**
      * Save all modified files
      */
     $scope.saveAll = function (data) {
-      $log.info("save all");
+      console.log("save all");
       data.countModifiedFile = 0;
       for (var file in data.workingFiles) {
         $scope.saveFile(data, data.workingFiles[file]);
@@ -332,7 +358,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         }
         file.isModified = false;
       }
-      $log.info('save file', file);
+      console.log('save file', file);
       FilesService.saveFileForProject($scope.profile.userId, data.project.id, file)
         .then(function () {
           if (file.type == 'entity') {
@@ -346,7 +372,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      * @param file File to create
      */
     $scope.onCreateFile = function (data, file) {
-      $log.info('onCreateFile', file);
+      console.log('onCreateFile', file);
       data.workingFiles[file.id] = file;
       data.allFiles[file.id] = file;
       data.selectedFile = file;
@@ -359,7 +385,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      * @param folder Folder to create
      */
     $scope.onCreateFolder = function (folder) {
-      $log.info('onCreateFolder', folder);
+      console.log('onCreateFolder', folder);
       $scope.safeApply();
     };
 
@@ -368,7 +394,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      * @param folderId Folder id to delete
      */
     $scope.onDeleteFolder = function (data, folderId) {
-      $log.info('onDeleteFolder', folderId);
+      console.log('onDeleteFolder', folderId);
       FilesService.deleteFolderForProject($scope.profile.userId, data.project.id, folderId);
     };
 
@@ -403,7 +429,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      */
     $scope.onClickFile = function (data, fileId) {
       var file = data.allFiles[fileId];
-      $log.info('onClickFile but do nothing', file);
+      console.log('onClickFile', fileId);
       if (!file.hasContent) {
         FilesService.getFileForProject($scope.profile.userId, $scope.data.project.id, fileId)
           .then(function (result) {
@@ -433,6 +459,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           .then(function (result) {
             var file = result.data;
             console.log('getFileForProject', file);
+            // Get the name without the extension
+            file.name = file.name.split(".")[0];
             data.allFiles[file.id].hasContent = true;
             data.allFiles[file.id].content = file.content;
             data.allFiles[file.id].isModified = false;
@@ -455,7 +483,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      * @param fileId File id modified by user
      */
     $scope.onContentChange = function (data, fileId) {
-      $log.info('onContentChange', fileId);
+      console.log('onContentChange', fileId);
       if (!data.allFiles[fileId].isModified) {
         data.countModifiedFile++;
         data.allFiles[fileId].isModified = true;
@@ -537,7 +565,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       FilesService.getFileForProject($scope.profile.userId, $scope.data.project.id, data.selectedFile.id)
         .then(function (result) {
           var file = result.data;
-          $log.info('refresh file', file);
+          console.log('refresh file', file);
           data.allFiles[file.id].hasContent = true;
           data.allFiles[file.id].content = file.content;
           data.selectedFile = data.allFiles[file.id];

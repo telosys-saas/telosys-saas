@@ -63,6 +63,11 @@ angular.module('ide')
           $scope.data.models.errorTransformeds = errorTransformeds;
           if ($scope.data.models.countModelsErrors > 0) {
             $scope.displayTab = 'model';
+            $scope.data.generation.selectedModelEntitys = null;
+          }else{
+            if($scope.data.generation.selectedModel) {
+              $scope.data.generation.selectedModelEntitys = $scope.data.generation.selectedModel.children;
+            }
           }
         });
 
@@ -164,11 +169,10 @@ angular.module('ide')
             }
           }
           if ($scope.data.generation.templates.length == 0) {
-            $scope.data.generation.errorMessage = "Please select a template";
-            return;
+            $scope.data.generation.errorMessageTemplate = "Please select a template";
           }
           if ($scope.data.generation.entities.length == 0) {
-            $scope.data.generation.errorMessage = "Please select an entity";
+            $scope.data.generation.errorMessageModel = "Please select an entity";
             return;
           }
           $scope.data.generation.errorMessage = null;

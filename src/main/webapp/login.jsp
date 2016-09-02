@@ -22,7 +22,7 @@
         <div class="login-body">
             <form name="loginform" action="" method="POST" accept-charset="UTF-8" role="form">
                 <div class="form-group">
-                    <a href="/profile/github" class="btn btn-default btn-lg btn-github btn-block" role="button"><i class="fa fa-github fa-2x"></i>Sign in with GitHub</a>
+                    <a href="/" class="btn btn-default btn-lg btn-github btn-block" role="button"><i class="fa fa-github fa-2x"></i>Sign in with GitHub</a>
                 </div>
                 <hr/>
                 <% if (request.getSession().getAttribute("simpleShiroApplicationLoginFailure") != null) { %>

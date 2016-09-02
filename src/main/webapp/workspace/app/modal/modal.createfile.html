@@ -1,12 +1,16 @@
-<div class="modal-header">
-    <h3 class="modal-title">Create a file</h3>
-</div>
-<div class="modal-body">
-    <label>File name :</label>
-    <input ng-model="fileName" autofocus>
-    &nbsp;{{errorMessage}}
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="createFile()">Create file</button>
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+<div class="modal-content">
+    <form>
+        <div class="modal-header">
+            <h3 class="modal-title">Create a file</h3>
+        </div>
+        <div class="modal-body">
+            <label>File name :</label>
+            <input ng-model="fileName" autofocus>
+            &nbsp;{{errorMessage}}
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="submit" ng-disabled="fileName==''" ng-click="createFile()">Create file</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </form>
 </div>

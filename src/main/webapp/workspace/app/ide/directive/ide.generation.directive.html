@@ -43,6 +43,7 @@
     </div>
     <div class="col-sm-6">
         <div class="container-fluid generation-selection">
+            <div class="alert alert-danger" role="alert" ng-if="!data.generation.selectedModelEntitys" style="margin: 10px">Model error : please look in the console</div>
             <div class="row generation-selection-line card-generation"
                  ng-repeat="entity in data.generation.selectedModelEntitys"
                  ng-click="selectEntity(entity)"
@@ -100,7 +101,7 @@
         <form class="form-horizontal">
             <div class="form-group">
                 <div class="col-sm-12 center-align">
-                    <button class="btn btn-primary" ng-click="submitGeneration()">
+                    <button class="btn btn-primary" ng-disabled="!data.generation.selectedModelEntitys" ng-click="submitGeneration()">
                         <span class="fa fa-play-circle fa-lg"></span> &nbsp;Generate
                     </button>
                 </div>

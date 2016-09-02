@@ -1,24 +1,28 @@
-<div class="modal-header">
-    <h3 class="modal-title">New project</h3>
-</div>
-<div class="modal-body">
-    {{errorMessage}}
-    <div class="form-group">
-        <label for="project-name">Project name :</label>
-        <input id="project-name" class="form-control" placeholder="Project name"
-               ng-model="projectName" ng-change="projectNameChange()" autofocus>
-    </div>
-
-    <div ng-class="{'has-error' : noModelName}">
-        <div class="form-group">
-            <label for="model-name">Model name :</label>
-            <input id="model-name" class="form-control" placeholder="Model name"
-                   ng-model="modelName" ng-change="modelNameChange()">
+<div class="modal-content">
+    <form>
+        <div class="modal-header">
+            <h3 class="modal-title">New project</h3>
         </div>
-    </div>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-disabled="noModelName" ng-click="createProject()">Create project
-    </button>
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        <div class="modal-body">
+            {{errorMessage}}
+            <div class="form-group">
+                <label for="project-name">Project name :</label>
+                <input id="project-name" class="form-control" placeholder="Project name"
+                       ng-model="projectName" ng-change="projectNameChange()" autofocus>
+            </div>
+            <div ng-class="{'has-error' : noModelName}">
+                <div class="form-group">
+                    <label for="model-name">Model name :</label>
+                    <input id="model-name" class="form-control" placeholder="Model name"
+                           ng-model="modelName" ng-change="modelNameChange()">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="submit" ng-disabled="projectName=='' || modelName==''" ng-click="createProject()">Create
+                project
+            </button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </form>
 </div>

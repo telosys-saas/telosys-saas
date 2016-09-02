@@ -15,7 +15,7 @@
 <body>
 <div>
     <h1>Telosys</h1>
-    <a href="login.jsp">Login</a><br>
+    <a href="login">Login</a><br>
     <a href="createAccount.jsp">Create account</a>
     <br>
     <b><%

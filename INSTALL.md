@@ -31,8 +31,8 @@
 - apt-get install maven
 
 ## Telosys data folder
-- mkdir /opt/telosys-saas
-- nano /opt/telosys-saas/telosys-saas.properties
+- sudo mkdir /opt/telosys-saas
+- sudo nano /opt/telosys-saas/telosys-saas.properties
   - define this content :
 ```
 dataRootPath        = /opt/telosys-saas
@@ -67,4 +67,4 @@ See logs :
 - tail -n 500 /var/lib/tomcat8/logs/catalina.out
 
 Go to the application:
-- http://localhost:8080/talosys-saas
+- http://localhost:8080/telosys-saas

@@ -179,7 +179,77 @@ table.simple tr td, table.simple tr th {
 
 .inline-block {
     display: inline-block;
-};
-};
-};
+}
+
+.login {
+    border: 1px solid rgba(0,0,0,.3);
+    border-radius: 1px;
+    background: #fff;
+    -webkit-box-shadow: 0 5px 15px rgba(0,0,0,.3);
+    -moz-box-shadow: 0 5px 15px rgba(0,0,0,.3);
+    box-shadow: 0 5px 15px rgba(0,0,0,.3);
+    width: 600px;
+    margin: 30px auto;
+}
+
+.login.without-backdrop {
+    border-color: #d4d4d4;
+    box-shadow: 0 1px 2px #ddd;
+}
+
+.login .login-heading {
+    position: relative;
+    padding: 15px;
+}
+
+.login .login-heading h4 {
+    margin: 0;
+}
+
+.login .login-body {
+    padding: 15px;
+}
+
+.login .login-body input {
+    height: 42px;
+    box-shadow: none;
+}
+
+.btn.btn-block, .gb-markdown .btn.btn-block, a.btn.btn-block {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.btn.btn-success, .gb-markdown .btn.btn-success, a.btn.btn-success {
+    background: linear-gradient(#5cb85c, #449d44);
+    border-color: #3d8b3d;
+    color: #fff;
+}
+
+.btn.btn-github {
+    background: linear-gradient(#444,#2b2b2b);
+    border-color: #1e1e1e;
+    color: #fff;
+}
+
+.btn.btn-github.btn-lg {
+    padding-right: 5px;
+    position: relative;
+    padding-left: 40px;
+}
+
+.btn.btn-facebook.btn-lg i, .btn.btn-github.btn-lg i, .btn.btn-google.btn-lg i, .btn.btn-twitter.btn-lg i {
+    top: 0;
+    left: 0;
+    line-height: 46px;
+    width: 50px;
+    bottom: 0;
+}
+
+.btn.btn-github.btn-lg i {
+    position: absolute;
+    padding: 0 10px;
+    background: rgba(0,0,0,.3);
+    border-radius: 6px 0 0 6px;
 }

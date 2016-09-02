@@ -67,4 +67,4 @@ See logs :
 - tail -n 500 /var/lib/tomcat8/logs/catalina.out
 
 Go to the application:
-- http://localhost:8080/talosys-saas
+- http://localhost:8080/telosys-saas

@@ -31,8 +31,8 @@
 - apt-get install maven
 
 ## Telosys data folder
-- mkdir /opt/telosys-saas
-- nano /opt/telosys-saas/telosys-saas.properties
+- sudo mkdir /opt/telosys-saas
+- sudo nano /opt/telosys-saas/telosys-saas.properties
   - define this content :
 ```
 dataRootPath        = /opt/telosys-saas

@@ -21,6 +21,10 @@ import java.security.SecureRandom;
 public class ForgetPassword extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // remove last error message
+        request.getSession().removeAttribute("error");
+
         UsersManager usersManager = UsersManager.getInstance();
         Memory memory = Memory.getMemory();
         GMail gMail = new GMail();
@@ -50,6 +54,10 @@ public class ForgetPassword extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // remove last error message
+        request.getSession().removeAttribute("error");
+
         response.sendRedirect(request.getContextPath() + "/forgetPassword.jsp");
     }
 }

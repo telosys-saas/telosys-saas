@@ -15,6 +15,26 @@
 
 <body>
 
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-1">
+                <div class="item logo">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <span class="item title">
+                    Telosys Saas
+                </span>
+            </div>
+            <div class="col-sm-7 right-align">
+                <a href="createAccount" class="btn btn-success">Sign up</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="shade-gradient">
     <div class="login without-backdrop">
         <div class="login-heading">
             <h4>Log in to Your Account</h4>
@@ -25,12 +45,13 @@
                     <a href="/" class="btn btn-default btn-lg btn-github btn-block" role="button"><i class="fa fa-github fa-2x"></i>Sign in with GitHub</a>
                 </div>
                 <hr/>
-                <% if (request.getSession().getAttribute("simpleShiroApplicationLoginFailure") != null) { %>
+                <% if (request.getSession().getAttribute("error") != null) { %>
                 <div class="form-group">
                     <div class="alert alert-danger">
-                        Login attempt was unsuccessful
+                        <%=request.getSession().getAttribute("error")%>
                     </div>
                 </div>
+                <% request.getSession().removeAttribute("error"); %>
                 <% } %>
                 <div class="form-group">
                     <input name="username" id="username" type="text" class="form-control input-lg" placeholder="Username" />
@@ -46,6 +67,7 @@
             </form>
         </div>
     </div>
+</div>
 
 </body>
 

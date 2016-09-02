@@ -25,8 +25,10 @@ public class TelosysFormAuthenticationFilter extends org.apache.shiro.web.filter
 
     @Override
     protected void setFailureAttribute(ServletRequest request, AuthenticationException ae) {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        HttpSession session = httpServletRequest.getSession(false);
         String message = ae.getMessage();
-        request.setAttribute(getFailureKeyAttribute(), message);
+        session.setAttribute(getFailureKeyAttribute(), message);
     }
 
     @Override
@@ -58,9 +60,9 @@ public class TelosysFormAuthenticationFilter extends org.apache.shiro.web.filter
                 // the user tries 3 times to login
                 if (numberOfTry >= 2) {
                     session.setAttribute("numberOfTry", ++numberOfTry);
-                    session.setAttribute("error", "You reach the limit of login try.");
+                    session.setAttribute("error", "You have exceeded the number of allowed login attempts");
                     try {
-                        httpServletResponse.sendRedirect("/");
+                        httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login.jsp");
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }

@@ -19,6 +19,10 @@ public class Login extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // remove last error message
+        request.getSession().removeAttribute("error");
+
         // The user is already authenticated
         if (Security.isAuthenticated()) {
             response.sendRedirect(request.getContextPath() + "/workspace/index.html");
@@ -32,7 +36,8 @@ public class Login extends HttpServlet {
         int numberOfTry = (int) request.getSession().getAttribute("numberOfTry");
         // THe user try 3 times to log in
         if (numberOfTry >= 3) {
-            response.sendRedirect(request.getContextPath() + "/");
+            request.getSession().setAttribute("error", "You have exceeded the number of allowed login attempts");
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
             return;
         }
         response.sendRedirect(request.getContextPath() + "/login.jsp");

@@ -19,6 +19,10 @@ import java.io.IOException;
 public class ResetPassword extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // remove last error message
+        request.getSession().removeAttribute("error");
+
         PasswordEncoder passwordEncoder = new PasswordEncoder();
         if(!Util.equalsAndNotEmpty(request.getParameter("password1"), request.getParameter("password2"))) {
             request.getSession().setAttribute("error", "Password is not defined");
@@ -41,6 +45,10 @@ public class ResetPassword extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // remove last error message
+        request.getSession().removeAttribute("error");
+
         // Find the user who match with the token in the url link
         String urlRequest = request.getRequestURL().toString();
         String[] parseUrlRequest = urlRequest.split("/");

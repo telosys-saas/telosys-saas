@@ -20,12 +20,14 @@
     </div>
     <div class="login-body">
         <form name="createAccountForm" action="/forgetPassword" method="POST">
+            <% } %>
             <% if (request.getSession().getAttribute("error") != null) { %>
             <div class="form-group">
                 <div class="alert alert-danger">
-                    <% out.println(request.getSession().getAttribute("error")); %>
+                    <%=request.getSession().getAttribute("error")%>
                 </div>
             </div>
+            <c:remove var="error" scope="session" />
             <% } %>
             <div class="form-group">
                 <input name="login" id="login" type="text" class="form-control input-lg" placeholder="Username" />

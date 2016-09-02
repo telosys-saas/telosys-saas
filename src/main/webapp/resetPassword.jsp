@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <link href="lib/materialdesignicons/css/materialdesignicons.css" media="all" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body class="shade-gradient">
 
 <div class="login without-backdrop">
     <div class="login-heading">
@@ -22,9 +22,10 @@
             <% if (request.getSession().getAttribute("error") != null) { %>
             <div class="form-group">
                 <div class="alert alert-danger">
-                    <% out.println(request.getSession().getAttribute("error")); %>
+                    <%=request.getSession().getAttribute("error")%>
                 </div>
             </div>
+            <c:remove var="error" scope="session" />
             <% } %>
             <div class="form-group">
                 <input name="password1" id="password1" type="password" class="form-control input-lg" placeholder="Password" />

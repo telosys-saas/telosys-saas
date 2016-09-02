@@ -15,6 +15,10 @@ public class RedirectAfterGithubLogin extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // remove last error message
+        request.getSession().removeAttribute("error");
+
         response.sendRedirect(request.getContextPath() + "/workspace");
     }
 }

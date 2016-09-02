@@ -203,6 +203,10 @@ header .container .item {
     margin: 0 10px;
 }
 
+header .container .btn {
+    font-size: 22px;
+}
+
 header .container .logo {
     display: inline-block;
     background-image: url('../images/telosys-logo-min.svg');

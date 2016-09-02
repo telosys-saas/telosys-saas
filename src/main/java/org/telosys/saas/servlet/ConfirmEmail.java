@@ -25,6 +25,7 @@ public class ConfirmEmail extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // remove last error message
+        request.getSession().removeAttribute("success");
         request.getSession().removeAttribute("error");
 
         String urlRequest = request.getRequestURL().toString();

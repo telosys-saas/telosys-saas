@@ -21,6 +21,7 @@ public class ResetPassword extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // remove last error message
+        request.getSession().removeAttribute("success");
         request.getSession().removeAttribute("error");
 
         PasswordEncoder passwordEncoder = new PasswordEncoder();
@@ -47,6 +48,7 @@ public class ResetPassword extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // remove last error message
+        request.getSession().removeAttribute("success");
         request.getSession().removeAttribute("error");
 
         // Find the user who match with the token in the url link

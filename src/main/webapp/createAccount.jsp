@@ -43,6 +43,14 @@
                     <a href="/profile/github" class="btn btn-default btn-lg btn-github btn-block" role="button"><i class="fa fa-github fa-2x"></i>Sign in with GitHub</a>
                 </div>
                 <hr/>
+                <% if (request.getSession().getAttribute("success") != null) { %>
+                <div class="form-group">
+                    <div class="alert alert-success">
+                        <%=request.getSession().getAttribute("success")%>
+                    </div>
+                </div>
+                <% request.getSession().removeAttribute("success"); %>
+                <% } %>
                 <% if (request.getSession().getAttribute("error") != null) { %>
                 <div class="form-group">
                     <div class="alert alert-danger">

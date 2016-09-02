@@ -27,6 +27,7 @@ public class CreateAccount extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // remove last error message
+        request.getSession().removeAttribute("success");
         request.getSession().removeAttribute("error");
 
         UsersManager usersManager = UsersManager.getInstance();
@@ -75,12 +76,14 @@ public class CreateAccount extends HttpServlet {
                 " The Telosys Team";
         gMail.send(user.getMail(), subjectMail, bodyMail);
         // Redirect to the home page
+        request.getSession().setAttribute("success", "Mail sent for account creation");
         response.sendRedirect(request.getContextPath() + "/");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // remove last error message
+        request.getSession().removeAttribute("success");
         request.getSession().removeAttribute("error");
 
         response.sendRedirect(request.getContextPath() + "/createAccount.jsp");

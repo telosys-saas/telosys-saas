@@ -39,6 +39,14 @@
         </div>
         <div class="login-body">
             <form name="createAccountForm" action="/resetPassword" method="POST">
+                <% if (request.getSession().getAttribute("success") != null) { %>
+                <div class="form-group">
+                    <div class="alert alert-success">
+                        <%=request.getSession().getAttribute("success")%>
+                    </div>
+                </div>
+                <% request.getSession().removeAttribute("success"); %>
+                <% } %>
                 <% if (request.getSession().getAttribute("error") != null) { %>
                 <div class="form-group">
                     <div class="alert alert-danger">

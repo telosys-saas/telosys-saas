@@ -48,6 +48,14 @@
 
 <div class="shade-gradient">
     <div class="container">
+        <% if (request.getSession().getAttribute("success") != null) { %>
+        <div class="col-sm-12">
+            <div class="alert alert-success">
+                <%=request.getSession().getAttribute("success")%>
+            </div>
+        </div>
+        <% request.getSession().removeAttribute("success"); %>
+        <% } %>
         <div class="col-sm-6">
             <div class="home-presentation">
                 <h1>The lightest and easiest code generator</h1>

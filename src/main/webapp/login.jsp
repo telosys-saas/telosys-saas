@@ -24,7 +24,7 @@
             </div>
             <div class="col-sm-4">
                 <span class="item title">
-                    Telosys Saas
+                    <a href="<%=request.getContextPath()%>/">Telosys Saas</a>
                 </span>
             </div>
             <div class="col-sm-7 right-align">

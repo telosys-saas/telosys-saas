@@ -22,7 +22,7 @@
             </div>
             <div class="col-sm-4">
                 <span class="item title">
-                    Telosys Saas
+                    <a href="<%=request.getContextPath()%>/">Telosys Saas</a>
                 </span>
             </div>
             <div class="col-sm-7 right-align">
@@ -133,18 +133,26 @@
 </div>
 
 <!--
-<div class="section welcome-section-footer">
-    <div class="row container">
-        <div class="col s6 left-align">
-            <p><a href="http://www.telosys.org" target="_blank">Telosys</a></p>
-            <p><a href="https://sites.google.com/site/telosystools/" target="_blank">Telosys Source code generator</a></p>
-            <p><a href="http://marketplace.eclipse.org/content/telosys-tools" target="_blank">Plugin Telosys Tools For Eclipse</a></p>
-            <p><a href="https://github.com/telosys-tools" target="_blank">Templates for code generation</a></p>
-        </div>
-        <div class="col s6 left-align">
-            <p><a mailto="telosysteam@gmail.com" target="_blank">Contact us by mail : telosysteam@gmail.com</a></p>
-            <p><a href="https://moot.it/telosystools" target="_blank">Forum : https://moot.it/telosystools</a></p>
-            <p><a href="http://telosys-tools.blogspot.com/" target="_blank">Blog : http://telosys-tools.blogspot.com/</a></p>
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">Place sticky footer content here.</p>
+    </div>
+</footer>
+<!--
+<div class="welcome-section-footer" style="position: fixed; bottom: 0; width: 100%;">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 center-align" style="padding: 20px">
+                <p><a href="http://www.telosys.org" target="_blank">Telosys</a></p>
+                <p><a href="https://sites.google.com/site/telosystools/" target="_blank">Telosys Source code generator</a></p>
+                <p><a href="http://marketplace.eclipse.org/content/telosys-tools" target="_blank">Plugin Telosys Tools For Eclipse</a></p>
+                <p><a href="https://github.com/telosys-tools" target="_blank">Templates for code generation</a></p>
+            </div>
+            <div class="col-sm-6 center-align" style="padding: 20px">
+                <p><a mailto="telosysteam@gmail.com" target="_blank">Contact us by mail : telosysteam@gmail.com</a></p>
+                <p><a href="https://moot.it/telosystools" target="_blank">Forum : https://moot.it/telosystools</a></p>
+                <p><a href="http://telosys-tools.blogspot.com/" target="_blank">Blog : http://telosys-tools.blogspot.com/</a></p>
+            </div>
         </div>
     </div>
 </div>

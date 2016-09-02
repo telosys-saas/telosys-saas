@@ -14,29 +14,50 @@
 
 <body>
 
-<div class="login without-backdrop">
-    <div class="login-heading">
-        <h4>Forget password</h4>
-    </div>
-    <div class="login-body">
-        <form name="createAccountForm" action="/forgetPassword" method="POST">
-            <% } %>
-            <% if (request.getSession().getAttribute("error") != null) { %>
-            <div class="form-group">
-                <div class="alert alert-danger">
-                    <%=request.getSession().getAttribute("error")%>
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-1">
+                <div class="item logo">
                 </div>
             </div>
-            <c:remove var="error" scope="session" />
-            <% } %>
-            <div class="form-group">
-                <input name="login" id="login" type="text" class="form-control input-lg" placeholder="Username" />
+            <div class="col-sm-4">
+                <span class="item title">
+                    <a href="<%=request.getContextPath()%>/">Telosys Saas</a>
+                </span>
             </div>
-            <div class="form-group">
-                <input name="mail" id="mail" type="text" class="form-control input-lg" placeholder="Email Address" />
+            <div class="col-sm-7 right-align">
+                <a href="login" class="btn btn-default item">Sign in</a>
             </div>
-            <button type="submit" class="btn btn-success btn-lg btn-block" role="button" data-reactid="86">Send email</button>
-        </form>
+        </div>
+    </div>
+</header>
+
+<div class="shade-gradient">
+    <div class="login without-backdrop">
+        <div class="login-heading">
+            <h4>Forget password</h4>
+        </div>
+        <div class="login-body">
+            <form name="createAccountForm" action="/forgetPassword" method="POST">
+                <% } %>
+                <% if (request.getSession().getAttribute("error") != null) { %>
+                <div class="form-group">
+                    <div class="alert alert-danger">
+                        <%=request.getSession().getAttribute("error")%>
+                    </div>
+                </div>
+                <c:remove var="error" scope="session" />
+                <% } %>
+                <div class="form-group">
+                    <input name="login" id="login" type="text" class="form-control input-lg" placeholder="Username" />
+                </div>
+                <div class="form-group">
+                    <input name="mail" id="mail" type="text" class="form-control input-lg" placeholder="Email Address" />
+                </div>
+                <button type="submit" class="btn btn-success btn-lg btn-block" role="button" data-reactid="86">Send email</button>
+            </form>
+        </div>
     </div>
 </div>
 

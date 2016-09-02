@@ -30,7 +30,7 @@
 	</servlet-mapping>
 
 	<!-- PAC4J Security -->
-	<!-- callback -->
+	<!-- Callback -->
 	<filter>
 		<filter-name>callbackFilter</filter-name>
 		<filter-class>org.pac4j.j2e.filter.CallbackFilter</filter-class>

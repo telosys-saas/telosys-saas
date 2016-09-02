@@ -16,8 +16,16 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 
 /**
  * <p>User: Zhang Kaitao
@@ -69,8 +77,21 @@ public class OAuthRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		logger.info("doGetAuthorizationInfo(token)...");
+
         OAuthToken oAuth2Token = (OAuthToken) token;
         String code = oAuth2Token.getAuthCode();
+        Client client = Client.create();
+        WebResource webResource = client.resource("https://github.com/login/oauth/access_token?client_id=78cfdcea02fa8d08efe5" +
+                "&client_secret=31ef44e4ada6739166f8a0d07dd7de43ed2ba19a&code="+ code);
+        String response = webResource.type("application/json").post(String.class);
+
+        String[] parseResponse = response.split("&");
+        String[] accesToken = parseResponse[0].split("=");
+        client = Client.create();
+        webResource = client.resource("https://api.github.com/user?access_token="+ accesToken[1]);
+
+        response = webResource.type("application/json").get(String.class);
+
         String username = extractUsername(code);
 
         SimpleAuthenticationInfo authenticationInfo =

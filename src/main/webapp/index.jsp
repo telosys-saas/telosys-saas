@@ -110,7 +110,7 @@
                 <div class="login-body">
                     <form name="createAccountForm" action="createAccount" method="POST">
                         <div class="form-group">
-                            <a href="/profile/github" class="btn btn-default btn-lg btn-github btn-block" role="button"><i class="fa fa-github fa-2x"></i>Sign in with GitHub</a>
+                            <a href="https://github.com/login/oauth/authorize?scope=user:email&client_id=78cfdcea02fa8d08efe5" class="btn btn-default btn-lg btn-github btn-block" role="button"><i class="fa fa-github fa-2x"></i>Sign in with GitHub</a>
                         </div>
                         <hr/>
                         <% if (request.getSession().getAttribute("error") != null) { %>

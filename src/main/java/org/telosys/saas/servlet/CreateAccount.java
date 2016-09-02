@@ -28,18 +28,26 @@ public class CreateAccount extends HttpServlet {
         GMail gMail = new GMail();
         // Check if the user fill all the fields
         if(Util.isEmpty(request.getParameter("login"))){
-            throw new IllegalStateException("create user : login is not defined");
+            request.getSession().setAttribute("error", "Username is not defined");
+            response.sendRedirect(request.getContextPath() + "/createAccount.jsp");
+            return;
         }
         if (Util.isEmpty(request.getParameter("mail"))) {
-            throw new IllegalStateException("create user : mail is not defined");
+            request.getSession().setAttribute("error", "Mail is not defined");
+            response.sendRedirect(request.getContextPath() + "/createAccount.jsp");
+            return;
         }
         if(!Util.equalsAndNotEmpty(request.getParameter("password1"), request.getParameter("password2"))) {
-            throw new IllegalStateException("create user : password is not defined");
+            request.getSession().setAttribute("error", "Password is not defined");
+            response.sendRedirect(request.getContextPath() + "/createAccount.jsp");
+            return;
         }
         // Check if the user is unique
         User userExisting = usersManager.getUserByLogin(request.getParameter("login"));
         if (userExisting != null) {
-            throw new IllegalStateException("create user : user already exists");
+            request.getSession().setAttribute("error", "User already exists");
+            response.sendRedirect(request.getContextPath() + "/createAccount.jsp");
+            return;
         }
         // TODO search by mail
         // Create the new user
@@ -59,10 +67,10 @@ public class CreateAccount extends HttpServlet {
                 " The Telosys Team";
         gMail.send(user.getMail(), subjectMail, bodyMail);
         // Redirect to the home page
-        response.sendRedirect("/");
+        response.sendRedirect(request.getContextPath() + "/");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("createAccount.jsp");
+        response.sendRedirect(request.getContextPath() + "/createAccount.jsp");
     }
 }

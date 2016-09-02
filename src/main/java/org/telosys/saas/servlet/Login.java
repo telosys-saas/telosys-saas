@@ -21,20 +21,20 @@ public class Login extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // The user is already authenticated
         if (Security.isAuthenticated()) {
-            response.sendRedirect("/workspace/index.html");
+            response.sendRedirect(request.getContextPath() + "/workspace/index.html");
             return;
         }
         // The user access to the login page for the first time
         if (request.getSession().getAttribute("numberOfTry") == null) {
-            response.sendRedirect("/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
             return;
         }
         int numberOfTry = (int) request.getSession().getAttribute("numberOfTry");
         // THe user try 3 times to log in
         if (numberOfTry >= 3) {
-            response.sendRedirect("/");
+            response.sendRedirect(request.getContextPath() + "/");
             return;
         }
-        response.sendRedirect("/login.jsp");
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
     }
 }

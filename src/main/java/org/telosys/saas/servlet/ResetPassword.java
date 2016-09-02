@@ -21,19 +21,23 @@ public class ResetPassword extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PasswordEncoder passwordEncoder = new PasswordEncoder();
         if(!Util.equalsAndNotEmpty(request.getParameter("password1"), request.getParameter("password2"))) {
-            throw new IllegalStateException("create user : password is not defined");
+            request.getSession().setAttribute("error", "Password is not defined");
+            response.sendRedirect(request.getContextPath() + "/resetPassword.jsp");
+            return;
         }
         String login = (String) request.getSession().getAttribute("login");
         UsersManager usersManager = UsersManager.getInstance();
         User userExisting = usersManager.getUserByLogin(login);
         if(userExisting == null){
-            throw new IllegalStateException("reset password : user doesn't exist");
+            request.getSession().setAttribute("error", "User does not exist");
+            response.sendRedirect(request.getContextPath() + "/resetPassword.jsp");
+            return;
         }
 
         userExisting.setEncryptedPassword(passwordEncoder.encrypt(request.getParameter("password1")));
         usersManager.deleteUser(userExisting.getLogin());
         usersManager.saveUser(userExisting);
-        response.sendRedirect("/");
+        response.sendRedirect(request.getContextPath() + "/");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -44,10 +48,12 @@ public class ResetPassword extends HttpServlet {
         Memory memory = Memory.getMemory();
         User userExisting = memory.findUserByToken(token);
         if(userExisting == null){
-            throw new IllegalStateException("reset password : bad link");
+            request.getSession().setAttribute("error", "Bad reset password link");
+            response.sendRedirect(request.getContextPath() + "/resetPassword.jsp");
+            return;
         }
         // Save the user's login in the session
         request.getSession().setAttribute("login",userExisting.getLogin());
-        response.sendRedirect("/resetPassword.jsp");
+        response.sendRedirect(request.getContextPath() + "/resetPassword.jsp");
     }
 }

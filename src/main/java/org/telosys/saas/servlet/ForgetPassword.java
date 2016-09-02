@@ -27,10 +27,14 @@ public class ForgetPassword extends HttpServlet {
         // Check if the user exists
         User userExisting = usersManager.getUserByLogin(request.getParameter("login"));
         if (userExisting == null) {
-            throw new IllegalStateException("forget password : user doesn't exist");
+            request.getSession().setAttribute("error", "User does not exist");
+            response.sendRedirect(request.getContextPath() + "/forgetPassword.jsp");
+            return;
         }
         if (!Util.equalsAndNotEmpty(request.getParameter("mail"), userExisting.getMail())) {
-            throw new IllegalStateException("forget password : bad email");
+            request.getSession().setAttribute("error", "Bad email");
+            response.sendRedirect(request.getContextPath() + "/forgetPassword.jsp");
+            return;
         }
         // Save the new user in memory
         // and create a unique token for the link and memory map
@@ -42,10 +46,10 @@ public class ForgetPassword extends HttpServlet {
                 " Sincerly," +
                 " The Telosys Team";
         gMail.send(userExisting.getMail(), "Reset Telosys password", bodyMail);
-        response.sendRedirect("/");
+        response.sendRedirect(request.getContextPath() + "/");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("/forgetPassword.jsp");
+        response.sendRedirect(request.getContextPath() + "/forgetPassword.jsp");
     }
 }

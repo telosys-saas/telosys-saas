@@ -30,9 +30,11 @@ public class ConfirmEmail extends HttpServlet {
         UsersManager usersManager = UsersManager.getInstance();
         User user = memory.findUserByToken(token);
         if(user == null){
-            throw new IllegalStateException("confirm email : bad link");
+            request.getSession().setAttribute("error", "Bad confirmation link");
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
         }
         usersManager.saveUser(user, user.getEncryptedPassword());
-        response.sendRedirect("/login");
+        response.sendRedirect(request.getContextPath() + "/login");
     }
 }

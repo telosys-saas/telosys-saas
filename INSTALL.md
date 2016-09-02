@@ -38,10 +38,11 @@
 dataRootPath        = /opt/telosys-saas
 httpPort            = 8080
 authRedirectUrl     = http://localhost:8080/api/callback
-githubOauthKey      = cbbe70a7fa16533ca892
-githubOauthPassword = 2fcbd7d3f417582f042bb33baa1875b46454f70e
+githubOauthKey      = 
+githubOauthPassword = 
 gmailUsername       = telosystoolsdemo@gmail.com
-gmailPassword       = telosysteam1
+gmailPassword       = 
+mailRedirect        = http://<adresse_ip>
 ```
 - sudo chown -R tomcat8:tomcat8 /opt/telosys-saas
 

@@ -1,5 +1,7 @@
 package org.telosys.saas.servlet;
 
+import org.telosys.saas.config.Configuration;
+import org.telosys.saas.config.ConfigurationHolder;
 import org.telosys.saas.util.GMail;
 import org.telosys.saas.util.Util;
 import org.telosys.tools.users.User;
@@ -65,8 +67,10 @@ public class CreateAccount extends HttpServlet {
         memory.addUser(token,user);
         // Send a confirmation email
         String subjectMail = "Confirm Telosys account";
-        String bodyMail = "Dear " + user.getLogin() + "," + " Please click on the following link to confirm your email address" +
-                " http://localhost:8080/confirmEmail/" + token +
+        Configuration configuration = ConfigurationHolder.getConfiguration();
+        String bodyMail = "Dear " + user.getLogin() + "," + " Please click on the following link to confirm your email address : " +
+                //" http://localhost:8080/confirmEmail/" + token +
+                configuration.getMailRedirect() + "/confirmEmail/" + token +
                 " Sincerly," +
                 " The Telosys Team";
         gMail.send(user.getMail(), subjectMail, bodyMail);

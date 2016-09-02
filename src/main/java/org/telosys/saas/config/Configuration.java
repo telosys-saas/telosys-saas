@@ -22,6 +22,7 @@ public class Configuration {
     private static final String GITHUB_OAUTH_PASSWORD = "githubOauthPassword";
     private static final String GMAIL_USERNAME = "gmailUsername";
     private static final String GMAIL_PASSWORD = "gmailPassword";
+    private static final String MAIL_REDIRECT = "mailRedirect";
 
 
     //--- Default values
@@ -32,6 +33,7 @@ public class Configuration {
     private static final String GITHUB_OAUTH_PASSWORD_DEFAULT_VALUE = null;
     private static final String GMAIL_USERNAME_DEFAULT_VALUE = null;
     private static final String GMAIL_PASSWORD_DEFAULT_VALUE = null;
+    private static final String MAIL_REDIRECT_DEFAULT_VALUE = null;
 
     //--- Attributes
     private final String dataRootPath;
@@ -42,6 +44,7 @@ public class Configuration {
     private final String githubOauthPassword;
     private final String gmailUsername;
     private final String gmailPassword;
+    private final String mailRedirect;
 
     //--------------------------------------------------------------------------------
 
@@ -63,6 +66,7 @@ public class Configuration {
         this.githubOauthPassword = GITHUB_OAUTH_PASSWORD_DEFAULT_VALUE;
         this.gmailUsername = GMAIL_USERNAME_DEFAULT_VALUE;
         this.gmailPassword = GMAIL_PASSWORD_DEFAULT_VALUE;
+        this.mailRedirect = MAIL_REDIRECT_DEFAULT_VALUE;
     }
 
     //--------------------------------------------------------------------------------
@@ -87,6 +91,7 @@ public class Configuration {
         this.githubOauthPassword = paramValue(properties.getProperty(GITHUB_OAUTH_PASSWORD), GITHUB_OAUTH_PASSWORD_DEFAULT_VALUE);
         this.gmailUsername = paramValue(properties.getProperty(GMAIL_USERNAME), GMAIL_USERNAME_DEFAULT_VALUE);
         this.gmailPassword = paramValue(properties.getProperty(GMAIL_PASSWORD), GMAIL_PASSWORD_DEFAULT_VALUE);
+        this.mailRedirect = paramValue(properties.getProperty(MAIL_REDIRECT), MAIL_REDIRECT_DEFAULT_VALUE);
     }
 
     //--------------------------------------------------------------------------------
@@ -145,5 +150,9 @@ public class Configuration {
 
     public String getGmailPassword() {
         return gmailPassword;
+    }
+
+    public String getMailRedirect() {
+        return mailRedirect;
     }
 }

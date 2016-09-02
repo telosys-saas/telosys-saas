@@ -200,3 +200,15 @@ The properties configurations to send the emails are define in the java class "G
 - port: 587
 - authentication: enabled
 - start tls : enabled
+
+##### telosys-saas.properties
+```
+dataRootPath        = /data/telosys-saas
+httpPort            = 8080
+authRedirectUrl     = http://<adresse_ip>/api/callback
+githubOauthKey      = 
+githubOauthPassword = 
+gmailUsername       = telosystoolsdemo@gmail.com
+gmailPassword       = 
+mailRedirect        = http://<adresse_ip>
+```

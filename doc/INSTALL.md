@@ -48,7 +48,7 @@ mailRedirect        = http://<adresse_ip>
 
 ## TELOSYS_ROOT variable
 - Edit ```context.xml```Tomcat file :
-- nano /etc/tomcat8/conf/context.xml
+- nano /etc/tomcat8/context.xml
 - Add this line in ```<Context>``` :
 ```
 <Environment name="TELOSYS_ROOT" type="java.lang.String" value="/opt/telosys-saas" override="false" />

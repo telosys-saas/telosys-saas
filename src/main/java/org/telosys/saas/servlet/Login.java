@@ -16,6 +16,7 @@ import java.io.IOException;
 public class Login extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,9 +36,9 @@ public class Login extends HttpServlet {
             return;
         }
         int numberOfTry = (int) request.getSession().getAttribute("numberOfTry");
-        // THe user try 3 times to log in
+        // The user try 3 times to log in
         if (numberOfTry >= 3) {
-            request.getSession().setAttribute("error", "You have exceeded the number of allowed login attempts");
+            request.getSession().setAttribute("error", "You exceeded the number of allowed login attempts");
             response.sendRedirect(request.getContextPath() + "/login.jsp");
             return;
         }

@@ -3,7 +3,7 @@
 angular.module('app')
   .factory('BundlesService', ['$http', function ($http) {
 
-    var host = '/';
+    var host = '/telosys-saas/';
 
     return {
 

@@ -3,8 +3,8 @@
 angular.module('app')
   .factory('FilesService', ['$http', function ($http) {
 
-    var host = '/';
-
+    var host = '/telosys-saas/';
+    
     return {
 
       /**

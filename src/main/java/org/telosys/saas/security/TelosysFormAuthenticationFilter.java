@@ -33,12 +33,24 @@ public class TelosysFormAuthenticationFilter extends org.apache.shiro.web.filter
 
     @Override
     protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
-        this.issueSuccessRedirect(request, response);
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession(false);
         if (session.getAttribute("numberOfTry") != null) {
+            int numberOfTry = (int) session.getAttribute("numberOfTry");
+            if (numberOfTry >= 3) {
+                session.setAttribute("numberOfTry", ++numberOfTry);
+                session.setAttribute("error", "You have exceeded the number of allowed login attempts");
+                try {
+                    httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login.jsp  ");
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                return false;
+            }
             session.setAttribute("numberOfTry", null);
         }
+        this.issueSuccessRedirect(request, response);
         return false;
     }
 

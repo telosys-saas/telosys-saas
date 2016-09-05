@@ -3,10 +3,10 @@
 angular.module('app')
   .factory('TelosysService', ['$http', function ($http) {
 
-    var host = '/';
+      var host = '/telosys-saas/';
     
     return {
-
+        
       /**
        * Get the Telosys folder
        * @param userId the authenticated user

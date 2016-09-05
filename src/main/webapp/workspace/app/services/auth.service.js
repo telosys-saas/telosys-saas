@@ -3,7 +3,7 @@
 angular.module('app')
   .factory('AuthService', ['$http', function ($http) {
 
-    var host = '/';
+    var host = '/telosys-saas/';
 
     return {
 
@@ -14,7 +14,7 @@ angular.module('app')
       status: function () {
         return $http({
           method: 'GET',
-          url: host + 'api/v1/profile/user',
+          url: host+ 'api/v1/profile/user',
           dataType: 'json'
         })
           .catch(function (e) {

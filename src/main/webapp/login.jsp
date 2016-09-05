@@ -68,8 +68,8 @@
                     <input name="password" id="password" type="password" class="form-control input-lg" placeholder="Password" />
                 </div>
                 <p class="help-block">
-                    If you don't have an account, <a href="/createAccount">sign up</a>.
-                    Forgot your password? <a href="/forgetPassword">Reset it</a> with your email.
+                    If you don't have an account, <a href="/telosys-saas/createAccount">sign up</a>.
+                    Forgot your password? <a href="/telosys-saas/forgetPassword">Reset it</a> with your email.
                 </p>
                 <button type="submit" class="btn btn-success btn-lg btn-block" role="button" data-reactid="86">Sign in</button>
             </form>

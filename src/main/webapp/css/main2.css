@@ -78,7 +78,7 @@ div.checkbox {
 
 .logo-telosys-min {
     display: inline-block;
-    background: url("/images/telosys-logo-min.svg");
+    background: url("../images/telosys-logo-min.svg");
     background-repeat: no-repeat;
     width: 64px;
     height: 50px;

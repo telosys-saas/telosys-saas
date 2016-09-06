@@ -1,5 +1,7 @@
 package org.telosys.saas.servlet;
 
+import org.telosys.saas.security.Security;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +21,10 @@ public class RedirectAfterGithubLogin extends HttpServlet {
         // remove last error message
         request.getSession().removeAttribute("success");
         request.getSession().removeAttribute("error");
-
-        response.sendRedirect(request.getContextPath() + "/workspace");
+        if(Security.isAuthenticated()) {
+            response.sendRedirect(request.getContextPath() + "/workspace/index.html");
+            return;
+        }
+        response.sendRedirect(request.getContextPath() + "/");
     }
 }

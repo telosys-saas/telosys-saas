@@ -1,5 +1,7 @@
 package org.telosys.saas.servlet;
 
+import org.telosys.saas.config.Configuration;
+import org.telosys.saas.config.ConfigurationHolder;
 import org.telosys.saas.security.Security;
 
 import javax.servlet.ServletException;
@@ -7,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.groups.ConvertGroup;
 import java.io.IOException;
 
 /**
@@ -25,6 +28,9 @@ public class Login extends HttpServlet {
         request.getSession().removeAttribute("success");
         request.getSession().removeAttribute("error");
 
+        Configuration configuration = ConfigurationHolder.getConfiguration();
+        int loginAttemptsMax = Integer.parseInt(configuration.getLoginAttemptsMax());
+
         // The user is already authenticated
         if (Security.isAuthenticated()) {
             response.sendRedirect(request.getContextPath() + "/workspace/index.html");
@@ -37,8 +43,8 @@ public class Login extends HttpServlet {
         }
         int numberOfTry = (int) request.getSession().getAttribute("numberOfTry");
         // The user try 3 times to log in
-        if (numberOfTry >= 3) {
-            request.getSession().setAttribute("error", "You exceeded the number of allowed login attempts");
+        if (numberOfTry >= loginAttemptsMax) {
+            request.getSession().setAttribute("error", "You exceeded the number of allowed login attempts (" + numberOfTry + "/"+ loginAttemptsMax + ")");
             response.sendRedirect(request.getContextPath() + "/login.jsp");
             return;
         }

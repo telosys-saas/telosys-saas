@@ -1,4 +1,4 @@
-<dashboardtoolbar projects="projects" profile="profile"></dashboardtoolbar>
+<dashboardtoolbar data="data"></dashboardtoolbar>
 <div class="container-fluid dashboard">
     <div class="row">
         <div style="float:right; padding: 20px;">
@@ -11,7 +11,7 @@
         </div>
 
         <div class="col-sm-12">
-            <div class="col-sm-3" ng-repeat="project in projects">
+            <div class="col-sm-3" ng-repeat="project in data.projects">
                 <div class="card" style="cursor: pointer;" ng-click="goToProject(project.id)" >
                     <div class="card-content">
                         <span class="card-title">{{project.name}}</span>

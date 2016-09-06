@@ -57,7 +57,7 @@
                         <%=request.getSession().getAttribute("error")%>
                     </div>
                 </div>
-                <c:remove var="error" scope="session" />
+                <% request.getSession().removeAttribute("error"); %>
                 <% } %>
                 <div class="form-group">
                     <input name="login" id="login" type="text" class="form-control input-lg" placeholder="Username" />

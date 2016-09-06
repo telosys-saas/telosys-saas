@@ -16,7 +16,7 @@
                         <li ng-click="addProject()"><a href>Create project</a></li>
                         <li role="separator" class="divider"></li>
                         <li ng-repeat="project in data.projects">
-                            <a href="/telosys-saas/workspace/index.html#/ide/{{project.id}}">{{project.name}}</a>
+                            <a href="{{data.host}}/workspace/index.html#/ide/{{project.id}}">{{project.name}}</a>
                         </li>
                     </ul>
                 </li>
@@ -54,7 +54,7 @@
                         {{profile.login || profile.userId}} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="/telosys-saas/logout?url=/">Log out</a>
+                            <a href="{{data.host}}/logout?url=/">Log out</a>
                         </li>
                         <li>
                             <a href ng-click="changePassword()">Change password</a>

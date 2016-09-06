@@ -154,7 +154,7 @@ Steps :
 - And it compares the password to validate the authentication
 - "FormAuthenticator" defines the user profile which indicates that user is authenticated
 
-### Pac4J : Github authentication
+### Shiro : Github authentication
 
 Steps:
 - the user goes to the login page and click on the button "Login with Github"
@@ -174,7 +174,7 @@ Steps:
 - Click on the tab "Developer application"
 - Click on "Register a new application" button
 - Set an application Name
-- Defines a callback URL which matches with the PAC4J callback filter URL defined in the web.xml. This callback URL must start by "http://" or "https://". It likes : "http://localhost:8080/callback"
+- Defines a callback URL which be used for  with the PAC4J callback filter URL defined in the web.xml. This callback URL must start by "http://" or "https://". It likes : "http://localhost:8080/callback"
 - Click on "Register application"
 - It creates an OAuth key with a "Client ID" and a "Client secret"
 - These "Client ID", "Client secret" and "Callback URL" must be written in the file "telosys-saas.properties" located in the TELOSYS_ROOT directory as follow :

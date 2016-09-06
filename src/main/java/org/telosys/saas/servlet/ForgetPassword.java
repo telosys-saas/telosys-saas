@@ -1,5 +1,7 @@
 package org.telosys.saas.servlet;
 
+import org.telosys.saas.config.Configuration;
+import org.telosys.saas.config.ConfigurationHolder;
 import org.telosys.saas.util.GMail;
 import org.telosys.saas.util.Util;
 import org.telosys.tools.users.User;
@@ -46,8 +48,9 @@ public class ForgetPassword extends HttpServlet {
         SecureRandom secureRandom = new SecureRandom();
         String token = new BigInteger(130, secureRandom).toString();
         memory.addUser(token,userExisting);
-        String bodyMail = "Dear " + userExisting.getLogin() + "," + " Please click on the following link to reset your password" +
-                " http://localhost:8080/resetPassword/" + token +
+        Configuration configuration = ConfigurationHolder.getConfiguration();
+        String bodyMail = "Dear " + userExisting.getLogin() + "," + " Please click on the following link to reset your password " +
+                configuration.getMailRedirect() + "/resetPassword/" + token +
                 " Sincerly," +
                 " The Telosys Team";
         gMail.send(userExisting.getMail(), "Reset Telosys password", bodyMail);
@@ -55,7 +58,6 @@ public class ForgetPassword extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         // remove last error message
         request.getSession().removeAttribute("success");
         request.getSession().removeAttribute("error");

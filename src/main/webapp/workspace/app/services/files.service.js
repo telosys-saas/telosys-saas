@@ -3,7 +3,21 @@
 angular.module('app')
   .factory('FilesService', ['$http', function ($http) {
 
-    var host = '/telosys-saas/';
+    var getContextPath = function () {
+      var context = window.location.pathname.split('/');
+      var contextPath = "";
+      for (var index = 0; index < context.length; index++) {
+        if(context[index] == "workspace") {
+          break;
+        }
+        if(context[index] != "") {
+          contextPath += '/' + context[index];
+        }
+      }
+      return contextPath;
+    };
+
+    var host = getContextPath();
     
     return {
 
@@ -15,7 +29,7 @@ angular.module('app')
       getFilesForProject: function (userId, projectId) {
         return $http({
           method: 'GET',
-          url: host + 'api/v1/users/' + userId + '/projects/' + projectId + '/workspace'
+          url: host + '/api/v1/users/' + userId + '/projects/' + projectId + '/workspace'
         })
           .catch(function (e) {
           console.log(e);
@@ -161,7 +175,7 @@ angular.module('app')
       getFileForProject: function (userId, projectId, fileId) {
         return $http({
           method: 'GET',
-          url: host + "api/v1/users/" + userId + "/projects/" + projectId + "/files?fileId=" + encodeURIComponent(fileId)
+          url: host + "/api/v1/users/" + userId + "/projects/" + projectId + "/files?fileId=" + encodeURIComponent(fileId)
         })
           .catch(function (e) {
             console.log(e);
@@ -178,7 +192,7 @@ angular.module('app')
       createFolderForProject: function (userId, projectId, folder) {
         return $http({
           method: "PUT",
-          url: host + "api/v1/users/" + userId + "/projects/" + projectId + "/createFolder?folderId=" + encodeURIComponent(folder.id),
+          url: host + "/api/v1/users/" + userId + "/projects/" + projectId + "/createFolder?folderId=" + encodeURIComponent(folder.id),
           dataType: 'json',
           contentType: 'application/json',
           data: JSON.stringify(folder)
@@ -199,7 +213,7 @@ angular.module('app')
       createFileForProject: function (userId, projectId, file) {
         return $http({
           method: "PUT",
-          url: host + "api/v1/users/" + userId + "/projects/" + projectId + "/createFile?fileId=" + encodeURIComponent(file.id),
+          url: host + "/api/v1/users/" + userId + "/projects/" + projectId + "/createFile?fileId=" + encodeURIComponent(file.id),
           dataType: 'json',
           contentType: 'application/json',
           data: JSON.stringify(file)
@@ -220,7 +234,7 @@ angular.module('app')
       saveFileForProject: function (userId, projectId, file) {
         return $http({
           method: "PUT",
-          url: host + "api/v1/users/" + userId + "/projects/" + projectId + "/files?fileId=" + encodeURIComponent(file.id),
+          url: host + "/api/v1/users/" + userId + "/projects/" + projectId + "/files?fileId=" + encodeURIComponent(file.id),
           dataType: 'json',
           contentType: 'application/json',
           data: JSON.stringify(file)
@@ -241,7 +255,7 @@ angular.module('app')
       deleteFileForProject: function (userId, projectId, fileId) {
         return $http({
           method: "DELETE",
-          url: host + "api/v1/users/" + userId + "/projects/" + projectId + "/files?fileId=" + encodeURIComponent(fileId)
+          url: host + "/api/v1/users/" + userId + "/projects/" + projectId + "/files?fileId=" + encodeURIComponent(fileId)
         })
           .catch(function (e) {
             console.log(e);
@@ -260,7 +274,7 @@ angular.module('app')
         console.log("deleteFolderForProject", folderId);
         return $http({
           method: "DELETE",
-          url: host + "api/v1/users/" + userId + "/projects/" + projectId + "/folders?folderId=" + encodeURIComponent(folderId)
+          url: host + "/api/v1/users/" + userId + "/projects/" + projectId + "/folders?folderId=" + encodeURIComponent(folderId)
         })
           .catch(function (e) {
             console.log(e);

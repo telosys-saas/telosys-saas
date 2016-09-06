@@ -5,12 +5,18 @@ angular.module('dashboard')
     function (AuthService, ProjectsService, $scope, $location, $uibModal) {
 
       /** authentication */
-      $scope.profile = {};
-      
-      /**
-       * Projects list
-       */
-      $scope.projects = [];
+      $scope.data = {
+        /** Profile of the authenticated user */
+        profile: {},
+
+        /**
+         * Projects list
+         */
+        projects: [],
+
+        /** the host of the app */
+        host : ""
+    };
 
       /**
        * Go to the projectID
@@ -36,6 +42,20 @@ angular.module('dashboard')
         });
       };
 
+      function getContextPath() {
+        var context = window.location.pathname.split('/');
+        var contextPath = "";
+        for (var index = 0; index < context.length; index++) {
+          if(context[index] == "workspace") {
+            break;
+          }
+          if(context[index] != "") {
+            contextPath += '/' + context[index];
+          }
+        }
+        return contextPath;
+      }
+
       /**
        * Init the dashboard toolbar
        */
@@ -43,15 +63,16 @@ angular.module('dashboard')
         AuthService.status()
           .then(function (result) {
             console.log('authentication:', result.data);
-            $scope.profile = result.data;
-            if (!$scope.profile.authenticated) {
+            $scope.data.profile = result.data;
+            if (!$scope.data.profile.authenticated) {
               $location.path('/error');
               return {};
             }
-            return ProjectsService.getProjects($scope.profile.userId);
+            $scope.data.host = getContextPath();
+            return ProjectsService.getProjects($scope.data.profile.userId);
           })
           .then(function (result) {
-            $scope.projects = result.data;
+            $scope.data.projects = result.data;
           })
           .catch(function(e) {
             console.log(e);

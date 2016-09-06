@@ -3,8 +3,22 @@
 angular.module('app')
   .factory('ProjectsService', ['$http', function ($http) {
 
-    var host = '/telosys-saas/';
+    var getContextPath = function () {
+      var context = window.location.pathname.split('/');
+      var contextPath = "";
+      for (var index = 0; index < context.length; index++) {
+        if(context[index] == "workspace") {
+          break;
+        }
+        if(context[index] != "") {
+          contextPath += '/' + context[index];
+        }
+      }
+      return contextPath;
+    };
 
+    var host = getContextPath();
+    
     return {
 
       /**
@@ -15,7 +29,7 @@ angular.module('app')
       getProjects: function (userId) {
         return $http({
           method: 'GET',
-          url: host + 'api/v1/users/' + userId + '/projects'
+          url: host + '/api/v1/users/' + userId + '/projects'
         })
           .catch(function (e) {
             console.log(e);
@@ -31,7 +45,7 @@ angular.module('app')
       getProjectById: function (userId, projectId) {
         return $http({
           method: 'GET',
-          url: host + 'api/v1/users/' + userId + '/projects/' + projectId
+          url: host + '/api/v1/users/' + userId + '/projects/' + projectId
         })
           .catch(function (e) {
             console.log(e);
@@ -47,7 +61,7 @@ angular.module('app')
       createProject: function (userId, projectName) {
         return $http({
           method: "PUT",
-          url: host + "api/v1/users/" + userId + "/projects/" + projectName,
+          url: host + "/api/v1/users/" + userId + "/projects/" + projectName,
           dataType: 'json',
           contentType: 'application/json',
           data: JSON.stringify({
@@ -70,7 +84,7 @@ angular.module('app')
       launchGeneration: function (userId, projectName, generation) {
         return $http({
           method: "PUT",
-          url: host + "api/v1/users/" + userId + "/projects/" + projectName + "/action/generate",
+          url: host + "/api/v1/users/" + userId + "/projects/" + projectName + "/action/generate",
           dataType: 'json',
           data: JSON.stringify(generation)
         })
@@ -85,7 +99,7 @@ angular.module('app')
        * @param projectName Project name
        */
       downloadZip: function (userId, projectName) {
-        document.location = host + "api/v1/users/" + userId + "/projects/" + projectName + "/zip";
+        document.location = host + "/api/v1/users/" + userId + "/projects/" + projectName + "/zip";
       },
 
       /**
@@ -95,7 +109,7 @@ angular.module('app')
        */
       getProjectConfiguration: function (userId, projectName) {
         return $http({
-          url: host + "api/v1/users/" + userId + "/projects/" + projectName + "/configuration",
+          url: host + "/api/v1/users/" + userId + "/projects/" + projectName + "/configuration",
           dataType: 'json'
         })
           .catch(function (e) {
@@ -110,7 +124,7 @@ angular.module('app')
 
         return $http({
           method: "PUT",
-          url: host + "api/v1/users/" + userId + "/projects/" + projectName + "/configuration",
+          url: host + "/api/v1/users/" + userId + "/projects/" + projectName + "/configuration",
           dataType: 'json',
           contentType: 'application/json',
           data: JSON.stringify(projectConfiguration)
@@ -123,7 +137,7 @@ angular.module('app')
       getTemplateForGeneration: function (userId, projectName, bundleName) {
         return $http({
           method: 'GET',
-          url: host + "api/v1/users/" + userId + "/projects/" + projectName + "/templates/" + bundleName,
+          url: host + "/api/v1/users/" + userId + "/projects/" + projectName + "/templates/" + bundleName,
           dataType: 'json'
         })
           .catch(function (e) {

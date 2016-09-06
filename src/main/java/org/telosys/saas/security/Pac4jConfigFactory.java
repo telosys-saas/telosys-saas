@@ -24,7 +24,7 @@ public class Pac4jConfigFactory {
         clients.add(formClient);
 		LOG.info("[ENABLED] Authentification by user / password");
 
-    	// Github
+    	// RedirectToGithubLogin
     	if( configuration.getAuthRedirectUrl() != null 
 		 && configuration.getGithubOauthKey() != null 
 		 && configuration.getGthubOauthPassword() != null)
@@ -33,9 +33,9 @@ public class Pac4jConfigFactory {
     				configuration.getGithubOauthKey(), configuration.getGthubOauthPassword());
     		gitHubClient.setScope("user:email");
     		clients.add(gitHubClient);
-    		LOG.info("[ENABLED] Github authentification");
+    		LOG.info("[ENABLED] RedirectToGithubLogin authentification");
     	} else {
-    		LOG.info("[DISABLED] Github authentification - Missing configuration properties");
+    		LOG.info("[DISABLED] RedirectToGithubLogin authentification - Missing configuration properties");
     	}
         
         return new Config(new Clients(configuration.getAuthRedirectUrl(), clients.toArray(new Client[] {})));

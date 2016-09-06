@@ -5,6 +5,9 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.telosys.saas.security.TelosysFormAuthenticationFilter;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -17,6 +20,8 @@ import java.io.IOException;
  * <p>Version: 1.0
  */
 public class OAuthFilter extends AuthenticatingFilter {
+
+    private final Logger logger = LoggerFactory.getLogger(OAuthFilter.class);
 
     //oauth2 authc code
     private String authcCodeParam = "code";
@@ -51,6 +56,7 @@ public class OAuthFilter extends AuthenticatingFilter {
 
     @Override
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) throws Exception {
+        logger.info("createToken()...");
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String code = httpRequest.getParameter(authcCodeParam);
         return new OAuthToken(code);
@@ -58,12 +64,14 @@ public class OAuthFilter extends AuthenticatingFilter {
 
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+        logger.info("isAccessAllowed()...");
         return false;
     }
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
 
+        logger.info("onAccessDenied()...");
         String error = request.getParameter("error");
         String errorDescription = request.getParameter("error_description");
         if( ! isEmpty(error) ) {
@@ -74,7 +82,7 @@ public class OAuthFilter extends AuthenticatingFilter {
         Subject subject = getSubject(request, response);
         if(!subject.isAuthenticated()) {
             if( isEmpty(request.getParameter(authcCodeParam)) ) {
-                
+
                 saveRequestAndRedirectToLogin(request, response);
                 return false;
             }
@@ -86,6 +94,8 @@ public class OAuthFilter extends AuthenticatingFilter {
     @Override
     protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request,
                                      ServletResponse response) throws Exception {
+
+        logger.info("onLoginSuccess()...");
         issueSuccessRedirect(request, response);
         return false;
     }
@@ -93,6 +103,8 @@ public class OAuthFilter extends AuthenticatingFilter {
     @Override
     protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException ae, ServletRequest request,
                                      ServletResponse response) {
+
+        logger.info("onLoginFailure()...");
         Subject subject = getSubject(request, response);
         if (subject.isAuthenticated() || subject.isRemembered()) {
             try {

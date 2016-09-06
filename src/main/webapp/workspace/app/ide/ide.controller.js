@@ -28,6 +28,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         events: getCommonEvents(),
         /** The Telosys Tools Folder */
         telosysFolder: {},
+        /** the host of the app */
+        host: "",
 
         /**
          * Data for model created by the user
@@ -713,7 +715,20 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         })
     };
 
-
+    function getContextPath() {
+      var context = window.location.pathname.split('/');
+      var contextPath = "";
+      for (var index = 0; index < context.length; index++) {
+        if(context[index] == "workspace") {
+          break;
+        }
+        if(context[index] != "") {
+          contextPath += '/' + context[index];
+        }
+      }
+      return contextPath;
+    }
+    
     /**
      * Initialize the IDE
      */
@@ -724,6 +739,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           console.log('authenticated false');
           document.location = '../login.jsp';
         }
+        $scope.data.host = getContextPath();
         ProjectsService.getProjects($scope.profile.userId)
           .then(function (result) {
             // Get the selected project by the user

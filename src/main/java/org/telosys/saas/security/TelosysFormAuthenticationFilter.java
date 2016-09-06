@@ -6,6 +6,8 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.telosys.saas.config.Configuration;
+import org.telosys.saas.config.ConfigurationHolder;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -25,6 +27,7 @@ public class TelosysFormAuthenticationFilter extends org.apache.shiro.web.filter
 
     @Override
     protected void setFailureAttribute(ServletRequest request, AuthenticationException ae) {
+        logger.info("setFailureAttribute()...");
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpSession session = httpServletRequest.getSession(false);
         String message = ae.getMessage();
@@ -33,14 +36,20 @@ public class TelosysFormAuthenticationFilter extends org.apache.shiro.web.filter
 
     @Override
     protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
+
+        logger.info("onLoginSuccess()...");
+
+        Configuration configuration = ConfigurationHolder.getConfiguration();
+        int loginAttemptsMax = Integer.parseInt(configuration.getLoginAttemptsMax());
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession(false);
+
         if (session.getAttribute("numberOfTry") != null) {
             int numberOfTry = (int) session.getAttribute("numberOfTry");
-            if (numberOfTry >= 3) {
-                session.setAttribute("numberOfTry", ++numberOfTry);
-                session.setAttribute("error", "You have exceeded the number of allowed login attempts");
+            if (numberOfTry >= loginAttemptsMax) {
+                session.setAttribute("numberOfTry", numberOfTry);
+                session.setAttribute("error", "You have exceeded the number of allowed login attempts (" + numberOfTry + "/"+ loginAttemptsMax + ")");
                 try {
                     httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login.jsp  ");
                 } catch (IOException e1) {
@@ -48,7 +57,10 @@ public class TelosysFormAuthenticationFilter extends org.apache.shiro.web.filter
                 }
                 return false;
             }
-            session.setAttribute("numberOfTry", null);
+            session.removeAttribute("numberOfTryMessage");
+            session.removeAttribute("numberOfTry");
+            session.removeAttribute("error");
+            session.removeAttribute("success");
         }
         this.issueSuccessRedirect(request, response);
         return false;
@@ -56,30 +68,31 @@ public class TelosysFormAuthenticationFilter extends org.apache.shiro.web.filter
 
     @Override
     protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
-        this.setFailureAttribute(request, e);
 
         logger.info("onLoginFailure()...");
+
+        Configuration configuration = ConfigurationHolder.getConfiguration();
+        int loginAttemptsMax = Integer.parseInt(configuration.getLoginAttemptsMax());
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession(false);
-        logger.info("onLoginFailure() : session = ", session);
         if(session != null) {
             // case : the user tries to login for the first time
             if (session.getAttribute("numberOfTry") == null) {
-                session.setAttribute("numberOfTry", 1);
+                int numberOfTry = 1;
+                session.setAttribute("numberOfTry", numberOfTry);
+                session.setAttribute("error", "Incorrect username or password (" + numberOfTry + "/"+ loginAttemptsMax + ")");
             } else {
                 int numberOfTry = (int) session.getAttribute("numberOfTry");
                 // the user tries 3 times to login
-                if (numberOfTry >= 2) {
-                    session.setAttribute("numberOfTry", ++numberOfTry);
-                    session.setAttribute("error", "You have exceeded the number of allowed login attempts");
-                    try {
-                        httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login.jsp");
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
+                if (numberOfTry >= loginAttemptsMax-1) {
+                    if(numberOfTry == loginAttemptsMax-1){
+                        ++numberOfTry;
                     }
+                    session.setAttribute("numberOfTry", numberOfTry);
+                    session.setAttribute("error", "You have exceeded the number of allowed login attempts (" + numberOfTry + "/"+ loginAttemptsMax + ")");
                 } else {
                     session.setAttribute("numberOfTry", ++numberOfTry);
+                    session.setAttribute("error", "Incorrect username or password (" + numberOfTry + "/"+ loginAttemptsMax + ")");
                 }
             }
         }

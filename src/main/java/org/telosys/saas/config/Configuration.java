@@ -23,6 +23,7 @@ public class Configuration {
     private static final String GMAIL_USERNAME = "gmailUsername";
     private static final String GMAIL_PASSWORD = "gmailPassword";
     private static final String MAIL_REDIRECT = "mailRedirect";
+    private static final String LOGIN_ATTEMPS_MAX = "loginAttemptsMax";
 
 
     //--- Default values
@@ -34,6 +35,7 @@ public class Configuration {
     private static final String GMAIL_USERNAME_DEFAULT_VALUE = null;
     private static final String GMAIL_PASSWORD_DEFAULT_VALUE = null;
     private static final String MAIL_REDIRECT_DEFAULT_VALUE = null;
+    private static final String LOGIN_ATTEMPS_MAX_DEFAULT_VALUE = null;
 
     //--- Attributes
     private final String dataRootPath;
@@ -45,6 +47,7 @@ public class Configuration {
     private final String gmailUsername;
     private final String gmailPassword;
     private final String mailRedirect;
+    private final String loginAttemptsMax;
 
     //--------------------------------------------------------------------------------
 
@@ -67,6 +70,7 @@ public class Configuration {
         this.gmailUsername = GMAIL_USERNAME_DEFAULT_VALUE;
         this.gmailPassword = GMAIL_PASSWORD_DEFAULT_VALUE;
         this.mailRedirect = MAIL_REDIRECT_DEFAULT_VALUE;
+        this.loginAttemptsMax = LOGIN_ATTEMPS_MAX;
     }
 
     //--------------------------------------------------------------------------------
@@ -92,6 +96,7 @@ public class Configuration {
         this.gmailUsername = paramValue(properties.getProperty(GMAIL_USERNAME), GMAIL_USERNAME_DEFAULT_VALUE);
         this.gmailPassword = paramValue(properties.getProperty(GMAIL_PASSWORD), GMAIL_PASSWORD_DEFAULT_VALUE);
         this.mailRedirect = paramValue(properties.getProperty(MAIL_REDIRECT), MAIL_REDIRECT_DEFAULT_VALUE);
+        this.loginAttemptsMax = paramValue(properties.getProperty(LOGIN_ATTEMPS_MAX), LOGIN_ATTEMPS_MAX_DEFAULT_VALUE);
     }
 
     //--------------------------------------------------------------------------------
@@ -154,5 +159,9 @@ public class Configuration {
 
     public String getMailRedirect() {
         return mailRedirect;
+    }
+
+    public String getLoginAttemptsMax() {
+        return loginAttemptsMax;
     }
 }

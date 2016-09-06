@@ -3,7 +3,21 @@
 angular.module('app')
   .factory('TelosysService', ['$http', function ($http) {
 
-      var host = '/telosys-saas/';
+      var getContextPath = function () {
+          var context = window.location.pathname.split('/');
+          var contextPath = "";
+          for (var index = 0; index < context.length; index++) {
+              if(context[index] == "workspace") {
+                  break;
+              }
+              if(context[index] != "") {
+                  contextPath += '/' + context[index];
+              }
+          }
+          return contextPath;
+      };
+
+      var host = getContextPath();
     
     return {
         
@@ -16,7 +30,7 @@ angular.module('app')
       getTelosysFolderForProject: function (userId, projectId) {
         return $http({
           method: 'GET',
-          url: host + "api/v1/users/" + userId + "/projects/" + projectId + "/telosys",
+          url: host + "/api/v1/users/" + userId + "/projects/" + projectId + "/telosys",
           dataType: 'json'
         })
           .catch(function (e) {

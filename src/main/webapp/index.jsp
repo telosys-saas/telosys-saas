@@ -67,7 +67,7 @@
                                 <i class="fa fa-sitemap fa-stack-1x fa-inverse"></i>
                             </span>
                         </div>
-                        <div class="col-sm-3 center-align" style="padding: 5px 0px">
+                        <div class="col-sm-3 center-align" style="padding: 5px 0">
                             <h4>1 : Design</h4>
                         </div>
                         <div class="col-sm-7 center-align" style="padding: 5px 20px; font-size: 110%;">
@@ -81,7 +81,7 @@
                                 <i class="fa fa-bolt fa-stack-1x fa-inverse"></i>
                             </span>
                         </div>
-                        <div class="col-sm-3 center-align" style="padding: 5px 0px">
+                        <div class="col-sm-3 center-align" style="padding: 5px 0">
                             <h4>2 : Generate</h4>
                         </div>
                         <div class="col-sm-7 center-align" style="padding: 5px 20px; font-size: 110%;">
@@ -95,7 +95,7 @@
                                 <i class="fa fa-download fa-stack-1x fa-inverse"></i>
                             </span>
                         </div>
-                        <div class="col-sm-3 center-align" style="padding: 5px 0px">
+                        <div class="col-sm-3 center-align" style="padding: 5px 0">
                             <h4>3 : Download</h4>
                         </div>
                         <div class="col-sm-7 center-align" style="padding: 5px 20px; font-size: 110%;">
@@ -110,7 +110,7 @@
                 <div class="login-body">
                     <form name="createAccountForm" action="createAccount" method="POST">
                         <div class="form-group">
-                            <a href="https://github.com/login/oauth/authorize?scope=user:email&client_id=78cfdcea02fa8d08efe5" class="btn btn-default btn-lg btn-github btn-block" role="button"><i class="fa fa-github fa-2x"></i>Sign in with GitHub</a>
+                            <a href="<%=request.getContextPath()%>/accessToGithub" class="btn btn-default btn-lg btn-github btn-block" role="button"><i class="fa fa-github fa-2x"></i>Sign in with GitHub</a>
                         </div>
                         <hr/>
                         <% if (request.getSession().getAttribute("error") != null) { %>

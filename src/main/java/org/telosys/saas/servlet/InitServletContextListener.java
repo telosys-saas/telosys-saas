@@ -28,16 +28,13 @@ public class InitServletContextListener implements ServletContextListener {
 			logger.info("Configuration loaded");
 			logger.info(" . data root path  = " + configuration.getDataRootPath() );
 			logger.info(" . users file path = " + configuration.getUsersFilePath() );
+			logger.info(" . Github OAuth Key = " + configuration.getGithubOauthKey() );
+			logger.info(" . Gmail Username = " + configuration.getGmailUsername() );
+			logger.info(" . Mail Redirect = " + configuration.getMailRedirect() );
+			logger.info(" . Login Attempts Max = " + configuration.getLoginAttemptsMax() );
 			UsersManager.setUsersFileName(configuration.getUsersFilePath());
 			logger.info("UsersManager initialized.");
 		}
-		else {
-			
-		}
-//		String dataRootPath = configuration.getDataRootPath();
-//		String usersFilePath = dataRootPath + "/users.csv";
-//		logger.info("Users file : "+usersFilePath);
-//		UsersManager.setUsersFileName(usersFilePath);
 	}
 
 	@Override

@@ -29,8 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.telosys.tools.users.User;
 
 public class ProjectService {
-	
-//	private FileStorageDao storageDao = new FileStorageDao();
+
 	private final StorageDao storageDao;
 
 	public ProjectService() {
@@ -202,9 +201,7 @@ public class ProjectService {
 			projectConfiguration.getVariables().setSpecificVariables(specificVariablesAsJson);
 			
 			return projectConfiguration;
-		} catch (TelosysToolsException e) {
-			throw new IllegalStateException(e);
-		} catch (JsonProcessingException e) {
+		} catch (TelosysToolsException | JsonProcessingException e) {
 			throw new IllegalStateException(e);
 		}
 	}
@@ -226,7 +223,6 @@ public class ProjectService {
 			telosysToolsCfg.setRootPackage(projectVariables.getROOT_PKG());
 			telosysToolsCfg.setEntityPackage(projectVariables.getENTITY_PKG());
 
-			/*Map<Object, Object> specificVariables = new ObjectMapper().convertValue(projectVariables.getSpecificVariables(), HashMap.class);*/
 			JSONObject json = (JSONObject)new JSONParser().parse(projectVariables.getSpecificVariables());
 			List<Variable> variables = new ArrayList<>();
 			for(Object key : json.keySet()) {

@@ -8,11 +8,11 @@ angular.module('ide').directive('editor', function () {
       scope: {
         data: '='
       },
-      
+
       templateUrl: 'app/ide/directive/ide.editor.directive.html',
 
       link: function ($scope, element, attrs) {
-        
+
         $scope.events = $scope.data.events;
 
         /**
@@ -33,7 +33,6 @@ angular.module('ide').directive('editor', function () {
           } else if (oldValue != null) {
             // Case :
             // - the user closes the selected file
-            $scope.data.oldSelectedFile = oldValue;
             console.log("close editor", oldValue);
             $scope.closeEditor(oldValue.id);
           }
@@ -65,10 +64,13 @@ angular.module('ide').directive('editor', function () {
               $scope.addEditor(file);
             }
             console.log("new files", newFileIds);
-          }else {
-            // by default : we close all files and the editor view
-            if(element[0].children[0].children[0]) {
-              element[0].children[0].children[0].style.display = 'none';
+          } else {
+            // Case : new value = null so the user close all files
+            if (oldValue != null) {
+              for (var fileId in oldValue) {
+                $scope.closeEditor(fileId);
+              }
+              $scope.data.workingFiles = {};
             }
           }
 
@@ -132,8 +134,8 @@ angular.module('ide').directive('editor', function () {
             return;
           }
           if ($scope.events.onCloseFile) {
-              $scope.events.onCloseFile($scope.data, $scope.data.selectedFile.id);
-            }
+            $scope.events.onCloseFile($scope.data, $scope.data.selectedFile.id);
+          }
         };
 
         /**
@@ -201,7 +203,7 @@ angular.module('ide').directive('editor', function () {
           if ($scope.editors[formatedFileId] == null) {
             return;
           }
-          console.log('show editor',$scope.editors[formatedFileId]);
+          console.log('show editor', $scope.editors[formatedFileId]);
           $scope.hideAllEditors();
           $scope.editors[formatedFileId].div.style.display = 'block';
         };

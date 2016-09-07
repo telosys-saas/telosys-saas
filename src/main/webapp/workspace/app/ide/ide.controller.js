@@ -46,8 +46,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           workingFiles: {},
           /** Selected file */
           selectedFile: null,
-          /** the old selected file */
-          oldSelectedFile: null,
           /** Counter of modified file */
           countModifiedFile: 0,
           /** Select element in the treeview */
@@ -84,7 +82,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           /** All bundles in public repository */
           allBundles: {},
           /** Git hub user name to get the bundle */
-          githubUserName: 'telosys-tools',
+          githubUserName: 'telosys-templates-v3',
           /** IDE events redirected to controller functions */
           events: getEventsForBundles()
         },
@@ -242,32 +240,52 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     $scope.closeAll = function (data) {
       console.log("close all");
       var hasModifiedFile = false;
-      // Check if one of the opened file is modified
+      var modifiedFiles = {};
+      // Create a list of modified files
       for (var fileOpened in data.workingFiles) {
         if (data.workingFiles[fileOpened].isModified) {
           hasModifiedFile = true;
+          modifiedFiles[fileOpened] = data.workingFiles[fileOpened].name;
         }
       }
       if (hasModifiedFile) {
-        if (!confirm("Les modifications seront perdues. Souhaitez-vous continuer ?")) {
-          return;
+        var modalInstance = $uibModal.open({
+          templateUrl: 'app/modal/modal.closeall.html',
+          size: 'sm',
+          controller: 'modalCtrl',
+          resolve: {
+            data: {
+              modifiedFiles: modifiedFiles
+            }
+          }
+        });
+        modalInstance.result.then(function (result) {
+          console.log('closeAll', 'modalInstance.result.then', result);
+          // Save the files selected by the user
+          for (var file in result) {
+            if (result[file]) {
+              $scope.saveFile(data, data.workingFiles[file]);
+            }
+          }
+          for(file in data.workingFiles){
+            data.workingFiles[file].isModified = false;
+          }
+          if (data.countModifiedFile > 0) {
+            data.countModifiedFile = 0;
+          }
+          $scope.closeAll(data);
+        })
+      }
+      if (!modalInstance) {
+        if(data.selectedFile){
+          data.selectedFile.hasContent = false;
+          data.selectedFile = null;
         }
-      }
-      // Close the opened file
-      for (var fileOpened in data.workingFiles) {
-        // Save the modified file(s)
-        if (data.workingFiles[fileOpened].isModified) {
-          $scope.saveFile(data.workingFiles[fileOpened]);
+        for (var fileOpened in data.workingFiles) {
+          data.allFiles[fileOpened].hasContent = false;
         }
-        // and close all
-        delete data.workingFiles[fileOpened];
-        data.allFiles[fileOpened].hasContent = false;
+        data.workingFiles = null;
       }
-      if (data.selectedFile) {
-        data.selectedFile.hasContent = true;
-        data.selectedFile = null;
-      }
-      console.log(data.workingFiles);
     };
 
     /**
@@ -276,7 +294,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      */
     $scope.onCloseFile = function (data, fileId) {
       var file = data.allFiles[fileId];
-      if (file.isModified){
+      if (file.isModified) {
         var modalInstance = $uibModal.open({
           templateUrl: 'app/modal/modal.savefile.html',
           controller: 'modalCtrl',
@@ -287,17 +305,17 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           }
         });
         modalInstance.result.then(function (result) {
-          if(result){
-            $scope.saveFile(data,file);
+          if (result) {
+            $scope.saveFile(data, file);
           }
           if (data.countModifiedFile > 0) {
             data.countModifiedFile--;
           }
           file.isModified = false;
-          $scope.onCloseFile(data,fileId);
+          $scope.onCloseFile(data, fileId);
         })
       }
-      if(!modalInstance) {
+      if (!modalInstance) {
         console.log("close file", fileId);
         // Select the next file to display
         if (data.selectedFile) {
@@ -461,7 +479,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           .then(function (result) {
             var file = result.data;
             console.log('getFileForProject', file);
-            // Get the name without the extension
+            // Get the name file without the extension
             file.name = file.name.split(".")[0];
             data.allFiles[file.id].hasContent = true;
             data.allFiles[file.id].content = file.content;
@@ -719,16 +737,16 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       var context = window.location.pathname.split('/');
       var contextPath = "";
       for (var index = 0; index < context.length; index++) {
-        if(context[index] == "workspace") {
+        if (context[index] == "workspace") {
           break;
         }
-        if(context[index] != "") {
+        if (context[index] != "") {
           contextPath += '/' + context[index];
         }
       }
       return contextPath;
     }
-    
+
     /**
      * Initialize the IDE
      */

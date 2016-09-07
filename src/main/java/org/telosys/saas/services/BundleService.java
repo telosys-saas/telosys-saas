@@ -14,8 +14,7 @@ import org.telosys.tools.commons.TelosysToolsException;
 import org.telosys.tools.users.User;
 
 public class BundleService {
-	
-//	private StorageDao storage = new FileStorageDao();
+
 	private StorageDao storage = StorageDaoProvider.getStorageDao();
 
 	private GithubManager githubManager = GithubManager.getInstance();
@@ -52,7 +51,7 @@ public class BundleService {
 		String folderTemplatesPath = FileUtil.join("TelosysTools","templates");
     	List<String> filters = new ArrayList<>();
     	Folder folderTemplates = storage.getFolderForProjectAndUser(user, project, folderTemplatesPath, filters);
-    	List<Bundle> bundles = new ArrayList<Bundle>();
+    	List<Bundle> bundles = new ArrayList<>();
     	for(Folder folder : folderTemplates.getFolders()) {
     		bundles.add(getBundle(folder.getName()));
     	}

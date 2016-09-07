@@ -20,7 +20,7 @@ import java.io.IOException;
 @WebServlet("/confirmEmail/*")
 public class ConfirmEmail extends HttpServlet {
 
-    protected static final Logger logger = LoggerFactory.getLogger(InitServletContextListener.class);
+    protected static final Logger logger = LoggerFactory.getLogger(ConfirmEmail.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -29,23 +29,25 @@ public class ConfirmEmail extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         logger.info("ConfirmEmail doGet");
-        // remove last error message
+        // Remove last error message
         request.getSession().removeAttribute("success");
         request.getSession().removeAttribute("error");
 
+        // Parse the request Url to find the token
         String urlRequest = request.getRequestURL().toString();
         String[] parseUrlRequest = urlRequest.split("/");
         String token = parseUrlRequest[parseUrlRequest.length-1];
         Memory memory = Memory.getMemory();
         UsersManager usersManager = UsersManager.getInstance();
+        // Find the user associate to the token
         User user = memory.findUserByToken(token);
         if(user == null){
-            logger.info("ConfirmEmail Bad confirmation link");
+            logger.info("Bad confirmation link");
             request.getSession().setAttribute("error", "Bad confirmation link");
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
-        logger.info("ConfirmEmail save user");
+        logger.info("Save user");
         usersManager.saveUser(user, user.getEncryptedPassword());
         response.sendRedirect(request.getContextPath() + "/login");
     }

@@ -32,8 +32,6 @@ import org.telosys.tools.users.User;
 @Path("/users/{userId}/projects/{projectId}")
 public class ProjectResource {
 
-    // private StorageDao storage = new MockStorageDao();
-//	private StorageDao storage = new FileStorageDao();
     private StorageDao storage = StorageDaoProvider.getStorageDao();
 
     private BundleService bundleService = new BundleService();
@@ -129,18 +127,10 @@ public class ProjectResource {
     @Path("/templates/{bundleName}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getTemplatesForGeneration(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @PathParam("bundleName") String bundleName){
+    public List<Template> getTemplatesForGeneration(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @PathParam("bundleName") String bundleName) {
         User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
-        List<Template> templateList = projectService.getTemplatesForGeneration(user, project, bundleName);
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String json = null;
-        try {
-            json = ow.writeValueAsString(templateList);
-        } catch (JsonProcessingException e) {
-            throw new IllegalStateException(e);
-        }
-        return json;
+        return projectService.getTemplatesForGeneration(user, project, bundleName);
     }
 
     /**
@@ -282,19 +272,6 @@ public class ProjectResource {
         }
         storage.deleteFileForProjectAndUser(user, project, file);
     }
-
-    /*
-    @Path("/models")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public ModelNames getModels(@PathParam("userId") String userId, @PathParam("projectId") String projectId) {
-    	User user = Security.getUser(); 
-    	Project project = storage.getProjectForUser(user, projectId);
-    	List<String> names = projectService.getModelNames(user, project);
-    	ModelNames modelNames = new ModelNames();
-    	modelNames.setNames(names);
-    	return modelNames;
-    }*/
 
     @Path("/models")
     @GET

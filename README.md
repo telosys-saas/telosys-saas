@@ -30,7 +30,7 @@ Define the application workspace in an environment variable  :
  * ```java -jar target/telosys-saas.jar```
 => Console output : ```[main] INFO org.eclipse.jetty.server.Server - Started```
 * Go to the URL :
- * [http://localhost:8181](http://localhost:8181)
+ * [http://localhost:8080](http://localhost:8080)
 
 ## Development configuration
 

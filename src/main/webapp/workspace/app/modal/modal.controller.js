@@ -41,6 +41,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     $scope.rowToDeletes = {};
     $scope.displayConfigurationTab = 'folders';
     $scope.rowToAdd = {};
+
     /**
      * The new specific variable
      */
@@ -51,12 +52,16 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
 
     /** The selected bundle */
     $scope.selectedBundle = {};
+
     /** The new password */
     $scope.changePassword = {
       oldPassword: '',
       password: '',
       confirmPassword: ''
     };
+
+    /** The list of file to save */
+    $scope.fileToSaves = {};
 
     /**
      * Create a new project
@@ -277,13 +282,10 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
       var modalInstance = $uibModal.open({
         templateUrl: 'app/modal/modal.addvariable.html',
         controller: 'modalCtrl',
+        windowTopClass  : 'top-modal',
         resolve: {
           data: {}
         }
-      });
-      modalInstance.opened.then(function () {
-        var modalWindows = document.getElementsByClassName("modal");
-        modalWindows[0].style.zIndex = 1060;
       });
       modalInstance.result.then(function (specificVariable) {
         $scope.data.variables.specificVariables[specificVariable.name] = specificVariable.value;
@@ -313,6 +315,22 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
 
     $scope.selectConfigurationVariable = function (key) {
       $scope.selectedVariable = key;
+    };
+
+    $scope.selectAllFileToSave = function () {
+      for(var file in $scope.data.modifiedFiles){
+        $scope.fileToSaves[file] = true;
+      }
+    };
+
+    $scope.deselectAllFileToSave = function () {
+      for(var file in $scope.data.modifiedFiles){
+        $scope.fileToSaves[file] = false;
+      }
+    };
+    
+    $scope.selectFiles = function () {
+      $uibModalInstance.close($scope.fileToSaves)
     };
 
     /**

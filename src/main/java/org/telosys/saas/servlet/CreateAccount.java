@@ -1,5 +1,7 @@
 package org.telosys.saas.servlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.telosys.saas.config.Configuration;
 import org.telosys.saas.config.ConfigurationHolder;
 import org.telosys.saas.util.GMail;
@@ -24,9 +26,13 @@ import java.security.SecureRandom;
 @WebServlet("/createAccount")
 public class CreateAccount extends HttpServlet {
 
+    protected static final Logger logger = LoggerFactory.getLogger(CreateAccount.class);
+
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        // remove last error message
+        logger.info("doPost");
+        // Remove last error message
         request.getSession().removeAttribute("success");
         request.getSession().removeAttribute("error");
 
@@ -56,7 +62,7 @@ public class CreateAccount extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/createAccount.jsp");
             return;
         }
-        // TODO search by mail
+        logger.info("doPost : Create user");
         // Create the new user
         User user = new User(UserType.TELOSYS_USER, request.getParameter("login"));
         user.setMail(request.getParameter("mail"));
@@ -74,6 +80,7 @@ public class CreateAccount extends HttpServlet {
                 configuration.getMailRedirect() + "/confirmEmail/" + token +
                 " Sincerly," +
                 " The Telosys Team";
+        logger.info("doPost : Sent mail");
         gMail.send(user.getMail(), subjectMail, bodyMail);
         // Redirect to the home page
         request.getSession().setAttribute("success", "Mail sent for account creation");
@@ -82,7 +89,7 @@ public class CreateAccount extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        // remove last error message
+        // Remove last error message
         request.getSession().removeAttribute("success");
         request.getSession().removeAttribute("error");
 

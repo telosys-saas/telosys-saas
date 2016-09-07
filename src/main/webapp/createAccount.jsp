@@ -40,7 +40,9 @@
         <div class="login-body">
             <form name="createAccountForm" action="createAccount" method="POST">
                 <div class="form-group">
-                    <a href="/profile/github" class="btn btn-default btn-lg btn-github btn-block" role="button"><i class="fa fa-github fa-2x"></i>Sign in with GitHub</a>
+                    <a href="<%=request.getContextPath()%>/profile/github"
+                       class="btn btn-default btn-lg btn-github btn-block" role="button"><i
+                            class="fa fa-github fa-2x"></i>Sign in with GitHub</a>
                 </div>
                 <hr/>
                 <% if (request.getSession().getAttribute("success") != null) { %>
@@ -60,18 +62,22 @@
                 <% request.getSession().removeAttribute("error"); %>
                 <% } %>
                 <div class="form-group">
-                    <input name="login" id="login" type="text" class="form-control input-lg" placeholder="Username" />
+                    <input name="login" id="login" type="text" class="form-control input-lg" placeholder="Username"/>
                 </div>
                 <div class="form-group">
-                    <input name="mail" id="mail" type="text" class="form-control input-lg" placeholder="Email Address" />
+                    <input name="mail" id="mail" type="text" class="form-control input-lg" placeholder="Email Address"/>
                 </div>
                 <div class="form-group">
-                    <input name="password1" id="password1" type="password" class="form-control input-lg" placeholder="Password" />
+                    <input name="password1" id="password1" type="password" class="form-control input-lg"
+                           placeholder="Password"/>
                 </div>
                 <div class="form-group">
-                    <input name="password2" id="password2" type="password" class="form-control input-lg" placeholder="Confirm Password" />
+                    <input name="password2" id="password2" type="password" class="form-control input-lg"
+                           placeholder="Confirm Password"/>
                 </div>
-                <button type="submit" class="btn btn-success btn-lg btn-block" role="button" data-reactid="86">Create an account</button>
+                <button type="submit" class="btn btn-success btn-lg btn-block" role="button" data-reactid="86">Create an
+                    account
+                </button>
             </form>
         </div>
     </div>

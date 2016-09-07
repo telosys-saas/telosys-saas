@@ -18,6 +18,8 @@ public class Template implements Serializable {
 
     private String type = "template";
 
+    public Template(){}
+
     public Template(TargetDefinition targetDefinition) {
         this.name = targetDefinition.getTemplate();
         this.description = targetDefinition.getName();
@@ -63,7 +65,7 @@ public class Template implements Serializable {
     }
 
     public void setSelected(Boolean selected) {
-        selected = selected;
+        this.selected = selected;
     }
 
     public String getType() {

@@ -60,6 +60,7 @@ angular.module('ide')
             $scope.configuration = true;
             var modalInstance = $uibModal.open({
               templateUrl: 'app/modal/modal.configuration.html',
+              size: 'lg',
               controller: 'modalCtrl',
               resolve: {
                 data: $scope.data.configuration

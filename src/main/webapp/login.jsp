@@ -28,7 +28,7 @@
                 </span>
             </div>
             <div class="col-sm-7 right-align">
-                <a href="createAccount" class="btn btn-success">Sign up</a>
+                <a href="<%=request.getContextPath()%>/createAccount" class="btn btn-success">Sign up</a>
             </div>
         </div>
     </div>

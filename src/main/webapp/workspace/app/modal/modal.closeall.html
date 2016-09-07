@@ -1,0 +1,46 @@
+<div class="modal-content modal-sm">
+    <div class="modal-header">
+        <h4 style="padding-left: 10px;">Select files to save :</h4>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row">
+                <form class="form-horizontal">
+                    <div class="close-selection">
+                        <div ng-repeat="(key, value) in data.modifiedFiles">
+                            <div class="col-sm-12">
+                                <div class="checkbox">
+                                    <label class="form-check-label close-card">
+                                        <input type="checkbox" ng-model="fileToSaves[key]"
+                                               style="margin-right: 5px;"/>
+                                        {{value}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <button class="btn btn-info btn-block" type="button"
+                                        ng-click="selectAllFileToSave()">Select all
+                                </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button class="btn btn-info btn-block" type="button"
+                                        ng-click="deselectAllFileToSave()">Deselect all
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="submit"
+                ng-click="selectFiles()">OK
+        </button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</div>

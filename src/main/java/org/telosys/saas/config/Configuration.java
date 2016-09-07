@@ -15,39 +15,36 @@ public class Configuration {
     private static final String USERS_FILE_NAME = "users.txt";
 
     //--- Parameters names
-//	private static final String DATA_ROOT_PATH        = "dataRootPath" ;
-//	private static final String HTTP_PORT             = "httpPort" ;
-    private static final String AUTH_REDIRECT_URL = "authRedirectUrl";
     private static final String GITHUB_OAUTH_KEY = "githubOauthKey";
     private static final String GITHUB_OAUTH_PASSWORD = "githubOauthPassword";
     private static final String GMAIL_USERNAME = "gmailUsername";
     private static final String GMAIL_PASSWORD = "gmailPassword";
     private static final String MAIL_REDIRECT = "mailRedirect";
     private static final String LOGIN_ATTEMPS_MAX = "loginAttemptsMax";
+    private static final String NUMBER_OF_PROJECT_MAX = "numberOfProjectMax";
 
 
     //--- Default values
-//	private static final String DATA_ROOT_PATH_DEFAULT_VALUE        = "fs" ;
-//	private static final String HTTP_PORT_DEFAULT_VALUE             = "80" ;
-    private static final String AUTH_REDIRECT_URL_DEFAULT_VALUE = null;
     private static final String GITHUB_OAUTH_KEY_DEFAULT_VALUE = null;
     private static final String GITHUB_OAUTH_PASSWORD_DEFAULT_VALUE = null;
     private static final String GMAIL_USERNAME_DEFAULT_VALUE = null;
     private static final String GMAIL_PASSWORD_DEFAULT_VALUE = null;
     private static final String MAIL_REDIRECT_DEFAULT_VALUE = null;
     private static final String LOGIN_ATTEMPS_MAX_DEFAULT_VALUE = null;
+    private static final String NUMBER_OF_PROJECT_MAX_DEFAULT_VALUE = null;
+
 
     //--- Attributes
     private final String dataRootPath;
     private final String usersFilePath;
-    //	private final String httpPort;
-    private final String authRedirectUrl;
     private final String githubOauthKey;
     private final String githubOauthPassword;
     private final String gmailUsername;
     private final String gmailPassword;
     private final String mailRedirect;
     private final String loginAttemptsMax;
+    private final String numberOfProjectMax;
+
 
     //--------------------------------------------------------------------------------
 
@@ -59,18 +56,15 @@ public class Configuration {
      */
     protected Configuration(String dataRootPath) {
 
-//		this.dataRootPath        = DATA_ROOT_PATH_DEFAULT_VALUE ;
         this.dataRootPath = dataRootPath;
         this.usersFilePath = FileUtil.buildFilePath(dataRootPath, USERS_FILE_NAME);
-//		this.httpPort            = HTTP_PORT_DEFAULT_VALUE ;
-
-        this.authRedirectUrl = AUTH_REDIRECT_URL_DEFAULT_VALUE;
         this.githubOauthKey = GITHUB_OAUTH_KEY_DEFAULT_VALUE;
         this.githubOauthPassword = GITHUB_OAUTH_PASSWORD_DEFAULT_VALUE;
         this.gmailUsername = GMAIL_USERNAME_DEFAULT_VALUE;
         this.gmailPassword = GMAIL_PASSWORD_DEFAULT_VALUE;
         this.mailRedirect = MAIL_REDIRECT_DEFAULT_VALUE;
         this.loginAttemptsMax = LOGIN_ATTEMPS_MAX;
+        this.numberOfProjectMax = NUMBER_OF_PROJECT_MAX_DEFAULT_VALUE;
     }
 
     //--------------------------------------------------------------------------------
@@ -84,19 +78,15 @@ public class Configuration {
      */
     protected Configuration(String dataRootPath, Properties properties) {
 
-//		this.dataRootPath        = paramValue( properties.getProperty(DATA_ROOT_PATH),        DATA_ROOT_PATH_DEFAULT_VALUE) ;
         this.dataRootPath = dataRootPath;
         this.usersFilePath = FileUtil.buildFilePath(dataRootPath, USERS_FILE_NAME);
-
-//		this.httpPort            = paramValue( properties.getProperty(HTTP_PORT),             HTTP_PORT_DEFAULT_VALUE);
-
-        this.authRedirectUrl = paramValue(properties.getProperty(AUTH_REDIRECT_URL), AUTH_REDIRECT_URL_DEFAULT_VALUE);
         this.githubOauthKey = paramValue(properties.getProperty(GITHUB_OAUTH_KEY), GITHUB_OAUTH_KEY_DEFAULT_VALUE);
         this.githubOauthPassword = paramValue(properties.getProperty(GITHUB_OAUTH_PASSWORD), GITHUB_OAUTH_PASSWORD_DEFAULT_VALUE);
         this.gmailUsername = paramValue(properties.getProperty(GMAIL_USERNAME), GMAIL_USERNAME_DEFAULT_VALUE);
         this.gmailPassword = paramValue(properties.getProperty(GMAIL_PASSWORD), GMAIL_PASSWORD_DEFAULT_VALUE);
         this.mailRedirect = paramValue(properties.getProperty(MAIL_REDIRECT), MAIL_REDIRECT_DEFAULT_VALUE);
         this.loginAttemptsMax = paramValue(properties.getProperty(LOGIN_ATTEMPS_MAX), LOGIN_ATTEMPS_MAX_DEFAULT_VALUE);
+        this.numberOfProjectMax = paramValue(properties.getProperty(NUMBER_OF_PROJECT_MAX), NUMBER_OF_PROJECT_MAX_DEFAULT_VALUE);
     }
 
     //--------------------------------------------------------------------------------
@@ -127,13 +117,6 @@ public class Configuration {
         return usersFilePath;
     }
 
-    //	public String getHttpPort() {
-//		return httpPort;
-//	}
-    public String getAuthRedirectUrl() {
-        return authRedirectUrl;
-    }
-
     public String getGithubOauthKey() {
         return githubOauthKey;
     }
@@ -141,13 +124,6 @@ public class Configuration {
     public String getGthubOauthPassword() {
         return githubOauthPassword;
     }
-//	public int getHttpPortAsInt() {
-//		try {
-//			return Integer.parseInt(httpPort);
-//		} catch (NumberFormatException e) {
-//			throw new RuntimeException("Configuration error, cannot convert http port '"+httpPort+"' to int");
-//		}
-//	}
 
     public String getGmailUsername() {
         return gmailUsername;
@@ -163,5 +139,9 @@ public class Configuration {
 
     public String getLoginAttemptsMax() {
         return loginAttemptsMax;
+    }
+
+    public String getNumberOfProjectMax() {
+        return numberOfProjectMax;
     }
 }

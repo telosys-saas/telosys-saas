@@ -393,7 +393,7 @@ footer {
     margin-top: 10px;
     background-color: #efefef;
     height: 450px;
-    overflow-y: auto;
+    overflow: auto;
     border: 1px solid #cecece;
     padding-left: 10px;
     padding-right: 10px;
@@ -401,7 +401,7 @@ footer {
 
 .generation-selection-line {
     margin: 3px 3px;
-    border: 0px solid #dedede;
+    border: 0 solid #dedede;
     background-color: white;
     box-shadow: 0 1px 1px rgba(0,0,0,0.25);
 }
@@ -467,4 +467,22 @@ footer {
 
 .configuration-checkbox{
     padding-left: 30px;
+}
+
+.close-selection{
+    overflow: auto;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    background-color: #efefef;
+    height: 150px;
+    border: 1px solid #cecece;
+}
+
+.top-modal{
+    z-index: 1060;
+}
+
+.close-card{
+    cursor: pointer;
+    margin: 2px 0;
 }

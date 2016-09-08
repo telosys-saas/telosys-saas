@@ -9,7 +9,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     // data
     $scope.data = data;
 
-    $scope.errorMessage = '';
+    $scope.errorMessage = null;
 
     /**
      * The new project name
@@ -72,6 +72,14 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
         ProjectsService.createProject($scope.profile.userId, $scope.projectName)
           .then(function (result) {
             var project = result.data;
+            if(project.existing){
+              $scope.errorMessage = "Project already exists";
+              return;
+            }
+            if(project.tooManyProject){
+              $scope.errorMessage = "You have too many projects, please buy a premium account";
+              return;
+            }
             ModelService.createModel($scope.profile.userId, project.id, $scope.modelName)
               .then(function () {
                 $location.path('/ide/' + project.id);
@@ -195,11 +203,16 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      */
     $scope.createModel = function () {
       ModelService.createModel($scope.profile.userId, $scope.data.project.id, $scope.modelName)
-        .then(function () {
-          if ($scope.data.refreshAll) {
-            $scope.data.refreshAll();
+        .then(function (result) {
+          var model  = result.data;
+          if(model.existing){
+            $scope.errorMessage = "Model already exists";
+          }else {
+            if ($scope.data.refreshAll) {
+              $scope.data.refreshAll();
+            }
+            $uibModalInstance.close();
           }
-          $uibModalInstance.close();
         })
     };
 
@@ -208,9 +221,14 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      */
     $scope.createEntity = function () {
       ModelService.createEntityForModel($scope.profile.userId, $scope.data.project.id, $scope.selectedModel.text, $scope.entityName)
-        .then(function () {
-          $scope.data.openCreatedFile('TelosysTools/'+$scope.selectedModel.text+'_model/'+$scope.entityName+'.entity');
-          $uibModalInstance.close();
+        .then(function (result) {
+          var file = result.data;
+          if(file.existing){
+            $scope.errorMessage = "Entity already exists";
+          }else {
+            $scope.data.openCreatedFile(file.id);
+            $uibModalInstance.close();
+          }
         })
     };
 
@@ -239,20 +257,16 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
       $scope.selectedBundle = bundle;
     };
 
-    $scope.confirmPasswordChange = function () {
-      if ($scope.changePassword.confirmPassword != $scope.changePassword.password) {
-        $scope.passwordDontMatch = true;
-      } else {
-        $scope.passwordDontMatch = false;
-      }
-    };
-
     $scope.submitNewPassword = function () {
-      if ($scope.passwordDontMatch) {
-        return
-      }
-      AuthService.changePassword($scope.profile.userId, $scope.changePassword);
-      $uibModalInstance.close();
+      AuthService.changePassword($scope.profile.userId, $scope.changePassword)
+        .then(function (result) {
+          var changePasswordResult = result.data;
+          if (changePasswordResult.hasError) {
+            $scope.errorMessage = changePasswordResult.message;
+            return;
+          }
+          $uibModalInstance.close();
+        })
     };
 
     $scope.onClickConfigurationTab = function (tabToDisplay) {
@@ -329,8 +343,12 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
       }
     };
     
-    $scope.selectFiles = function () {
+    $scope.closeAll = function () {
       $uibModalInstance.close($scope.fileToSaves)
+    };
+
+    $scope.removeElement = function () {
+      $uibModalInstance.close()
     };
 
     /**
@@ -347,6 +365,9 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
       });
       if($scope.data.models){
         $scope.selectedModel = $scope.data.models[0];
+      }
+      if($scope.data.modifiedFiles){
+        $scope.selectAllFileToSave();
       }
     }
 

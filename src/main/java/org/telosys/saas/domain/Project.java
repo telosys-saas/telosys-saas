@@ -10,6 +10,10 @@ public class Project implements Serializable {
 	
 	private String name;
 
+	private boolean isExisting = false;
+
+	private boolean tooManyProject = false;
+
 	public String getId() {
 		return id;
 	}
@@ -26,4 +30,19 @@ public class Project implements Serializable {
 		this.name = name;
 	}
 
+	public boolean isExisting() {
+		return isExisting;
+	}
+
+	public void setExisting(boolean existing) {
+		isExisting = existing;
+	}
+
+	public boolean isTooManyProject() {
+		return tooManyProject;
+	}
+
+	public void setTooManyProject(boolean tooManyProject) {
+		this.tooManyProject = tooManyProject;
+	}
 }

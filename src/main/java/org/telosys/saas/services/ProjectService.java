@@ -9,6 +9,8 @@ import java.util.Map;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.telosys.saas.dao.StorageDao;
 import org.telosys.saas.dao.StorageDaoProvider;
 import org.telosys.saas.domain.*;
@@ -29,6 +31,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.telosys.tools.users.User;
 
 public class ProjectService {
+
+	protected static final Logger logger = LoggerFactory.getLogger(ProjectService.class);
 
 	private final StorageDao storageDao;
 
@@ -272,8 +276,9 @@ public class ProjectService {
 					targetDefinitions1.add(targetDefinition);
 				}
 			}
+			logger.info("launchGenerationByEntityAndBundle : start of generation");
 			GenerationTaskResult generationTaskResult = telosysProject.launchGeneration(genericModel, entityNames, bundleName, targetDefinitions1, true);
-			
+			logger.info("launchGenerationByEntityAndBundle : end of generation");
 			GenerationResult generationResult = new GenerationResult();
 			generationResult.setNumberOfFilesGenerated(generationTaskResult.getNumberOfFilesGenerated());
 			generationResult.setNumberOfGenerationErrors(generationTaskResult.getNumberOfGenerationErrors());

@@ -260,7 +260,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           }
         });
         modalInstance.result.then(function (result) {
-          console.log('closeAll', 'modalInstance.result.then', result);
           // Save the files selected by the user
           for (var file in result) {
             if (result[file]) {

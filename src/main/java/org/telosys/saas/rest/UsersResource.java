@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.telosys.saas.domain.ChangePasswordResult;
 import org.telosys.saas.domain.UserChangePassword;
 import org.telosys.saas.domain.UserCreation;
 import org.telosys.saas.security.Security;
@@ -73,26 +74,44 @@ public class UsersResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public User changePassword(@PathParam("login") String login, UserChangePassword userChangePassword) {
-        if (Util.isEmpty(login)) {
-            throw new IllegalStateException("change password: login is not defined");
-        }
-        if (Util.isEmpty(userChangePassword.getOldPassword())) {
-            throw new IllegalStateException("change password : old password is not defined");
-        }
-        if (Util.isEmpty(userChangePassword.getPassword())) {
-            throw new IllegalStateException("change password : password is not defined");
+    public ChangePasswordResult changePassword(@PathParam("login") String login, UserChangePassword userChangePassword) {
+        ChangePasswordResult changePasswordResult = new ChangePasswordResult();
+
+        if (!Security.isAuthenticated()) {
+            changePasswordResult.setHasError(true);
+            changePasswordResult.setMessage("Not authenticated");
+            return changePasswordResult;
         }
         User authenticatedUser = Security.getUser();
         if (!Util.equalsAndNotEmpty(authenticatedUser.getLogin(), login)) {
-            throw new IllegalStateException("change password : not authorized");
+            changePasswordResult.setHasError(true);
+            changePasswordResult.setMessage("Not authorized");
+            return changePasswordResult;
+        }
+        if (Util.isEmpty(userChangePassword.getOldPassword())) {
+            changePasswordResult.setHasError(true);
+            changePasswordResult.setMessage("Old password is not valid");
+            return changePasswordResult;
         }
         User user = usersManager.getUserByLogin(login);
         if (!usersManager.checkPassword(user, userChangePassword.getOldPassword())) {
-            throw new IllegalStateException("change password : old password is not valid");
+            changePasswordResult.setHasError(true);
+            changePasswordResult.setMessage("Old password is not valid");
+            return changePasswordResult;
+        }
+        if (Util.isEmpty(userChangePassword.getPassword())) {
+            changePasswordResult.setHasError(true);
+            changePasswordResult.setMessage("Password is not defined");
+            return changePasswordResult;
+        }
+        if(!Util.equalsAndNotEmpty(userChangePassword.getPassword(), userChangePassword.getConfirmPassword())){
+            changePasswordResult.setHasError(true);
+            changePasswordResult.setMessage("Confirm password doesn't match");
+            return changePasswordResult;
         }
         usersManager.saveUser(user, userChangePassword.getPassword());
-        return user;
+        changePasswordResult.setMessage("Change password successfully");
+        return changePasswordResult;
     }
 
     @Path("{login}")

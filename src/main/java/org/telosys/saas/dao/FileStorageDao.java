@@ -8,6 +8,8 @@ import java.util.UUID;
 
 import org.apache.commons.io.FileDeleteStrategy;
 import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.telosys.saas.config.Configuration;
 import org.telosys.saas.config.ConfigurationHolder;
 import org.telosys.saas.domain.File;
@@ -19,8 +21,11 @@ import org.telosys.tools.users.User;
 
 public class FileStorageDao implements StorageDao {
 
+	protected static final Logger logger = LoggerFactory.getLogger(FileStorageDao.class);
+
+
 	private final Configuration configuration ;
-	
+
 	protected FileStorageDao() {
 		configuration = ConfigurationHolder.getConfiguration();
 	}
@@ -38,7 +43,13 @@ public class FileStorageDao implements StorageDao {
 //	}
 
 	private String getUserPath(User user) {
-		String userPath = FileUtil.join(getRootPath(), user.getType().name(), user.getLogin());
+		String nameUserType = user.getType().name();
+		logger.info("getUserPath nameUserType = " + nameUserType);
+		String userLogin = user.getLogin();
+		logger.info("getUserPath nameUserType = " + userLogin);
+		String rootPath = getRootPath();
+		logger.info("getUserPath nameUserType = " + rootPath);
+		String userPath = FileUtil.join(rootPath, nameUserType , userLogin);
 		java.io.File dir = new java.io.File(userPath);
 		dir.mkdirs();
 		return userPath;

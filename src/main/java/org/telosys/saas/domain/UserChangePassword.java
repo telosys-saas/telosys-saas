@@ -8,6 +8,7 @@ public class UserChangePassword implements Serializable {
 
 	private String oldPassword;
 	private String password;
+	private String confirmPassword;
 	
 	public String getOldPassword() {
 		return oldPassword;
@@ -22,5 +23,12 @@ public class UserChangePassword implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
 }

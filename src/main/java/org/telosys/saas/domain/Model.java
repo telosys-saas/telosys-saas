@@ -11,7 +11,8 @@ import org.telosys.tools.generic.model.ModelType;
 public class Model implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	private boolean isExisting = false;
 	private List<Entity> entities = new ArrayList<>();
 	private Map<String, Entity> entityByTableNames = new HashMap<>();
 	private Map<String, Entity> entityByClassNames = new HashMap<>();
@@ -127,4 +128,11 @@ public class Model implements Serializable {
 		this.parsingErrors = parsingErrors;
 	}
 
+	public boolean isExisting() {
+		return isExisting;
+	}
+
+	public void setExisting(boolean existing) {
+		isExisting = existing;
+	}
 }

@@ -1,14 +1,14 @@
 <div class="modal-content">
     <form>
         <div class="modal-header">
-            <h3 class="modal-title">Save file</h3>
+            <h3 class="modal-title">Delete</h3>
         </div>
         <div class="modal-body">
-            <label> Are you sure you want to delete '{{data.fileName}}' ?</label>
+            <label> Are you sure you want to delete '{{data.elementName}}' ?</label>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="submit" ng-click="removeFileFile(true)">Yes</button>
-            <button class="btn btn-primary" type="button" ng-click="removeFileFile(false)">No</button>
+            <button class="btn btn-primary" type="submit" ng-click="removeElement()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
         </div>
     </form>
 </div>

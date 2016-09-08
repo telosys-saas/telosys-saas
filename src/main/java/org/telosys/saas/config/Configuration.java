@@ -2,6 +2,9 @@ package org.telosys.saas.config;
 
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.telosys.saas.servlet.ConfirmEmail;
 import org.telosys.tools.commons.FileUtil;
 
 /**
@@ -10,6 +13,9 @@ import org.telosys.tools.commons.FileUtil;
  * @author Laurent Guerin
  */
 public class Configuration {
+
+    protected static final Logger logger = LoggerFactory.getLogger(Configuration.class);
+
 
     //--- Files names
     private static final String USERS_FILE_NAME = "users.txt";
@@ -56,6 +62,7 @@ public class Configuration {
      */
     protected Configuration(String dataRootPath) {
 
+        logger.info("Configuration(String dataRootPath)", dataRootPath);
         this.dataRootPath = dataRootPath;
         this.usersFilePath = FileUtil.buildFilePath(dataRootPath, USERS_FILE_NAME);
         this.githubOauthKey = GITHUB_OAUTH_KEY_DEFAULT_VALUE;
@@ -77,6 +84,8 @@ public class Configuration {
      * @param properties
      */
     protected Configuration(String dataRootPath, Properties properties) {
+
+        logger.info("Configuration(String dataRootPath, Properties properties) = " + dataRootPath);
 
         this.dataRootPath = dataRootPath;
         this.usersFilePath = FileUtil.buildFilePath(dataRootPath, USERS_FILE_NAME);

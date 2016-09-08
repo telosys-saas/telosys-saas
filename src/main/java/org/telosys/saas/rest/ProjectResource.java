@@ -20,6 +20,9 @@ import javax.ws.rs.core.Response;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.sun.deploy.config.Config;
+import org.telosys.saas.config.Configuration;
+import org.telosys.saas.config.ConfigurationHolder;
 import org.telosys.saas.dao.StorageDao;
 import org.telosys.saas.dao.StorageDaoProvider;
 import org.telosys.saas.domain.*;
@@ -33,6 +36,7 @@ import org.telosys.tools.users.User;
 public class ProjectResource {
 
     private StorageDao storage = StorageDaoProvider.getStorageDao();
+    private Configuration configuration = ConfigurationHolder.getConfiguration();
 
     private BundleService bundleService = new BundleService();
     private ProjectService projectService = new ProjectService();
@@ -86,6 +90,12 @@ public class ProjectResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Project saveProject(@PathParam("userId") String userId, @PathParam("projectId") String projectId, Project project) {
         User user = Security.getUser();
+        int numberOfMaxProject = Integer.parseInt(configuration.getNumberOfProjectMax());
+        int numberOfCurrentProject = storage.getProjectsForUser(user).size();
+        if (numberOfCurrentProject >= numberOfMaxProject) {
+            project.setTooManyProject(true);
+            return project;
+        }
         Project projectExisting = storage.getProjectForUser(user, project.getId());
         if (projectExisting == null) {
             // Create
@@ -94,6 +104,7 @@ public class ProjectResource {
             projectService.initProject(user, project);
             return project;
         }
+        project.setExisting(true);
         return project;
     }
 
@@ -297,6 +308,12 @@ public class ProjectResource {
     public Model saveModel(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @PathParam("modelName") String modelName) {
         User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
+        List<String> modelNames = projectService.getModelNames(user, project);
+        if (modelNames.contains(modelName)) {
+            Model model = new Model();
+            model.setExisting(true);
+            return model;
+        }
         return projectService.createModel(user, project, modelName);
     }
 
@@ -312,10 +329,18 @@ public class ProjectResource {
     @Path("/models/{modelName}/entities/{entityName}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public void createEntity(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @PathParam("modelName") String modelName, @PathParam("entityName") String entityName) {
+    public File createEntity(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @PathParam("modelName") String modelName, @PathParam("entityName") String entityName) {
         User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
-        projectService.createEntityForModel(user, project, modelName, entityName);
+        File file = storage.getFileForProjectAndUser(user, project, "TelosysTools/" + modelName + "_model/" + entityName + ".entity");
+        if (!file.isExisting()) {
+            // Create entity
+            projectService.createEntityForModel(user, project, modelName, entityName);
+        } else {
+            file.setExisting(true);
+        }
+        return file;
+
     }
 
     @Path("/action/generate")

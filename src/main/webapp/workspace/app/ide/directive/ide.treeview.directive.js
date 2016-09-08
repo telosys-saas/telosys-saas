@@ -180,25 +180,36 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
       $scope.onRemove = function (node, tree) {
         return (function (obj) {
           console.log('onRemove');
-          tree.delete_node(node);
-          if (node.type == 'models') {
-            var folderId = 'TelosysTools/' + node.text + '_model';
-            var fileModelId = 'TelosysTools/' + node.text + '.model';
-            $scope.events.onDeleteFolder($scope.data, folderId);
-            $scope.events.onDeleteFile($scope.data, fileModelId);
-          }
-          if (node.type == 'bundle') {
-            $scope.events.removeBundle(node.text);
-          }
-          if (node.type == 'folder') {
-            var folderId = node.id;
-            $scope.events.onDeleteFolder($scope.data, folderId)
-          }
-          if (node.type == 'file' || node.type == 'entity') {
-            var fileId = node.id;
-            $scope.events.onDeleteFile($scope.data, fileId);
-          }
-          $scope.refreshAll();
+          var modalInstance = $uibModal.open({
+            templateUrl: 'app/modal/modal.confirmremove.html',
+            controller: 'modalCtrl',
+            resolve: {
+              data: {
+                elementName: node.text
+              }
+            }
+          });
+          modalInstance.result.then(function () {
+            tree.delete_node(node);
+            if (node.type == 'models') {
+              var folderId = 'TelosysTools/' + node.text + '_model';
+              var fileModelId = 'TelosysTools/' + node.text + '.model';
+              $scope.events.onDeleteFolder($scope.data, folderId);
+              $scope.events.onDeleteFile($scope.data, fileModelId);
+            }
+            if (node.type == 'bundle') {
+              $scope.events.removeBundle(node.text);
+            }
+            if (node.type == 'folder') {
+              var folderId = node.id;
+              $scope.events.onDeleteFolder($scope.data, folderId)
+            }
+            if (node.type == 'file' || node.type == 'entity') {
+              var fileId = node.id;
+              $scope.events.onDeleteFile($scope.data, fileId);
+            }
+            $scope.refreshAll();
+          })
         })
       };
 

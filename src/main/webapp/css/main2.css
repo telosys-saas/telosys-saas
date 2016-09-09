@@ -486,3 +486,14 @@ footer {
     cursor: pointer;
     margin: 2px 0;
 }
+
+
+.bundle-selection {
+    margin-top: 10px;
+    background-color: #efefef;
+    height: 350px;
+    overflow: auto;
+    border: 1px solid #cecece;
+    padding-left: 10px;
+    padding-right: 10px;
+}

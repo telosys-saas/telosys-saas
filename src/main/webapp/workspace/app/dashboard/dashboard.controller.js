@@ -33,7 +33,7 @@ angular.module('dashboard')
       $scope.addProject = function () {
         console.log('addProject');
         // Modal window to create a new project
-        var modalInstance = $uibModal.open({
+       $uibModal.open({
           templateUrl: 'app/modal/modal.createproject.html',
           controller: 'modalCtrl',
           resolve: {
@@ -65,7 +65,7 @@ angular.module('dashboard')
             console.log('authentication:', result.data);
             $scope.data.profile = result.data;
             if (!$scope.data.profile.authenticated) {
-              $location.path('/error');
+              document.location = '../login.jsp';
               return {};
             }
             $scope.data.host = getContextPath();
@@ -76,7 +76,7 @@ angular.module('dashboard')
           })
           .catch(function(e) {
             console.log(e);
-            $location.path('/error');
+            document.location = '../login.jsp';
           });
       }
       init();

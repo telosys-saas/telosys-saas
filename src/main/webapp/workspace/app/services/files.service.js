@@ -7,10 +7,10 @@ angular.module('app')
       var context = window.location.pathname.split('/');
       var contextPath = "";
       for (var index = 0; index < context.length; index++) {
-        if(context[index] == "workspace") {
+        if (context[index] == "workspace") {
           break;
         }
-        if(context[index] != "") {
+        if (context[index] != "") {
           contextPath += '/' + context[index];
         }
       }
@@ -18,7 +18,7 @@ angular.module('app')
     };
 
     var host = getContextPath();
-    
+
     return {
 
       /**
@@ -32,8 +32,8 @@ angular.module('app')
           url: host + '/api/v1/users/' + userId + '/projects/' + projectId + '/workspace'
         })
           .catch(function (e) {
-          console.log(e);
-        });
+            console.log(e);
+          });
       },
 
       /**
@@ -44,10 +44,10 @@ angular.module('app')
        * @returns JSON Folder
        */
       convertFolderToJson: function (folder, parent, type) {
-        
+
         var currentNode;
         switch (type) {
-          case 'files' :
+          case 'folder' :
           {
             currentNode = {
               id: folder.id,
@@ -58,12 +58,12 @@ angular.module('app')
           }
             break;
 
-          case 'models' :
+          case 'model' :
           {
             currentNode = {
               id: folder.id,
               text: folder.name,
-              type: 'models',
+              type: type,
               children: []
             };
           }
@@ -88,10 +88,11 @@ angular.module('app')
               type: folder.type,
               children: []
             };
-          }break;
+          }
+            break;
         }
 
-        if (!parent) {
+        if (!parent  && type != 'bundle') {
           currentNode.state = {
             'opened': true
           };
@@ -144,12 +145,12 @@ angular.module('app')
        * @param folder Folder
        * @returns map of files
        */
-      getAllFilesFromTree: function (folder) {
+      getAllFiles: function (folder) {
         var allFiles = {};
         if (folder.folders) {
           for (var i = 0; i < folder.folders.length; i++) {
             var folderSub = folder.folders[i];
-            var tempAllFiles = this.getAllFilesFromTree(folderSub);
+            var tempAllFiles = this.getAllFiles(folderSub);
             for (var fileId in tempAllFiles) {
               allFiles[fileId] = tempAllFiles[fileId];
             }
@@ -158,6 +159,9 @@ angular.module('app')
         if (folder.files) {
           for (var i = 0; i < folder.files.length; i++) {
             var file = folder.files[i];
+            if(folder.type == 'model'){
+              file.modelName = folder.name;
+            }
             allFiles[file.id] = file;
           }
         }

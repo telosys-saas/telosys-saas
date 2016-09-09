@@ -1,37 +1,65 @@
 <div class="modal-content modal-lg">
     <div class="modal-header">
-        <h3 class="modal-title">Add bundle</h3>
+        <h3 class="modal-title">Manage bundle</h3>
     </div>
     <div class="modal-body">
-        <div class="modal-header">
-            <h4>Bundles in the public repository</h4>
-        </div>
         <div class="modal-body">
-            <div class="form-group">
-                <label for="githubUserName">GitHub repository name :</label>
-                <input id="githubUserName" class="form-control"
-                       ng-model="data.githubUserName" placeholder="{{data.githubUserName}}" autofocus>
-                <button class="btn btn-info" style="margin-top: 10px" type="button" ng-click="getbundles()">Get
-                    available
-                    bundles
-                </button>
-            </div>
-            <div class="container">
-                <div class="col-md-4">
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-class="{active: selectedBundle==bundle}" ng-repeat="bundle in data.allBundles"
-                            ng-click="selectBundle(bundle)">
-                            <td>{{bundle.name}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <button class="btn btn-info" type="button" ng-click="downloadBundle()">Download selected bundles
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="githubUserName" class="col-sm-3 control-label">GitHub repository name :</label>
+                    <div class="col-sm-6">
+                        <input id="githubUserName" class="form-control" ng-model="data.githubUserName" autofocus>
+                    </div>
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-offset-3 col-sm-3">
+                        <button class="btn btn-info" style="margin-top: 10px" type="button" ng-click="getbundles()">
+                            Get available bundles
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-sm-6"><h4>Github bundles :</h4></div>
+                <div class="col-sm-offset-1 col-sm-5"><h4>Project bundles :</h4></div>
+                <div class="col-sm-5">
+                    <div class="container-fluid bundle-selection">
+                        <div class="row generation-selection-line card-generation"
+                             ng-repeat="(key, bundle) in data.allBundles"
+                             ng-class="{'generation-selection-line-selected':bundleToDownload[bundle.name]}">
+                            <div class="checkbox">
+                                <label class="form-check-label" style="padding-left: 30px">
+                                    <input type="checkbox" ng-model="bundleToDownload[bundle.name]"
+                                           style="margin-right: 5px;"/>
+                                    {{bundle.name}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-1"></div>
+                <div class="col-sm-offset-1 col-sm-5">
+                    <div class="container-fluid bundle-selection">
+                        <div class="row generation-selection-line card-generation"
+                             ng-repeat="(key, value) in data.bundlesOfProject"
+                             ng-class="{'generation-selection-line-selected':bundleToRemove[value.name]}">
+                            <div class="checkbox">
+                                <label class="form-check-label" style="padding-left: 30px">
+                                    <input type="checkbox" ng-model="bundleToRemove[value.name]"
+                                           style="margin-right: 5px;"/>
+                                    {{value.name}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-offset-1 col-sm-5">
+                    <button class="btn btn-primary" type="button" ng-click="downloadBundle()" style="margin-top: 10px">
+                    Download
+                    </button>
+                </div>
+                <div class="col-sm-offset-2 col-sm-4">
+                    <button class="btn btn-primary" type="button" ng-click="removeBundle()" style="margin-top: 10px">
+                        Remove
                     </button>
                 </div>
             </div>

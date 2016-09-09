@@ -11,9 +11,7 @@
                             <div class="col-sm-12">
                                 <div class="checkbox">
                                     <label class="form-check-label close-card">
-                                        <input type="checkbox" ng-model="fileToSaves[key]"
-                                               style="margin-right: 5px;"/>
-                                        {{value}}
+                                        <input type="checkbox" ng-model="fileToSaves[key]" style="margin-right: 5px;"/>{{value}}
                                     </label>
                                 </div>
                             </div>
@@ -22,13 +20,13 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <div class="col-sm-6">
-                                <button class="btn btn-info btn-block" type="button"
-                                        ng-click="selectAllFileToSave()">Select all
+                                <button class="btn btn-info btn-block" type="button" ng-click="selectAllFileToSave()">
+                                    Select all
                                 </button>
                             </div>
                             <div class="col-sm-6">
-                                <button class="btn btn-info btn-block" type="button"
-                                        ng-click="deselectAllFileToSave()">Deselect all
+                                <button class="btn btn-info btn-block" type="button" ng-click="deselectAllFileToSave()">
+                                    Deselect all
                                 </button>
                             </div>
                         </div>
@@ -38,8 +36,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" type="submit"
-                ng-click="closeAll()">OK
+        <button class="btn btn-primary" type="submit" ng-click="closeAll()">OK
         </button>
         <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
     </div>

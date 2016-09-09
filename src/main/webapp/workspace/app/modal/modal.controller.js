@@ -33,9 +33,6 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      */
     $scope.entityName = '';
 
-    /** The selected Model */
-    $scope.selectedModel = {};
-
     /** Data for Configuration */
     $scope.selectedVariable = null;
     $scope.rowToDeletes = {};
@@ -50,8 +47,12 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
       value: ''
     };
 
-    /** The selected bundle */
-    $scope.selectedBundle = {};
+
+    /** The list of selected bundle */
+    $scope.bundleToDownload = {};
+
+    /** Bundles to remove */
+    $scope.bundleToRemove = {};
 
     /** The new password */
     $scope.changePassword = {
@@ -63,20 +64,21 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     /** The list of file to save */
     $scope.fileToSaves = {};
 
+
     /**
      * Create a new project
      */
     $scope.createProject = function () {
       console.log('createProject modal');
-      if($scope.projectName != "") {
+      if ($scope.projectName != "") {
         ProjectsService.createProject($scope.profile.userId, $scope.projectName)
           .then(function (result) {
             var project = result.data;
-            if(project.existing){
+            if (project.existing) {
               $scope.errorMessage = "Project already exists";
               return;
             }
-            if(project.tooManyProject){
+            if (project.tooManyProject) {
               $scope.errorMessage = "You have too many projects, please buy a premium account";
               return;
             }
@@ -125,7 +127,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      */
     $scope.createFolder = function () {
       console.log('createFolder modal', $scope.folderName);
-      if($scope.folderName != "") {
+      if ($scope.folderName != "") {
         var folder = {};
         // create the new folder object
         if ($scope.data.nodeParent.id == '@@_root_@@') {
@@ -204,10 +206,10 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     $scope.createModel = function () {
       ModelService.createModel($scope.profile.userId, $scope.data.project.id, $scope.modelName)
         .then(function (result) {
-          var model  = result.data;
-          if(model.existing){
+          var model = result.data;
+          if (model.existing) {
             $scope.errorMessage = "Model already exists";
-          }else {
+          } else {
             if ($scope.data.refreshAll) {
               $scope.data.refreshAll();
             }
@@ -220,12 +222,12 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      * Create an entity
      */
     $scope.createEntity = function () {
-      ModelService.createEntityForModel($scope.profile.userId, $scope.data.project.id, $scope.selectedModel.text, $scope.entityName)
+      ModelService.createEntityForModel($scope.profile.userId, $scope.data.project.id, $scope.data.selectedModel, $scope.entityName)
         .then(function (result) {
           var file = result.data;
-          if(file.existing){
+          if (file.existing) {
             $scope.errorMessage = "Entity already exists";
-          }else {
+          } else {
             $scope.data.openCreatedFile(file.id);
             $uibModalInstance.close();
           }
@@ -236,12 +238,31 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      * Download the selected bundle from github
      */
     $scope.downloadBundle = function () {
-      BundlesService.addBundle($scope.profile.userId, $scope.data.project.id, $scope.data.githubUserName, $scope.selectedBundle.name)
-        .then(function () {
-          $scope.data.refreshAll();
-          $scope.data.bundlesOfProject[$scope.selectedBundle.name] = $scope.selectedBundle;
-        });
+      for (var index = 0; index < $scope.data.allBundles.length; index++) {
+        var bundle = $scope.data.allBundles[index];
+        if ($scope.bundleToDownload[bundle.name]) {
+          BundlesService.addBundle($scope.profile.userId, $scope.data.project.id, $scope.data.githubUserName, bundle.name)
+            .then(function (result) {
+              var bundle = result.data;
+              $scope.bundleToDownload[bundle.name] = false;
+              $scope.data.bundlesOfProject[bundle.name] = bundle;
+              $scope.data.refreshAll();
+            });
+        }
+      }
     };
+
+    $scope.removeBundle = function () {
+      for (var bundle in $scope.bundleToRemove) {
+        if ($scope.bundleToRemove[bundle]) {
+          $scope.data.removeBundle(bundle);
+          $scope.bundleToRemove[bundle.name] = false;
+          delete $scope.data.bundlesOfProject[bundle];
+        }
+      }
+      $scope.data.refreshAll();
+    };
+
 
     /**
      * Get a list of bundles from github
@@ -276,16 +297,8 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     /**
      * Apply the new configuration
      */
-    $scope.applyConfig = function () {
-      console.log('saveConfig', $scope.data);
-      $scope.data.events.saveConfig();
-    };
-
-    /**
-     * Apply the new configuration
-     */
     $scope.saveConfig = function () {
-      $scope.applyConfig();
+      $scope.data.events.saveConfig();
       $uibModalInstance.close();
     };
 
@@ -296,7 +309,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
       var modalInstance = $uibModal.open({
         templateUrl: 'app/modal/modal.addvariable.html',
         controller: 'modalCtrl',
-        windowTopClass  : 'top-modal',
+        windowTopClass: 'top-modal',
         resolve: {
           data: {}
         }
@@ -332,17 +345,17 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     };
 
     $scope.selectAllFileToSave = function () {
-      for(var file in $scope.data.modifiedFiles){
+      for (var file in $scope.data.modifiedFiles) {
         $scope.fileToSaves[file] = true;
       }
     };
 
     $scope.deselectAllFileToSave = function () {
-      for(var file in $scope.data.modifiedFiles){
+      for (var file in $scope.data.modifiedFiles) {
         $scope.fileToSaves[file] = false;
       }
     };
-    
+
     $scope.closeAll = function () {
       $uibModalInstance.close($scope.fileToSaves)
     };
@@ -363,10 +376,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
       AuthService.status().then(function (result) {
         $scope.profile = result.data;
       });
-      if($scope.data.models){
-        $scope.selectedModel = $scope.data.models[0];
-      }
-      if($scope.data.modifiedFiles){
+      if ($scope.data.modifiedFiles) {
         $scope.selectAllFileToSave();
       }
     }

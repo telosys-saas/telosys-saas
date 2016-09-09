@@ -46,6 +46,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           workingFiles: {},
           /** Selected file */
           selectedFile: null,
+          /** Name of the selected model */
+          selectedModel: null,
           /** Counter of modified file */
           countModifiedFile: 0,
           /** Select element in the treeview */
@@ -522,7 +524,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           filesFoder.id = '@@_root_@@';
           $scope.data.files.tree = [];
           $scope.data.files.tree.push(FilesService.convertFolderToJson(filesFoder, null, 'folder'));
-          $scope.data.files.allFiles = FilesService.getAllFilesFromTree(result.data);
+          $scope.data.files.allFiles = FilesService.getAllFiles(result.data);
           if (callback) {
             callback();
           }
@@ -562,7 +564,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
               templateFolder.folders[index].id = '@@_root_@@_' + index;
               $scope.data.bundles.tree.push(FilesService.convertFolderToJson(templateFolder.folders[index], null, 'bundle'));
             }
-            $scope.data.bundles.allFiles = FilesService.getAllFilesFromTree(templateFolder);
+            $scope.data.bundles.allFiles = FilesService.getAllFiles(templateFolder);
             BundlesService.getBundlesInPublicRepository($scope.data.bundles.githubUserName)
               .then(function (result) {
                 $scope.data.bundles.allBundles = result.data;
@@ -625,7 +627,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     $scope.getTemplateForGeneration = function (bundleName, callback) {
       ProjectsService.getTemplateForGeneration($scope.profile.userId, $scope.data.project.id, bundleName)
         .then(function (result) {
-          //$scope.data.bundles.templatesForGeneration = result.data;
           if (callback) callback(result);
         })
     };
@@ -665,7 +666,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           templateFolder.folders[index].id = '@@_root_@@_' + index;
           $scope.data.bundles.tree.push(FilesService.convertFolderToJson(templateFolder.folders[index], null, 'bundle'));
         }
-        $scope.data.bundles.allFiles = FilesService.getAllFilesFromTree(templateFolder);
+        $scope.data.bundles.allFiles = FilesService.getAllFiles(templateFolder);
       }
       // Public bundles
       return BundlesService.getBundlesOfProject($scope.profile.userId, $scope.data.project.id);
@@ -682,11 +683,12 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           var modelFolder = getFolderByName($scope.telosysFolder, modelName);
           allModelsFolder.folders.push(modelFolder);
           modelFolder.id = '@@_root_@@_' + index;
-          $scope.data.models.tree.push(FilesService.convertFolderToJson(modelFolder, null, 'models'));
+          $scope.data.models.tree.push(FilesService.convertFolderToJson(modelFolder, null, 'model'));
         }
-        $scope.data.models.allFiles = FilesService.getAllFilesFromTree(allModelsFolder);
+        $scope.data.models.allFiles = FilesService.getAllFiles(allModelsFolder);
         $scope.data.models.modelErrors = models;
       }
+      $scope.data.models.selectedModel = $scope.data.models.tree[0].text;
     }
 
     $scope.getModels = function () {
@@ -777,10 +779,10 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           })
           .then(function (result) {
             // Init Files
-            var filesFoder = result.data;
-            filesFoder.id = '@@_root_@@';
-            $scope.data.files.tree.push(FilesService.convertFolderToJson(filesFoder, null, 'folder'));
-            $scope.data.files.allFiles = FilesService.getAllFilesFromTree(result.data);
+            var filesFolder = result.data;
+            filesFolder.id = '@@_root_@@';
+            $scope.data.files.tree.push(FilesService.convertFolderToJson(filesFolder, null, 'folder'));
+            $scope.data.files.allFiles = FilesService.getAllFiles(result.data);
             // Get bundles
             return initBundles();
           })

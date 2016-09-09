@@ -18,7 +18,7 @@ angular.module('dashboard')
                 $scope.addProject = function () {
                     console.log('addProject');
                     // Modal window to create a new project
-                    var modalInstance = $uibModal.open({
+                   $uibModal.open({
                         templateUrl: 'app/modal/modal.createproject.html',
                         controller: 'modalCtrl',
                         resolve: {
@@ -33,7 +33,7 @@ angular.module('dashboard')
                 };
 
                 $scope.changePassword = function () {
-                    var modalInstance = $uibModal.open({
+                  $uibModal.open({
                         templateUrl: 'app/modal/modal.changepassword.html',
                         controller: 'modalCtrl',
                         resolve: {

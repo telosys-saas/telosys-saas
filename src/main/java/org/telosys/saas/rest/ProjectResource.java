@@ -17,10 +17,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.sun.deploy.config.Config;
 import org.telosys.saas.config.Configuration;
 import org.telosys.saas.config.ConfigurationHolder;
 import org.telosys.saas.dao.StorageDao;
@@ -30,6 +26,7 @@ import org.telosys.saas.security.Security;
 import org.telosys.saas.services.BundleService;
 import org.telosys.saas.services.ProjectService;
 import org.telosys.saas.services.TelosysFolderService;
+import org.telosys.tools.commons.bundles.BundleStatus;
 import org.telosys.tools.users.User;
 
 @Path("/users/{userId}/projects/{projectId}")
@@ -120,10 +117,11 @@ public class ProjectResource {
     @Path("/bundles/{githubUserName}/{bundleName}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public void addBundleToTheProject(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @PathParam("githubUserName") String githubUserName, @PathParam("bundleName") String bundleName) {
+    public Bundle addBundleToTheProject(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @PathParam("githubUserName") String githubUserName, @PathParam("bundleName") String bundleName) {
         User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
         projectService.addBundleToTheProject(user, project, githubUserName, bundleName);
+        return bundleService.getBundle(bundleName);
     }
 
     @Path("/bundles/{bundleName}")

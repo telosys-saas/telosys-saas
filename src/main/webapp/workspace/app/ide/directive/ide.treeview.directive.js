@@ -25,7 +25,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           };
         }
         $scope.onCreateFile(nodeParent)();
-        
+
       };
 
       /**
@@ -105,7 +105,8 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
               bundlesOfProject: $scope.data.bundlesOfProject,
               allBundles: $scope.data.allBundles,
               githubUserName: $scope.data.githubUserName,
-              refreshAll: $scope.refreshAll
+              refreshAll: $scope.refreshAll,
+              removeBundle: $scope.events.removeBundle
             }
           }
         });
@@ -122,6 +123,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
             data: {
               models: $scope.data.tree,
               project: $scope.data.project,
+              selectedModel : $scope.data.selectedModel,
               openCreatedFile: function (fileId) {
                 $scope.data.events.refreshAll(function () {
                   var tree = $(element[0].children[1]).jstree();
@@ -191,7 +193,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           });
           modalInstance.result.then(function () {
             tree.delete_node(node);
-            if (node.type == 'models') {
+            if (node.type == 'model') {
               var folderId = 'TelosysTools/' + node.text + '_model';
               var fileModelId = 'TelosysTools/' + node.text + '.model';
               $scope.events.onDeleteFolder($scope.data, folderId);
@@ -216,38 +218,14 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
       /**
        * Delete the selected element (folder or file) in the treeview
        */
-      $scope.deleteSelectedElementForFiles = function () {
+      $scope.deleteSelectedElement = function () {
         var elementToDelete = $scope.data.selectedElement;
         var tree = $(element[0].children[1]).jstree();
         console.log('deleteSelectedElement', $scope.data.selectedElement);
         if (elementToDelete && elementToDelete != null && elementToDelete.id != '@@_root_@@') {
-          var result = confirm("Voulez-vous supprimer \"" + elementToDelete.text + "\" ?");
-          if (result) {
             $scope.onRemove(elementToDelete, tree)();
             $scope.data.selectedElement = null;
-          }
-        }
-      };
-
-      /**
-       * Delete the selected element (model or entity) in the treeview
-       */
-      $scope.deleteSelectedElementForModels = function () {
-        var elementToDelete = $scope.data.selectedElement;
-        var tree = $(element[0].children[1]).jstree();
-        console.log('deleteSelectedElement', $scope.data.selectedElement);
-        if (elementToDelete && elementToDelete != null) {
-          var result = confirm("Voulez-vous supprimer \"" + elementToDelete.text + "\" ?");
-          if (result) {
-            if (elementToDelete.type == 'entity') {
-              $scope.onRemove(elementToDelete, tree);
-              $scope.data.selectedElement = null;
-            }
-            if (elementToDelete.type == 'models') {
-              $scope.onRemove(elementToDelete, tree);
-              $scope.data.selectedElement = null;
-            }
-          }
+            console.log('deleteSelectedElement',$scope.data.selectedElement);
         }
       };
 
@@ -279,7 +257,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
             "bundle": {
               "icon": "fa fa-archive"
             },
-            "models": {
+            "model": {
               "icon": "fa fa-cubes"
             },
             "entity": {
@@ -330,7 +308,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
                     action: $scope.onRemove(node, tree)
                   }
                 }
-                if (node.type == 'models') {
+                if (node.type == 'model') {
                   items.CreateFolder = {
                     label: "Create entity",
                     action: $scope.createEntity
@@ -356,11 +334,13 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
         /** Functions to detect one click and double click on one node in the treeview */
         // click file (one click)
         $(element[0].children[1]).bind("activate_node.jstree", function (e, data) {
-          var fileFound = $scope.data.allFiles[data.node.id];
           $scope.data.selectedElement = data.node;
           console.log('treeview one click', $scope.data.selectedElement);
-          if (fileFound && (fileFound.type == 'file' || fileFound.type == 'entity')) {
-            $scope.data.tree.selectedFile = fileFound;
+          if(data.node.type == 'model'){
+            $scope.data.selectedModel = data.node.text;
+          }
+          if(data.node.type == 'entity'){
+            $scope.data.selectedModel = $scope.data.allFiles[$scope.data.selectedElement.id].modelName;
           }
         }.bind(this));
 
@@ -368,8 +348,9 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
         $(element[0].children[1]).bind("dblclick.jstree", function () {
           console.log('treeview double click', $scope.data.selectedElement);
           if ($scope.events.onDoubleClickFile) {
-            if ($scope.data.tree.selectedFile != null) {
-              $scope.events.onDoubleClickFile($scope.data, $scope.data.tree.selectedFile.id);
+            var file = $scope.data.allFiles[$scope.data.selectedElement.id];
+            if (file) {
+              $scope.events.onDoubleClickFile($scope.data, file.id);
             }
           }
         }.bind(this));

@@ -71,6 +71,7 @@ angular.module('ide').directive('editor', function () {
                 $scope.closeEditor(fileId);
               }
               $scope.data.workingFiles = {};
+              return;
             }
           }
 

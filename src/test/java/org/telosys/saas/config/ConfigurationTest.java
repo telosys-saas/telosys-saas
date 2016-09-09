@@ -46,5 +46,5 @@ public class ConfigurationTest {
 //		assertEquals("foo",  configuration.getDataRootPath() );
 //		assertEquals("8282", configuration.getHttpPort() );
 //	}
-	
+
 }

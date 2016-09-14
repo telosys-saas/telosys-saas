@@ -27,6 +27,7 @@
 
     </div>
 
+    <!-- Model tab -->
     <div ng-if="displayTab=='model'" id="consoleModel" class="console-error">
         <div class="col-sm-12">
             <table class="table table-striped table-bordered table-condensed" ng-if="data.models.countModelsErrors > 0">
@@ -44,6 +45,7 @@
         </div>
     </div>
 
+    <!-- Generation tab -->
     <div ng-if="displayTab == 'generation'" id="consoleGeneration" class="console-error">
         <div class="alert alert-danger" role="alert" ng-if="data.generation.errorMessage" style="margin: 10px">{{data.generation.errorMessage}}</div>
         <div class="col-sm-12" ng-if="data.generation.generationResults && !data.generation.errorMessage">

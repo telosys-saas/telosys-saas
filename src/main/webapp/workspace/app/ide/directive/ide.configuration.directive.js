@@ -4,7 +4,7 @@
  * IDE Configuration
  */
 angular.module('ide')
-  .directive('configuration',['$uibModal',function ($uibModal) {
+  .directive('configuration', ['$uibModal', function ($uibModal) {
     return {
       scope: {
         data: '='
@@ -19,6 +19,13 @@ angular.module('ide')
         /** Data for Variables tab*/
         $scope.selectedVariable = null;
 
+        /** Map of variables to delete */
+        $scope.rowToDeletes = {};
+
+        /**
+         * Change the tab to display
+         * @param tabToDisplay Name of the tab to display
+         */
         $scope.onClickTab = function (tabToDisplay) {
           $scope.displayTab = tabToDisplay;
         };
@@ -48,24 +55,18 @@ angular.module('ide')
           })
         };
 
-        $scope.rowToDeletes = {};
-
         /**
          * Delete a specific variable
          */
         $scope.deleteVariable = function () {
-          if($scope.rowToDeletes) {
-            for(var key in $scope.rowToDeletes) {
-              if($scope.rowToDeletes[key]) {
+          if ($scope.rowToDeletes) {
+            for (var key in $scope.rowToDeletes) {
+              if ($scope.rowToDeletes[key]) {
                 delete $scope.data.variables.specificVariables[key];
               }
             }
           }
           $scope.rowToDeletes = {};
-        };
-
-        $scope.selectVariable = function (key) {
-          $scope.selectedVariable = key;
         };
       }
     }

@@ -1,71 +1,70 @@
 # PREPARE
 
 ## Update
-- apt-get update
+- sudo apt-get update
 
-## git
-- apt-get install git
-
-## jdk 1.8
+## Jdk 1.8
 - sudo add-apt-repository ppa:webupd8team/java
 - sudo apt-get update
 - sudo apt-get install oracle-java8-installer
 - sudo apt-get install oracle-java8-set-default
 
-## tomcat 8
-- sudo apt-get install tomcat8
-- sudo apt-get install tomcat8-admin
-- sudo nano /etc/default/tomcat8
-  - replace ```-Xmx128m``` by ```-Xmx512m``` in ```JAVA_OPTS``` line
-- sudo nano /etc/tomcat8/tomcat-users.xml
+## Telosys application folder
+- mkdir ~/work
+
+## Tomcat 7
+- cd ~/work
+- wget http://apache.mirrors.ovh.net/ftp.apache.org/dist/tomcat/tomcat-7/v7.0.70/bin/apache-tomcat-7.0.70.tar.gz
+- tar -xzvf apache-tomcat-7.0.70.tar.gz
+- nano ~/work/apache-tomcat-7.0.70/conf/tomcat-users.xml 
   - add in ```<tomcat-users>``` :
 ```
 <tomcat-users>
     <user username="admin" password="password" roles="manager-gui,admin-gui"/>
 </tomcat-users>
 ```
-- sudo service tomcat8 restart
-- Test with URL : http://localhost:8080/manager/html
-
-## maven 3
-- apt-get install maven
 
 ## Telosys data folder
 - sudo mkdir /opt/telosys-saas
-- sudo nano /opt/telosys-saas/telosys-saas.properties
+- sudo chown $USER:$USER telosys-saas
+- nano /opt/telosys-saas/telosys-saas.properties
   - define this content :
 ```
-dataRootPath        = /opt/telosys-saas
-httpPort            = 8080
-authRedirectUrl     = http://localhost:8080/api/callback
-githubOauthKey      = 
-githubOauthPassword = 
-gmailUsername       = telosystoolsdemo@gmail.com
-gmailPassword       = 
-mailRedirect        = http://<adresse_ip>
+githubOauthKey=
+githubOauthPassword=
+gmailUsername=telosystoolsdemo
+gmailPassword=
+mailRedirect=http://localhost:8080/telosys-saas
+loginAttemptsMax=3
+numberOfProjectMax=3
 ```
-- sudo chown -R tomcat8:tomcat8 /opt/telosys-saas
 
 ## TELOSYS_ROOT variable
-- Edit ```context.xml```Tomcat file :
-- nano /etc/tomcat8/context.xml
+- Edit ```context.xml``` tomcat file :
+- nano ~/work/apache-tomcat-7.0.70/conf/context.xml
 - Add this line in ```<Context>``` :
 ```
 <Environment name="TELOSYS_ROOT" type="java.lang.String" value="/opt/telosys-saas" override="false" />
 ```
 
-# BUILD
-- mkdir ~/work
+## Maven 3 and Git
+- sudo apt-get install maven git
+
+## BUILD and DEPLOY the application 
 - cd ~/work
 - git clone https://github.com/telosys-saas/telosys-saas.git
 - cd telosys-saas
 - mvn clean package
-- sudo cp target/telosys-saas.war /var/lib/tomcat8/webapps
-- sudo chown tomcat8:tomcat8 /var/lib/tomcat8/webapps/telosys-saas.war
-- sudo service tomcat8 restart
+- sudo cp target/telosys-saas.war  ~/work/apache-tomcat-7.0.70/webapps
+
+## START the application
+- cd ~/work/apache-tomcat-7.0.70/bin
+- ./startup.sh
+
+- Test with URL : http://localhost:8080/manager/html
 
 See logs :
-- tail -n 500 /var/lib/tomcat8/logs/catalina.out
+- tail -n 500  ~/work/apache-tomcat-7.0.70/logs/catalina.out 
 
-Go to the application:
+Go to the application :
 - http://localhost:8080/telosys-saas

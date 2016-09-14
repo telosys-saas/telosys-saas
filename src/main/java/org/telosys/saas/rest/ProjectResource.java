@@ -26,7 +26,6 @@ import org.telosys.saas.security.Security;
 import org.telosys.saas.services.BundleService;
 import org.telosys.saas.services.ProjectService;
 import org.telosys.saas.services.TelosysFolderService;
-import org.telosys.tools.commons.bundles.BundleStatus;
 import org.telosys.tools.users.User;
 
 @Path("/users/{userId}/projects/{projectId}")

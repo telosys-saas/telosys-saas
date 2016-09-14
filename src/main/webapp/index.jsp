@@ -26,14 +26,17 @@
                 </span>
             </div>
             <div class="col-sm-7 right-align">
-                <form class="form-inline" name="loginform" action="login.jsp" method="POST" accept-charset="UTF-8" role="form">
+                <form class="form-inline" name="loginform" action="login.jsp" method="POST" accept-charset="UTF-8"
+                      role="form">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="form-group">
-                                <input name="username" id="username" type="text" class="form-control" placeholder="Username" />
+                                <input name="username" id="username" type="text" class="form-control"
+                                       placeholder="Username"/>
                             </div>
                             <div class="form-group">
-                                <input name="password" id="password" type="password" class="form-control" placeholder="Password" />
+                                <input name="password" id="password" type="password" class="form-control"
+                                       placeholder="Password"/>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-default item">Sign in</button>
@@ -71,7 +74,8 @@
                             <h4>1 : Design</h4>
                         </div>
                         <div class="col-sm-7 center-align" style="padding: 5px 20px; font-size: 110%;">
-                            <p class="text-muted black-text">Use the Telosys DSL (Domain Specification Language) to design your model</p>
+                            <p class="text-muted black-text">Use the Telosys DSL (Domain Specification Language) to
+                                design your model</p>
                         </div>
                     </div>
                     <div class="row">
@@ -85,7 +89,8 @@
                             <h4>2 : Generate</h4>
                         </div>
                         <div class="col-sm-7 center-align" style="padding: 5px 20px; font-size: 110%;">
-                            <p class="text-muted black-text">Use existing templates or create new templates to generate your application<br/><br/></p>
+                            <p class="text-muted black-text">Use existing templates or create new templates to generate
+                                your application<br/><br/></p>
                         </div>
                     </div>
                     <div class="row">
@@ -99,7 +104,8 @@
                             <h4>3 : Download</h4>
                         </div>
                         <div class="col-sm-7 center-align" style="padding: 5px 20px; font-size: 110%;">
-                            <p class="text-muted black-text">Download the generated application as a ZIP file and let's develop on it</p>
+                            <p class="text-muted black-text">Download the generated application as a ZIP file and let's
+                                develop on it</p>
                         </div>
                     </div>
                 </div>
@@ -110,7 +116,9 @@
                 <div class="login-body">
                     <form name="createAccountForm" action="createAccount" method="POST">
                         <div class="form-group">
-                            <a href="<%=request.getContextPath()%>/accessToGithub" class="btn btn-default btn-lg btn-github btn-block" role="button"><i class="fa fa-github fa-2x"></i>Sign in with GitHub</a>
+                            <a href="<%=request.getContextPath()%>/accessToGithub"
+                               class="btn btn-default btn-lg btn-github btn-block" role="button"><i
+                                    class="fa fa-github fa-2x"></i>Sign in with GitHub</a>
                         </div>
                         <hr/>
                         <% if (request.getSession().getAttribute("error") != null) { %>
@@ -121,50 +129,29 @@
                         </div>
                         <% } %>
                         <div class="form-group">
-                            <input name="login" id="login" type="text" class="form-control input-lg" placeholder="Username" />
+                            <input name="login" id="login" type="text" class="form-control input-lg"
+                                   placeholder="Username"/>
                         </div>
                         <div class="form-group">
-                            <input name="mail" id="mail" type="text" class="form-control input-lg" placeholder="Email Address" />
+                            <input name="mail" id="mail" type="text" class="form-control input-lg"
+                                   placeholder="Email Address"/>
                         </div>
                         <div class="form-group">
-                            <input name="password1" id="password1" type="password" class="form-control input-lg" placeholder="Password" />
+                            <input name="password1" id="password1" type="password" class="form-control input-lg"
+                                   placeholder="Password"/>
                         </div>
                         <div class="form-group">
-                            <input name="password2" id="password2" type="password" class="form-control input-lg" placeholder="Confirm Password" />
+                            <input name="password2" id="password2" type="password" class="form-control input-lg"
+                                   placeholder="Confirm Password"/>
                         </div>
-                        <button type="submit" class="btn btn-success btn-lg btn-block" role="button" data-reactid="86">Create an account</button>
+                        <button type="submit" class="btn btn-success btn-lg btn-block" role="button" data-reactid="86">
+                            Create an account
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<!--
-<footer class="footer">
-    <div class="container">
-        <p class="text-muted">Place sticky footer content here.</p>
-    </div>
-</footer>
-<!--
-<div class="welcome-section-footer" style="position: fixed; bottom: 0; width: 100%;">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6 center-align" style="padding: 20px">
-                <p><a href="http://www.telosys.org" target="_blank">Telosys</a></p>
-                <p><a href="https://sites.google.com/site/telosystools/" target="_blank">Telosys Source code generator</a></p>
-                <p><a href="http://marketplace.eclipse.org/content/telosys-tools" target="_blank">Plugin Telosys Tools For Eclipse</a></p>
-                <p><a href="https://github.com/telosys-tools" target="_blank">Templates for code generation</a></p>
-            </div>
-            <div class="col-sm-6 center-align" style="padding: 20px">
-                <p><a mailto="telosysteam@gmail.com" target="_blank">Contact us by mail : telosysteam@gmail.com</a></p>
-                <p><a href="https://moot.it/telosystools" target="_blank">Forum : https://moot.it/telosystools</a></p>
-                <p><a href="http://telosys-tools.blogspot.com/" target="_blank">Blog : http://telosys-tools.blogspot.com/</a></p>
-            </div>
-        </div>
-    </div>
-</div>
--->
-
 </body>
 </html>

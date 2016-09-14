@@ -32,6 +32,7 @@ public class InitServletContextListener implements ServletContextListener {
 			logger.info(" . Gmail Username = " + configuration.getGmailUsername() );
 			logger.info(" . Mail Redirect = " + configuration.getMailRedirect() );
 			logger.info(" . Login Attempts Max = " + configuration.getLoginAttemptsMax() );
+			logger.info(" . Number of project Max = " + configuration.getNumberOfProjectMax() );
 			UsersManager.setUsersFileName(configuration.getUsersFilePath());
 			logger.info("UsersManager initialized.");
 		}

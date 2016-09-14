@@ -14,7 +14,9 @@ angular.module('ide')
 
       link: function ($scope, element, attrs) {
 
-        // Model and Entity function
+        /**
+         * Change the selected model
+         */
         $scope.changeSelectedModel = function () {
           console.log('changeSelectedModel', $scope.data.generation.selectedModel);
           if($scope.data.generation.selectedModel) {
@@ -24,6 +26,9 @@ angular.module('ide')
           }
         };
 
+        /**
+         * Check if the model contains some errors
+         */
         $scope.selectModelEntitys = function () {
           console.log('selectModelEntitys');
           for (var i = 0; i < $scope.data.models.modelErrors.length; i++) {
@@ -39,15 +44,26 @@ angular.module('ide')
           }
         };
 
+        /**
+         * Automatically redirect to the model view
+         * @param fileId File to display in the editor
+         */
         $scope.goToModelEntity = function (fileId) {
           console.log('goToModelEntity', fileId);
           $scope.data.events.onDoubleClickFile($scope.data.models, fileId);
         };
 
+        /**
+         * Select the entity
+         * @param entity Entity to select
+         */
         $scope.selectEntity = function (entity) {
           entity.selected = !entity.selected;
         };
 
+        /**
+         * Select all entities for the selected model
+         */
         $scope.selectAllEntity = function () {
           $scope.deselectAllEntity();
           if ($scope.data.generation.selectedModelEntitys) {
@@ -59,6 +75,9 @@ angular.module('ide')
           }
         };
 
+        /**
+         * Deselect all entities for the selected model
+         */
         $scope.deselectAllEntity = function () {
           if ($scope.data.generation.selectedModelEntitys) {
             for (var index = 0; index < $scope.data.generation.selectedModelEntitys.length; index++) {
@@ -69,12 +88,18 @@ angular.module('ide')
           }
         };
 
-        // Bundle and Template function
+        /**
+         * Automatically redirect to the bundle view
+         * @param fileId File to display in the editor
+         */
         $scope.goToBundleTemplate = function (fileId) {
           console.log('goToBundleTemplate', fileId);
           $scope.data.events.onDoubleClickFile($scope.data.bundles, fileId);
         };
 
+        /**
+         * Change the selected bundle
+         */
         $scope.changeSelectedBundle = function () {
           console.log('changeSelectedBundle', $scope.data.generation.selectedBundle);
           $scope.data.bundles.events.getTemplateForGeneration($scope.data.generation.selectedBundle.text, function (result) {
@@ -83,10 +108,17 @@ angular.module('ide')
           });
         };
 
+        /**
+         * Select the template
+         * @param template Template to select
+         */
         $scope.selectTemplate = function (template) {
           template.selected = !template.selected;
         };
 
+        /**
+         * Select all templates for the selected bundle
+         */
         $scope.selectAllTemplate = function () {
           $scope.deselectAllTemplate();
           if ($scope.data.generation.selectedBundleTemplates) {
@@ -98,6 +130,9 @@ angular.module('ide')
           }
         };
 
+        /**
+         * Deselect all templates for the selected bundle
+         */
         $scope.deselectAllTemplate = function () {
           if ($scope.data.generation.selectedBundleTemplates) {
             for (var index = 0; index < $scope.data.generation.selectedBundleTemplates.length; index++) {
@@ -108,6 +143,9 @@ angular.module('ide')
           }
         };
 
+        /**
+         * Compute the generation and launch it
+         */
         $scope.submitGeneration = function () {
           $scope.data.generation.entities = [];
           $scope.data.generation.templates = [];
@@ -139,6 +177,10 @@ angular.module('ide')
           $scope.data.generation.events.generate();
         };
 
+        /**
+         * Automatically redirect to the bundle view
+         * and open the template.cfg associated to the selected bundle
+         */
         $scope.goToBundleConfiguration = function () {
           if ($scope.data.generation.bundle || $scope.data.generation.bundle != "") {
             var fileId = 'TelosysTools/templates/' + $scope.data.generation.bundle + '/templates.cfg';
@@ -146,6 +188,9 @@ angular.module('ide')
           }
         };
 
+        /**
+         * Refresh the list of selectable model and entity
+         */
         $scope.refreshModel = function () {
           $scope.data.models.events.refreshAll(function () {
             for (var index = 0; index < $scope.data.models.tree.length; index++) {
@@ -158,6 +203,9 @@ angular.module('ide')
           })
         };
 
+        /**
+         * Init the generation view
+         */
         function init() {
           if ($scope.data.generation.selectedModelEntitys == null) {
             if ($scope.data.models.tree) {

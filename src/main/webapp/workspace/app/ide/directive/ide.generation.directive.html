@@ -46,9 +46,8 @@
             <div class="alert alert-danger" role="alert" ng-if="!data.generation.selectedModelEntitys" style="margin: 10px">Model error : please look in the console</div>
             <div class="row generation-selection-line card-generation"
                  ng-repeat="entity in data.generation.selectedModelEntitys"
-                 ng-click="selectEntity(entity)"
                  ng-class="{'generation-selection-line-selected':entity.selected}">
-                <div class="col-sm-11">
+                <div class="col-sm-11" ng-click="selectEntity(entity)">
                     <div class="checkbox" style="word-wrap: break-word;">
                         <label class="control-label" for="entity_{{$index}}">
                             <input type="checkbox" ng-model="entity.selected" id="entity_{{$index}}" />
@@ -69,10 +68,9 @@
         <div class="container-fluid generation-selection">
             <div class="row generation-selection-line card-generation"
                  ng-repeat="template in data.generation.selectedBundleTemplates"
-                 ng-click="selectTemplate(template)"
                  ng-class="{'generation-selection-line-selected':template.selected}"
                  ng-if="data.generation.selectedBundle">
-                <div class="col-sm-10">
+                <div class="col-sm-10" ng-click="selectTemplate(template)">
                     <div class="checkbox" style="word-wrap: break-word;">
                         <label class="control-label" for="template_{{$index}}">
                             <input type="checkbox" ng-model="template.selected" id="template_{{$index}}" />

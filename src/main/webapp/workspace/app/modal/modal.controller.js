@@ -64,6 +64,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     /** The list of file to save */
     $scope.fileToSaves = {};
 
+    $scope.downloading = false;
 
     /**
      * Create a new project
@@ -238,6 +239,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      * Download the selected bundle from github
      */
     $scope.downloadBundle = function () {
+      $scope.downloading = true;
       for (var index = 0; index < $scope.data.allBundles.length; index++) {
         var bundle = $scope.data.allBundles[index];
         if ($scope.bundleToDownload[bundle.name]) {
@@ -247,6 +249,7 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
               $scope.bundleToDownload[bundle.name] = false;
               $scope.data.bundlesOfProject[bundle.name] = bundle;
               $scope.data.refreshAll();
+              $scope.downloading = false;
             });
         }
       }
@@ -268,9 +271,11 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      * Get a list of bundles from github
      */
     $scope.getbundles = function () {
+      $scope.downloading = true;
       BundlesService.getBundlesInPublicRepository($scope.data.githubUserName)
         .then(function (result) {
           $scope.data.allBundles = result.data;
+          $scope.downloading = false;
         })
     };
 

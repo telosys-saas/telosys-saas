@@ -60,6 +60,7 @@ angular.module('dashboard')
        * Init the dashboard toolbar
        */
       function init() {
+        // Check authentication
         AuthService.status()
           .then(function (result) {
             console.log('authentication:', result.data);
@@ -69,6 +70,7 @@ angular.module('dashboard')
               return {};
             }
             $scope.data.host = getContextPath();
+            // Get the list of projects
             return ProjectsService.getProjects($scope.data.profile.userId);
           })
           .then(function (result) {

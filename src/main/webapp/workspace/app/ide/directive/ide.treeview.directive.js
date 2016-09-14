@@ -137,6 +137,9 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
         });
       };
 
+      /**
+       * Open a modal window to create a new model
+       */
       $scope.createModel = function () {
         $uibModal.open({
           templateUrl: 'app/modal/modal.createmodel.html',
@@ -229,6 +232,10 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
         }
       };
 
+      /**
+       * Remove a project 
+       * TODO
+       */
       $scope.removeProject = function () {
         console.log('removeProject');
       };
@@ -332,7 +339,6 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
         });
 
         /** Functions to detect one click and double click on one node in the treeview */
-        // click file (one click)
         $(element[0].children[1]).bind("activate_node.jstree", function (e, data) {
           $scope.data.selectedElement = data.node;
           console.log('treeview one click', $scope.data.selectedElement);
@@ -344,7 +350,7 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
           }
         }.bind(this));
 
-        // double click
+        /** Functions to detect double click and double click on one node in the treeview */
         $(element[0].children[1]).bind("dblclick.jstree", function () {
           console.log('treeview double click', $scope.data.selectedElement);
           if ($scope.events.onDoubleClickFile) {

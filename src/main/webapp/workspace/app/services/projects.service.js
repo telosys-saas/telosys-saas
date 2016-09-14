@@ -24,7 +24,6 @@ angular.module('app')
       /**
        * Get the list of all projects
        * @param userId User ID
-       * @returns {*}
        */
       getProjects: function (userId) {
         return $http({
@@ -40,7 +39,6 @@ angular.module('app')
        * Get the project with the projectId
        * @param userId User ID
        * @param projectId Project ID
-       * @returns {*}
        */
       getProjectById: function (userId, projectId) {
         return $http({
@@ -56,7 +54,6 @@ angular.module('app')
        * Create a new project
        * @param userId User ID
        * @param projectName new Project name
-       * @returns {*}
        */
       createProject: function (userId, projectName) {
         return $http({
@@ -79,7 +76,6 @@ angular.module('app')
        * @param userId User ID
        * @param projectName Current project Name
        * @param generation
-       * @returns {*}
        */
       launchGeneration: function (userId, projectName, generation) {
         return $http({
@@ -104,11 +100,12 @@ angular.module('app')
 
       /**
        * Get the configuration of the current project
-       * @param userId
-       * @param projectName
+       * @param userId USER ID
+       * @param projectName Name of the current project
        */
       getProjectConfiguration: function (userId, projectName) {
         return $http({
+          method: 'GET',
           url: host + "/api/v1/users/" + userId + "/projects/" + projectName + "/configuration",
           dataType: 'json'
         })
@@ -117,6 +114,12 @@ angular.module('app')
           });
       },
 
+      /**
+       * Save the configuration of the project
+       * @param userId User ID
+       * @param projectName Name of the current project
+       * @param projectConfiguration The configuration of the project
+       */
       saveProjectConfiguration: function (userId, projectName, projectConfiguration) {
         if (projectConfiguration && projectConfiguration.variables && projectConfiguration.variables.specificVariables) {
           projectConfiguration.variables.specificVariables = JSON.stringify(projectConfiguration.variables.specificVariables);
@@ -134,6 +137,12 @@ angular.module('app')
           });
       },
 
+      /**
+       * Get the list template given a bundle name
+       * @param userId user ID
+       * @param projectName Name of the current project
+       * @param bundleName Bundle name
+       */
       getTemplateForGeneration: function (userId, projectName, bundleName) {
         return $http({
           method: 'GET',

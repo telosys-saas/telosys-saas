@@ -17,12 +17,20 @@ angular.module('ide')
 
         $scope.displayTab = 'model';
 
+        /**
+         * When the server send the result of the generation
+         * the function transform the result and display it in the console
+         */
         $scope.$watchCollection('data.generation.generationResults', function () {
           console.log('console generationResults', $scope.data.generation.generationResults);
           $scope.data.generation.errorTransformeds = $scope.transformGenerationErrors($scope.data.generation, $scope.data.generation.generationResults.errors);
           $scope.displayTab = 'generation'
         });
 
+        /**
+         * When the server send the errors fr the model
+         * the function transform the result and display it in the console
+         */
         $scope.$watchCollection('data.models.modelErrors', function () {
           console.log('console modelErrors', $scope.data.models.modelErrors);
           // Model entity errors
@@ -71,6 +79,11 @@ angular.module('ide')
           }
         });
 
+        /**
+         * Parse all errors 
+         * @param generation The executed generation
+         * @param errors Errors during the generation
+         */
         $scope.transformGenerationErrors = function (generation, errors) {
           if (!errors) return [];
           var errorTransformeds = [];
@@ -82,6 +95,11 @@ angular.module('ide')
           return errorTransformeds;
         };
 
+        /**
+         * Pasre one error
+         * @param generation The executed generation
+         * @param error One error during the generation
+         */
         $scope.transformGenerationError = function (generation, error) {
           try {
             var posBegin = error.message.indexOf('Template "') + 10;
@@ -121,6 +139,11 @@ angular.module('ide')
           }
         };
 
+        /**
+         * Parse one error of the model
+         * @param modelName The model name where an error occurred
+         * @param error the Error
+         */
         $scope.transformModelsError = function (modelName, error) {
           return {
             entityFileId: 'TelosysTools/' + modelName + '_model/' + error.entityName + '.entity',
@@ -130,20 +153,35 @@ angular.module('ide')
           }
         };
 
+        /**
+         * Change the tab to display
+         * @param tabToDisplay Name of the next tab
+         */
         $scope.onClickTab = function (tabToDisplay) {
           $scope.displayTab = tabToDisplay;
         };
 
+        /**
+         * Automatically redirect to the bundle view 
+         * @param fileId File to display in the editor
+         */
         $scope.goToBundleTemplate = function (fileId) {
           console.log('goToBundleTemplate', fileId);
           $scope.data.events.onDoubleClickFile($scope.data.bundles, fileId);
         };
 
+        /**
+         * Automatically redirect to the model view
+         * @param fileId File to display in the editor
+         */
         $scope.goToModelEntity = function (fileId) {
           console.log('goToModelEntity', fileId);
           $scope.data.events.onDoubleClickFile($scope.data.models, fileId);
         };
 
+        /**
+         * Erase everything in the console
+         */
         $scope.clearLog = function () {
           $scope.data.generation.generationResults = [];
           $scope.data.generation.errorTransformeds = {};
@@ -151,6 +189,9 @@ angular.module('ide')
           $scope.generation.errorMessage = null;
         };
 
+        /**
+         * Compute the generate and launch it
+         */
         $scope.generateAgain = function () {
           $scope.data.generation.entities = [];
           $scope.data.generation.templates = [];

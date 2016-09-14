@@ -7,7 +7,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
 
   function (AuthService, $location, ProjectsService, FilesService, BundlesService, TelosysService, ModelService, $scope, $routeParams, $uibModal) {
 
-    /** authentication */
+    /** Authenticated user information */
     $scope.profile = {};
 
     /** Indicates if the IDE is initialized and could be displayed */
@@ -28,7 +28,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         events: getCommonEvents(),
         /** The Telosys Tools Folder */
         telosysFolder: {},
-        /** the host of the app */
+        /** The host url of the application */
         host: "",
 
         /**
@@ -123,17 +123,31 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           events: getEventsForConfiguration()
         },
 
+        /**
+         * Data to generate the code and display the result (success or errors)
+         */ 
         generation: {
+          /** The name of the selected model for the server */
           model: "",
+          /** The list of name of the selected entities for the server */
           entities: [],
+          /** The name of the selected bundle for the server */
           bundle: "",
+          /** The list of name of the selected templates for the server */
           templates: [],
-          generationResults: [],
-          errorTransformeds: {},
+          /** Map of the selected entities */
           selectedModelEntitys: null,
+          /** Map of the selected templates */
           selectedBundleTemplates: null,
+          /** The selected model */
           selectedModel: {},
+          /** The selected bundle */
           selectedBundle: {},
+          /** The result of the generation from the server */
+          generationResults: [],
+          /** The formatted errors to display in the console */
+          errorTransformeds: {},
+          /** IDE events redirected to controller functions */
           events: getCommonEvents()
         }
       };
@@ -144,35 +158,35 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      */
     function getCommonEvents() {
       return {
-        // File creation
+        /** File creation */
         onCreateFile: $scope.onCreateFile,
-        // Folder creation
+        /**  Folder creation */ 
         onCreateFolder: $scope.onCreateFolder,
-        // Select a file
+        /**  Select a file */
         onClickFile: $scope.onClickFile,
-        // Open a file
+        /**  Open a file */
         onDoubleClickFile: $scope.onDoubleClickFile,
-        // Delete the folder
+        /**  Delete the folder */
         onDeleteFolder: $scope.onDeleteFolder,
-        // Delete the file
+        /**  Delete the file */
         onDeleteFile: $scope.onDeleteFile,
-        // Close the file
+        /**  Close the file */
         onCloseFile: $scope.onCloseFile,
-        // Close all files
+        /**  Close all files */
         closeAll: $scope.closeAll,
-        // File content changes
+        /**  File content changes */
         onContentChange: $scope.onContentChange,
-        // Save the file
+        /**  Save the file */
         saveFile: $scope.saveFile,
-        // Save all files
+        /**  Save all files */
         saveAll: $scope.saveAll,
-        // Refresh the file
+        /**  Refresh the file */
         onRefreshFile: $scope.onRefreshFile,
-        // Download the project in zip file
+        /**  Download the project in zip file */
         onDownload: $scope.onDownload,
-        // change the view to display
+        /**  change the view to display */
         changeView: $scope.changeView,
-        // Launch the generation
+        /**  Launch the generation */
         generate: $scope.generate
       }
     }
@@ -623,7 +637,11 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         });
     };
 
-
+    /**
+     * Get the list of template given a bundle name
+     * @param bundleName The bundle name
+     * @param callback 
+     */
     $scope.getTemplateForGeneration = function (bundleName, callback) {
       ProjectsService.getTemplateForGeneration($scope.profile.userId, $scope.data.project.id, bundleName)
         .then(function (result) {
@@ -639,7 +657,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      * Get a specific folder by its name
      * @param folderParent Parent folder
      * @param name Name of searched folder
-     * @returns {*}
      */
     function getFolderByName(folderParent, name) {
       if (folderParent.folders) {
@@ -651,6 +668,10 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       }
     }
 
+    /**
+     * Get authentication information
+     * @param callback
+     */
     function getAuthStatus(callback) {
       AuthService.status().then(function (result) {
         $scope.profile = result.data;
@@ -658,6 +679,9 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       });
     }
 
+    /**
+     * Init the bundles data
+     */
     function initBundles() {
       // Get Bundles
       var templateFolder = getFolderByName($scope.telosysFolder, 'templates');
@@ -672,6 +696,9 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       return BundlesService.getBundlesOfProject($scope.profile.userId, $scope.data.project.id);
     }
 
+    /**
+     * Init the models data
+     */
     function initModels(models) {
       var allModelsFolder = {
         folders: []
@@ -691,6 +718,9 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
       $scope.data.models.selectedModel = $scope.data.models.tree[0].text;
     }
 
+    /**
+     * Get the errors of the model
+     */
     $scope.getModels = function () {
       ModelService.getModels($scope.profile.userId, $scope.data.project.id)
         .then(function (result) {
@@ -717,6 +747,10 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         })
     };
 
+    /**
+     * Convert the list of bundle send by the server to a map
+     * @param bundelArray
+     */
     function convertBundleArrayToBundleMap(bundelArray) {
       for (var index = 0; index < bundelArray.length; index++) {
         var bundle = bundelArray[index];

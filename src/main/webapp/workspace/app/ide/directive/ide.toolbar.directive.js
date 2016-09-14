@@ -36,7 +36,7 @@ angular.module('ide')
         $scope.addProject = function () {
           console.log('addProject');
           // Modal window to create a new project
-          var modalInstance = $uibModal.open({
+          $uibModal.open({
             templateUrl: 'app/modal/modal.createproject.html',
             controller: 'modalCtrl',
             resolve: {
@@ -45,8 +45,12 @@ angular.module('ide')
           });
         };
 
+        /**
+         * Change the password for the current user
+         * the function open a modal window
+         */
         $scope.changePassword = function () {
-          var modalInstance = $uibModal.open({
+         $uibModal.open({
             templateUrl: 'app/modal/modal.changepassword.html',
             controller: 'modalCtrl',
             resolve: {
@@ -55,6 +59,9 @@ angular.module('ide')
           });
         };
 
+        /**
+         * Init and Open a modal window to configure the project
+         */
         $scope.openConfiguration = function () {
           $scope.data.configuration.events.getConfiguration(function () {
             $scope.configuration = true;

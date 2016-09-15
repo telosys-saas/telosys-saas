@@ -233,14 +233,6 @@ angular.module('ide').directive('treeview', ['$uibModal', function ($uibModal) {
       };
 
       /**
-       * Remove a project 
-       * TODO
-       */
-      $scope.removeProject = function () {
-        console.log('removeProject');
-      };
-
-      /**
        * Treeview initialization
        */
       function init() {

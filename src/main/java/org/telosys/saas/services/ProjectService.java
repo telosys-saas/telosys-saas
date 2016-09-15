@@ -331,4 +331,7 @@ public class ProjectService {
 		}
 	}
 
+	public void removeProjectForUser(User user, Project project, String projectId) {
+
+	}
 }

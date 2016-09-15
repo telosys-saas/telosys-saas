@@ -10,9 +10,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     /** Authenticated user information */
     $scope.profile = {};
 
-    /** Indicates if the IDE is initialized and could be displayed */
-    $scope.initialized = false;
-
     $scope.defaultView = 'models';
 
     function initData() {
@@ -30,6 +27,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         telosysFolder: {},
         /** The host url of the application */
         host: "",
+        /** Indicates if the IDE is initialized and could be displayed */
+        initialized: false,
 
         /**
          * Data for model created by the user
@@ -187,7 +186,9 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         /**  change the view to display */
         changeView: $scope.changeView,
         /**  Launch the generation */
-        generate: $scope.generate
+        generate: $scope.generate,
+        /** Remove a list of project */
+        removeProject: $scope.removeProject
       }
     }
 
@@ -494,8 +495,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           .then(function (result) {
             var file = result.data;
             console.log('getFileForProject', file);
-            // Get the name file without the extension
-            file.name = file.name.split(".")[0];
             data.allFiles[file.id].hasContent = true;
             data.allFiles[file.id].content = file.content;
             data.allFiles[file.id].isModified = false;
@@ -613,8 +612,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
     /**
      * Download the project in a ZIP file
      */
-    $scope.onDownload = function () {
-      ProjectsService.downloadZip($scope.profile.userId, $scope.data.project.id)
+    $scope.onDownload = function (folderToDownload) {
+      ProjectsService.downloadZip($scope.profile.userId, $scope.data.project.id,folderToDownload)
     };
 
     /**
@@ -835,7 +834,7 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
             // Init models
             initModels(result.data);
             // Indicates that the IDE is initialized and can be displayed
-            $scope.initialized = true;
+            $scope.data.initialized = true;
           })
           .catch(function (e) {
             console.log(e);

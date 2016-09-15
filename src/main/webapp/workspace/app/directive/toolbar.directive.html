@@ -3,7 +3,7 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <a class="navbar-brand logo-telosys-min" href="#"></a>
-            <a class="navbar-brand" href="/telosys-saas/workspace/index.html#/ide/{{data.project.id}}"><b>{{data.project.name}}</b></a>
+            <a class="navbar-brand" href="{{data.host}} /workspace/index.html#/ide/{{data.project.id}}"><b>{{data.project.name}}</b></a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -14,32 +14,33 @@
                     <ul class="dropdown-menu">
                         <li><a href="#">Dashboard</a></li>
                         <li ng-click="addProject()"><a href>Create project</a></li>
+                        <li ng-click="removeProject()"><a href>Remove project</a></li>
                         <li role="separator" class="divider"></li>
                         <li ng-repeat="project in data.projects">
                             <a href="{{data.host}}/workspace/index.html#/ide/{{project.id}}">{{project.name}}</a>
                         </li>
                     </ul>
                 </li>
-                <li class="dropdown" ng-click="changeView('models')" ng-class="{active : data.isDisplay=='models'}">
+                <li ng-if="data.initialized" class="dropdown" ng-click="changeView('models')" ng-class="{active : data.isDisplay=='models'}">
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false"><span class="fa fa-cubes"></span> Models <span class="badge" ng-if="data.models.countModifiedFile != 0">{{data.models.countModifiedFile}}</span></a>
                 </li>
-                <li class="dropdown"  ng-click="changeView('bundles')" ng-class="{active : data.isDisplay=='bundles'}">
+                <li ng-if="data.initialized" class="dropdown"  ng-click="changeView('bundles')" ng-class="{active : data.isDisplay=='bundles'}">
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false"><span class="fa fa-archive"></span> Templates bundles <span class="badge" ng-if="data.bundles.countModifiedFile != 0">{{data.bundles.countModifiedFile}}</span></a>
                 </li>
-                <li class="dropdown"  ng-click="openConfiguration()" ng-class="{active : configuration==true}">
+                <li ng-if="data.initialized" class="dropdown"  ng-click="openConfiguration()" ng-class="{active : configuration==true}">
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button"><span class="fa fa-cog"></span> Configuration</a>
                 </li>
-                <li class="dropdown"  ng-click="changeView('generation')" ng-class="{active : data.isDisplay=='generation'}">
+                <li ng-if="data.initialized" class="dropdown"  ng-click="changeView('generation')" ng-class="{active : data.isDisplay=='generation'}">
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false"><span class="fa fa-play-circle"></span> Generation</a>
                 </li>
-                <li class="dropdown"  ng-click="changeView('files')" ng-class="{active : data.isDisplay=='files'}">
+                <li ng-if="data.initialized" class="dropdown"  ng-click="changeView('files')" ng-class="{active : data.isDisplay=='files'}">
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false"><i class="mdi mdi-file-multiple"></i> Generated files <span class="badge" ng-if="data.files.countModifiedFile != 0">{{data.files.countModifiedFile}}</span></a>
                 </li>
-                <li class="dropdown"  ng-click="download()">
+                <li ng-if="data.initialized" class="dropdown"  ng-click="openDownload()">
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false"><i class="mdi mdi-download mdi-18px"></i> Download Project</a>
                 </li>

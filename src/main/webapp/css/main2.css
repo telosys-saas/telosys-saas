@@ -482,7 +482,7 @@ footer {
     z-index: 1060;
 }
 
-.close-card{
+.checkbox-card {
     cursor: pointer;
     margin: 2px 0;
 }

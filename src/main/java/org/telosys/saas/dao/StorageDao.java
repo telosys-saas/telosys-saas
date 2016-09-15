@@ -1,9 +1,11 @@
 package org.telosys.saas.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.telosys.saas.domain.File;
 import org.telosys.saas.domain.Folder;
+import org.telosys.saas.domain.FolderToDownload;
 import org.telosys.saas.domain.Project;
 import org.telosys.tools.users.User;
 
@@ -127,6 +129,6 @@ public interface StorageDao {
 	 * @param project
 	 * @return
 	 */
-	java.io.File getFileZipToDownload(User user, Project project);
+	java.io.File getFileZipToDownload(User user, Project project, FolderToDownload folderToDownload);
 	
 }

@@ -1,7 +1,9 @@
 package org.telosys.saas.rest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +18,11 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.telosys.saas.config.Configuration;
 import org.telosys.saas.config.ConfigurationHolder;
 import org.telosys.saas.dao.StorageDao;
@@ -51,12 +57,21 @@ public class ProjectResource {
     }
 
     @GET
-    @Path("/zip")
+    @Path("/zip/{strFolderToDownload}")
     @Produces("application/zip")
-    public Response downloadZipProject(@PathParam("userId") String userId, @PathParam("projectId") String projectId) {
+    public Response downloadZipProject(@PathParam("userId") String userId, @PathParam("projectId") String projectId, @PathParam("strFolderToDownload") String strFolderToDownload) {
         User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
-        java.io.File file = storage.getFileZipToDownload(user, project);
+        JSONParser jsonParser = new JSONParser();
+        Map<String, Object> mapFolderToDownload;
+        FolderToDownload folderToDownload = null;
+        try {
+            mapFolderToDownload = (Map<String, Object>) jsonParser.parse(strFolderToDownload);
+            folderToDownload = new FolderToDownload(mapFolderToDownload);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        java.io.File file = storage.getFileZipToDownload(user, project, folderToDownload);
         return Response.ok(file).header("Content-Disposition", "attachment; filename=\"" + projectId + ".zip\"").build();
     }
 
@@ -79,6 +94,15 @@ public class ProjectResource {
         Project project = storage.getProjectForUser(user, projectId);
         projectService.saveProjectConfiguration(user, project, projectConfiguration);
         return projectConfiguration;
+    }
+
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public void removeProject(@PathParam("userId") String userId, @PathParam("projectId") String projectId) {
+        User user = Security.getUser();
+        Project project = storage.getProjectForUser(user, projectId);
+        projectService.removeProjectForUser(user, project, projectId);
     }
 
     @PUT

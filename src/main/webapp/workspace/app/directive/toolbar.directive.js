@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('ide')
-  .directive('idetoolbar', ['$uibModal', function ($uibModal) {
+angular.module('app')
+  .directive('toolbar', ['$uibModal', function ($uibModal) {
     return {
 
       scope: {
@@ -9,7 +9,7 @@ angular.module('ide')
         profile: '='
       },
 
-      templateUrl: 'app/ide/directive/ide.toolbar.directive.html',
+      templateUrl: 'app/directive/toolbar.directive.html',
 
       link: function ($scope, element, attrs) {
 
@@ -27,7 +27,7 @@ angular.module('ide')
          */
         $scope.download = function () {
           console.log('download');
-          $scope.data.events.onDownload();
+
         };
 
         /**
@@ -45,17 +45,50 @@ angular.module('ide')
           });
         };
 
+        $scope.removeProject = function () {
+          console.log('addProject');
+          // Modal window to remove a new project
+          $uibModal.open({
+            templateUrl: 'app/modal/modal.removeprojects.html',
+            size: 'sm',
+            controller: 'modalCtrl',
+            resolve: {
+              data: {
+                projects: $scope.data.projects
+              }
+            }
+          });
+        };
+
         /**
          * Change the password for the current user
          * the function open a modal window
          */
         $scope.changePassword = function () {
-         $uibModal.open({
+          $uibModal.open({
             templateUrl: 'app/modal/modal.changepassword.html',
             controller: 'modalCtrl',
             resolve: {
               data: {}
             }
+          });
+        };
+
+        /**
+         * Init and Open a modal window to configure the project
+         */
+        $scope.openDownload = function () {
+          var modalInstance = $uibModal.open({
+            templateUrl: 'app/modal/modal.download.html',
+            controller: 'modalCtrl',
+            resolve: {
+              data: {
+                project: $scope.data.project
+              }
+            }
+          });
+          modalInstance.result.then(function (folderToDownload) {
+            $scope.data.events.onDownload(folderToDownload);
           });
         };
 

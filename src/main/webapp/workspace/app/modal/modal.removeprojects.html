@@ -1,17 +1,17 @@
 <div class="modal-content">
     <form class="form-horizontal">
         <div class="modal-header">
-            <h4 style="padding-left: 10px;">Select files to save :</h4>
+            <h4 style="padding-left: 10px;">Select project to remove :</h4>
         </div>
         <div class="modal-body">
             <div class="container-fluid">
                 <div class="row">
                     <div class="close-selection">
-                        <div ng-repeat="(key, value) in data.modifiedFiles">
+                        <div ng-repeat="(key, value) in data.projects">
                             <div class="col-sm-12">
                                 <div class="checkbox">
                                     <label class="form-check-label checkbox-card">
-                                        <input type="checkbox" ng-model="fileToSaves[key]" style="margin-right: 5px;"/>{{value}}
+                                        <input type="checkbox" ng-model="projectsToRemove[value.id]" style="margin-right: 5px;"/>{{value.name}}
                                     </label>
                                 </div>
                             </div>
@@ -20,12 +20,12 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <div class="col-sm-6">
-                                <button class="btn btn-info btn-block" type="button" ng-click="selectAllFileToSave()">
+                                <button class="btn btn-info btn-block" type="button" ng-click="selectAllProject()">
                                     Select all
                                 </button>
                             </div>
                             <div class="col-sm-6">
-                                <button class="btn btn-info btn-block" type="button" ng-click="deselectAllFileToSave()">
+                                <button class="btn btn-info btn-block" type="button" ng-click="deselectAllProject()">
                                     Deselect all
                                 </button>
                             </div>
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="submit" ng-click="closeAll()" autofocus>OK
+            <button class="btn btn-danger" type="submit" ng-click="removeProjects()">Remove
             </button>
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
         </div>

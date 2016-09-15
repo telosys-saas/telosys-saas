@@ -1,10 +1,10 @@
-<idetoolbar data="data" profile="profile"></idetoolbar>
+<toolbar data="data" profile="profile"></toolbar>
 <div style="width: 100%; height: 100%; position: relative; overflow: auto;"
-     ng-if="initialized">
+     ng-if="data.initialized">
     <div id="left" class="content" style="position: absolute; left: 0; width: calc(25% - 10px); top: 0; bottom: 0">
-        <left data="data.models" ng-show="data.isDisplay=='models'"></left>
-        <left data="data.bundles" ng-show="data.isDisplay=='bundles'"></left>
-        <left data="data.files" ng-show="data.isDisplay=='files'"></left>
+        <treeview data="data.models" ng-show="data.isDisplay=='models'"></treeview>
+        <treeview data="data.bundles" ng-show="data.isDisplay=='bundles'"></treeview>
+        <treeview data="data.files" ng-show="data.isDisplay=='files'"></treeview>
         <div ng-show="data.isDisplay=='generation'" class="row">
             <div class="col-sm-12">
                 <h2>Generation</h2>

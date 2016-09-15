@@ -47,7 +47,6 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
       value: ''
     };
 
-
     /** The list of selected bundle */
     $scope.bundleToDownload = {};
 
@@ -64,7 +63,20 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
     /** The list of file to save */
     $scope.fileToSaves = {};
 
+    /** When the server is downloading bundles */
     $scope.downloading = false;
+    
+    /** The selected folder to download */
+    $scope.folderToDownload  = {
+      /** If the user wants to download the generated file */
+      generatedFiles : true,
+      /** If the user wants to download the telosys folder (models and bundles) */
+      telosysFolder : false
+    };
+
+    /** Projects to remove */
+    $scope.projectsToRemove = {};
+   
 
     /**
      * Create a new project
@@ -223,6 +235,10 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
      * Create an entity
      */
     $scope.createEntity = function () {
+      if($scope.entityName[0] != $scope.entityName[0].toUpperCase()){
+        $scope.errorMessage = "Entity name must start with an upper case";
+        return;
+      }
       ModelService.createEntityForModel($scope.profile.userId, $scope.data.project.id, $scope.data.selectedModel, $scope.entityName)
         .then(function (result) {
           var file = result.data;
@@ -369,6 +385,45 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
       $uibModalInstance.close()
     };
 
+    /**
+     * Download the project
+     */
+    $scope.downloadProject = function () {
+      $uibModalInstance.close($scope.folderToDownload);
+    };
+
+    /**
+     * Remove the projects selected by the user
+     */
+    $scope.removeProjects = function () {
+      console.log('removeProject');
+      for (var project in $scope.projectsToRemove) {
+        if (project) {
+          ProjectsService.removeProject($scope.profile.userId, project);
+        }
+      }
+      $uibModalInstance.close();
+    };
+    /**
+     * Select all projects
+     */
+    $scope.selectAllProject = function () {
+      for (var index = 0; index < $scope.data.projects.length; index++) {
+        var project = $scope.data.projects[index];
+        $scope.projectsToRemove[project.id] = true;
+      }
+    };
+
+    /**
+     * Deselect all projects
+     */
+    $scope.deselectAllProject = function () {
+      for (var index = 0; index < $scope.data.projects.length; index++) {
+        var project = $scope.data.projects[index];
+        $scope.projectsToRemove[project.id] = false;
+      }
+    };
+    
     /**
      * Close the modal window
      */

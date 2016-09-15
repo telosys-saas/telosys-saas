@@ -3,5 +3,5 @@ var app = angular.module('app', [
   'ngAnimate',
   'dashboard',
   'modal',
-  'ide'
+  'ide',
 ]);

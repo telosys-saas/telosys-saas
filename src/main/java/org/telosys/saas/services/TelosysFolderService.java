@@ -38,12 +38,19 @@ public class TelosysFolderService {
 			
 			for(Folder folder : templatesFolder.getFolders()) {
 				folder.setType("bundle");
+				List<File> files = new ArrayList<>();
+				for(File file : folder.getFiles()) {
+					if (!file.getName().contains(".gitignore")) {
+						files.add(file);
+					}
+				}
+				folder.setFiles(files);
 			}
 		}
 		
 		// Add Models
 		for(Folder folder : originalTelosysFolder.getFolders()) {
-			if(folder.getName().indexOf("_model") != -1) {
+			if(folder.getName().contains("_model")) {
 				telosysFolder.getFolders().add(folder);
 
 				folder.setType("model");

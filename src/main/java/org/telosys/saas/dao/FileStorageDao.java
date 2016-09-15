@@ -14,6 +14,7 @@ import org.telosys.saas.config.Configuration;
 import org.telosys.saas.config.ConfigurationHolder;
 import org.telosys.saas.domain.File;
 import org.telosys.saas.domain.Folder;
+import org.telosys.saas.domain.FolderToDownload;
 import org.telosys.saas.domain.Project;
 import org.telosys.saas.util.FileUtil;
 import org.telosys.saas.util.Zip;
@@ -217,6 +218,11 @@ public class FileStorageDao implements StorageDao {
 		if(fileIO.exists()) {
 			try {
 				file.setContent(FileUtil.readFile(filePath));
+				if(file.getName().contains(".entity")) {
+					file.setType("entity");
+					String entityName = file.getName().substring(0,file.getName().indexOf(".entity"));
+					file.setName(entityName);
+				}
 			} catch (IOException e) {
 				throw new IllegalStateException(e);
 			}
@@ -322,14 +328,15 @@ public class FileStorageDao implements StorageDao {
 	}
 
 	@Override
-	public java.io.File getFileZipToDownload(User user, Project project) {
+	public java.io.File getFileZipToDownload(User user, Project project, FolderToDownload folderToDownload) {
 		String input = getProjectPath(user, project);
 		String output = FileUtil.join(System.getProperty("java.io.tmpdir"),project.getId()+"_"+UUID.randomUUID().toString());
 		// Create ZIP file in temporary directory
 		//Zip zip = new Zip(input, output);
 		//zip.zip();
 		Zip zip = new Zip();
-		zip.zip(input, output);
+
+		zip.zip(input, output, folderToDownload);
 		// Return File on this ZIP
 		return getIOFile(output);
 	}

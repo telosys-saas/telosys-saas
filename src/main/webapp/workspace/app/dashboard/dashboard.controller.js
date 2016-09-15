@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('dashboard')
-  .controller('dashboardCtrl', ['AuthService','ProjectsService', '$scope', '$location', '$uibModal',
+  .controller('dashboardCtrl', ['AuthService', 'ProjectsService', '$scope', '$location', '$uibModal',
     function (AuthService, ProjectsService, $scope, $location, $uibModal) {
+
+      /** Profile of the authenticated user */
+      $scope.profile = {};
 
       /** authentication */
       $scope.data = {
-        /** Profile of the authenticated user */
-        profile: {},
 
         /**
          * Projects list
@@ -15,41 +16,20 @@ angular.module('dashboard')
         projects: [],
 
         /** the host of the app */
-        host : ""
-    };
+        host: "",
 
-      /**
-       * Go to the projectID
-       * @param projectId
-       */
-      $scope.goToProject = function (projectId) {
-        // Change the url path
-        $location.path('/ide/' + projectId);
-      };
-
-      /**
-       * Create a new project
-       */
-      $scope.addProject = function () {
-        console.log('addProject');
-        // Modal window to create a new project
-       $uibModal.open({
-          templateUrl: 'app/modal/modal.createproject.html',
-          controller: 'modalCtrl',
-          resolve: {
-            data: {}
-          }
-        });
+        /** Indicates if the IDE is initialized and could be displayed */
+        initialized: false
       };
 
       function getContextPath() {
         var context = window.location.pathname.split('/');
         var contextPath = "";
         for (var index = 0; index < context.length; index++) {
-          if(context[index] == "workspace") {
+          if (context[index] == "workspace") {
             break;
           }
-          if(context[index] != "") {
+          if (context[index] != "") {
             contextPath += '/' + context[index];
           }
         }
@@ -64,23 +44,24 @@ angular.module('dashboard')
         AuthService.status()
           .then(function (result) {
             console.log('authentication:', result.data);
-            $scope.data.profile = result.data;
-            if (!$scope.data.profile.authenticated) {
+            $scope.profile = result.data;
+            if (!$scope.profile.authenticated) {
               document.location = '../login.jsp';
               return {};
             }
             $scope.data.host = getContextPath();
             // Get the list of projects
-            return ProjectsService.getProjects($scope.data.profile.userId);
+            return ProjectsService.getProjects($scope.profile.userId);
           })
           .then(function (result) {
             $scope.data.projects = result.data;
           })
-          .catch(function(e) {
+          .catch(function (e) {
             console.log(e);
             document.location = '../login.jsp';
           });
       }
+
       init();
 
     }]);

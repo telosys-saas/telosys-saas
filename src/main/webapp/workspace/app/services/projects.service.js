@@ -7,10 +7,10 @@ angular.module('app')
       var context = window.location.pathname.split('/');
       var contextPath = "";
       for (var index = 0; index < context.length; index++) {
-        if(context[index] == "workspace") {
+        if (context[index] == "workspace") {
           break;
         }
-        if(context[index] != "") {
+        if (context[index] != "") {
           contextPath += '/' + context[index];
         }
       }
@@ -18,7 +18,7 @@ angular.module('app')
     };
 
     var host = getContextPath();
-    
+
     return {
 
       /**
@@ -72,6 +72,24 @@ angular.module('app')
       },
 
       /**
+       * Remove a project
+       * @param userId user ID
+       * @param projectId Project ID to remove
+       * @returns {*}
+       */
+     removeProject: function (userId, projectId){
+       return $http({
+         method: "DELETE",
+         url: host + "/api/v1/users/" + userId + "/projects/" + projectId,
+         dataType: 'json',
+         contentType: 'application/json'
+       })
+         .catch(function (e) {
+           console.log(e);
+         });
+    },
+
+      /**
        * Launch the code generation
        * @param userId User ID
        * @param projectName Current project Name
@@ -93,9 +111,10 @@ angular.module('app')
        * Download the project in a ZIP file
        * @param userId User ID
        * @param projectName Project name
+       * @param folderToDownload The selected folder(s) to download
        */
-      downloadZip: function (userId, projectName) {
-        document.location = host + "/api/v1/users/" + userId + "/projects/" + projectName + "/zip";
+      downloadZip: function (userId, projectName, folderToDownload) {
+        document.location = host + "/api/v1/users/" + userId + "/projects/" + projectName + "/zip/" + JSON.stringify(folderToDownload);
       },
 
       /**

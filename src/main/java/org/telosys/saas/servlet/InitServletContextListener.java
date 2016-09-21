@@ -34,7 +34,7 @@ public class InitServletContextListener implements ServletContextListener {
 			logger.info(" . Login Attempts Max = " + configuration.getLoginAttemptsMax() );
 			logger.info(" . Number of project Max = " + configuration.getNumberOfProjectMax() );
 			UsersManager.setUsersFileName(configuration.getUsersFilePath());
-			logger.info("UsersManager initialized.");
+			logger.info("UsersManager initializedIDE.");
 		}
 	}
 

@@ -36,7 +36,7 @@
          * Loads the configuration using the data root path defined externally <br>
          * and properties file 'telosys-saas.properties' <br>
          *
-         * @return the configuration or NULL if the configuration cannot be initialized
+         * @return the configuration or NULL if the configuration cannot be initializedIDE
          */
         public Configuration loadConfiguration() {
 

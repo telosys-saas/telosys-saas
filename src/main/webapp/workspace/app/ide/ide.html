@@ -1,6 +1,6 @@
 <toolbar data="data" profile="profile"></toolbar>
 <div style="width: 100%; height: 100%; position: relative; overflow: auto;"
-     ng-if="data.initialized">
+     ng-if="data.initializedIDE">
     <div id="left" class="content" style="position: absolute; left: 0; width: calc(25% - 10px); top: 0; bottom: 0">
         <treeview data="data.models" ng-show="data.isDisplay=='models'"></treeview>
         <treeview data="data.bundles" ng-show="data.isDisplay=='bundles'"></treeview>

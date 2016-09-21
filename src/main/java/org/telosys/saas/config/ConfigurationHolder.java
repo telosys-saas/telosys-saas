@@ -18,7 +18,7 @@ public class ConfigurationHolder {
 			return configuration ;
 		}
 		else {
-			throw new RuntimeException("Configuration not initialized");
+			throw new RuntimeException("Configuration not initializedIDE");
 		}
 	}
 }

@@ -27,11 +27,10 @@ angular.module('app')
          */
         $scope.download = function () {
           console.log('download');
-
         };
 
         /**
-         * Add a new project
+         * Open the modal to create a new project
          */
         $scope.addProject = function () {
           console.log('addProject');
@@ -45,6 +44,9 @@ angular.module('app')
           });
         };
 
+        /**
+         * Open the modal to remove some project(s)
+         */
         $scope.removeProject = function () {
           console.log('addProject');
           // Modal window to remove a new project
@@ -54,7 +56,9 @@ angular.module('app')
             controller: 'modalCtrl',
             resolve: {
               data: {
-                projects: $scope.data.projects
+                project: $scope.data.project,
+                projects: $scope.data.projects,
+                events: $scope.data.events
               }
             }
           });

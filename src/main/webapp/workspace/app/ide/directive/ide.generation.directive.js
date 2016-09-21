@@ -193,13 +193,7 @@ angular.module('ide')
          */
         $scope.refreshModel = function () {
           $scope.data.models.events.refreshAll(function () {
-            for (var index = 0; index < $scope.data.models.tree.length; index++) {
-              var model = $scope.data.models.tree[index];
-              if(model.text ==  $scope.data.generation.selectedModel.text){
-                $scope.data.generation.selectedModel = model;
-              }
-            }
-            $scope.changeSelectedModel();
+              $scope.changeSelectedModel();
           })
         };
 

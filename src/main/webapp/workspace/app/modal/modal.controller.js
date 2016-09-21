@@ -76,7 +76,6 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
 
     /** Projects to remove */
     $scope.projectsToRemove = {};
-   
 
     /**
      * Create a new project
@@ -399,7 +398,15 @@ angular.module('modal').controller('modalCtrl', ['$scope', '$uibModalInstance', 
       console.log('removeProject');
       for (var project in $scope.projectsToRemove) {
         if (project) {
-          ProjectsService.removeProject($scope.profile.userId, project);
+          ProjectsService.removeProject($scope.profile.userId, project)
+            .then(function () {
+              $scope.data.events.refreshProjects();
+              if($scope.data.project) {
+                if (project == $scope.data.project.id) {
+                  $location.path('/dashboard');
+                }
+              }
+            });
         }
       }
       $uibModalInstance.close();

@@ -102,7 +102,7 @@ public class ProjectResource {
     public void removeProject(@PathParam("userId") String userId, @PathParam("projectId") String projectId) {
         User user = Security.getUser();
         Project project = storage.getProjectForUser(user, projectId);
-        projectService.removeProjectForUser(user, project, projectId);
+        projectService.removeProjectForUser(user, project);
     }
 
     @PUT

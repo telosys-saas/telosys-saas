@@ -100,8 +100,10 @@ angular.module('ide').directive('editor', function () {
          */
         $scope.editorOptions = {
           value: '',
+          tabSize : 2,
           lineNumbers: true,
           extraKeys: {
+            "Ctrl-Space": "autocomplete",
             'Ctrl-S': function (cm) {
               console.log('Ctrl-S save method');
               $scope.saveFile($scope.data);
@@ -154,7 +156,20 @@ angular.module('ide').directive('editor', function () {
           console.log("add editor");
           var newElement = $(element[0].children[2]).append('<div id="editorCodemirror_' + formatedFileId + '" class="codemirror"></div>');
           // Create a new editor
-          var editor = CodeMirror(newElement[0].children[newElement[0].children.length - 1], $scope.editorOptions);
+          var editorOptions = {};
+          var keys = Object.keys($scope.editorOptions);
+          for(var i=0; i<keys.length; i++ ) {
+            var key = keys[i];
+            editorOptions[key] = $scope.editorOptions[key];
+          }
+          if(file.id . indexOf('.entity') != -1) {
+            editorOptions.mode = 'entity';
+          }
+          if(file.id . indexOf('.vm') != -1) {
+            editorOptions.mode = 'velocity';
+          }
+
+          var editor = CodeMirror(newElement[0].children[newElement[0].children.length - 1], editorOptions);
           editor.setValue(file.content);
           editor.on('change', $scope.onContentChange);
           // Save the new editor and the new DOM element in the list of editors

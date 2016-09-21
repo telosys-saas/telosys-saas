@@ -27,8 +27,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         telosysFolder: {},
         /** The host url of the application */
         host: "",
-        /** Indicates if the IDE is initialized and could be displayed */
-        initialized: false,
+        /** Indicates if the IDE is initializedIDE and could be displayed */
+        initializedIDE: false,
 
         /**
          * Data for model created by the user
@@ -179,6 +179,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
         saveFile: $scope.saveFile,
         /**  Save all files */
         saveAll: $scope.saveAll,
+        /** Refresh the list of projects */
+        refreshProjects: $scope.refreshProjects,
         /**  Refresh the file */
         onRefreshFile: $scope.onRefreshFile,
         /**  Download the project in zip file */
@@ -555,6 +557,9 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           ModelService.getModels($scope.profile.userId, $scope.data.project.id)
             .then(function (result) {
               initModels(result.data);
+              if($scope.data.models.tree.length == 1) {
+                $scope.data.generation.selectedModel = $scope.data.models.tree[0];
+              }
               if (callback) {
                 callback();
               }
@@ -588,6 +593,16 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           }
         });
 
+    };
+
+    /**
+     * Refresh the list of projects
+     */
+    $scope.refreshProjects = function () {
+      ProjectsService.getProjects($scope.profile.userId)
+        .then(function (result) {
+          $scope.data.projects = result.data;
+        })
     };
 
     /**
@@ -833,8 +848,8 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
           .then(function (result) {
             // Init models
             initModels(result.data);
-            // Indicates that the IDE is initialized and can be displayed
-            $scope.data.initialized = true;
+            // Indicates that the IDE is initializedIDE and can be displayed
+            $scope.data.initializedIDE = true;
           })
           .catch(function (e) {
             console.log(e);

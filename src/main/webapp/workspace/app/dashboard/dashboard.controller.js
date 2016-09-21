@@ -7,20 +7,32 @@ angular.module('dashboard')
       /** Profile of the authenticated user */
       $scope.profile = {};
 
-      /** authentication */
-      $scope.data = {
+      function initData() {
+        /** Data for dashboard */
+        $scope.data = {
 
-        /**
-         * Projects list
-         */
-        projects: [],
+          /**
+           * Projects list
+           */
+          projects: [],
 
-        /** the host of the app */
-        host: "",
+          events: getCommonEvents(),
 
-        /** Indicates if the IDE is initialized and could be displayed */
-        initialized: false
-      };
+          /** The host of the app */
+          host: "",
+
+          /** Indicates if the IDE is initializedIDE and could be displayed */
+          initialized: false
+        };
+      }
+      /**
+       * Common events
+       */
+      function getCommonEvents() {
+        return {
+          refreshProjects: $scope.refreshProjects
+        };
+      }
 
       function getContextPath() {
         var context = window.location.pathname.split('/');
@@ -37,9 +49,44 @@ angular.module('dashboard')
       }
 
       /**
-       * Init the dashboard toolbar
+       * Go to the projectID
+       * @param projectId
+       */
+      $scope.goToProject = function (projectId) {
+        // Change the url path
+        $location.path('/ide/' + projectId);
+      };
+
+      /**
+       * Open the modal to create a new project
+       */
+      $scope.addProject = function () {
+        console.log('addProject');
+        // Modal window to create a new project
+        $uibModal.open({
+          templateUrl: 'app/modal/modal.createproject.html',
+          controller: 'modalCtrl',
+          resolve: {
+            data: {}
+          }
+        });
+      };
+
+      /**
+       * Refresh the list of projects
+       */
+      $scope.refreshProjects = function () {
+        ProjectsService.getProjects($scope.profile.userId)
+          .then(function (result) {
+            $scope.data.projects = result.data;
+          })
+      };
+
+      /**
+       * Init the dashboard
        */
       function init() {
+        initData();
         // Check authentication
         AuthService.status()
           .then(function (result) {
@@ -64,4 +111,6 @@ angular.module('dashboard')
 
       init();
 
-    }]);
+    }
+
+  ]);

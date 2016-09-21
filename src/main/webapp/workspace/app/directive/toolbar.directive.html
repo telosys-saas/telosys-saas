@@ -5,6 +5,7 @@
             <a class="navbar-brand logo-telosys-min" href="#"></a>
             <a class="navbar-brand" href="{{data.host}} /workspace/index.html#/ide/{{data.project.id}}"><b>{{data.project.name}}</b></a>
         </div>
+
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
@@ -21,22 +22,22 @@
                         </li>
                     </ul>
                 </li>
-                <li ng-if="data.initialized" class="dropdown" ng-click="changeView('models')" ng-class="{active : data.isDisplay=='models'}">
+                <li ng-if="data.initializedIDE" class="dropdown" ng-click="changeView('models')" ng-class="{active : data.isDisplay=='models'}">
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false"><span class="fa fa-cubes"></span> Models <span class="badge" ng-if="data.models.countModifiedFile != 0">{{data.models.countModifiedFile}}</span></a>
                 </li>
-                <li ng-if="data.initialized" class="dropdown"  ng-click="changeView('bundles')" ng-class="{active : data.isDisplay=='bundles'}">
+                <li ng-if="data.initializedIDE" class="dropdown"  ng-click="changeView('bundles')" ng-class="{active : data.isDisplay=='bundles'}">
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false"><span class="fa fa-archive"></span> Templates bundles <span class="badge" ng-if="data.bundles.countModifiedFile != 0">{{data.bundles.countModifiedFile}}</span></a>
                 </li>
-                <li ng-if="data.initialized" class="dropdown"  ng-click="openConfiguration()" ng-class="{active : configuration==true}">
+                <li ng-if="data.initializedIDE" class="dropdown"  ng-click="openConfiguration()" ng-class="{active : configuration==true}">
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button"><span class="fa fa-cog"></span> Configuration</a>
                 </li>
-                <li ng-if="data.initialized" class="dropdown"  ng-click="changeView('generation')" ng-class="{active : data.isDisplay=='generation'}">
+                <li ng-if="data.initializedIDE" class="dropdown"  ng-click="changeView('generation')" ng-class="{active : data.isDisplay=='generation'}">
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false"><span class="fa fa-play-circle"></span> Generation</a>
                 </li>
-                <li ng-if="data.initialized" class="dropdown"  ng-click="changeView('files')" ng-class="{active : data.isDisplay=='files'}">
+                <li ng-if="data.initializedIDE" class="dropdown"  ng-click="changeView('files')" ng-class="{active : data.isDisplay=='files'}">
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false"><i class="mdi mdi-file-multiple"></i> Generated files <span class="badge" ng-if="data.files.countModifiedFile != 0">{{data.files.countModifiedFile}}</span></a>
                 </li>

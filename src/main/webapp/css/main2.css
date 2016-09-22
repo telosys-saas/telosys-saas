@@ -512,3 +512,19 @@ footer {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.cm-type{
+    color: #0000C0;
+}
+
+.cm-annotation{
+    color : #5F29FF;
+}
+
+.cm-comment-line{
+    color : #7f7f80;
+}
+
+.cm-entity{
+    color : #FF0000;
+}

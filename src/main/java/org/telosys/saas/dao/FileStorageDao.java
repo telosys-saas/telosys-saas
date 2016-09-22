@@ -24,7 +24,6 @@ public class FileStorageDao implements StorageDao {
 
     protected static final Logger logger = LoggerFactory.getLogger(FileStorageDao.class);
 
-
     private final Configuration configuration;
 
     protected FileStorageDao() {

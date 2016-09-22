@@ -13,6 +13,7 @@
   CodeMirror.registerHelper("hint", "entity", entityHint);
 
   function entityHint(editor, options) {
+    console.log('entityHint',options);
     var cur = editor.getCursor();
     var curLine = editor.getLine(cur.line);
     var token = editor.getTokenAt(cur);
@@ -27,8 +28,8 @@
   function getCompletions(state) {
     if(!state.isInEntityBlock) return [];
     if(state.isInCommentLine || state.isInCommentBlock) return [];
-    if(state.isType) return ['string', 'integer'];
-    if(state.isAnnotation) return ['@Id', '@NotNull'];
+    if(state.isType) return ['binary','boolean','byte','date','decimal','double','float','int','long','short','string','time','timestamp'];
+    if(state.isAnnotation) return ['@AutoIncremented','@Embedded','@Future','@Id','@LongText','@Max()','@Min()','@NotBlank','@NotEmpty','@NotNull','@ObjectType','@Past','@PrimitiveType','@SizeMax()','@SizeMin()','@SqlType','@UnsignedType'];
   }
 
 });

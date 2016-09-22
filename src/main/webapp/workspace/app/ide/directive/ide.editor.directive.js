@@ -21,7 +21,6 @@ angular.module('ide').directive('editor', function () {
          * @param newValue : after change
          */
         $scope.$watch('data.selectedFile', function (newValue, oldValue) {
-          console.log(newValue);
           if (newValue && newValue != null) {
             if (oldValue == null || newValue.id != oldValue.id) {
               // Cases :
@@ -100,20 +99,25 @@ angular.module('ide').directive('editor', function () {
          */
         $scope.editorOptions = {
           value: '',
-          tabSize : 2,
+          tabSize: 2,
           lineNumbers: true,
+          gutters: ["CodeMirror-lint-markers"],
+          lint: true,
           extraKeys: {
-            "Ctrl-Space": "autocomplete",
+            'Ctrl-Space': 'autocomplete',
             'Ctrl-S': function (cm) {
               console.log('Ctrl-S save method');
               $scope.saveFile($scope.data);
-            },
+            }
+
+            ,
             'Cmd-S': function (cm) {
               console.log('Cmd-S save method');
               $scope.saveFile($scope.data);
             }
           }
-        };
+        }
+        ;
 
         /**
          * Opened editors
@@ -158,14 +162,14 @@ angular.module('ide').directive('editor', function () {
           // Create a new editor
           var editorOptions = {};
           var keys = Object.keys($scope.editorOptions);
-          for(var i=0; i<keys.length; i++ ) {
+          for (var i = 0; i < keys.length; i++) {
             var key = keys[i];
             editorOptions[key] = $scope.editorOptions[key];
           }
-          if(file.id . indexOf('.entity') != -1) {
+          if (file.id.indexOf('.entity') != -1) {
             editorOptions.mode = 'entity';
           }
-          if(file.id . indexOf('.vm') != -1) {
+          if (file.id.indexOf('.vm') != -1) {
             editorOptions.mode = 'velocity';
           }
 

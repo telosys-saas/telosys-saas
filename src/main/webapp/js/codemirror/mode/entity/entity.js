@@ -31,7 +31,6 @@
 
       token: function (stream, state) {
         // comment line
-
         if (stream.sol()) {
           state.isInCommentLine = false;
         }
@@ -40,59 +39,71 @@
         var char = stream.next();
 
         if (state.isInCommentLine) {
-          return 'comment';
+          return "comment-line";
         }
 
         // detect comment line start
         if (char == '/' && stream.peek() == '/') {
           state.isInCommentLine = true;
-          return 'comment';
+          return "comment-line";
         }
 
         if (!state.isInEntityBlock) {
           if (char.match(/\w/)) {
             stream.eatWhile(/\w/);
-            return "variable";
+            return "entity";
           }
           if (char == '{') {
-            state.countOpened['{']++;
             state.isInEntityBlock = true;
           }
           return null;
         } else {
+          // detect tabulation
           if (char.match(/ \t/)) {
             return null;
           }
+          // detect variable name
+          // if true change the syntax color
           if (char.match(/\w/)) {
-            return "variable-2";
+            return "variable";
           }
+          // detect if we are after ':'
+          // if true, enabled autocomplete for type
           if (char == ':') {
             state.isType = true;
             return null;
           }
-          if (char == ';') {
-            state.isType = false;
-            return null;
-          }
-          if (char == '@') {
-            stream.eatWhile(/\w/);
-            return "variable-3";
-          }
+          // detect if we are in annotation block
+          // if true disabled autocomplete for type
+          // and enabled autocomplete for annotation
           if (char == '{') {
-            state.countOpened['{']++;
             state.isAnnotation = true;
             state.isType = false;
             return null;
           }
+
+          // detect if we are after annotation
+          // if true disabled autocomplete for annotation
           if (char == '}') {
-            state.countOpened['{']--;
             state.isAnnotation = false;
-            if (state.countOpened['{'] > 0) {
-              return null;
-            } else {
-              state.isInEntityBlock = false;
-              return null;
-            }
+            return null;
+          }
+          // detect if we are in annotation
+          // if true change the annotation color
+          if (char == '@') {
+            stream.eatWhile(/\w/);
+            return "annotation";
+          }
+          // detect the end of one attribute (after ';')
+          // if true disabled autocomplete for type
+          if (char == ';') {
+            state.isType = false;
+            state.isAnnotation = false;
+            return null;
+          }
+          if (state.isType) {
+            stream.eatWhile(/\w/);
+            return "type";
           }
         }
       },

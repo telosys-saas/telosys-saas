@@ -519,7 +519,6 @@ angular.module('ide').controller('ideCtrl', ['AuthService', '$location', 'Projec
      * @param fileId File id modified by user
      */
     $scope.onContentChange = function (data, fileId) {
-      console.log('onContentChange', fileId);
       if (!data.allFiles[fileId].isModified) {
         data.countModifiedFile++;
         data.allFiles[fileId].isModified = true;

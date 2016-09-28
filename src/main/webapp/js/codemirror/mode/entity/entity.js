@@ -17,13 +17,7 @@
       startState: function () {
         return {
           isInEntityBlock: false,
-          countOpened: {
-            '{': 0,
-            '[': 0,
-            ':': 0
-          },
           isInCommentLine: false,
-          isInCommentBlock: false,
           isType: false,
           isAnnotation: false
         };
@@ -59,7 +53,7 @@
           return null;
         } else {
           // detect tabulation
-          if (char.match(/ \t/)) {
+          if (char.match(/\t/)) {
             return null;
           }
           // detect variable name

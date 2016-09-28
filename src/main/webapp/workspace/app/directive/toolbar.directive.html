@@ -3,7 +3,7 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <a class="navbar-brand logo-telosys-min" href="#"></a>
-            <a class="navbar-brand" href="{{data.host}} /workspace/index.html#/ide/{{data.project.id}}"><b>{{data.project.name}}</b></a>
+            <a class="navbar-brand" href="{{data.host}}/workspace/index.html#/ide/{{data.project.id}}"><b>{{data.project.name}}</b></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -41,7 +41,7 @@
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false"><i class="mdi mdi-file-multiple"></i> Generated files <span class="badge" ng-if="data.files.countModifiedFile != 0">{{data.files.countModifiedFile}}</span></a>
                 </li>
-                <li ng-if="data.initialized" class="dropdown"  ng-click="openDownload()">
+                <li ng-if="data.initializedIDE" class="dropdown"  ng-click="openDownload()">
                     <a href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false"><i class="mdi mdi-download mdi-18px"></i> Download Project</a>
                 </li>

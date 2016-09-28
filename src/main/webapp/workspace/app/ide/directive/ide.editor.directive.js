@@ -101,8 +101,8 @@ angular.module('ide').directive('editor', function () {
           value: '',
           tabSize: 2,
           lineNumbers: true,
+          lint: false,
           gutters: ["CodeMirror-lint-markers"],
-          lint: true,
           extraKeys: {
             'Ctrl-Space': 'autocomplete',
             'Ctrl-S': function (cm) {
@@ -167,9 +167,11 @@ angular.module('ide').directive('editor', function () {
             editorOptions[key] = $scope.editorOptions[key];
           }
           if (file.id.indexOf('.entity') != -1) {
+            editorOptions.lint = true;
             editorOptions.mode = 'entity';
           }
           if (file.id.indexOf('.vm') != -1) {
+            editorOptions.lint = true;
             editorOptions.mode = 'velocity';
           }
 

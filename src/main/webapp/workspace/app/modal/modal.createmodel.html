@@ -1,15 +1,27 @@
 <div class="modal-content">
-    <form>
+    <form class="form-horizontal">
         <div class="modal-header">
             <h3 class="modal-title">Create a model</h3>
         </div>
         <div class="modal-body">
-            <label>Model name :</label>
-            <input ng-model="modelName" autofocus>
-            &nbsp;{{errorMessage}}
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <div class="alert alert-danger" ng-if="errorMessage">
+                        {{errorMessage}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="model-name" class="col-sm-3 control-label">Model name :</label>
+                <div class="col-sm-9">
+                    <input id="model-name" ng-model="modelName" class="form-control" autofocus>
+                </div>
+            </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="submit" ng-disabled="modelName==''" ng-click="createModel()">Create model</button>
+            <button class="btn btn-primary" type="submit" ng-disabled="modelName==''" ng-click="createModel()">Create
+                model
+            </button>
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
         </div>
     </form>

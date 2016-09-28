@@ -1,15 +1,27 @@
 <div class="modal-content">
-    <form>
+    <form class="form-horizontal">
         <div class="modal-header">
             <h3 class="modal-title">Create a folder</h3>
         </div>
         <div class="modal-body">
-            <label>Folder name :</label>
-            <input ng-model="folderName" autofocus>
-            &nbsp;{{errorMessage}}
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <div class="alert alert-danger" ng-if="errorMessage">
+                        {{errorMessage}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="folder-name" class="col-sm-3">Folder name :</label>
+                <div class="col-sm-9">
+                    <input id="folder-name" ng-model="folderName" autofocus>
+                </div>
+            </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="submit" ng-disabled="folderName==''" ng-click="createFolder()">Add folder</button>
+            <button class="btn btn-primary" type="submit" ng-disabled="folderName==''" ng-click="createFolder()">Add
+                folder
+            </button>
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
         </div>
     </form>

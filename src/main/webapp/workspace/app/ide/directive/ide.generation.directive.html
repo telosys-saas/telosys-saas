@@ -47,10 +47,10 @@
             <div class="row generation-selection-line card-generation"
                  ng-repeat="entity in data.generation.selectedModelEntitys"
                  ng-class="{'generation-selection-line-selected':entity.selected}">
-                <div class="col-sm-11" ng-click="selectEntity(entity)">
-                    <div class="checkbox" style="word-wrap: break-word;">
+                <div class="col-sm-11">
+                    <div class="checkbox" ng-click="selectEntity(entity)" style="word-wrap: break-word;">
                         <label class="control-label" for="entity_{{$index}}">
-                            <input type="checkbox" ng-model="entity.selected" id="entity_{{$index}}" />
+                            <input type="checkbox" ng-model="entity.selected" ng-click="selectEntity(entity)" id="entity_{{$index}}" style="cursor: pointer;"/>
                             {{entity.text}}
                         </label>
                     </div>

@@ -58,6 +58,7 @@ angular.module('ide')
          * @param entity Entity to select
          */
         $scope.selectEntity = function (entity) {
+          console.log('selectEntity',entity);
           entity.selected = !entity.selected;
         };
 
@@ -69,8 +70,7 @@ angular.module('ide')
           if ($scope.data.generation.selectedModelEntitys) {
             for (var index = 0; index < $scope.data.generation.selectedModelEntitys.length; index++) {
               var entity = $scope.data.generation.selectedModelEntitys[index];
-              entity.selected = false;
-              $scope.selectEntity(entity);
+              entity.selected = true;
             }
           }
         };
@@ -82,8 +82,7 @@ angular.module('ide')
           if ($scope.data.generation.selectedModelEntitys) {
             for (var index = 0; index < $scope.data.generation.selectedModelEntitys.length; index++) {
               var entity = $scope.data.generation.selectedModelEntitys[index];
-              entity.selected = true;
-              $scope.selectEntity(entity);
+              entity.selected = false;
             }
           }
         };
@@ -113,7 +112,7 @@ angular.module('ide')
          * @param template Template to select
          */
         $scope.selectTemplate = function (template) {
-          template.selected = !template.selected;
+          //template.selected = !template.selected;
         };
 
         /**
@@ -124,8 +123,7 @@ angular.module('ide')
           if ($scope.data.generation.selectedBundleTemplates) {
             for (var index = 0; index < $scope.data.generation.selectedBundleTemplates.length; index++) {
               var template = $scope.data.generation.selectedBundleTemplates[index];
-              template.selected = false;
-              $scope.selectTemplate(template);
+              template.selected = true;
             }
           }
         };
@@ -137,8 +135,7 @@ angular.module('ide')
           if ($scope.data.generation.selectedBundleTemplates) {
             for (var index = 0; index < $scope.data.generation.selectedBundleTemplates.length; index++) {
               var template = $scope.data.generation.selectedBundleTemplates[index];
-              template.selected = true;
-              $scope.selectTemplate(template);
+              template.selected = false;
             }
           }
         };

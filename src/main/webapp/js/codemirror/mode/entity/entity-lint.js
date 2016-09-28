@@ -43,7 +43,7 @@
       while (lineNumber < lines.length) {
         var line = lines[lineNumber];
         state.isInCommentLine = false;
-        checkLine(line.trim(), lineNumber, state);
+        //checkLine(line.trim(), lineNumber, state);
         lineNumber++;
       }
     }

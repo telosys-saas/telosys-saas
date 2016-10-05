@@ -1,10 +1,13 @@
 package org.telosys.saas.dao;
 
+import java.io.BufferedInputStream;
 import java.io.FileFilter;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.zip.ZipEntry;
 
 import org.apache.commons.io.FileDeleteStrategy;
 import org.apache.commons.io.filefilter.FileFilterUtils;
@@ -333,12 +336,19 @@ public class FileStorageDao implements StorageDao {
     public java.io.File getFileZipToDownload(User user, Project project, FolderToDownload folderToDownload) {
         String input = getProjectPath(user, project);
         String output = FileUtil.join(System.getProperty("java.io.tmpdir"), project.getId() + "_" + UUID.randomUUID().toString());
-        // Create ZIP file in temporary directory
-        //Zip zip = new Zip(input, output);
-        //zip.zip();
         Zip zip = new Zip();
-
-        zip.zip(input, output, folderToDownload);
+        List<String> files = new ArrayList<>();
+        java.io.File f = new java.io.File(input);
+        try {
+            for (String sub : f.list()) {
+                if ((sub.contains("TelosysTools") && folderToDownload.getTelosysFolder()) || (!sub.contains("TelosysTools") && folderToDownload.getGeneratedFiles())) {
+                    files.add(FileUtil.join(input, sub));
+                }
+            }
+            zip.compressFiles(files, output);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // Return File on this ZIP
         return getIOFile(output);
     }

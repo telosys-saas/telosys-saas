@@ -32,7 +32,7 @@
 ```
 githubOauthKey=
 githubOauthPassword=
-gmailUsername=telosystoolsdemo
+gmailUsername=
 gmailPassword=
 mailRedirect=http://localhost:8080/telosys-saas
 loginAttemptsMax=3

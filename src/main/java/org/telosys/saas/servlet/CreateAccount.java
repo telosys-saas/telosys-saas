@@ -4,12 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telosys.saas.config.Configuration;
 import org.telosys.saas.config.ConfigurationHolder;
-import org.telosys.saas.util.GMail;
+import org.telosys.saas.util.Mail;
 import org.telosys.saas.util.Util;
 import org.telosys.tools.users.User;
 import org.telosys.tools.users.UserType;
 import org.telosys.tools.users.UsersManager;
-import org.telosys.tools.users.crypto.PasswordEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +27,6 @@ public class CreateAccount extends HttpServlet {
 
     protected static final Logger logger = LoggerFactory.getLogger(CreateAccount.class);
 
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         logger.info("doPost");
@@ -38,7 +36,7 @@ public class CreateAccount extends HttpServlet {
 
         UsersManager usersManager = UsersManager.getInstance();
         Memory memory = Memory.getMemory();
-        GMail gMail = new GMail();
+        Mail mail = new Mail();
         // Check if the user fill all the fields
         if(Util.isEmpty(request.getParameter("login"))){
             request.getSession().setAttribute("error", "Username is not defined");
@@ -76,12 +74,11 @@ public class CreateAccount extends HttpServlet {
         String subjectMail = "Confirm Telosys account";
         Configuration configuration = ConfigurationHolder.getConfiguration();
         String bodyMail = "Dear " + user.getLogin() + "," + " Please click on the following link to confirm your email address : " +
-                //" http://localhost:8080/confirmEmail/" + token +
                 configuration.getMailRedirect() + "/confirmEmail/" + token +
                 " Sincerly," +
                 " The Telosys Team";
         logger.info("doPost : Sent mail");
-        gMail.send(user.getMail(), subjectMail, bodyMail);
+        mail.send(user.getMail(), subjectMail, bodyMail);
         // Redirect to the home page
         request.getSession().setAttribute("success", "Mail sent for account creation");
         response.sendRedirect(request.getContextPath() + "/");
@@ -92,7 +89,6 @@ public class CreateAccount extends HttpServlet {
         // Remove last error message
         request.getSession().removeAttribute("success");
         request.getSession().removeAttribute("error");
-
         response.sendRedirect(request.getContextPath() + "/createAccount.jsp");
     }
 }

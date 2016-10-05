@@ -79,8 +79,13 @@
           // detect if we are after annotation
           // if true disabled autocomplete for annotation
           if (char == '}') {
-            state.isAnnotation = false;
-            return null;
+            if(!state.isAnnotation){
+              state.isInEntityBlock = false;
+              return null;
+            }else {
+              state.isAnnotation = false;
+              return null;
+            }
           }
           // detect if we are in annotation
           // if true change the annotation color

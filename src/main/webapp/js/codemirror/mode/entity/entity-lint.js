@@ -29,6 +29,7 @@
   function validator(text, options) {
     var state = {
       isInEntityBlock: false,
+      isInCodeLine: false,
       isInCommentLine: false,
       isInVariableName: false,
       isType: false,
@@ -66,6 +67,7 @@
         // detect variable name
         // if true change the syntax color
         if (char.match(/\w/)) {
+
           var posEnd = line.indexOf(' ', pos);
           var error = {
             from: {
@@ -104,8 +106,13 @@
         }
         // detect if we are in annotation block
         if (char == '{') {
-          state.isAnnotation = true;
-          state.isType = false;
+          if(!state.isAnnotation){
+            state.isInEntityBlock = false;
+            return null;
+          }else {
+            state.isAnnotation = false;
+            return null;
+          }
         }
         // detect if we are after annotation
         if (char == '}') {

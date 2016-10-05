@@ -23,9 +23,10 @@ public class Configuration {
     //--- Parameters names
     private static final String GITHUB_OAUTH_KEY = "githubOauthKey";
     private static final String GITHUB_OAUTH_PASSWORD = "githubOauthPassword";
-    private static final String GMAIL_USERNAME = "gmailUsername";
-    private static final String GMAIL_PASSWORD = "gmailPassword";
+    private static final String MAIL_USERNAME = "mailUsername";
+    private static final String MAIL_PASSWORD = "mailPassword";
     private static final String MAIL_REDIRECT = "mailRedirect";
+    private static final String SERVER_MAIL = "serverMail";
     private static final String LOGIN_ATTEMPS_MAX = "loginAttemptsMax";
     private static final String NUMBER_OF_PROJECT_MAX = "numberOfProjectMax";
 
@@ -33,9 +34,10 @@ public class Configuration {
     //--- Default values
     private static final String GITHUB_OAUTH_KEY_DEFAULT_VALUE = null;
     private static final String GITHUB_OAUTH_PASSWORD_DEFAULT_VALUE = null;
-    private static final String GMAIL_USERNAME_DEFAULT_VALUE = null;
-    private static final String GMAIL_PASSWORD_DEFAULT_VALUE = null;
+    private static final String MAIL_USERNAME_DEFAULT_VALUE = null;
     private static final String MAIL_REDIRECT_DEFAULT_VALUE = null;
+    private static final String MAIL_PASSWORD_DEFAULT_VALUE = null;
+    private static final String SERVER_MAIL_DEFAULT_VALUE = null;
     private static final String LOGIN_ATTEMPS_MAX_DEFAULT_VALUE = null;
     private static final String NUMBER_OF_PROJECT_MAX_DEFAULT_VALUE = null;
 
@@ -45,9 +47,10 @@ public class Configuration {
     private final String usersFilePath;
     private final String githubOauthKey;
     private final String githubOauthPassword;
-    private final String gmailUsername;
-    private final String gmailPassword;
+    private final String mailUsername;
+    private final String mailPassword;
     private final String mailRedirect;
+    private final String serverMail;
     private final String loginAttemptsMax;
     private final String numberOfProjectMax;
 
@@ -67,9 +70,10 @@ public class Configuration {
         this.usersFilePath = FileUtil.buildFilePath(dataRootPath, USERS_FILE_NAME);
         this.githubOauthKey = GITHUB_OAUTH_KEY_DEFAULT_VALUE;
         this.githubOauthPassword = GITHUB_OAUTH_PASSWORD_DEFAULT_VALUE;
-        this.gmailUsername = GMAIL_USERNAME_DEFAULT_VALUE;
-        this.gmailPassword = GMAIL_PASSWORD_DEFAULT_VALUE;
+        this.mailUsername = MAIL_USERNAME_DEFAULT_VALUE;
+        this.mailPassword = MAIL_PASSWORD_DEFAULT_VALUE;
         this.mailRedirect = MAIL_REDIRECT_DEFAULT_VALUE;
+        this.serverMail = SERVER_MAIL_DEFAULT_VALUE;
         this.loginAttemptsMax = LOGIN_ATTEMPS_MAX;
         this.numberOfProjectMax = NUMBER_OF_PROJECT_MAX_DEFAULT_VALUE;
     }
@@ -91,9 +95,10 @@ public class Configuration {
         this.usersFilePath = FileUtil.buildFilePath(dataRootPath, USERS_FILE_NAME);
         this.githubOauthKey = paramValue(properties.getProperty(GITHUB_OAUTH_KEY), GITHUB_OAUTH_KEY_DEFAULT_VALUE);
         this.githubOauthPassword = paramValue(properties.getProperty(GITHUB_OAUTH_PASSWORD), GITHUB_OAUTH_PASSWORD_DEFAULT_VALUE);
-        this.gmailUsername = paramValue(properties.getProperty(GMAIL_USERNAME), GMAIL_USERNAME_DEFAULT_VALUE);
-        this.gmailPassword = paramValue(properties.getProperty(GMAIL_PASSWORD), GMAIL_PASSWORD_DEFAULT_VALUE);
+        this.mailUsername = paramValue(properties.getProperty(MAIL_USERNAME), MAIL_USERNAME_DEFAULT_VALUE);
+        this.mailPassword = paramValue(properties.getProperty(MAIL_PASSWORD), MAIL_PASSWORD_DEFAULT_VALUE);
         this.mailRedirect = paramValue(properties.getProperty(MAIL_REDIRECT), MAIL_REDIRECT_DEFAULT_VALUE);
+        this.serverMail = paramValue(properties.getProperty(SERVER_MAIL), SERVER_MAIL_DEFAULT_VALUE);
         this.loginAttemptsMax = paramValue(properties.getProperty(LOGIN_ATTEMPS_MAX), LOGIN_ATTEMPS_MAX_DEFAULT_VALUE);
         this.numberOfProjectMax = paramValue(properties.getProperty(NUMBER_OF_PROJECT_MAX), NUMBER_OF_PROJECT_MAX_DEFAULT_VALUE);
     }
@@ -134,18 +139,21 @@ public class Configuration {
         return githubOauthPassword;
     }
 
-    public String getGmailUsername() {
-        return gmailUsername;
+    public String getMailUsername() {
+        return mailUsername;
     }
 
-    public String getGmailPassword() {
-        return gmailPassword;
+    public String getMailPassword() {
+        return mailPassword;
     }
 
     public String getMailRedirect() {
         return mailRedirect;
     }
 
+    public String getServerMail() {
+        return serverMail;
+    }
     public String getLoginAttemptsMax() {
         return loginAttemptsMax;
     }

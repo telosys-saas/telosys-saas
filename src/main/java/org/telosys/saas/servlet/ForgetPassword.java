@@ -2,7 +2,7 @@ package org.telosys.saas.servlet;
 
 import org.telosys.saas.config.Configuration;
 import org.telosys.saas.config.ConfigurationHolder;
-import org.telosys.saas.util.GMail;
+import org.telosys.saas.util.Mail;
 import org.telosys.saas.util.Util;
 import org.telosys.tools.users.User;
 import org.telosys.tools.users.UsersManager;
@@ -30,7 +30,7 @@ public class ForgetPassword extends HttpServlet {
 
         UsersManager usersManager = UsersManager.getInstance();
         Memory memory = Memory.getMemory();
-        GMail gMail = new GMail();
+        Mail mail = new Mail();
         // Check if the user exists
         User userExisting = usersManager.getUserByLogin(request.getParameter("login"));
         if (userExisting == null) {
@@ -53,7 +53,7 @@ public class ForgetPassword extends HttpServlet {
                 configuration.getMailRedirect() + "/resetPassword/" + token +
                 " Sincerly," +
                 " The Telosys Team";
-        gMail.send(userExisting.getMail(), "Reset Telosys password", bodyMail);
+        mail.send(userExisting.getMail(), "Reset Telosys password", bodyMail);
         response.sendRedirect(request.getContextPath() + "/");
     }
 
@@ -61,7 +61,6 @@ public class ForgetPassword extends HttpServlet {
         // remove last error message
         request.getSession().removeAttribute("success");
         request.getSession().removeAttribute("error");
-
         response.sendRedirect(request.getContextPath() + "/forgetPassword.jsp");
     }
 }

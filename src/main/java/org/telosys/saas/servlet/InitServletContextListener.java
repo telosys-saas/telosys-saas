@@ -14,33 +14,33 @@ import org.telosys.tools.users.UsersManager;
  */
 public class InitServletContextListener implements ServletContextListener {
 
-	protected static final Logger logger = LoggerFactory.getLogger(InitServletContextListener.class);
+    protected static final Logger logger = LoggerFactory.getLogger(InitServletContextListener.class);
 
-	/**
-	 * Initialization
-	 */
-	@Override
-	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		logger.info("Initialization");
-		logger.info("Loading configuration...");
-		Configuration configuration = ConfigurationHolder.getConfiguration();
-		if ( configuration != null ) {
-			logger.info("Configuration loaded");
-			logger.info(" . data root path  = " + configuration.getDataRootPath() );
-			logger.info(" . users file path = " + configuration.getUsersFilePath() );
-			logger.info(" . Github OAuth Key = " + configuration.getGithubOauthKey() );
-			logger.info(" . Gmail Username = " + configuration.getGmailUsername() );
-			logger.info(" . Mail Redirect = " + configuration.getMailRedirect() );
-			logger.info(" . Login Attempts Max = " + configuration.getLoginAttemptsMax() );
-			logger.info(" . Number of project Max = " + configuration.getNumberOfProjectMax() );
-			UsersManager.setUsersFileName(configuration.getUsersFilePath());
-			logger.info("UsersManager initializedIDE.");
-		}
-	}
+    /**
+     * Initialization
+     */
+    @Override
+    public void contextInitialized(ServletContextEvent servletContextEvent) {
+        logger.info("Initialization");
+        logger.info("Loading configuration...");
+        Configuration configuration = ConfigurationHolder.getConfiguration();
+        if (configuration != null) {
+            logger.info("Configuration loaded");
+            logger.info(" . data root path  = " + configuration.getDataRootPath());
+            logger.info(" . users file path = " + configuration.getUsersFilePath());
+            logger.info(" . Github OAuth Key = " + configuration.getGithubOauthKey());
+            logger.info(" . Mail Username = " + configuration.getMailUsername());
+            logger.info(" . Mail redirect = " + configuration.getMailRedirect());
+            logger.info(" . Login Attempts Max = " + configuration.getLoginAttemptsMax());
+            logger.info(" . Number of project Max = " + configuration.getNumberOfProjectMax());
+            UsersManager.setUsersFileName(configuration.getUsersFilePath());
+            logger.info("UsersManager initializedIDE.");
+        }
+    }
 
-	@Override
-	public void contextDestroyed(ServletContextEvent servletContextEvent) {
-		
-	}
-	
+    @Override
+    public void contextDestroyed(ServletContextEvent servletContextEvent) {
+
+    }
+
 }

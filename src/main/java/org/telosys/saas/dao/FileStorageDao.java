@@ -47,11 +47,11 @@ public class FileStorageDao implements StorageDao {
 
     private String getUserPath(User user) {
         String nameUserType = user.getType().name();
-        logger.info("getUserPath nameUserType = " + nameUserType);
+        logger.info("userType = " + nameUserType);
         String userLogin = user.getLogin();
-        logger.info("getUserPath nameUserType = " + userLogin);
+        logger.info("userName = " + userLogin);
         String rootPath = getRootPath();
-        logger.info("getUserPath nameUserType = " + rootPath);
+        logger.info("getUserPath = " + rootPath);
         String userPath = FileUtil.join(rootPath, nameUserType, userLogin);
         java.io.File dir = new java.io.File(userPath);
         dir.mkdirs();
@@ -334,21 +334,10 @@ public class FileStorageDao implements StorageDao {
 
     @Override
     public java.io.File getFileZipToDownload(User user, Project project, FolderToDownload folderToDownload) {
+
         String input = getProjectPath(user, project);
         String output = FileUtil.join(System.getProperty("java.io.tmpdir"), project.getId() + "_" + UUID.randomUUID().toString());
-        Zip zip = new Zip();
-        List<String> files = new ArrayList<>();
-        java.io.File f = new java.io.File(input);
-        try {
-            for (String sub : f.list()) {
-                if ((sub.contains("TelosysTools") && folderToDownload.getTelosysFolder()) || (!sub.contains("TelosysTools") && folderToDownload.getGeneratedFiles())) {
-                    files.add(FileUtil.join(input, sub));
-                }
-            }
-            zip.compressFiles(files, output);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Zip.zip(input,output,folderToDownload);
         // Return File on this ZIP
         return getIOFile(output);
     }

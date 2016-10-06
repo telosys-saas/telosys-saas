@@ -119,17 +119,7 @@ public class OAuthRealm extends AuthorizingRealm {
             // Transform the json into a map
             Map<String,Object> map =  JSONUtils.parseJSON(response);
             String userName = (String) map.get("login");
-            String password = configuration.getGithubOauthKey();
-            User user = usersManager.getUserByLogin(userName);
-
-            // If the user doesn't exist then create one
-            if (user == null) {
-                user = new User(UserType.GITHUB_USER, userName);
-                user.setEncryptedPassword(password);
-                usersManager.saveUser(user, user.getEncryptedPassword());
-                user = usersManager.getUserByLogin(userName);
-            }
-            logger.info("doGetAuthenticationInfo(token) : password = " + user.getEncryptedPassword() );
+            User user = new User(UserType.GITHUB_USER, userName);
 
             return new SimpleAuthenticationInfo(user, code, REALM_NAME);
 

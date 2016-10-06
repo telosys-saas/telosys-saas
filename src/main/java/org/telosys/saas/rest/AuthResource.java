@@ -44,12 +44,7 @@ public class AuthResource {
             StringBuffer buf = new StringBuffer();
             buf.append("{\"authenticated\":true");
             buf.append(", \"userId\": \"").append(user.getLogin()).append("\"");
-            buf.append(", \"login\": \"").append(user.getLogin()).append("\"");
-            if(user.getAvatar() == null || "".equals(user.getAvatar().trim())) {
-                buf.append(", \"avatar\": null");
-            } else {
-                buf.append(", \"avatar\": \"").append(user.getAvatar()).append("\"");
-            }
+            buf.append(", \"userType\": \"").append(user.getType()).append("\"");
             buf.append("}");
             return buf.toString();
         }

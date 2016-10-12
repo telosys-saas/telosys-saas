@@ -10,16 +10,21 @@ View : Models
 treeview : data = $scope.data.models
 editor : data = $scope.data.models
 console : data = $scope.data
+
 View : Bundles
 treeview : data = $scope.data.bundles
 editor : data = $scope.data.bundles
 console : data = $scope.data
+
 View : Generation
 generation : data = $scope.data
+
 View : Files
 treeview : data = $scope.data.files
 editor : data = $scope.data.files
 console : data = $scope.data
+
+
 Directives : $watch
 
 editor :

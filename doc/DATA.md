@@ -1,14 +1,16 @@
-# Main
+# Directives
 
-data.models: (entities)   
-  - View : Models
-  - Used by directives : 
-    - treeview
-    - editor
-    - console
-data.templates:
-  - used by :
-    - view : templates
-    - 
-    
-data.files: (generated files)
+- view : Models
+  - treeview : data.models
+  - editor : data.models
+  - console : data
+- view : Bundles
+  - treeview : data.bundles
+  - editor : data.bundles
+  - console : data
+- view : Generation
+  - generation : data
+- view : Files
+  - treeview : data.files
+  - editor : data.files
+  - console : data

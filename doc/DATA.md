@@ -7,9 +7,9 @@ $scope => scope du controller principal "IDEController"
 $scope.data => Les données de l'IDE stockés dans le controller principal
 
 - View : Models
-  - treeview : data = ''$scope.data.models''
-  - editor : data = ''$scope.data.models''
-  - console : data = ''$scope.data''
+  - treeview : data = $scope.data.models
+  - editor : data = $scope.data.models
+  - console : data = $scope.data
 - View : Bundles
   - treeview : data = $scope.data.bundles
   - editor : data = $scope.data.bundles

@@ -32,10 +32,12 @@ data.selectedFile :
 view : Models : data.selectedFile = $scope.data.models.selectedFile
 view : Bundles : data.selectedFile = $scope.data.bundles.selectedFile
 view : Console : data.selectedFile = $scope.data.console.selectedFile
+
 data.workingFiles :
 view : Models : data.workingFiles = $scope.data.models.workingFiles
 view : Bundles : data.workingFiles = $scope.data.bundles.workingFiles
 view : Console : data.workingFiles = $scope.data.console.workingFiles
+
 console :
 data.generation.generationResults
 data.models.modelErrors

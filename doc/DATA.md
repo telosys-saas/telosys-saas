@@ -1,11 +1,14 @@
 # Main
 
-data 
-- models: (entities) 
+data.models: (entities)   
   - View : Models
   - Used by directives : 
     - treeview
     - editor
     - console
-- templates:
-- files: (generated files)
+data.templates:
+  - used by :
+    - view : templates
+    - 
+    
+data.files: (generated files)

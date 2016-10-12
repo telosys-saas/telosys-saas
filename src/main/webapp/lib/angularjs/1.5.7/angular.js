@@ -12885,7 +12885,7 @@ function LocationHashbangInHtml5Url(appBase, appBaseNoFile, hashPrefix) {
 var locationPrototype = {
 
   /**
-   * Ensure absolute url is initialized.
+   * Ensure absolute url is initializedIDE.
    * @private
    */
   $$absUrl:'',
@@ -27216,7 +27216,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * `$modelValue`, i.e. either the last parsed value or the last value set from the scope.
    */
   this.$validate = function() {
-    // ignore $validate before models is initialized
+    // ignore $validate before models is initializedIDE
     if (isNumber(ctrl.$modelValue) && isNaN(ctrl.$modelValue)) {
       return;
     }
@@ -29503,7 +29503,7 @@ var ngRepeatDirective = ['$parse', '$animate', '$compile', function($parse, $ani
         $scope.$watchCollection(rhs, function ngRepeatAction(collection) {
           var index, length,
               previousNode = $element[0],     // node that cloned nodes should be inserted after
-                                              // initialized to the comment node anchor
+                                              // initializedIDE to the comment node anchor
               nextNode,
               // Same as lastBlockMap but it has the current state. It will become the
               // lastBlockMap on the next iteration.

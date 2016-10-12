@@ -5338,7 +5338,7 @@
   var Init = CodeMirror.Init = {toString: function(){return "CodeMirror.Init";}};
 
   // These two are, on init, called from the constructor because they
-  // have to be initialized before the editor can start at all.
+  // have to be initializedIDE before the editor can start at all.
   option("value", "", function(cm, val) {
     cm.setValue(val);
   }, true);

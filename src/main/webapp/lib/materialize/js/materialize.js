@@ -856,11 +856,11 @@ if ($) {
 
     return this.each(function() {
 
-      if ($(this).hasClass('initialized')) {
+      if ($(this).hasClass('initializedIDE')) {
         return;
       }
 
-      $(this).addClass('initialized');
+      $(this).addClass('initializedIDE');
 
       var overlayActive = false;
       var doneAnimating = true;
@@ -2624,7 +2624,7 @@ $(document).ready(function(){
         });
 
         // Reset select
-        formReset.find('select.initialized').each(function () {
+        formReset.find('select.initializedIDE').each(function () {
           var reset_text = formReset.find('option[selected]').text();
           formReset.siblings('input.select-dropdown').val(reset_text);
         });
@@ -2865,7 +2865,7 @@ $(document).ready(function(){
 
       // If destroying the select, remove the selelct-id and reset it to it's uninitialized state.
       if(callback === 'destroy') {
-        $select.data('select-id', null).removeClass('initialized');
+        $select.data('select-id', null).removeClass('initializedIDE');
         return;
       }
 
@@ -2985,7 +2985,7 @@ $(document).ready(function(){
         $($newSelect[0]).attr('tabindex', $select.attr('tabindex'));
       }
 
-      $select.addClass('initialized');
+      $select.addClass('initializedIDE');
 
       $newSelect.on({
         'focus': function (){
@@ -6501,7 +6501,7 @@ Picker.extend( 'pickadate', DatePicker )
         // Initialize
         var view = $(this);
         // Don't double initialize.
-        if (view.hasClass('initialized')) {
+        if (view.hasClass('initializedIDE')) {
           return true;
         }
 
@@ -6513,7 +6513,7 @@ Picker.extend( 'pickadate', DatePicker )
           });
         }
 
-        view.addClass('initialized');
+        view.addClass('initializedIDE');
         pressed = false;
         offset = target = 0;
         images = [];

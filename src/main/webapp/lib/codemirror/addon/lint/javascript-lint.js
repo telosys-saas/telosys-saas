@@ -10,8 +10,7 @@
     mod(CodeMirror);
 })(function(CodeMirror) {
   "use strict";
-  // declare global: JSHINT
-
+  // declare global: JSHINT 
   var bogus = [ "Dangerous comment" ];
 
   var warnings = [ [ "Expected '{'",
@@ -26,6 +25,7 @@
     JSHINT(text, options, options.globals);
     var errors = JSHINT.data().errors, result = [];
     if (errors) parseErrors(errors, result);
+    console.log('validator',result);
     return result;
   }
 

@@ -43,7 +43,7 @@
       }
     }
   });
-
+    
   CodeMirror.defineExtension("lineComment", function(from, to, options) {
     if (!options) options = noOptions;
     var self = this, mode = self.getModeAt(from);

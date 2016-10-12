@@ -28,6 +28,7 @@ console : data = $scope.data
 Directives : $watch
 
 editor :
+
 data.selectedFile :
 view : Models : data.selectedFile = $scope.data.models.selectedFile
 view : Bundles : data.selectedFile = $scope.data.bundles.selectedFile

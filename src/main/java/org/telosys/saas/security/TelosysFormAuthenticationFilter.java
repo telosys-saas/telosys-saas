@@ -40,6 +40,7 @@ public class TelosysFormAuthenticationFilter extends org.apache.shiro.web.filter
         logger.info("onLoginSuccess()...");
 
         Configuration configuration = ConfigurationHolder.getConfiguration();
+        logger.info("loginAttemptsMax : " + configuration.getLoginAttemptsMax());
         int loginAttemptsMax = Integer.parseInt(configuration.getLoginAttemptsMax());
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;

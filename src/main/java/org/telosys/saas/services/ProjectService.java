@@ -1,7 +1,6 @@
 package org.telosys.saas.services;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,22 +12,32 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telosys.saas.dao.StorageDao;
 import org.telosys.saas.dao.StorageDaoProvider;
-import org.telosys.saas.domain.*;
+import org.telosys.saas.domain.Entity;
+import org.telosys.saas.domain.File;
+import org.telosys.saas.domain.Folder;
+import org.telosys.saas.domain.Generation;
+import org.telosys.saas.domain.GenerationErrorResult;
+import org.telosys.saas.domain.GenerationResult;
+import org.telosys.saas.domain.Model;
+import org.telosys.saas.domain.Project;
+import org.telosys.saas.domain.ProjectConfiguration;
+import org.telosys.saas.domain.ProjectConfigurationVariables;
+import org.telosys.saas.domain.Template;
 import org.telosys.saas.util.FileUtil;
-import org.telosys.tools.api.GenericModelLoader;
+import org.telosys.tools.api.TelosysModelException;
 import org.telosys.tools.api.TelosysProject;
 import org.telosys.tools.commons.TelosysToolsException;
+import org.telosys.tools.commons.bundles.TargetDefinition;
 import org.telosys.tools.commons.cfg.TelosysToolsCfg;
 import org.telosys.tools.commons.variables.Variable;
 import org.telosys.tools.dsl.DslModelUtil;
 import org.telosys.tools.generator.GeneratorException;
-import org.telosys.tools.generator.target.TargetDefinition;
 import org.telosys.tools.generator.task.ErrorReport;
 import org.telosys.tools.generator.task.GenerationTaskResult;
+import org.telosys.tools.users.User;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.telosys.tools.users.User;
 
 public class ProjectService {
 
@@ -81,9 +90,38 @@ public class ProjectService {
     public String getModelPath(User user, Project project, String modelName) {
         return FileUtil.join(storageDao.getProjectPath(user, project), "TelosysTools", modelName);
     }
-
+    
     public Model getModel(User user, Project project, String modelName) {
         TelosysProject telosysProject = getTelosysProject(user, project);
+		try {
+			org.telosys.tools.generic.model.Model genericModel = telosysProject.loadModel(modelName + ".model");
+            Model model;
+            if (genericModel == null) {
+                model = new Model();
+                model.setName(modelName);
+            } else {
+                model = map(telosysProject.loadModel(modelName + ".model"), modelName);
+            }
+            return model;
+		} catch (TelosysToolsException ex) {
+			if ( ex instanceof TelosysModelException ) {
+				logger.error("Invalid model !");
+				// Print parsing errors
+				TelosysModelException tme = (TelosysModelException) ex ;
+				Map<String,String> parsingErrors = tme.getParsingErrors();
+				if ( parsingErrors != null ) {
+					logger.error( parsingErrors.size() + " parsing error(s)" );
+					for ( Map.Entry<String,String> entry : parsingErrors.entrySet() ) {
+						logger.error( "'" + entry.getKey() + "' : " + entry.getValue() );
+					}					
+				}
+			}
+			else {
+				logger.error("getModel", ex);					
+			}
+		}
+		return null ; // Model cannot be loaded
+        /*
         try {
             GenericModelLoader genericModelLoader = telosysProject.getGenericModelLoader();
             org.telosys.tools.generic.model.Model genericModel = genericModelLoader.loadModel(modelName + ".model");
@@ -113,6 +151,7 @@ public class ProjectService {
         } catch (TelosysToolsException e) {
             throw new IllegalStateException(e);
         }
+        */
     }
 
     public Model createModel(User user, Project project, String modelName) {
@@ -247,7 +286,7 @@ public class ProjectService {
         TelosysProject telosysProject = getTelosysProject(user, project);
         List<Template> templateList = new ArrayList<>();
         try {
-            List<TargetDefinition> targetDefinitions = telosysProject.loadTargetsDefinitions(bundleName).getTemplatesTargets();
+            List<TargetDefinition> targetDefinitions = telosysProject.getTargetDefinitions(bundleName).getTemplatesTargets();
             for (TargetDefinition targetDefinition : targetDefinitions) {
                 Template template = new Template(targetDefinition);
                 String absoluteFilePath = "TelosysTools/templates/" + bundleName + "/" + targetDefinition.getTemplate();
@@ -255,7 +294,7 @@ public class ProjectService {
                 templateList.add(template);
             }
             return templateList;
-        } catch (TelosysToolsException | GeneratorException e) {
+        } catch (TelosysToolsException e) {
             throw new IllegalStateException(e);
         }
     }
@@ -269,7 +308,7 @@ public class ProjectService {
         try {
             org.telosys.tools.generic.model.Model genericModel = telosysProject.loadModel(modelName + ".model");
 
-            List<TargetDefinition> targetDefinitions = telosysProject.loadTargetsDefinitions(bundleName).getTemplatesTargets();
+            List<TargetDefinition> targetDefinitions = telosysProject.getTargetDefinitions(bundleName).getTemplatesTargets();
             List<TargetDefinition> targetDefinitions1 = new ArrayList<>();
             for (TargetDefinition targetDefinition : targetDefinitions) {
                 if (templatesName.contains(targetDefinition.getTemplate())) {
@@ -291,7 +330,7 @@ public class ProjectService {
                 generationResult.getErrors().add(error);
             }
             return generationResult;
-        } catch (TelosysToolsException | GeneratorException e) {
+        } catch (TelosysToolsException e) {
             throw new IllegalStateException(e);
         }
     }
@@ -315,8 +354,6 @@ public class ProjectService {
             }
             return generationResult;
         } catch (TelosysToolsException e) {
-            throw new IllegalStateException(e);
-        } catch (GeneratorException e) {
             throw new IllegalStateException(e);
         }
     }

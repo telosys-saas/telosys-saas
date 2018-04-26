@@ -22,7 +22,7 @@
 	<properties>
 		<java.version>1.7</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<telosys.version>3.0.0-SNAPSHOT</telosys.version>
+		<telosys.version>3.0.0</telosys.version>
 	</properties>
 
 	<dependencies>
@@ -139,7 +139,7 @@
 		<!-- Telosys -->
 		<dependency>
 			<groupId>org.telosys</groupId>
-			<artifactId>telosys-tools-api</artifactId>
+			<artifactId>telosys-tools-all</artifactId>
 			<version>${telosys.version}</version>
 		</dependency>
 
@@ -171,7 +171,8 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
-<!-- 			<plugin>
+			<!-- 
+ 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
 				<version>1.6</version>
@@ -209,8 +210,8 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin> -->
-<!-- 			<plugin>
+			</plugin>
+ 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.3.2</version>
@@ -221,7 +222,8 @@
 						<argument>target/telosys-saas.jar</argument>
 					</arguments>
 				</configuration>
-			</plugin> -->
+			</plugin>
+			-->
 		</plugins>
 	</build>
 

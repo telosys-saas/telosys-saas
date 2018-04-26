@@ -1,8 +1,8 @@
 package org.telosys.saas.domain;
 
-import org.telosys.tools.generator.target.TargetDefinition;
-
 import java.io.Serializable;
+
+import org.telosys.tools.commons.bundles.TargetDefinition;
 
 public class Template implements Serializable {
 
